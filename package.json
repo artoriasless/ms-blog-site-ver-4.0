@@ -1,0 +1,34 @@
+{
+  "name": "ms-blog-site-ver-4.0",
+  "version": "1.0.0",
+  "description": "blog site of mine,use koa2/mysql/react/bootstrap",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development node forever.js",
+    "production": "NODE_ENV=production node forever.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MonkingStand/ms-blog-site-ver-4.0.git"
+  },
+  "keywords": [
+    "koa2",
+    "mysql",
+    "react",
+    "bootstrap"
+  ],
+  "author": "Stan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MonkingStand/ms-blog-site-ver-4.0/issues"
+  },
+  "homepage": "https://github.com/MonkingStand/ms-blog-site-ver-4.0#readme",
+  "dependencies": {
+    "forever-monitor": "^1.7.1",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.5",
+    "path": "^0.12.7"
+  }
+}
