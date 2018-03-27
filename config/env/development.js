@@ -2,11 +2,11 @@
 
 module.exports = {
     db: {
-        host: 'test',
+        host: 'localhost',
         port: 3306,
-        user: 'test',
-        password: 'test',
-        database: 'test',
+        user: 'root',
+        password: '123',
+        database: 'blog_local',
         seq_options: {
             logging: false,
             dialectOptions: {
