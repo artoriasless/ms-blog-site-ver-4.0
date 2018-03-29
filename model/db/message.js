@@ -3,19 +3,25 @@
 const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
-    const Reply = sequelize.define('Reply', {
+    const Message = sequelize.define('Message', {
         id: {
             type: DataTypes.INTEGER.UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
         },
-        userId: {
-            type: DataTypes.INTEGER.UNSIGNED,
+        title: {
+            type: DataTypes.STRING,
             allowNull: false,
-            field: 'user_id',
-            comment: '评论的用户 id',
+            field: 'title',
+            comment: '一条消息的标题',
         },
-        papgerId: {
+        content: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            field: 'content',
+            comment: '一条消息的主要内容',
+        },
+        paperId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             field: 'paper_id',
@@ -23,35 +29,23 @@ module.exports = (sequelize, DataTypes) => {
         },
         replyId: {
             type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: true,
-            defaultValue: 0,
+            allowNull: false,
             field: 'reply_id',
-            comment: '该评论对应的上一级评论 id （该评论为子评论时）',
+            comment: '对应消息来源的评论 id',
         },
-        content: {
-            type: DataTypes.TEXT,
+        isRead: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-            field: 'content',
-            comment: '评论主体内容',
-        },
-        replyHistory: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-            field: 'reply_history',
-            comment: '评论历史（包括date、content），逗号分隔的 json对象 字符串',
-        },
-        replyDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            field: 'reply_date',
-            comment: '评论主体内容',
+            defaultValue: 0,
+            field: 'is_read',
+            comment: '消息是否已读',
         },
         isDeleted: {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
             field: 'is_deleted',
-            comment: '评论是否删除（逻辑删除）',
+            comment: '消息是否删除（逻辑删除）',
         },
         gmtCreate: {
             type: DataTypes.DATE,
@@ -74,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
     }, {
-        tableName: 'comment',
+        tableName: 'message',
         timestamps: true,
         underscored: true,
 
@@ -89,5 +83,5 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    return Reply;
+    return Message;
 };
