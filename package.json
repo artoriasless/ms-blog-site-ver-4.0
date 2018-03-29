@@ -4,7 +4,7 @@
     "description": "blog site of mine,use koa2/mysql/react/bootstrap",
     "main": "server.js",
     "scripts": {
-        "test": "NODE_ENV=development ./node_modules/.bin/mocha --recursive",
+        "test": "NODE_ENV=testing ./node_modules/.bin/mocha --recursive",
         "dev": "nodemon NODE_ENV=development node forever.js",
         "production": "NODE_ENV=production node forever.js"
     },
