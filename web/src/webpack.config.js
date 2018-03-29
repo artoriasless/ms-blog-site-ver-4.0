@@ -8,4 +8,14 @@ module.exports = {
         path: path.resolve(__dirname, '../public'),
         filename: 'index.js',
     },
+    module: {
+        rules: [{
+            test: /\.js?$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            query: {
+                presets: ['es2015', 'react']
+            }
+        }],
+    },
 };
