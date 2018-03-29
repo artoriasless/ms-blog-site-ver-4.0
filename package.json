@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "test": "NODE_ENV=development ./node_modules/.bin/mocha --recursive",
-        "dev": "NODE_ENV=development node forever.js",
+        "dev": "nodemon NODE_ENV=development node forever.js",
         "production": "NODE_ENV=production node forever.js"
     },
     "repository": {
@@ -40,6 +40,8 @@
         "eslint": "^4.19.1",
         "eslint-plugin-react": "^7.7.0",
         "mocha": "^5.0.5",
-        "should": "^13.2.1"
+        "nodemon": "^1.17.2",
+        "should": "^13.2.1",
+        "webpack": "^4.3.0"
     }
 }

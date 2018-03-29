@@ -12,3 +12,13 @@ a blog site of mine,version 4.0
 *   scripts cmd in pkg.json is available for linux/os x,if you want to run under window,it's supposed to modify
     *   change `NODE_ENV=development` to `$env:NODE_ENV="development"` may work
     *   if still not work,try to ask for help on **Stack Overflow**
+
+## PS
+*   when you need to develop,you need to start TWO terminal
+    *   one for start web,and watch files change
+        *   `npm run dev`
+    *   one for start webpack,and watch files change
+        *   `cd ./web/src`
+        *   `npm run pack`
+*   **Info**
+    *   before you run scripts above,you must have install all dependencies,for web project and webpack

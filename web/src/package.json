@@ -1,0 +1,22 @@
+{
+  "name": "fe_source",
+  "version": "1.0.0",
+  "description": "source code for front end",
+  "main": "webpack.js",
+  "scripts": {
+    "pack": "nodemon node ./webpack.js"
+  },
+  "keywords": [
+    "front-end"
+  ],
+  "author": "Stan",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.3.1",
+    "jquery-ui": "^1.12.1",
+    "nodemon": "^1.17.2",
+    "popper.js": "^1.14.1"
+  }
+}
