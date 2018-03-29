@@ -21,8 +21,12 @@ const child = new(forever.Monitor)('./web/server.js', {
     silent,
 });
 
+child.on('start', () => {
+    console.info(`app has started,address: http://localhost:${config.port}`);// eslint-disable-line
+});
+
 child.on('exit', () => {
-    console.info(`app has exited after ${max} restart(s)`);
+    console.info(`app has exited after ${max} restart(s)`);// eslint-disable-line
 });
 
 child.start();

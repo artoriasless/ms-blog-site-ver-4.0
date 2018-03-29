@@ -1,7 +1,11 @@
 'use strict';
 
-const demo = require('./demo');
+const user = require('./user');
+const paper = require('./paper');
+const reply = require('./reply');
 
 module.exports = {
-    demo,
+    user,
+    paper,
+    reply,
 };
