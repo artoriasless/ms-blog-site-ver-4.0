@@ -1,5 +1,5 @@
 # ms-blog-site-ver-4.0
-a blog site of mine,version 4.0
+a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-blog-site-ver-4.0/blob/master/README.zh.md)）
 
 ## brief
 *   it will use koa (ver ^2.0.0) as server side

@@ -1,5 +1,5 @@
 # ms-blog-site-ver-4.0
-自己搭的一个博客网站，4.0 版本
+自己搭的一个博客网站，4.0 版本（[English](https://github.com/MonkingStand/ms-blog-site-ver-4.0）
 
 ## 简述
 *   服务端使用 koa2
