@@ -6,6 +6,7 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
 *   it will use mySQL as database
 *   it will use react as browser side
 *   it will use bootstrap for ui structure
+*   it will use postcss to customize style ( using webpack to bundle )
 
 ## NOTE
 *   node version must be at least 7.6.0

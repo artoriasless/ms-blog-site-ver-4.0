@@ -6,6 +6,7 @@
 *   数据库使用 mysql
 *   前端框架使用 react
 *   前端 UI 框架使用 bootstrap
+*   前端使用 postcss 编写自定义的样式文件（ webpack 实时打包成 css ）
 
 ## 说明
 *   如果需要本地启动服务， node 版本至少为 7.6.0 ( koa2 限制)
