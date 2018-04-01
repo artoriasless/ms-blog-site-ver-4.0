@@ -1,5 +1,6 @@
 'use strict';
 /* global __dirname */
+/* eslint-disable */
 const path = require('path');
 
 const webpack = require('webpack');
@@ -8,6 +9,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const cssnext = require('postcss-cssnext');
 const autoprefixer = require('autoprefixer');
+/* eslint-disable */
 
 module.exports = {
     entry: {
@@ -51,7 +53,7 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('index.css'),
-        new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({
             '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
         }),
