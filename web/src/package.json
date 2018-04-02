@@ -4,7 +4,8 @@
     "description": "source code for front end",
     "main": "webpack.js",
     "scripts": {
-        "pack": "nodemon node ./webpack.js"
+        "pack-development": "nodemon node ./webpack.js development",
+        "pack-production": "node ./webpack.js production"
     },
     "keywords": [
         "front-end"

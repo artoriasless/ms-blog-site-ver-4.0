@@ -2,7 +2,7 @@
 /* eslint-disable */
 const React = require('react');
 const ReactDOM = require('react-dom');
-const thunk = require('redux-thunk');
+const thunk = require('redux-thunk').default;
 const { createStore, combineReducers, applyMiddleware } = require('redux');
 const { Provider } = require('react-redux');
 const { Router, Route, browserHistory, IndexRoute } = require('react-router');

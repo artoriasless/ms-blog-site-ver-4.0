@@ -11,7 +11,9 @@ const cssnext = require('postcss-cssnext');
 const autoprefixer = require('autoprefixer');
 /* eslint-disable */
 
-module.exports = {
+const argumentArr = process.argv;
+const env = argumentArr[argumentArr.length - 1];
+const config = {
     entry: {
         'index.css': [
             path.resolve(__dirname, './app.postcss')
@@ -52,10 +54,18 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: env,
+        }),
         new ExtractTextPlugin('index.css'),
-        // new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({
-            '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
+            '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })',
         }),
     ]
 };
+
+if (env === 'production') {
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+}
+
+module.exports = config;

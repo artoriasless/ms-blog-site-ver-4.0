@@ -1,14 +1,14 @@
 'use strict';
 /* eslint-disable */
 const React = require('react');
-const HomeTitle = require('../components/home-title');
+const Navbar = require('../components/common-components/navbar');
 /* eslint-disable */
 
 class PageHome extends React.Component {
     render() {
         return (
             <div>
-                <HomeTitle/>
+                <Navbar/>
             </div>
         );
     }
