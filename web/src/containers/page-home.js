@@ -7,7 +7,7 @@ const Navbar = require('../components/common-components/navbar');
 class PageHome extends React.Component {
     render() {
         return (
-            <div>
+            <div className="page-home">
                 <Navbar/>
             </div>
         );

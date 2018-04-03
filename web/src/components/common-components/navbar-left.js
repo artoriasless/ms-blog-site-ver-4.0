@@ -6,7 +6,7 @@ class NavbarLeft extends React.Component {
     render() {
         return (
             <div className="navbar-left logo-container">
-                logo
+                <div className="logo"></div>
             </div>
         );
     }

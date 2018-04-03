@@ -4119,7 +4119,7 @@ var _require4 = __webpack_require__(123),
 var App = __webpack_require__(126);
 var PageHome = __webpack_require__(127);
 /* 引入自定义的 reducers */
-var appReducer = __webpack_require__(130);
+var appReducer = __webpack_require__(131);
 /* 生成 store */
 var store = createStore(combineReducers({
     appReducer: appReducer,
@@ -27793,7 +27793,7 @@ var App = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { className: 'app-container' },
                 this.props.children
             );
         }
@@ -27838,7 +27838,7 @@ var PageHome = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { className: 'page-home' },
                 React.createElement(Navbar, null)
             );
         }
@@ -27867,6 +27867,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(0);
 var NavbarLeft = __webpack_require__(129);
+var NavbarRight = __webpack_require__(130);
 /* eslint-disable */
 
 var Navbar = function (_React$Component) {
@@ -27883,8 +27884,9 @@ var Navbar = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'navbar' },
-                React.createElement(NavbarLeft, null)
+                { className: 'page-section-header' },
+                React.createElement(NavbarLeft, null),
+                React.createElement(NavbarRight, null)
             );
         }
     }]);
@@ -27926,7 +27928,7 @@ var NavbarLeft = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'navbar-left logo-container' },
-                'logo'
+                React.createElement('div', { className: 'logo' })
             );
         }
     }]);
@@ -27943,10 +27945,52 @@ module.exports = NavbarLeft;
 "use strict";
 
 
-var _require = __webpack_require__(131),
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(0);
+
+var NavbarRight = function (_React$Component) {
+    _inherits(NavbarRight, _React$Component);
+
+    function NavbarRight() {
+        _classCallCheck(this, NavbarRight);
+
+        return _possibleConstructorReturn(this, (NavbarRight.__proto__ || Object.getPrototypeOf(NavbarRight)).apply(this, arguments));
+    }
+
+    _createClass(NavbarRight, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'navbar-right nav-container' },
+                '\u53F3\u4FA7\u83DC\u5355'
+            );
+        }
+    }]);
+
+    return NavbarRight;
+}(React.Component);
+
+module.exports = NavbarRight;
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(132),
     actionTypes = _require.actionTypes;
 
-var initHomeFunc = __webpack_require__(134);
+var initHomeFunc = __webpack_require__(135);
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -27985,15 +28029,15 @@ module.exports = reducers;
 */
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var actionTypes = __webpack_require__(132);
+var actionTypes = __webpack_require__(133);
 
-var initHome = __webpack_require__(133);
+var initHome = __webpack_require__(134);
 
 var actions = {
     actionTypes: actionTypes,
@@ -28003,7 +28047,7 @@ var actions = {
 module.exports = actions;
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28016,7 +28060,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28029,7 +28073,7 @@ var initHome = {
 module.exports = initHome;
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
