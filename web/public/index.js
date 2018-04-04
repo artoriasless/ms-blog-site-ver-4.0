@@ -4119,7 +4119,7 @@ var _require4 = __webpack_require__(123),
 var App = __webpack_require__(126);
 var PageHome = __webpack_require__(127);
 /* 引入自定义的 reducers */
-var appReducer = __webpack_require__(132);
+var appReducer = __webpack_require__(133);
 /* 生成 store */
 var store = createStore(combineReducers({
     appReducer: appReducer,
@@ -27873,7 +27873,8 @@ var React = __webpack_require__(0);
 var NavbarLeft = __webpack_require__(129);
 var NavbarRight = __webpack_require__(130);
 
-var initNavbarBG = __webpack_require__(131);
+var hideMainScrollerbar = __webpack_require__(131);
+var initNavbarBG = __webpack_require__(132);
 /* eslint-disable */
 
 var Navbar = function (_React$Component) {
@@ -27888,6 +27889,7 @@ var Navbar = function (_React$Component) {
     _createClass(Navbar, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            hideMainScrollerbar();
             initNavbarBG();
         }
     }, {
@@ -28052,6 +28054,26 @@ module.exports = NavbarRight;
 
 var $app = $('#app');
 
+function hideMainScrollerbar() {
+    var offsetWidth = $app.prop('offsetWidth');
+    var clientWidth = $app.prop('clientWidth');
+    var offsetVal = Math.abs(offsetWidth - clientWidth);
+
+    $app.css('margin-right', '-' + offsetVal + 'px');
+}
+
+module.exports = hideMainScrollerbar;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+var $app = $('#app');
+
 function changeBG() {
     var navbarHeight = $app.find('.page-section-header').height();
     var scrollTopVal = $app.scrollTop();
@@ -28075,16 +28097,16 @@ function initNavbarBG() {
 module.exports = initNavbarBG;
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _require = __webpack_require__(133),
+var _require = __webpack_require__(134),
     actionTypes = _require.actionTypes;
 
-var initHomeFunc = __webpack_require__(136);
+var initHomeFunc = __webpack_require__(137);
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -28123,15 +28145,15 @@ module.exports = reducers;
 */
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var actionTypes = __webpack_require__(134);
+var actionTypes = __webpack_require__(135);
 
-var initHome = __webpack_require__(135);
+var initHome = __webpack_require__(136);
 
 var actions = {
     actionTypes: actionTypes,
@@ -28141,7 +28163,7 @@ var actions = {
 module.exports = actions;
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28154,7 +28176,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28167,7 +28189,7 @@ var initHome = {
 module.exports = initHome;
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
