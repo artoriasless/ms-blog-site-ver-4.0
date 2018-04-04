@@ -9,6 +9,10 @@ class PageHome extends React.Component {
         return (
             <div className="page-home">
                 <Navbar/>
+                <div
+                    style={{
+                        height: "2500px",
+                    }}></div>
             </div>
         );
     }

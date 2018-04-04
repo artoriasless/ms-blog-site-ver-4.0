@@ -4119,7 +4119,7 @@ var _require4 = __webpack_require__(123),
 var App = __webpack_require__(126);
 var PageHome = __webpack_require__(127);
 /* 引入自定义的 reducers */
-var appReducer = __webpack_require__(131);
+var appReducer = __webpack_require__(132);
 /* 生成 store */
 var store = createStore(combineReducers({
     appReducer: appReducer,
@@ -27839,7 +27839,11 @@ var PageHome = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'page-home' },
-                React.createElement(Navbar, null)
+                React.createElement(Navbar, null),
+                React.createElement('div', {
+                    style: {
+                        height: "2500px"
+                    } })
             );
         }
     }]);
@@ -27868,6 +27872,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(0);
 var NavbarLeft = __webpack_require__(129);
 var NavbarRight = __webpack_require__(130);
+
+var initNavbarBG = __webpack_require__(131);
 /* eslint-disable */
 
 var Navbar = function (_React$Component) {
@@ -27880,6 +27886,11 @@ var Navbar = function (_React$Component) {
     }
 
     _createClass(Navbar, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            initNavbarBG();
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -27928,7 +27939,7 @@ var NavbarLeft = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'navbar-left logo-container' },
-                React.createElement('div', { className: 'logo' })
+                React.createElement('a', { href: '/', className: 'logo' })
             );
         }
     }]);
@@ -27968,9 +27979,60 @@ var NavbarRight = function (_React$Component) {
         key: 'render',
         value: function render() {
             return React.createElement(
-                'div',
-                { className: 'navbar-right nav-container' },
-                '\u53F3\u4FA7\u83DC\u5355'
+                'nav',
+                { className: 'navbar-right navbar navbar-expand-sm' },
+                React.createElement(
+                    'a',
+                    {
+                        className: 'navbar-toggler',
+                        type: 'button',
+                        'data-toggle': 'collapse',
+                        'data-target': '#navbarNavDropdown',
+                        'aria-controls': 'navbarNavDropdown',
+                        'aria-expanded': 'false',
+                        'aria-label': 'Toggle navigation' },
+                    React.createElement('i', { className: 'fa fa-bars' })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'collapse navbar-collapse', id: 'navbarNavDropdown' },
+                    React.createElement(
+                        'ul',
+                        { className: 'navbar-nav' },
+                        React.createElement(
+                            'li',
+                            { className: 'nav-item active' },
+                            React.createElement(
+                                'a',
+                                { className: 'nav-link', href: '#' },
+                                'Home ',
+                                React.createElement(
+                                    'span',
+                                    { className: 'sr-only' },
+                                    '(current)'
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'li',
+                            { className: 'nav-item' },
+                            React.createElement(
+                                'a',
+                                { className: 'nav-link', href: '#' },
+                                'Features'
+                            )
+                        ),
+                        React.createElement(
+                            'li',
+                            { className: 'nav-item' },
+                            React.createElement(
+                                'a',
+                                { className: 'nav-link', href: '#' },
+                                'Pricing'
+                            )
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -27986,11 +28048,43 @@ module.exports = NavbarRight;
 
 "use strict";
 
+/* global $ */
 
-var _require = __webpack_require__(132),
+var $app = $('#app');
+
+function changeBG() {
+    var navbarHeight = $app.find('.page-section-header').height();
+    var scrollTopVal = $app.scrollTop();
+    var opacity = scrollTopVal / (navbarHeight * 3);
+
+    opacity = opacity > 1 ? 1 : opacity;
+
+    if (scrollTopVal > 10) {
+        $app.find('.page-section-header').css('background-color', 'rgba(240, 240, 240, ' + opacity + ')');
+    } else {
+        $app.find('.page-section-header').css('background-color', '#fff');
+    }
+}
+
+function initNavbarBG() {
+    changeBG();
+
+    $app.scroll(changeBG);
+}
+
+module.exports = initNavbarBG;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(133),
     actionTypes = _require.actionTypes;
 
-var initHomeFunc = __webpack_require__(135);
+var initHomeFunc = __webpack_require__(136);
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -28029,15 +28123,15 @@ module.exports = reducers;
 */
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var actionTypes = __webpack_require__(133);
+var actionTypes = __webpack_require__(134);
 
-var initHome = __webpack_require__(134);
+var initHome = __webpack_require__(135);
 
 var actions = {
     actionTypes: actionTypes,
@@ -28047,7 +28141,7 @@ var actions = {
 module.exports = actions;
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28060,7 +28154,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28073,7 +28167,7 @@ var initHome = {
 module.exports = initHome;
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
