@@ -28062,7 +28062,7 @@ function changeBG() {
     if (scrollTopVal > 10) {
         $app.find('.page-section-header').css('background-color', 'rgba(240, 240, 240, ' + opacity + ')');
     } else {
-        $app.find('.page-section-header').css('background-color', '#fff');
+        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 0)');
     }
 }
 
