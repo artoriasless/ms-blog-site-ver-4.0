@@ -28013,7 +28013,7 @@ var NavbarRight = function (_React$Component) {
                             React.createElement(
                                 'a',
                                 { className: 'nav-link', href: '#' },
-                                'Home ',
+                                'Home',
                                 React.createElement(
                                     'span',
                                     { className: 'sr-only' },
@@ -28214,7 +28214,7 @@ module.exports = actions;
 var INIT_HOME = 'INIT_HOME';
 
 module.exports = {
-    'INIT_HOME': INIT_HOME
+    INIT_HOME: INIT_HOME
 };
 
 /***/ }),
