@@ -27840,11 +27840,16 @@ var PageHome = function (_React$Component) {
                 'div',
                 { className: 'page-home' },
                 React.createElement(Navbar, null),
-                React.createElement('div', {
-                    style: {
-                        height: '2500px',
-                        marginTop: 'calc(2.5rem + 1px)'
-                    } })
+                React.createElement(
+                    'div',
+                    {
+                        style: {
+                            height: '2500px',
+                            padding: '5px',
+                            marginTop: 'calc(2.5rem + 1px)'
+                        } },
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn'
+                )
             );
         }
     }]);
@@ -28063,7 +28068,7 @@ var $app = $('#app');
 function hideMainScrollerbar() {
     var offsetWidth = $app.prop('offsetWidth');
     var clientWidth = $app.prop('clientWidth');
-    var offsetVal = Math.abs(offsetWidth - clientWidth);
+    var offsetVal = Math.abs(offsetWidth - clientWidth + 2);
 
     $app.css('margin-right', '-' + offsetVal + 'px');
 }

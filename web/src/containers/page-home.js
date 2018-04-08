@@ -12,8 +12,10 @@ class PageHome extends React.Component {
                 <div
                     style={{
                         height: '2500px',
+                        padding: '5px',
                         marginTop: 'calc(2.5rem + 1px)',
                     }}>
+                    abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn
                 </div>
             </div>
         );
