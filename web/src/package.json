@@ -25,6 +25,7 @@
         "jquery": "^3.3.1",
         "jquery-ui": "^1.12.1",
         "markdown": "^0.5.0",
+        "moment": "^2.22.0",
         "nodemon": "^1.17.2",
         "popper.js": "^1.14.1",
         "postcss-atroot": "^0.1.3",
