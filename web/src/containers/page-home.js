@@ -11,8 +11,10 @@ class PageHome extends React.Component {
                 <Navbar/>
                 <div
                     style={{
-                        height: "2500px",
-                    }}></div>
+                        height: '2500px',
+                        marginTop: 'calc(2.5rem + 1px)',
+                    }}>
+                </div>
             </div>
         );
     }

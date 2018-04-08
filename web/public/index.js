@@ -27842,7 +27842,8 @@ var PageHome = function (_React$Component) {
                 React.createElement(Navbar, null),
                 React.createElement('div', {
                     style: {
-                        height: "2500px"
+                        height: '2500px',
+                        marginTop: 'calc(2.5rem + 1px)'
                     } })
             );
         }
