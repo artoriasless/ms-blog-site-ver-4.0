@@ -37,7 +37,8 @@ const config = {
                 },
             },
             {
-                test: /\.(css|postcss)?$/,
+                test: /\.postcss?$/,
+                exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
