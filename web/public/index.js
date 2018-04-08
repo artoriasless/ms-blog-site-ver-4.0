@@ -27993,8 +27993,7 @@ var NavbarRight = function (_React$Component) {
                 React.createElement(
                     'a',
                     {
-                        className: 'navbar-toggler',
-                        type: 'button',
+                        className: 'navbar-toggler btn',
                         'data-toggle': 'collapse',
                         'data-target': '#navbarNavDropdown',
                         'aria-controls': 'navbarNavDropdown',

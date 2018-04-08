@@ -7,8 +7,7 @@ class NavbarRight extends React.Component {
         return (
             <nav className="navbar-right navbar navbar-expand-sm">
                 <a
-                    className="navbar-toggler"
-                    type="button"
+                    className="navbar-toggler btn"
                     data-toggle="collapse"
                     data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown"
