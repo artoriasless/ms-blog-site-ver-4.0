@@ -4119,7 +4119,7 @@ var _require4 = __webpack_require__(123),
 var App = __webpack_require__(126);
 var PageHome = __webpack_require__(127);
 /* 引入自定义的 reducers */
-var appReducer = __webpack_require__(133);
+var appReducer = __webpack_require__(134);
 /* 生成 store */
 var store = createStore(combineReducers({
     appReducer: appReducer,
@@ -27874,7 +27874,8 @@ var NavbarLeft = __webpack_require__(129);
 var NavbarRight = __webpack_require__(130);
 
 var hideMainScrollerbar = __webpack_require__(131);
-var initNavbarBG = __webpack_require__(132);
+var initCompassIcon = __webpack_require__(132);
+var initNavbarBG = __webpack_require__(133);
 /* eslint-disable */
 
 var Navbar = function (_React$Component) {
@@ -27890,6 +27891,7 @@ var Navbar = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             hideMainScrollerbar();
+            initCompassIcon();
             initNavbarBG();
         }
     }, {
@@ -27898,8 +27900,12 @@ var Navbar = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'page-section-header' },
-                React.createElement(NavbarLeft, null),
-                React.createElement(NavbarRight, null)
+                React.createElement(
+                    'div',
+                    { className: 'page-section-header-container' },
+                    React.createElement(NavbarLeft, null),
+                    React.createElement(NavbarRight, null)
+                )
             );
         }
     }]);
@@ -28072,19 +28078,55 @@ module.exports = hideMainScrollerbar;
 
 /* global $ */
 
+var $compassIcon = $('#compassIcon');
+var $app = $('#app');
+
+function locationCompass() {
+    var compassHeight = $compassIcon.height();
+    var navbarHeight = $app.find('.page-section-header').height();
+    var scrollTopVal = $app.scrollTop();
+    var containerHeight = window.innerHeight;
+    var contentHeight = $app.prop('scrollHeight') - document.body.scrollHeight;
+
+    if (containerHeight !== contentHeight) {
+        var topVal = containerHeight * (scrollTopVal / contentHeight) - navbarHeight - compassHeight * 1.5;
+
+        $compassIcon.css('top', topVal + 'px').show().stop().fadeIn(function () {
+            $compassIcon.fadeOut();
+        });
+    }
+}
+
+function initCompassIcon() {
+    locationCompass();
+
+    $app.scroll(locationCompass);
+    $(window).resize(locationCompass);
+}
+
+module.exports = initCompassIcon;
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
 var $app = $('#app');
 
 function changeBG() {
     var navbarHeight = $app.find('.page-section-header').height();
     var scrollTopVal = $app.scrollTop();
-    var opacity = scrollTopVal / (navbarHeight * 3);
+    var opacity = scrollTopVal / navbarHeight;
 
     opacity = opacity > 1 ? 1 : opacity;
 
     if (scrollTopVal > 10) {
         $app.find('.page-section-header').css('background-color', 'rgba(240, 240, 240, ' + opacity + ')');
     } else {
-        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 0)');
+        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 1)');
     }
 }
 
@@ -28097,16 +28139,16 @@ function initNavbarBG() {
 module.exports = initNavbarBG;
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _require = __webpack_require__(134),
+var _require = __webpack_require__(135),
     actionTypes = _require.actionTypes;
 
-var initHomeFunc = __webpack_require__(137);
+var initHomeFunc = __webpack_require__(138);
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -28145,15 +28187,15 @@ module.exports = reducers;
 */
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var actionTypes = __webpack_require__(135);
+var actionTypes = __webpack_require__(136);
 
-var initHome = __webpack_require__(136);
+var initHome = __webpack_require__(137);
 
 var actions = {
     actionTypes: actionTypes,
@@ -28163,7 +28205,7 @@ var actions = {
 module.exports = actions;
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28176,7 +28218,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28189,7 +28231,7 @@ var initHome = {
 module.exports = initHome;
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

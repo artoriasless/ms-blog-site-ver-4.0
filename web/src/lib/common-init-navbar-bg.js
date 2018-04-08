@@ -5,14 +5,14 @@ const $app = $('#app');
 function changeBG() {
     const navbarHeight = $app.find('.page-section-header').height();
     const scrollTopVal = $app.scrollTop();
-    let opacity = scrollTopVal / (navbarHeight * 3);
+    let opacity = scrollTopVal / navbarHeight;
 
     opacity = (opacity > 1) ? 1 : opacity;
 
     if (scrollTopVal > 10) {
         $app.find('.page-section-header').css('background-color', `rgba(240, 240, 240, ${opacity})`);
     } else {
-        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 0)');
+        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 1)');
     }
 }
 

@@ -3,15 +3,14 @@
     .page-section-header {
         position: fixed;
         display: block;
-        max-width: 1200px;
         height: 2.5rem;
         line-height: 2rem;
         top: 0;
         left: 0;
         right: 0;
         padding: 0.25rem;
-        margin: 0 auto;
-        background-color: transparent;
+        background-color: #fff;
+        z-index: 999999;
 
         &:after {
             content: "";
@@ -24,46 +23,51 @@
             background-color: #ddd;
         }
 
-        .navbar-left {
-            float: left;
-        }
+        .page-section-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
 
-        .navbar-right {
-            float: right;
-        }
+            .navbar-left {
+                float: left;
+            }
 
-        .logo-container {
+            .navbar-right {
+                float: right;
+            }
 
-            .logo {
+            .logo-container {
+
+                .logo {
+                    display: block;
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 50%;
+                    background: url(/img/logo.jpg) no-repeat center center / cover;
+                }
+            }
+
+            .navbar {
                 display: block;
-                width: 2rem;
                 height: 2rem;
-                border-radius: 50%;
-                background: url(/img/logo.jpg) no-repeat center center / cover;
-            }
-        }
-
-        .navbar {
-            display: block;
-            height: 2rem;
-            padding: 0;
-
-            .navbar-toggler {
-                width: 2rem;
-                height: 2rem;
-                line-height: 2rem;
                 padding: 0;
-                border: none;
-                text-align: center;
-                background: transparent;
-            }
 
-            .nav-link {
-                height: 2rem;
-                line-height: 2rem;
-                padding: 0 1rem;
-                text-align: center;
-                cursor: pointer;
+                .navbar-toggler {
+                    width: 2rem;
+                    height: 2rem;
+                    line-height: 2rem;
+                    padding: 0;
+                    border: none;
+                    text-align: center;
+                    background: transparent;
+                }
+
+                .nav-link {
+                    height: 2rem;
+                    line-height: 2rem;
+                    padding: 0 1rem;
+                    text-align: center;
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -75,15 +79,17 @@
 
         .page-section-header {
 
-            .navbar {
+            .page-section-header-container {
+                .navbar {
 
-                .navbar-collapse {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    margin-top: 2.5rem;
-                    background-color: #f0f0f0;
+                    .navbar-collapse {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        margin-top: 2.5rem;
+                        background-color: #f0f0f0;
+                    }
                 }
             }
         }
