@@ -3,12 +3,36 @@
 	<head>
 		<meta charset = "UTF-8">
 		<meta name="author" content="Stan Lee">
-		<meta name="description" content="blog site version 4.0">
-		<title>Stan</title>
+		<meta name="description" content="404 page">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>page not found</title>
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-		<script src="index.js"></script>
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="index.css">
+		<style>
+			#root .app > div {
+				position: absolute;
+				display: block;
+				height: 20px;
+				line-height: 20px;
+				top: 50%;
+				left: 0;
+				right: 0;
+				margin-top: -10px;
+			}
+		</style>
 	</head>
 	<body>
-		please check the url is right
+		<div id="compassIcon"><i class="fa fa-compass"></i></div>
+		<div id="root">
+			<div class="app">
+				<div class="text-center text-danger">
+					please check the url is right
+				</div>
+			</div>
+		</div>
+		<script src="jquery/3.3.1/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
