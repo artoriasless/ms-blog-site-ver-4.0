@@ -1,22 +1,21 @@
 'use strict';
 /* global $ */
-const $app = $('#app');
+const $root = $('#root');
 
 function changeBG() {
+    const $app = $root.find('.app');
     const navbarHeight = $app.find('.page-section-header').height();
     const scrollTopVal = $app.scrollTop();
-    let opacity = scrollTopVal / navbarHeight;
+    let rgbVal = 255 - 25 * (scrollTopVal / navbarHeight);
 
-    opacity = (opacity > 1) ? 1 : opacity;
+    rgbVal = (rgbVal < 225) ? 225 : rgbVal;
 
-    if (scrollTopVal > 10) {
-        $app.find('.page-section-header').css('background-color', `rgba(240, 240, 240, ${opacity})`);
-    } else {
-        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 1)');
-    }
+    $app.find('.page-section-header').css('background-color', `rgb(${rgbVal}, ${rgbVal}, ${rgbVal})`);
 }
 
 function initNavbarBG() {
+    const $app = $root.find('.app');
+
     changeBG();
 
     $app.scroll(changeBG);

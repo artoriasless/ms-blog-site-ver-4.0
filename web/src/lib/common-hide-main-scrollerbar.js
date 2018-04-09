@@ -1,13 +1,13 @@
 'use strict';
 /* global $ */
-const $app = $('#app');
+const $root = $('#root');
 
 function hideMainScrollerbar() {
-    const offsetWidth = $app.prop('offsetWidth');
-    const clientWidth = $app.prop('clientWidth');
+    const offsetWidth = $root.prop('offsetWidth');
+    const clientWidth = $root.prop('clientWidth');
     const offsetVal = Math.abs(offsetWidth - clientWidth + 2);
 
-    $app.css('margin-right', `-${offsetVal}px`);
+    $root.css('margin-right', `-${offsetVal}px`);
 }
 
 module.exports = hideMainScrollerbar;

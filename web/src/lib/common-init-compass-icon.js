@@ -1,11 +1,12 @@
 'use strict';
 /* global $ */
 const $compassIcon = $('#compassIcon');
-const $app = $('#app');
+const $root = $('#root');
 
 function locationCompass() {
+    const $app = $root.find('.app');
     const compassHeight = $compassIcon.height();
-    const navbarHeight = $app.find('.page-section-header').height();
+    const navbarHeight = $root.find('.page-section-header').height();
     const scrollTopVal = $app.scrollTop();
     const containerHeight = window.innerHeight;
     const contentHeight = $app.prop('scrollHeight') - document.body.scrollHeight;
@@ -24,9 +25,10 @@ function locationCompass() {
 }
 
 function initCompassIcon() {
-    locationCompass();
+    const $app = $root.find('.app');
 
     $app.scroll(locationCompass);
+
     $(window).resize(locationCompass);
 }
 

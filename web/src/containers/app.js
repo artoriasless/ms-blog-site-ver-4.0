@@ -6,7 +6,7 @@ const React = require('react');
 class App extends React.Component {
     render() {
         return (
-            <div className="app-container">
+            <div className="app">
                 { this.props.children }
             </div>
         );

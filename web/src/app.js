@@ -25,7 +25,7 @@ const store = createStore(
 );
 
 const history = syncHistoryWithStore(browserHistory, store);
-const appDom = document.getElementById('app');
+const rootDom = document.getElementById('root');
 
 const router = (
     <Router history = { history }>
@@ -43,7 +43,7 @@ const render = () => {
         <Provider store = { store }>
             { router }
         </Provider>
-    ), appDom);
+    ), rootDom);
 };
 
 render();

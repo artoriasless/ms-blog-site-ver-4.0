@@ -4127,7 +4127,7 @@ var store = createStore(combineReducers({
 }), applyMiddleware(thunk));
 
 var history = syncHistoryWithStore(browserHistory, store);
-var appDom = document.getElementById('app');
+var rootDom = document.getElementById('root');
 
 var router = React.createElement(
     Router,
@@ -4147,7 +4147,7 @@ var render = function render() {
         Provider,
         { store: store },
         router
-    ), appDom);
+    ), rootDom);
 };
 
 render();
@@ -27793,7 +27793,7 @@ var App = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'app-container' },
+                { className: 'app' },
                 this.props.children
             );
         }
@@ -27822,6 +27822,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(0);
 var Navbar = __webpack_require__(128);
+
+var hideMainScrollerbar = __webpack_require__(131);
+var initCompassIcon = __webpack_require__(132);
+var initNavbarBG = __webpack_require__(133);
 /* eslint-disable */
 
 var PageHome = function (_React$Component) {
@@ -27834,6 +27838,13 @@ var PageHome = function (_React$Component) {
     }
 
     _createClass(PageHome, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            hideMainScrollerbar();
+            initCompassIcon();
+            initNavbarBG();
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -27844,11 +27855,137 @@ var PageHome = function (_React$Component) {
                     'div',
                     {
                         style: {
-                            height: '2500px',
                             padding: '5px',
                             marginTop: 'calc(2.5rem + 1px)'
                         } },
-                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn'
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null),
+                    'abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn',
+                    React.createElement('br', null)
                 )
             );
         }
@@ -27878,10 +28015,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(0);
 var NavbarLeft = __webpack_require__(129);
 var NavbarRight = __webpack_require__(130);
-
-var hideMainScrollerbar = __webpack_require__(131);
-var initCompassIcon = __webpack_require__(132);
-var initNavbarBG = __webpack_require__(133);
 /* eslint-disable */
 
 var Navbar = function (_React$Component) {
@@ -27894,13 +28027,6 @@ var Navbar = function (_React$Component) {
     }
 
     _createClass(Navbar, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            hideMainScrollerbar();
-            initCompassIcon();
-            initNavbarBG();
-        }
-    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -28063,14 +28189,14 @@ module.exports = NavbarRight;
 
 /* global $ */
 
-var $app = $('#app');
+var $root = $('#root');
 
 function hideMainScrollerbar() {
-    var offsetWidth = $app.prop('offsetWidth');
-    var clientWidth = $app.prop('clientWidth');
+    var offsetWidth = $root.prop('offsetWidth');
+    var clientWidth = $root.prop('clientWidth');
     var offsetVal = Math.abs(offsetWidth - clientWidth + 2);
 
-    $app.css('margin-right', '-' + offsetVal + 'px');
+    $root.css('margin-right', '-' + offsetVal + 'px');
 }
 
 module.exports = hideMainScrollerbar;
@@ -28084,11 +28210,12 @@ module.exports = hideMainScrollerbar;
 /* global $ */
 
 var $compassIcon = $('#compassIcon');
-var $app = $('#app');
+var $root = $('#root');
 
 function locationCompass() {
+    var $app = $root.find('.app');
     var compassHeight = $compassIcon.height();
-    var navbarHeight = $app.find('.page-section-header').height();
+    var navbarHeight = $root.find('.page-section-header').height();
     var scrollTopVal = $app.scrollTop();
     var containerHeight = window.innerHeight;
     var contentHeight = $app.prop('scrollHeight') - document.body.scrollHeight;
@@ -28103,9 +28230,10 @@ function locationCompass() {
 }
 
 function initCompassIcon() {
-    locationCompass();
+    var $app = $root.find('.app');
 
     $app.scroll(locationCompass);
+
     $(window).resize(locationCompass);
 }
 
@@ -28119,23 +28247,22 @@ module.exports = initCompassIcon;
 
 /* global $ */
 
-var $app = $('#app');
+var $root = $('#root');
 
 function changeBG() {
+    var $app = $root.find('.app');
     var navbarHeight = $app.find('.page-section-header').height();
     var scrollTopVal = $app.scrollTop();
-    var opacity = scrollTopVal / navbarHeight;
+    var rgbVal = 255 - 25 * (scrollTopVal / navbarHeight);
 
-    opacity = opacity > 1 ? 1 : opacity;
+    rgbVal = rgbVal < 225 ? 225 : rgbVal;
 
-    if (scrollTopVal > 10) {
-        $app.find('.page-section-header').css('background-color', 'rgba(240, 240, 240, ' + opacity + ')');
-    } else {
-        $app.find('.page-section-header').css('background-color', 'rgba(255, 255, 255, 1)');
-    }
+    $app.find('.page-section-header').css('background-color', 'rgb(' + rgbVal + ', ' + rgbVal + ', ' + rgbVal + ')');
 }
 
 function initNavbarBG() {
+    var $app = $root.find('.app');
+
     changeBG();
 
     $app.scroll(changeBG);
