@@ -1,9 +1,15 @@
 'use strict';
-
+/* eslint-disable */
 const React = require('react');
+const NavbarRightCatalogue = require('./navbar-right-catalogue');
+const NavbarRightUser = require('./navbar-right-user');
+const NavbarRightLogout = require('./navbar-right-logout');
+/* eslint-disable */
 
 class NavbarRight extends React.Component {
     render() {
+        const userInfo = this.props.userInfo;
+
         return (
             <nav className="navbar-right navbar navbar-expand-sm">
                 <a
@@ -17,15 +23,9 @@ class NavbarRight extends React.Component {
                 </a>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="#">Home<span className="sr-only">(current)</span></a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Features</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Pricing</a>
-                        </li>
+                        <NavbarRightCatalogue/>
+                        <NavbarRightUser userInfo = { userInfo }/>
+                        <NavbarRightLogout userInfo = { userInfo }/>
                     </ul>
                 </div>
             </nav>

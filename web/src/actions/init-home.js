@@ -1,7 +1,11 @@
 'use strict';
 
-const initHome = {
+const initHomeAction = (data) => ({
     type: 'INIT_HOME',
-};
+    payload: {
+        current: '/',
+        data,
+    },
+});
 
-module.exports = initHome;
+module.exports = initHomeAction;

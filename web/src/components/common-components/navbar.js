@@ -1,21 +1,35 @@
 'use strict';
-/* eslint-disable */
-const React = require('react');
-const NavbarLeft = require('./navbar-left');
-const NavbarRight = require('./navbar-right');
-/* eslint-disable */
+/* global $ */
+const { connect } = require('react-redux');
 
-class Navbar extends React.Component {
-    render() {
+const UI_navbar = require('../ui-components/navbar');
+const actions = require('../../actions');
+const initHomeAction = actions.initHomeAction;
+
+const mapState2Props = (state, props) => ({ //  eslint-disable-line
+    current: state.appReducer.current,
+    data: state.appReducer.data,
+});
+
+const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
+    const ajaxInitUserInfo = () => (dispatch) => {
+        const requestUrl = '/api/user/default';
+
         return (
-            <div className="page-section-header">
-                <div className="page-section-header-container">
-                    <NavbarLeft/>
-                    <NavbarRight/>
-                </div>
-            </div>
+            $.get(requestUrl, function(data) {
+                dispatch(initHomeAction(data));
+            })
         );
-    }
-}
+    };
+
+    return ({
+        initUserInfo: () => dispatch(ajaxInitUserInfo()),
+    });
+};
+
+const Navbar = connect(
+    mapState2Props,
+    mapDispatch2Props
+)(UI_navbar);
 
 module.exports = Navbar;
