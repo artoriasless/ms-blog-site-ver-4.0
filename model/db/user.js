@@ -46,6 +46,12 @@ module.exports = (sequelize, DataTypes) => {
             field: 'is_enabled',
             comment: '该用户账号是否启用：0 - 不启用，无法回复、发表评论，1 - 启用，默认启用，正常回复、评论',
         },
+        registerIp: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            field: 'register_ip',
+            comment: '用来注册的机器 ip 地址',
+        },
         gmtCreate: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
