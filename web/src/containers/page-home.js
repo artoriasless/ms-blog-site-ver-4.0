@@ -2,6 +2,7 @@
 /* eslint-disable */
 const React = require('react');
 const Navbar = require('../components/common-components/navbar');
+const LoginModal = require('../components/common-components/login-modal');
 
 const hideMainScrollerbar = require('../lib/common-hide-main-scrollerbar');
 const initCompassIcon = require('../lib/common-init-compass-icon');
@@ -89,6 +90,8 @@ class PageHome extends React.Component {
                     abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn<br/>
                     abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn+abcdefghijklmn<br/>
                 </div>
+
+                <LoginModal/>
             </div>
         );
     }

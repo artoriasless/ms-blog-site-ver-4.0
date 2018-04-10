@@ -1,5 +1,5 @@
 'use strict';
-
+/* global $ */
 const React = require('react');
 
 class NavbarRightUser extends React.Component {
@@ -10,8 +10,8 @@ class NavbarRightUser extends React.Component {
     }
 
     showLoginModal() {
-        //  TO DELETE
-        console.info('login');  //  eslint-disable-line
+        $('.navbar-collapse').collapse('hide');
+        $('#loginModal').modal();
     }
 
     render() {
