@@ -20,6 +20,6 @@
         *   `npm run dev`
     *   另一个终端用来监听前端模块的变化，用于实时打包
         *   `cd ./web/src`
-        *   `npm run pack`
+        *   `npm run pack-development`
 *   **提醒**
     *   在运行上述两个脚本之前，请确保已经安装了所有依赖：项目的依赖，以及前端模块的依赖

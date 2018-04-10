@@ -20,6 +20,6 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
         *   `npm run dev`
     *   one for start webpack,and watch files change
         *   `cd ./web/src`
-        *   `npm run pack`
+        *   `npm run pack-development`
 *   **Info**
     *   before you run scripts above,you must have install all dependencies,for web project and webpack
