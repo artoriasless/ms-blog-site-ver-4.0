@@ -11,6 +11,8 @@ const koaLogger = require('koa-logger');
 const Koa = require('koa');
 const app = new Koa();
 
+const koaLoggerTransporter = require('./lib/koa-logger-transporter');
+
 const router = require('./controller/_router');
 const globalException = require('./middleware/global-exception');
 
@@ -19,7 +21,7 @@ app.keys = config.sessionKeys;
 app.use(koaSession(config.session, app))
     .use(koaStatic(path.resolve(__dirname, './public')))
     .use(koaBody())
-    .use(koaLogger())
+    .use(koaLogger({transporter: koaLoggerTransporter}))
     .use(globalException)
     .use(router.routes())
     .use(router.allowedMethods());
