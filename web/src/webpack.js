@@ -13,7 +13,7 @@ const webpack = require('webpack');
 const rimraf = require('rimraf');
 
 const config = require('./webpack.config');
-//  遍历某个文件夹，将其中所有文件导入到 输出目录
+//  遍历某个文件夹，将其中所有文件导入到输出目录
 const importImg = (distPath) => {
     const folderReg = /^(\w|-|_)+$/;
     const fileReg = /\.(jpg|png|gif)?$/;

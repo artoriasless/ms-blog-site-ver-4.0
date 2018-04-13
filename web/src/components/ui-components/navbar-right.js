@@ -7,6 +7,15 @@ const NavbarRightLogout = require('./navbar-right-logout');
 /* eslint-disable */
 
 class NavbarRight extends React.Component {
+    componentDidMount() {
+        /* 组件初始化时，添加事件托管，点击非 navbar-collapse 的位置隐藏 navbar 下拉菜单 */
+        $(document).on('click', '*', function() {
+            if ($(this).closest('.navbar-collapse').length === 0) {
+                $('.navbar-collapse').collapse('hide');
+            }
+        });
+    }
+
     render() {
         const userInfo = this.props.userInfo;
 

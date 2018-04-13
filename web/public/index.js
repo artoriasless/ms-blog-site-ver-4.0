@@ -28321,6 +28321,16 @@ var NavbarRight = function (_React$Component) {
     }
 
     _createClass(NavbarRight, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            /* 组件初始化时，添加事件托管，点击非 navbar-collapse 的位置隐藏 navbar 下拉菜单 */
+            $(document).on('click', '*', function () {
+                if ($(this).closest('.navbar-collapse').length === 0) {
+                    $('.navbar-collapse').collapse('hide');
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var userInfo = this.props.userInfo;
