@@ -10,11 +10,7 @@ class PageCatalogue extends React.Component {
         return (
             <div className="page-catalogue">
                 <Navbar/>
-                <div
-                    style={{
-                        padding: '5px',
-                        marginTop: 'calc(2.5rem + 1px)',
-                    }}>
+                <div className="page-section-body">
                     目录页
                 </div>
                 <LoginModal/>
