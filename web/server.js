@@ -4,7 +4,7 @@ const path = require('path');
 
 const config = require('../config');
 
-const koaStatic = require('koa-static');
+const koaStatic = require('koa-static-cache');
 const koaBody = require('koa-bodyparser');
 const koaSession = require('koa-session');
 const koaLogger = require('koa-logger');
@@ -19,7 +19,9 @@ const globalException = require('./middleware/global-exception');
 app.keys = config.sessionKeys;
 
 app.use(koaSession(config.session, app))
-    .use(koaStatic(path.resolve(__dirname, './public')))
+    .use(koaStatic(path.resolve(__dirname, './public'), {
+        maxage: 365 * 24 * 60 * 60,
+    }))
     .use(koaBody())
     .use(koaLogger({transporter: koaLoggerTransporter}))
     .use(globalException)

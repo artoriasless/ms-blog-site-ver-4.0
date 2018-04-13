@@ -35,6 +35,10 @@ const router = (
             component = { App }
         >
             <IndexRoute component = { PageHome }/>
+            <Route
+                path = '/catalogue'
+                component = { PageCatalogue }
+            />
         </Route>
     </Router>
 );

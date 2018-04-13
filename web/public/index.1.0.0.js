@@ -4253,7 +4253,11 @@ var router = React.createElement(
             path: '/',
             component: App
         },
-        React.createElement(IndexRoute, { component: PageHome })
+        React.createElement(IndexRoute, { component: PageHome }),
+        React.createElement(Route, {
+            path: '/catalogue',
+            component: PageCatalogue
+        })
     )
 );
 

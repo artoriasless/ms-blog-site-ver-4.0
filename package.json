@@ -31,7 +31,7 @@
         "koa-logger": "^3.2.0",
         "koa-router": "^7.4.0",
         "koa-session": "^5.8.1",
-        "koa-static": "^4.0.2",
+        "koa-static-cache": "^5.1.2",
         "lodash": "^4.17.5",
         "moment": "^2.21.0",
         "mysql": "^2.15.0",
