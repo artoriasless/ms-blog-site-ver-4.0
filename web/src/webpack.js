@@ -10,9 +10,35 @@ const moment = require('moment');
 
 const webpack = require('webpack');
 
+const rimraf = require('rimraf');
+
 const config = require('./webpack.config');
+//  遍历某个文件夹，将其中所有文件导入到 输出目录
+const importImg = (distPath) => {
+    const folderReg = /^(\w|-|_)+$/;
+    const fileReg = /\.(jpg|png|gif)?$/;
+
+    if (!fs.existsSync(`../public/${distPath}`)) {
+
+        fs.mkdirSync(`../public/${distPath}`);
+    }
+
+    fs.readdirSync(distPath).forEach(name => {
+        if (folderReg.test(name)) {
+            importImg(`${distPath}/${name}`);
+        } else if (fileReg.test(name)) {
+            fs.writeFile(`../public/${distPath}/${name}`, fs.readFileSync(`${distPath}/${name}`));
+        }
+    });
+};
+
 /* eslint-disable */
 webpack(config, (err, stats) => {
+    //  导入图片（先移除原先导入的图片，避免图片重复）
+    rimraf('../public/img', () => {
+        importImg('img');
+    });
+
     const startDate = moment(stats.startTime).format('YYYY-MM-DD HH:mm:ss');
     const endDate = moment(stats.endTime).format('YYYY-MM-DD HH:mm:ss');
     const compileTime = (stats.endTime - stats.startTime) / 1000;

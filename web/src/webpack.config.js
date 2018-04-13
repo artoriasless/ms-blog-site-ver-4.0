@@ -52,6 +52,13 @@ const config = {
                     ],
                 }),
             },
+            {
+                test: /\.(jpg|png|gif)?$/,
+                loader: 'file-loader',
+                options: {
+                  name: '[path][name].[ext]'
+                }
+            }
         ],
     },
     plugins: [
