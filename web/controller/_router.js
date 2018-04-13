@@ -8,12 +8,14 @@ const _router = new Router();
 
 const api = require('./api');
 
+const staticVersion = require('../src/package.json').version;
+
 //  前端将使用 react ，网站采用 SPA 模式，固定模板页面
 async function page(ctx) {
     const filePath = path.resolve(__dirname, '../template/index.html');
     const data = fs.readFileSync(filePath).toString();
 
-    ctx.body = data;
+    ctx.body = data.replace(/<staticVersion>/g, staticVersion);
 }
 
 _router.get('/', page);

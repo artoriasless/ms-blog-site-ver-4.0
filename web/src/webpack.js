@@ -1,4 +1,10 @@
 'use strict';
+/* global __dirname */
+const staticVersion = require('./package.json').version;
+
+const fs = require('fs');
+
+const path = require('path');
 
 const moment = require('moment');
 
@@ -15,13 +21,29 @@ webpack(config, (err, stats) => {
     console.info('\x1b[36m%s\x1b[0m', ` start time: ${startDate}`);
     console.info('\x1b[36m%s\x1b[0m', `   end time: ${endDate}`);
     console.info('\x1b[36m%s\x1b[0m', `bundle time: ${compileTime} s`);
-    console.info('\x1b[36m%s\x1b[0m', '------------------');
 
     if (err) {
         console.info('----- ERROR -----');
         console.info('\x1b[36m%s\x1b[0m', err);
         console.info('-----------------');
+    } else {
+        const tempDate = new Date();
+        const fileDist = path.resolve(__dirname, '../public');
+
+        fs.writeFileSync(`${fileDist}/index.${staticVersion}.css`, fs.readFileSync(`${fileDist}/index.css`));
+        fs.writeFileSync(`${fileDist}/index.${staticVersion}.js`, fs.readFileSync(`${fileDist}/index.js`));
+
+        const ver_startDate = moment(tempDate).format('YYYY-MM-DD HH:mm:ss');
+        const ver_endDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+        const verCacheTime = (Date.parse(new Date()) - Date.parse(tempDate)) / 1000;
+
+        console.info('\x1b[36m%s\x1b[0m', '----- VER CACHE -----');
+        console.info('\x1b[36m%s\x1b[0m', ` start time: ${ver_startDate}`);
+        console.info('\x1b[36m%s\x1b[0m', `   end time: ${ver_endDate}`);
+        console.info('\x1b[36m%s\x1b[0m', ` cache time: ${verCacheTime} s`);
     }
+
+    console.info('\x1b[36m%s\x1b[0m', '----- FINISH -----');
 
     return true;
 });

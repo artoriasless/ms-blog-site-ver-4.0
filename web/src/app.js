@@ -13,6 +13,7 @@ const { syncHistoryWithStore, routerReducer } = require('react-router-redux');
 /* Page 前缀，对应一个个页面，即不同的路由 */
 const App = require('./containers/app');
 const PageHome = require('./containers/page-home');
+const PageCatalogue = require('./containers/page-catalogue');
 /* 引入自定义的 reducers */
 const appReducer = require('./reducers');
 /* 生成 store */
