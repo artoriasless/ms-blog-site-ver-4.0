@@ -1,5 +1,5 @@
 'use strict';
-/* global __dirname */
+/* global __dirname process */
 const staticVersion = require('./package.json').version;
 
 const fs = require('fs');
@@ -35,9 +35,14 @@ const importImg = (distPath) => {
 /* eslint-disable */
 webpack(config, (err, stats) => {
     //  导入图片（先移除原先导入的图片，避免图片重复）
-    rimraf('../public/img', () => {
+    //  windows 环境下 rimraf 的文件删除指令失效，忽略
+    if (process.env.OS === 'Windows_NT') {
         importImg('img');
-    });
+    } else {
+        rimraf('../public/img', () => {
+            importImg('img');
+        });
+    }
 
     const startDate = moment(stats.startTime).format('YYYY-MM-DD HH:mm:ss');
     const endDate = moment(stats.endTime).format('YYYY-MM-DD HH:mm:ss');
