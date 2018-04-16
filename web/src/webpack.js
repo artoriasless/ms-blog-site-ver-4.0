@@ -14,9 +14,9 @@ const rimraf = require('rimraf');
 
 const config = require('./webpack.config');
 //  遍历某个文件夹，将其中所有文件导入到输出目录
-const importImg = (distPath) => {
+const importFile = (distPath) => {
     const folderReg = /^(\w|-|_)+$/;
-    const fileReg = /\.(jpg|png|gif)?$/;
+    const fileReg = /\.(jpg|png|gif|ttf)?$/;
 
     if (!fs.existsSync(`../public/${distPath}`)) {
 
@@ -25,7 +25,7 @@ const importImg = (distPath) => {
 
     fs.readdirSync(distPath).forEach(name => {
         if (folderReg.test(name)) {
-            importImg(`${distPath}/${name}`);
+            importFile(`${distPath}/${name}`);
         } else if (fileReg.test(name)) {
             fs.writeFile(`../public/${distPath}/${name}`, fs.readFileSync(`${distPath}/${name}`));
         }
@@ -34,13 +34,17 @@ const importImg = (distPath) => {
 
 /* eslint-disable */
 webpack(config, (err, stats) => {
-    //  导入图片（先移除原先导入的图片，避免图片重复）
+    //  导入图片（先移除原先导入的图片，避免文件重复）
     //  windows 环境下 rimraf 的文件删除指令失效，忽略
     if (process.env.OS === 'Windows_NT') {
-        importImg('img');
+        importFile('img');
+        importFile('fonts');
     } else {
         rimraf('../public/img', () => {
-            importImg('img');
+            importFile('img');
+        });
+        rimraf('../public/fonts', () => {
+            importFile('fonts');
         });
     }
 
