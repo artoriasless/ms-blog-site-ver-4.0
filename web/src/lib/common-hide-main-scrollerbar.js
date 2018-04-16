@@ -7,7 +7,9 @@ function hideMainScrollerbar() {
     const clientWidth = $root.prop('clientWidth');
     const offsetVal = Math.abs(offsetWidth - clientWidth + 2);
 
-    $root.css('margin-right', `-${offsetVal}px`);
+    if (offsetWidth !== clientWidth) {
+        $root.css('margin-right', `-${offsetVal}px`);
+    }
 }
 
 module.exports = hideMainScrollerbar;
