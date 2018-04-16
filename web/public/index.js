@@ -27926,13 +27926,11 @@ module.exports = App;
 var $root = $('#root');
 
 function hideMainScrollerbar() {
-    var offsetWidth = $root.prop('offsetWidth');
-    var clientWidth = $root.prop('clientWidth');
-    var offsetVal = Math.abs(offsetWidth - clientWidth + 2);
+    var offsetWidth = $root.find('.app').prop('offsetWidth');
+    var clientWidth = $root.find('.app').prop('clientWidth');
+    var offsetVal = Math.abs(offsetWidth - clientWidth);
 
-    if (offsetWidth !== clientWidth) {
-        $root.css('margin-right', '-' + offsetVal + 'px');
-    }
+    $root.find('.app').css('margin-right', '-' + offsetVal + 'px');
 }
 
 module.exports = hideMainScrollerbar;

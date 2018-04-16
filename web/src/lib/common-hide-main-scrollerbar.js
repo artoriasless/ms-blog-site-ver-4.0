@@ -3,13 +3,11 @@
 const $root = $('#root');
 
 function hideMainScrollerbar() {
-    const offsetWidth = $root.prop('offsetWidth');
-    const clientWidth = $root.prop('clientWidth');
-    const offsetVal = Math.abs(offsetWidth - clientWidth + 2);
+    const offsetWidth = $root.find('.app').prop('offsetWidth');
+    const clientWidth = $root.find('.app').prop('clientWidth');
+    const offsetVal = Math.abs(offsetWidth - clientWidth);
 
-    if (offsetWidth !== clientWidth) {
-        $root.css('margin-right', `-${offsetVal}px`);
-    }
+    $root.find('.app').css('margin-right', `-${offsetVal}px`);
 }
 
 module.exports = hideMainScrollerbar;
