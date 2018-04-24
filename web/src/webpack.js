@@ -62,6 +62,12 @@ webpack(config, (err, stats) => {
         console.info('\x1b[36m%s\x1b[0m', err);
         console.info('-----------------');
     } else {
+        const errors = stats.compilation.errors;
+        if (Object.keys(errors).length > 0) {
+            console.info('\x1b[36m%s\x1b[0m', '----- ERROR -----');
+            console.info(errors);
+        }
+
         const tempDate = new Date();
         const fileDist = path.resolve(__dirname, '../public');
 
