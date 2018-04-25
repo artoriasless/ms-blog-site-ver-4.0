@@ -29,7 +29,7 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.js?$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
@@ -37,7 +37,7 @@ const config = {
                 },
             },
             {
-                test: /\.postcss?$/,
+                test: /\.postcss$/,
                 exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
@@ -53,10 +53,27 @@ const config = {
                 }),
             },
             {
-                test: /\.(jpg|png|gif)?$/,
-                loader: 'file-loader',
+                test: /\.(jpeg|jpg|png|gif)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 8192,
+                        fallback: 'file-loader',
+                        name: (filePath => filePath.split('/src/img/')[1]),
+                        outputPath: 'img',
+                    }
+                }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff)$/,
+                exclude: /node_modules/,
+                loader: 'url-loader',
                 options: {
-                  name: '[path][name].[ext]'
+                    limit: 1,
+                    fallback: 'file-loader',
+                    name: (filePath => filePath.split('/src/fonts/')[1]),
+                    outputPath: 'fonts',
                 }
             }
         ],
