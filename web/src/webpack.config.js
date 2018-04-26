@@ -60,8 +60,11 @@ const config = {
                     options: {
                         limit: 8192,
                         fallback: 'file-loader',
-                        name: (filePath => filePath.split('/src/img/')[1]),
-                        outputPath: 'img',
+                        name: (filePath => {
+                            const _path_ = path.resolve(__dirname, './');
+
+                            return filePath.replace(_path_, '');
+                        }),
                     }
                 }
             },
@@ -72,8 +75,11 @@ const config = {
                 options: {
                     limit: 1,
                     fallback: 'file-loader',
-                    name: (filePath => filePath.split('/src/fonts/')[1]),
-                    outputPath: 'fonts',
+                    name: (filePath => {
+                        const _path_ = path.resolve(__dirname, './');
+
+                        return filePath.replace(_path_, '');
+                    }),
                 }
             }
         ],
