@@ -6,10 +6,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const cssnext = require('postcss-cssnext');
-const autoprefixer = require('autoprefixer');
 /* eslint-disable */
+
+const postcssConfig = require('./postcss.config');
 
 const argumentArr = process.argv;
 const env = argumentArr[argumentArr.length - 1];
@@ -45,10 +44,13 @@ const config = {
                         {
                             loader: 'css-loader',
                             options: {
-                                minimize: true,
+                                minimize: !(env === 'development'),
                             },
                         },
-                        'postcss-loader',
+                        {
+                            loader: 'postcss-loader',
+                            options: postcssConfig,
+                        }
                     ],
                 }),
             },
@@ -71,15 +73,17 @@ const config = {
             {
                 test: /\.(eot|svg|ttf|woff)$/,
                 exclude: /node_modules/,
-                loader: 'url-loader',
-                options: {
-                    limit: 1,
-                    fallback: 'file-loader',
-                    name: (filePath => {
-                        const _path_ = path.resolve(__dirname, './');
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 1,
+                        fallback: 'file-loader',
+                        name: (filePath => {
+                            const _path_ = path.resolve(__dirname, './');
 
-                        return filePath.replace(_path_, '');
-                    }),
+                            return filePath.replace(_path_, '');
+                        }),
+                    }
                 }
             }
         ],

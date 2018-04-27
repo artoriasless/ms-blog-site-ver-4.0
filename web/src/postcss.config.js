@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    ident: 'postcss',
     plugins: [
         require('postcss-conditionals')(),
         require('postcss-simple-vars')(),
@@ -15,6 +16,6 @@ module.exports = {
                 rem: false
             }
         }),
-        require('postcss-extend')()
+        require('postcss-extend')(),
     ]
 };
