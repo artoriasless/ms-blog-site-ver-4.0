@@ -6,7 +6,12 @@
 *   数据库使用 mysql
 *   前端框架使用 react
 *   前端 UI 框架使用 bootstrap
-*   前端使用 postcss 编写自定义的样式文件（ webpack 实时打包成 css ）
+*   前端使用 postcss 编写自定义的样式文件
+*   关于前端实时打包构建
+    +   gulp + webpack
+    +   gulp 实时编译合并 stylesheet 样式文件
+    +   webpack 实时编译打包 javascript 文件
+    +   发生文件变化后，监听变化的文件类型（stylesheet 或者 javascript），进行增量构建，根据修改的文件获取其入口文件，选择性地打包
 
 ## 说明
 *   如果需要本地启动服务， node 版本至少为 7.6.0 ( koa2 限制)
@@ -23,3 +28,24 @@
         *   `npm run pack-development`
 *   **提醒**
     *   在运行上述两个脚本之前，请确保已经安装了所有依赖：项目的依赖，以及前端模块的依赖
+
+## 技术栈说明
++   前端打包方案：gulp + webpack
+    1.  各取所长
+        +   gulp 更侧重于自动化构建工具，强调 task 的概念，提供了打包 js、css 等静态资源的功能
+        +   webpack 更侧重于模块化的解决方案，强调 bundle 的概念，对单个入口文件做处理，将其所引入的各类静态资源独立打包
+        +   关于处理静态文件资源（ fonts 、 iamges），**` gulp.watch `** 比 webpack 的 **` Copy Webpack Plugin `** 更为安全
+        +   对于 stylesheet 的预处理上，gulp 的效率比 webpack 较高
+        +   关于 stylesheet 中的字体、图片引用，本身 webpack 不支持此功能，需要通过各种 loader 、plugin 来实现，默认的 webpack 只会识别 js 中的 **` require('../xx/xx.png') `**
+
+    2.  webpack 中用于独立打包输入 css 的插件耗时太大，对于开发人员效率过于低下
+        +	主要表现在 **` css-loader `** 、 **` style-loader `** ，以及 **` sass-loader `** 、 **` less-loader `** 、 **` postcss-loader `** 这类样式预处理 loader 以及用于独立打包输出 css 的 **` extract-text-webpack-plugin `** 插件上
+
++   前端实时构建（增量构建）
+    +   采用 chokidar（基于 fs.watch）监听文件变化，进行实时打包构建
+        1.  放弃使用 nodemon 监听文件变化后重启进程 -> 效率太低
+        2.  放弃使用 webpack 热启动来实时监听文件变化 -> gulp.watch 会将该进程阻塞
+        3.  放弃使用 gulp.watch 监听文件变化 -> 文件夹删除会报错
+        4.  最终使用 chokidar 监听文件变化（基于原生 fs.watch）
+            +   监听文件变化不报错
+            +   后续增量构建时更灵活

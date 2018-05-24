@@ -6,7 +6,12 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
 *   it will use mySQL as database
 *   it will use react as browser side
 *   it will use bootstrap for ui structure
-*   it will use postcss to customize style ( using webpack to bundle )
+*   it will use postcss to customize style
+*   about bundle tool
+    *   using gulp and webpack
+    *   using gulp to bundle stylesheet file(s)
+    *   using webpack to bundle javascript file(s)
+    *   while file changed,choose **`Incremental Build`**,avoid **`Full Build`**
 
 ## NOTE
 *   node version must be at least 7.6.0
@@ -23,3 +28,24 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
         *   `npm run pack-development`
 *   **Info**
     *   before you run scripts above,you must have install all dependencies,for web project and webpack
+
+## Tech Stack
++   Bundle Solution: gulp + webpack
+    1.  take advantage of gulp and webpack
+        +   gulp is good at automated build,focus on **`task`**
+        +   webpack is good at module solution，focus on **`bundle`**
+        +   **` gulp.watch `** (gulp) is safer than **` Copy Webpack Plugin `** (webpack) on handling static asserts (fonts/images/...)
+        +   gulp is more efficient than webpack on handling CSS preprocessor
+        +   webpack needs loaders/plugins to resolve static asserts in stylesheet
+
+    1.  the plugin in webpack to bundle css costs too much time
+        +	this problem appears while using **` css-loader `** 、 **` style-loader `** 、 **` sass-loader `** 、 **` less-loader `** 、 **` postcss-loader `** with **` extract-text-webpack-plugin `**
+
++   Incremental Build
+    +   use chokidar (based on fs.watch) to watch file(s) changed
+        1.  not use nodemon  -> inefficient
+        2.  not use webpack-hot-middleare -> process blocked while using with gulp.watch
+        3.  not use gulp.watch  -> throw error while remove folder
+        4.  using chokidar
+            +   avoid problems above
+            +   for incremental build
