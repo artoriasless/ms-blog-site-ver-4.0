@@ -1,16 +1,19 @@
 'use strict';
-
+/* global process */
 const os = require('os');
 
 const forever = require('forever-monitor');
 
-const config = require('./config');
+const env = process.env.NODE_ENV || 'development';
 
+let port = require('./config').port;
 let max = 1;        //  affect the number of child process
 let silent = false; //  affect whether show the console result in child process
-const args = [];
+const args = [
+    `NODE_ENV=${env}`
+];
 
-if (config.env !== 'development' && config.env !== 'testing') {
+if (env !== 'development' && env !== 'testing') {
     max = os.cpus().length;
     silent = true;
 }
@@ -22,7 +25,7 @@ const child = new(forever.Monitor)('./web/server.js', {
 });
 
 child.on('start', () => {
-    console.info(`app has started,address: http://localhost:${config.port}`);// eslint-disable-line
+    console.info(`app has started,address: http://localhost:${port}`);// eslint-disable-line
 });
 
 child.on('exit', () => {

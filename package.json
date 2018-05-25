@@ -5,8 +5,8 @@
     "main": "server.js",
     "scripts": {
         "test": "NODE_ENV=testing ./node_modules/.bin/mocha --recursive",
-        "dev": "nodemon NODE_ENV=development node forever.js",
-        "production": "nodemon NODE_ENV=production node forever.js"
+        "dev": "NODE_ENV=development nodemon node forever.js",
+        "production": "NODE_ENV=production nodemon node forever.js"
     },
     "repository": {
         "type": "git",
