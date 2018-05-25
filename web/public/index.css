@@ -32,17 +32,17 @@ html {
 
 @font-face {
 	font-family: consola;
-	src: url(/fonts/Consolas/index.ttf);
+	src: url(fonts/Consolas/index.ttf);
 }
 
 @font-face {
 	font-family: "snell roundhand script";
-	src: url(/fonts/Snell-Roundhand-Script/index.ttf);
+	src: url(fonts/Snell-Roundhand-Script/index.ttf);
 }
 
 @font-face {
     font-family: "brush script mt";
-    src: url(/fonts/Brush-Script-MT/index.ttf);
+    src: url(fonts/Brush-Script-MT/index.ttf);
 }
 
 body, #root, #root .app {
@@ -64,7 +64,7 @@ body * {
 
 #root {
     overflow: hidden;
-    background: url(/img/main-bg.jpg) no-repeat center center / cover;
+    background: url(img/main-bg.jpg) no-repeat center center / cover;
 }
 
 #root .app {
@@ -197,7 +197,7 @@ code {
                     width: 2rem;
                     height: 2rem;
                     border-radius: 50%;
-                    background: url(/img/logo.jpg) no-repeat center center / cover;
+                    background: url(img/logo.jpg) no-repeat center center / cover;
                 }
 
 .app .page-section-header .page-section-header-container .navbar {
@@ -277,3 +277,7 @@ code {
         height: 15rem;
         padding: 0.25rem 0.75rem;
     }
+
+
+
+
