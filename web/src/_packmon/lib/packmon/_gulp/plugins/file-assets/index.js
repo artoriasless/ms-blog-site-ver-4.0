@@ -65,7 +65,6 @@ function parseAssets(file, reference, curDepth, opts, push) {
     if (isIgnored(ignores, filePath)) {
         return;
     }
-
     if (reference || includeSrc) {
         // gutil.log(PLUGIN_NAME + ':', 'Extract', (reference ? gutil.colors.green(reference) + ' -> ' : '') + gutil.colors.green(relative));
         ignores.push(filePath);
@@ -75,7 +74,6 @@ function parseAssets(file, reference, curDepth, opts, push) {
     if (depth > 0 && curDepth >= depth) {
         return;
     }
-
     var code = contents.toString();
     if (new Buffer(code).length === contents.length) {
         code.replace(pattern, function ($, url) {

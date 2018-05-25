@@ -65,18 +65,8 @@ module.exports = function destPath(dest, fn, options) {
                 // calculate the new destination path
                 file.path = utils.rewrite(path.join(base, dest, name), ext);
             }
-            //  开发环境下，静态文件打包异步进行
-            if (opts.env !== 'development') {
-                this.push(file);
-            } else {
-                if (file.path.match(/\.(css|sass|less|postcss)$/)) {
-                    this.push(file);
-                } else {
-                    setTimeout(() => {
-                        destAssets(file);
-                    }, 10);
-                }
-            }
+
+            this.push(file);
         } catch (err) {
             this.emit('error', new utils.gutil.PluginError('gulp-dest', err));
         }

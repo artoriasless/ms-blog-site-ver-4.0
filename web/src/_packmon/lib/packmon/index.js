@@ -18,9 +18,9 @@ const packmon = {
         };
 
         if (typeMap[buildType]) {
-            _this.cleanOutdate();
             typeMap[buildType](_env, _opts);
         } else {
+            _this.cleanOutdate();
             _this.bundleStylesheet(_env, _opts);
             _this.bundleJavascript(_env, _opts);
         }

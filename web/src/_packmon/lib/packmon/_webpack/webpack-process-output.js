@@ -7,9 +7,9 @@ function webpackProcessOutput(_env, _opts) {    //  eslint-disable-line
     const _output = {
         filename: function() {
             if (_env === 'development') {
-                return '[name].js';
+                return 'index.js';
             } else {
-                return `[name].${_opts.version}.js`;
+                return `index.${_opts.version}.js`;
             }
         },
         path: path.resolve(rootDist, '../public'),
