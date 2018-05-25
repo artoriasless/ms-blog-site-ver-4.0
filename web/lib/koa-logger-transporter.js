@@ -21,6 +21,7 @@ module.exports = (str, args) => {   //  eslint-disable-line
     for (let i = 0; i < dataArr.length; i++) {
         outputArr.push(colorArr[i]);
         outputArr.push(dataArr[i]);
+        outputArr.push('\x1b[0m'); //  reset
     }
 
     console.info(...outputArr);    //  eslint-disable-line
