@@ -4,7 +4,6 @@
 		".git",
 		".gitignore",
 		"node_modules/**/node_modules",
-		"web/public",
 		"web/src",
 		"web/template"
 	],
