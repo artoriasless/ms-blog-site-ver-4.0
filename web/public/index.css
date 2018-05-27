@@ -278,6 +278,87 @@ code {
         padding: 0.25rem 0.75rem;
     }
 
+.page-home .main {
+        text-align: center;
+        max-width: 750px;
+        margin: 5rem auto auto;
+    }
 
+.page-home .main .main-title {
+            height: 3.75rem;
+            line-height: 3.75rem;
+            margin: 0;
+            font-family: "snell roundhand script", "brush script mt";
+            font-size: 3rem;
+            font-weight: 300;
+            color: #555;
+        }
 
+.page-home .main .sub-title {
+            line-height: 1.75rem;
+            margin: 0.5rem 0 0.75rem;
+            font-family: consola;
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: #777;
+            word-wrap: break-word;
+            word-break: keep-all;
+            text-transform:capitalize;
+        }
+
+.page-home .main .refer-info {
+            height: 1.5rem;
+            line-height: 1.5rem;
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 300;
+            text-align: right;
+            color: #aaa;
+        }
+
+.page-home .main .quick-link-container {
+            margin-top: 1.5rem;
+        }
+
+.page-home .main .quick-link-container .quick-link-content {
+                height: 2.5rem;
+                margin: 1.25rem 0;
+                background: transparent;
+            }
+
+.page-home .main .quick-link-container .quick-link-content .quick-link {
+                    position: relative;
+                    display: inline-block;
+                    height: 2.5rem;
+                    line-height: calc(2.5rem - 2px);
+                    padding: 0 1rem 0 3.5rem;
+                    border: 1px solid #aaa;
+                    border-radius: 1.5rem;
+                    color: #777;
+                    background: transparent;
+                }
+
+.page-home .main .quick-link-container .quick-link-content .quick-link:hover {
+                        text-decoration: none;
+                        color: #000;
+                    }
+
+.page-home .main .quick-link-container .quick-link-content .quick-link .link-img {
+                        position: absolute;
+                        display: block;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        left: 1.25rem;
+                        top: 0.5rem;
+                        border-radius: 50%;
+                    }
+
+.page-home .main .quick-link-container .quick-link-content .quick-link .link-img.github-link {
+                        border-radius: 0;
+                        background: url(img/github-logo.png) no-repeat center center / cover;
+                    }
+
+.page-home .main .quick-link-container .quick-link-content .quick-link .link-img.blog-link {
+                        background: url(img/logo.jpg) no-repeat center center / cover;
+                    }
 

@@ -975,7 +975,49 @@ var PageHome = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
-                    '\u9996\u9875'
+                    React.createElement(
+                        'div',
+                        { className: 'main' },
+                        React.createElement(
+                            'h1',
+                            { className: 'main-title' },
+                            'MonkingStand'
+                        ),
+                        React.createElement(
+                            'h3',
+                            { className: 'sub-title' },
+                            'thanks for visiting my blog,hope to code less,do more'
+                        ),
+                        React.createElement(
+                            'h4',
+                            { className: 'refer-info' },
+                            'valar morghulis,valar dohaeris'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'quick-link-container' },
+                            React.createElement(
+                                'div',
+                                { className: 'quick-link-content' },
+                                React.createElement(
+                                    'a',
+                                    { target: '_blank', href: 'https://github.com/MonkingStand', className: 'quick-link' },
+                                    React.createElement('span', { className: 'link-img github-link' }),
+                                    'view on Github'
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'quick-link-content' },
+                                React.createElement(
+                                    'a',
+                                    { href: '/catalogue', className: 'quick-link' },
+                                    React.createElement('span', { className: 'link-img blog-link' }),
+                                    'view blog'
+                                )
+                            )
+                        )
+                    )
                 ),
                 React.createElement(LoginModal, null)
             );
