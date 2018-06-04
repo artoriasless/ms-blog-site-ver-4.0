@@ -26,6 +26,9 @@
         }
     },
     "dependencies": {
+        "markdown": "^0.5.0"
+    },
+    "devDependencies": {
         "ava": "*",
         "babel": "^6.23.0",
         "babel-core": "^6.26.0",

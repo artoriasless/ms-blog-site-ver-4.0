@@ -51,7 +51,7 @@ function superUrlLoader() {
         //  源文件没有任何文件、模块引用，直接返回
         return src;
     } else {
-        pathArr.forEach((fileObj, index) => {
+        pathArr.forEach(fileObj => {
             var tmpSrc = fileObj.src;
             var tmpFile = fileObj.file;
 
