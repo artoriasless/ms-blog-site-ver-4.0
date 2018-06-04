@@ -1,7 +1,11 @@
 'use strict';
-
+/* eslint-disable */
 const React = require('react');
 
+const Header = require('./login-modal-header');
+const Body = require('./login-modal-body');
+const Footer = require('./login-modal-footer');
+/* eslint-disable */
 class LoginModal extends React.Component {
     render() {
         return (
@@ -16,24 +20,9 @@ class LoginModal extends React.Component {
                     role="document"
                 >
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">
-                                Sign in or Sign up
-                            </h5>
-                            <a
-                                className="btn close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                            >
-                                <i
-                                    className="fa fa-times"
-                                    aria-hidden="true"
-                                ></i>
-                            </a>
-                        </div>
-                        <div className="modal-body">
-                            登录/注册模态框
-                        </div>
+                        <Header/>
+                        <Body/>
+                        <Footer/>
                     </div>
                 </div>
             </div>

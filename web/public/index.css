@@ -32,17 +32,17 @@ html {
 
 @font-face {
 	font-family: consola;
-	src: url(fonts/Consolas/index.ttf);
+	src: url(fonts/Consolas/index.ttf) format('truetype');
 }
 
 @font-face {
 	font-family: "snell roundhand script";
-	src: url(fonts/Snell-Roundhand-Script/index.ttf);
+	src: url(fonts/Snell-Roundhand-Script/index.ttf) format('truetype');
 }
 
 @font-face {
     font-family: "brush script mt";
-    src: url(fonts/Brush-Script-MT/index.ttf);
+    src: url(fonts/Brush-Script-MT/index.ttf) format('truetype');
 }
 
 body, #root, #root .app {
@@ -245,6 +245,7 @@ code {
 
 #loginModal {
     z-index: 999999;
+
 }
 
 #loginModal .modal-dialog {
@@ -253,29 +254,53 @@ code {
     }
 
 #loginModal .modal-header {
-        padding: 0.25rem 0.75rem;
-    }
+    padding: 0.25rem 0.75rem;
+}
 
 #loginModal .modal-header .modal-title {
-            height: 1.5rem;
-            line-height: 1.5rem;
-            font-size: 1rem;
-            font-weight: 400;
-        }
+        height: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        font-weight: 400;
+    }
 
 #loginModal .modal-header .close {
-            width: 1.5rem;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            padding: 0;
-            margin: 0;
-            text-align: center;
-            font-size: 1rem;
-        }
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 1rem;
+    }
 
 #loginModal .modal-body {
-        height: 15rem;
-        padding: 0.25rem 0.75rem;
+    height: 15rem;
+    padding: 0.25rem 0.75rem;
+}
+
+#loginModal .modal-body .logo-container {
+        position: absolute;
+        width: 3rem;
+        height: 3rem;
+        left: 50%;
+        top: 0;
+        margin-left: -1.5rem;
+        margin-top: 0.5rem;
+        border-radius: 50%;
+        background: url(img/logo.jpg) no-repeat center center / cover;
+    }
+
+#loginModal .modal-footer {
+    padding: 0 0.75rem 0.75rem;
+    border-top: none;
+}
+
+#loginModal .modal-footer .submit-btn {
+        height: 2rem;
+        line-height: calc(2rem - 2px);
+        padding: 0 0.75rem;
+        color: #fff;
     }
 
 .page-home .main {
@@ -312,7 +337,6 @@ code {
             margin: 0;
             font-size: 1rem;
             font-weight: 300;
-            text-align: right;
             color: #aaa;
         }
 

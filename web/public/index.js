@@ -330,10 +330,10 @@ module.exports = Navbar;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal.js":
-/*!*************************************************!*\
-  !*** ./components/ui-components/login-modal.js ***!
-  \*************************************************/
+/***/ "./components/ui-components/login-modal-body.js":
+/*!******************************************************!*\
+  !*** ./components/ui-components/login-modal-body.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -349,6 +349,336 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* eslint-disable */
+var LoginForm = __webpack_require__(/*! ./login-modal-login-form */ "./components/ui-components/login-modal-login-form.js");
+var RegisterForm = __webpack_require__(/*! ./login-modal-register-form */ "./components/ui-components/login-modal-register-form.js");
+/* eslint-disable */
+
+var LoginModalBody = function (_React$Component) {
+    _inherits(LoginModalBody, _React$Component);
+
+    function LoginModalBody() {
+        _classCallCheck(this, LoginModalBody);
+
+        return _possibleConstructorReturn(this, (LoginModalBody.__proto__ || Object.getPrototypeOf(LoginModalBody)).apply(this, arguments));
+    }
+
+    _createClass(LoginModalBody, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'modal-body' },
+                React.createElement(
+                    'ul',
+                    {
+                        id: 'signIn_signUp_tab',
+                        className: 'nav nav-tabs nav-justified',
+                        role: 'tablist'
+                    },
+                    React.createElement(
+                        'li',
+                        { className: 'nav-item' },
+                        React.createElement(
+                            'a',
+                            {
+                                id: 'nav_signIn',
+                                className: 'nav-link active',
+                                'data-toggle': 'tab',
+                                href: '#content_signIn',
+                                role: 'tab',
+                                'aria-controls': 'content_signIn',
+                                'aria-selected': 'true'
+                            },
+                            'Sign In'
+                        )
+                    ),
+                    React.createElement(
+                        'li',
+                        { className: 'nav-item' },
+                        React.createElement(
+                            'a',
+                            {
+                                id: 'nav_signUp',
+                                className: 'nav-link',
+                                'data-toggle': 'tab',
+                                href: '#content_signUp',
+                                role: 'tab',
+                                'aria-controls': 'content_signUp',
+                                'aria-selected': 'true'
+                            },
+                            'Sign Up'
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'tab-content' },
+                    React.createElement(
+                        'div',
+                        {
+                            id: 'content_signIn',
+                            className: 'tab-pane fade show active',
+                            role: 'tabpanel',
+                            'aria-labelledby': 'content_signIn-tab'
+                        },
+                        React.createElement(LoginForm, null)
+                    ),
+                    React.createElement(
+                        'div',
+                        {
+                            id: 'content_signUp',
+                            className: 'tab-pane fade',
+                            role: 'tabpanel',
+                            'aria-labelledby': 'content_signUp-tab'
+                        },
+                        React.createElement(RegisterForm, null)
+                    )
+                )
+            );
+        }
+    }]);
+
+    return LoginModalBody;
+}(React.Component);
+
+module.exports = LoginModalBody;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal-footer.js":
+/*!********************************************************!*\
+  !*** ./components/ui-components/login-modal-footer.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var LoginModalFooter = function (_React$Component) {
+    _inherits(LoginModalFooter, _React$Component);
+
+    function LoginModalFooter() {
+        _classCallCheck(this, LoginModalFooter);
+
+        return _possibleConstructorReturn(this, (LoginModalFooter.__proto__ || Object.getPrototypeOf(LoginModalFooter)).apply(this, arguments));
+    }
+
+    _createClass(LoginModalFooter, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'modal-footer' },
+                React.createElement(
+                    'a',
+                    { className: 'btn btn-primary submit-btn' },
+                    'Submit'
+                )
+            );
+        }
+    }]);
+
+    return LoginModalFooter;
+}(React.Component);
+
+module.exports = LoginModalFooter;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal-header.js":
+/*!********************************************************!*\
+  !*** ./components/ui-components/login-modal-header.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var LoginModalHeader = function (_React$Component) {
+    _inherits(LoginModalHeader, _React$Component);
+
+    function LoginModalHeader() {
+        _classCallCheck(this, LoginModalHeader);
+
+        return _possibleConstructorReturn(this, (LoginModalHeader.__proto__ || Object.getPrototypeOf(LoginModalHeader)).apply(this, arguments));
+    }
+
+    _createClass(LoginModalHeader, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'modal-header' },
+                React.createElement(
+                    'h5',
+                    { className: 'modal-title' },
+                    'Sign in or Sign up'
+                ),
+                React.createElement(
+                    'a',
+                    {
+                        className: 'btn close',
+                        'data-dismiss': 'modal',
+                        'aria-label': 'Close'
+                    },
+                    React.createElement('i', {
+                        className: 'fa fa-times',
+                        'aria-hidden': 'true'
+                    })
+                )
+            );
+        }
+    }]);
+
+    return LoginModalHeader;
+}(React.Component);
+
+module.exports = LoginModalHeader;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal-login-form.js":
+/*!************************************************************!*\
+  !*** ./components/ui-components/login-modal-login-form.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var LoginForm = function (_React$Component) {
+    _inherits(LoginForm, _React$Component);
+
+    function LoginForm() {
+        _classCallCheck(this, LoginForm);
+
+        return _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).apply(this, arguments));
+    }
+
+    _createClass(LoginForm, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'form',
+                { id: 'loginForm' },
+                '\u767B\u5F55\u8868\u5355'
+            );
+        }
+    }]);
+
+    return LoginForm;
+}(React.Component);
+
+module.exports = LoginForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal-register-form.js":
+/*!***************************************************************!*\
+  !*** ./components/ui-components/login-modal-register-form.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var RegisterForm = function (_React$Component) {
+    _inherits(RegisterForm, _React$Component);
+
+    function RegisterForm() {
+        _classCallCheck(this, RegisterForm);
+
+        return _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).apply(this, arguments));
+    }
+
+    _createClass(RegisterForm, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'form',
+                { id: 'registerForm' },
+                '\u6CE8\u518C\u8868\u5355'
+            );
+        }
+    }]);
+
+    return RegisterForm;
+}(React.Component);
+
+module.exports = RegisterForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal.js":
+/*!*************************************************!*\
+  !*** ./components/ui-components/login-modal.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Header = __webpack_require__(/*! ./login-modal-header */ "./components/ui-components/login-modal-header.js");
+var Body = __webpack_require__(/*! ./login-modal-body */ "./components/ui-components/login-modal-body.js");
+var Footer = __webpack_require__(/*! ./login-modal-footer */ "./components/ui-components/login-modal-footer.js");
+/* eslint-disable */
 
 var LoginModal = function (_React$Component) {
     _inherits(LoginModal, _React$Component);
@@ -379,32 +709,9 @@ var LoginModal = function (_React$Component) {
                     React.createElement(
                         'div',
                         { className: 'modal-content' },
-                        React.createElement(
-                            'div',
-                            { className: 'modal-header' },
-                            React.createElement(
-                                'h5',
-                                { className: 'modal-title' },
-                                'Sign in or Sign up'
-                            ),
-                            React.createElement(
-                                'a',
-                                {
-                                    className: 'btn close',
-                                    'data-dismiss': 'modal',
-                                    'aria-label': 'Close'
-                                },
-                                React.createElement('i', {
-                                    className: 'fa fa-times',
-                                    'aria-hidden': 'true'
-                                })
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'modal-body' },
-                            '\u767B\u5F55/\u6CE8\u518C\u6A21\u6001\u6846'
-                        )
+                        React.createElement(Header, null),
+                        React.createElement(Body, null),
+                        React.createElement(Footer, null)
                     )
                 )
             );
