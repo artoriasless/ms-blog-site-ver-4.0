@@ -5,6 +5,7 @@
 		".gitignore",
 		"node_modules/**/node_modules",
 		"web/src",
+		"web/public",
 		"web/template"
 	],
 	"verbose": true,

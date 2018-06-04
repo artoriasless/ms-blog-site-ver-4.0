@@ -16,11 +16,13 @@ const koaLoggerTransporter = require('./lib/koa-logger-transporter');
 const router = require('./controller/_router');
 const globalException = require('./middleware/global-exception');
 
+const maxage = (config.env === 'development') ? 0 : 365 * 24 * 60 * 60;
+
 app.keys = config.sessionKeys;
 
 app.use(koaSession(config.session, app))
     .use(koaStatic(path.resolve(__dirname, './public'), {
-        maxage: 365 * 24 * 60 * 60,
+        maxage,
     }))
     .use(koaBody())
     .use(koaLogger({transporter: koaLoggerTransporter}))
