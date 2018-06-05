@@ -28,23 +28,6 @@ html {
     }
 }
 
-/* 引入特定字体 */
-
-@font-face {
-	font-family: consola;
-	src: url(fonts/Consolas/index.ttf) format('truetype');
-}
-
-@font-face {
-	font-family: "snell roundhand script";
-	src: url(fonts/Snell-Roundhand-Script/index.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: "brush script mt";
-    src: url(fonts/Brush-Script-MT/index.ttf) format('truetype');
-}
-
 body, #root, #root .app {
     position: absolute;
     top: 0;
@@ -62,20 +45,46 @@ body * {
     word-break: break-all;
 }
 
-#root {
-    overflow: hidden;
-    background: url(img/main-bg.jpg) no-repeat center center / cover;
+/* 引入特定字体 */
+
+@font-face {
+	font-family: consola;
+	src: url(fonts/Consolas/index.ttf) format('truetype');
 }
 
-#root .app {
-    overflow-y: auto;
-    background-color: rgba(255, 255, 255, .95);
+@font-face {
+	font-family: "snell roundhand script";
+	src: url(fonts/Snell-Roundhand-Script/index.ttf) format('truetype');
 }
 
-#root .app .page-section-header + .page-section-body {
-    max-width: 1200px;
-    padding: 0.25rem;
-    margin: calc(2.5rem + 1px) auto 0;
+@font-face {
+    font-family: "brush script mt";
+    src: url(fonts/Brush-Script-MT/index.ttf) format('truetype');
+}
+
+/* 覆盖 bootstrap 默认主题色 */
+
+a {
+    color: #5e87a2;
+}
+
+a:hover {
+        color: rgb(94, 160, 204);
+    }
+
+.btn-primary {
+    background-color: #5e87a2;
+    border-color: rgb(94, 160, 204);
+}
+
+.btn-primary:hover {
+        background-color: rgb(94, 160, 204);
+        border-color: rgb(94, 160, 204);
+    }
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background-color: rgb(94, 160, 204);
+    border-color: rgb(94, 160, 204);
 }
 
 /* 源码显示区域 */
@@ -109,6 +118,22 @@ code {
     border-radius: 5px;
     -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, .3);
     background-color: #555;
+}
+
+#root {
+    overflow: hidden;
+    background: url(img/main-bg.jpg) no-repeat center center / cover;
+}
+
+#root .app {
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, .95);
+}
+
+#root .app .page-section-header + .page-section-body {
+    max-width: 1200px;
+    padding: 0.25rem;
+    margin: calc(2.5rem + 1px) auto 0;
 }
 
 #compassIcon {
@@ -353,14 +378,19 @@ code {
 
 #switch_In_Up_container .toggle .toggle-group .toggle-on, #switch_In_Up_container .toggle .toggle-group .toggle-off {
                 height: 2rem;
-                line-height: 2rem;
+                line-height: calc(2rem - 2px);
                 padding: 0;
+                color: #fff;
+                background-color: rgb(94, 160, 204);
+                border: 1px solid rgb(94, 160, 204);
             }
 
 #switch_In_Up_container .toggle .toggle-group .toggle-handle {
                 display: block;
                 height: calc(2rem - 2px);
-                background-color: #fff;
+                background-color: #6610f2;
+                border: 1px solid #6610f2;
+                pointer-events: none;
             }
 
 #loginModal {
@@ -395,21 +425,17 @@ code {
     }
 
 #loginModal .modal-body {
-    height: 15rem;
+    min-height: 12.5rem;
     padding: 0.25rem 0.75rem;
 }
 
-#loginModal .modal-body .logo-container {
-        position: absolute;
-        width: 3rem;
-        height: 3rem;
-        left: 50%;
-        top: 0;
-        margin-left: -1.5rem;
-        margin-top: 0.5rem;
-        border-radius: 50%;
-        background: url(img/logo.jpg) no-repeat center center / cover;
-    }
+#loginModal .modal-body #loginForm .form-group, #loginModal .modal-body #registerForm .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+#loginModal .modal-body #loginForm .form-group label, #loginModal .modal-body #registerForm .form-group label {
+                margin-bottom: 0.25rem;
+            }
 
 #loginModal .modal-footer {
     padding: 0 0.75rem 0.75rem;
@@ -426,7 +452,7 @@ code {
 .page-home .main {
         text-align: center;
         max-width: 750px;
-        margin: 5rem auto auto;
+        margin: 4rem auto auto;
     }
 
 .page-home .main .main-title {

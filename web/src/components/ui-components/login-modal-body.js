@@ -55,9 +55,9 @@ class SwitchButton extends React.Component {
         $('#switchBtn')
             .bootstrapToggle({
                 on      : "Login",
-                onstyle : "primary",
+                onstyle : "default",
                 off     : "Register",
-                offstyle: "info",
+                offstyle: "default",
             })
             .change(function() {
                 var checked = $(this).prop('checked');

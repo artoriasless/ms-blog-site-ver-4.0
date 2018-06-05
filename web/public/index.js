@@ -438,9 +438,9 @@ var SwitchButton = function (_React$Component2) {
         value: function componentDidMount() {
             $('#switchBtn').bootstrapToggle({
                 on: "Login",
-                onstyle: "primary",
+                onstyle: "default",
                 off: "Register",
-                offstyle: "info"
+                offstyle: "default"
             }).change(function () {
                 var checked = $(this).prop('checked');
                 var tabLink = checked ? 'loginTabLink' : 'registerTabLink';
@@ -620,7 +620,40 @@ var LoginForm = function (_React$Component) {
             return React.createElement(
                 'form',
                 { id: 'loginForm' },
-                '\u767B\u5F55\u8868\u5355'
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            'for': 'login_email'
+                        },
+                        'email'
+                    ),
+                    React.createElement('input', {
+                        id: 'login_email',
+                        className: 'form-control',
+                        type: 'email',
+                        placeholder: 'type your email'
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            'for': 'login_password'
+                        },
+                        'password'
+                    ),
+                    React.createElement('input', {
+                        id: 'login_password',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'type your password'
+                    })
+                )
             );
         }
     }]);
@@ -667,7 +700,57 @@ var RegisterForm = function (_React$Component) {
             return React.createElement(
                 'form',
                 { id: 'registerForm' },
-                '\u6CE8\u518C\u8868\u5355'
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            'for': 'register_email'
+                        },
+                        'email'
+                    ),
+                    React.createElement('input', {
+                        id: 'register_email',
+                        className: 'form-control',
+                        type: 'email',
+                        placeholder: 'type your email'
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            'for': 'register_password'
+                        },
+                        'password'
+                    ),
+                    React.createElement('input', {
+                        id: 'register_password',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'type your password'
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            'for': 'register_passwordConfirm'
+                        },
+                        'password'
+                    ),
+                    React.createElement('input', {
+                        id: 'register_passwordConfirm',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'confirm your password'
+                    })
+                )
             );
         }
     }]);

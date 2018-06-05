@@ -14,14 +14,19 @@
             .toggle-on,
             .toggle-off {
                 height: 2rem;
-                line-height: 2rem;
+                line-height: calc(2rem - 2px);
                 padding: 0;
+                color: #fff;
+                background-color: var(--color-theme-dark);
+                border: 1px solid var(--color-theme-dark);
             }
 
             .toggle-handle {
                 display: block;
                 height: calc(2rem - 2px);
-                background-color: var(--color-white);
+                background-color: var(--color-indigo);
+                border: 1px solid var(--color-indigo);
+                pointer-events: none;
             }
         }
     }

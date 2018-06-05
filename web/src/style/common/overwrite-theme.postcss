@@ -1,0 +1,29 @@
+/* 覆盖 bootstrap 默认主题色 */
+a {
+    color: var(--color-theme);
+
+    &:hover {
+        color: var(--color-theme-dark);
+    }
+}
+.btn-primary {
+    background-color: var(--color-theme);
+    border-color: var(--color-theme-dark);
+
+    &:hover {
+        background-color: var(--color-theme-dark);
+        border-color: var(--color-theme-dark);
+    }
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+    background-color: var(--color-theme-dark);
+    border-color: var(--color-theme-dark);
+}
+
+/* 源码显示区域 */
+code {
+    padding: 0 5px;
+    font-family: consola;
+}
