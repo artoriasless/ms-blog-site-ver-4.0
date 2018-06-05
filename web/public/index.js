@@ -626,7 +626,7 @@ var LoginForm = function (_React$Component) {
                     React.createElement(
                         'label',
                         {
-                            'for': 'login_email'
+                            htmlFor: 'login_email'
                         },
                         'email'
                     ),
@@ -643,7 +643,7 @@ var LoginForm = function (_React$Component) {
                     React.createElement(
                         'label',
                         {
-                            'for': 'login_password'
+                            htmlFor: 'login_password'
                         },
                         'password'
                     ),
@@ -706,7 +706,7 @@ var RegisterForm = function (_React$Component) {
                     React.createElement(
                         'label',
                         {
-                            'for': 'register_email'
+                            htmlFor: 'register_email'
                         },
                         'email'
                     ),
@@ -723,7 +723,7 @@ var RegisterForm = function (_React$Component) {
                     React.createElement(
                         'label',
                         {
-                            'for': 'register_password'
+                            htmlFor: 'register_password'
                         },
                         'password'
                     ),
@@ -740,7 +740,7 @@ var RegisterForm = function (_React$Component) {
                     React.createElement(
                         'label',
                         {
-                            'for': 'register_passwordConfirm'
+                            htmlFor: 'register_passwordConfirm'
                         },
                         'password'
                     ),
@@ -1456,7 +1456,7 @@ module.exports = PageHome;
 "use strict";
 
 
-var deepCopy = function deepCopy(originalObj) {
+function deepCopy(originalObj) {
     /* 用于深拷贝的对象只是用来存储数据的，采用最简单直接的方法 */
     return JSON.parse(JSON.stringify(originalObj));
 };

@@ -8,7 +8,7 @@ class RegisterForm extends React.Component {
             <form id="registerForm">
                 <div className="form-group">
                     <label
-                        for="register_email"
+                        htmlFor="register_email"
                     >email</label>
                     <input
                         id="register_email"
@@ -19,7 +19,7 @@ class RegisterForm extends React.Component {
                 </div>
                 <div className="form-group">
                     <label
-                        for="register_password"
+                        htmlFor="register_password"
                     >password</label>
                     <input
                         id="register_password"
@@ -30,7 +30,7 @@ class RegisterForm extends React.Component {
                 </div>
                 <div className="form-group">
                     <label
-                        for="register_passwordConfirm"
+                        htmlFor="register_passwordConfirm"
                     >password</label>
                     <input
                         id="register_passwordConfirm"

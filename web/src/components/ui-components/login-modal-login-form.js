@@ -8,7 +8,7 @@ class LoginForm extends React.Component {
             <form id="loginForm">
                 <div className="form-group">
                     <label
-                        for="login_email"
+                        htmlFor="login_email"
                     >email</label>
                     <input
                         id="login_email"
@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
                 </div>
                 <div className="form-group">
                     <label
-                        for="login_password"
+                        htmlFor="login_password"
                     >password</label>
                     <input
                         id="login_password"
