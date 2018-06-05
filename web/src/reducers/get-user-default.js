@@ -2,10 +2,10 @@
 
 const deepCopy = require('/lib/common-deep-copy');
 
-const initHome = (originalState, action) => {   //  eslint-disable-line
+const getUserDefault = (originalState, action) => {   //  eslint-disable-line
     const newState = Object.assign ? Object.assign({}, action.payload) : deepCopy(action.payload);
 
     return newState;
 };
 
-module.exports = initHome;
+module.exports = getUserDefault;

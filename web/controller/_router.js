@@ -29,7 +29,14 @@ routeList.forEach(routeLink => {
 //  用户相关的 api 接口
 const api = require('./api');
 
+/**
+ *  User
+ */
 //  根据当前 session ，获取默认登录用户
 _router.get('/api/user/default', api.user.getUserDefault);
+//  登录
+_router.post('/api/user/login', api.user.login);
+//  注册
+_router.post('/api/user/register', api.user.register);
 
 module.exports = _router;

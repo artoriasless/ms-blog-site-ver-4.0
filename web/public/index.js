@@ -36,17 +36,32 @@
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
 /******/ 	};
 /******/
 /******/ 	// define __esModule on exports
 /******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
 /******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -84,9 +99,12 @@
 var INIT_HOME = 'INIT_HOME';
 var INIT_LOGIN_MODAL = 'INIT_LOGIN_MODAL';
 
+var GET_USER_DEFAULT = 'GET_USER_DEFAULT';
+
 module.exports = {
     INIT_HOME: INIT_HOME,
-    INIT_LOGIN_MODAL: INIT_LOGIN_MODAL
+    INIT_LOGIN_MODAL: INIT_LOGIN_MODAL,
+    GET_USER_DEFAULT: GET_USER_DEFAULT
 };
 
 /***/ }),
@@ -179,7 +197,7 @@ module.exports = initLoginModalAction;
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var thunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/lib/index.js").default;
+var thunk = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js").default;
 
 var _require = __webpack_require__(/*! redux */ "./node_modules/redux/es/index.js"),
     createStore = _require.createStore,
@@ -1371,6 +1389,8 @@ var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "
 var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
 /* eslint-disable */
 
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
 var PageHome = function (_React$Component) {
     _inherits(PageHome, _React$Component);
 
@@ -1383,6 +1403,18 @@ var PageHome = function (_React$Component) {
     _createClass(PageHome, [{
         key: 'render',
         value: function render() {
+            ajaxAction('/api/user/login', { test: 'login-post' }, function (data) {
+                console.info(data);
+            }, function (err) {
+                console.info(err);
+            });
+
+            ajaxAction('/api/user/register', { test: 'register-post' }, function (data) {
+                console.info(data);
+            }, function (err) {
+                console.info(err);
+            });
+
             return React.createElement(
                 'div',
                 { className: 'page-home' },
@@ -1443,6 +1475,44 @@ var PageHome = function (_React$Component) {
 }(React.Component);
 
 module.exports = PageHome;
+
+/***/ }),
+
+/***/ "./lib/common-ajax-action.js":
+/*!***********************************!*\
+  !*** ./lib/common-ajax-action.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+function ajaxAction(url, data, successFunc, failFunc, opts) {
+    //  通用的 ajax 调用方法，在 $.ajax 基础上做一次包装
+    var defaultOpts = {
+        url: url,
+        data: data,
+        type: 'post',
+        success: function success(data) {
+            if (successFunc) successFunc(data);
+        },
+        error: function error(err) {
+            if (failFunc) failFunc(err);
+        }
+    };
+
+    if (opts) {
+        for (var key in opts) {
+            defaultOpts[key] = opts[key];
+        }
+    }
+
+    $.ajax(defaultOpts);
+}
+
+module.exports = ajaxAction;
 
 /***/ }),
 
@@ -29808,17 +29878,15 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/redux-thunk/lib/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/redux-thunk/lib/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./node_modules/redux-thunk/es/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/redux-thunk/es/index.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-exports.__esModule = true;
+__webpack_require__.r(__webpack_exports__);
 function createThunkMiddleware(extraArgument) {
   return function (_ref) {
     var dispatch = _ref.dispatch,
@@ -29838,7 +29906,7 @@ function createThunkMiddleware(extraArgument) {
 var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
-exports['default'] = thunk;
+/* harmony default export */ __webpack_exports__["default"] = (thunk);
 
 /***/ }),
 
@@ -30899,6 +30967,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
+/***/ "./reducers/get-user-default.js":
+/*!**************************************!*\
+  !*** ./reducers/get-user-default.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var deepCopy = __webpack_require__(/*! ../lib/common-deep-copy */ "./lib/common-deep-copy.js");
+
+var getUserDefault = function getUserDefault(originalState, action) {
+    //  eslint-disable-line
+    var newState = Object.assign ? Object.assign({}, action.payload) : deepCopy(action.payload);
+
+    return newState;
+};
+
+module.exports = getUserDefault;
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -30914,6 +31005,8 @@ var _require = __webpack_require__(/*! ../actions */ "./actions/index.js"),
 
 var initHomeFunc = __webpack_require__(/*! ./init-home */ "./reducers/init-home.js");
 
+var getUserDefault = __webpack_require__(/*! ./get-user-default */ "./reducers/get-user-default.js");
+
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -30921,6 +31014,8 @@ var reducers = function reducers() {
     switch (action.type) {
         case actionTypes.INIT_HOME:
             return initHomeFunc(state, action);
+        case actionTypes.GET_USER_DEFAULT:
+            return getUserDefault(state, action);
         default:
             return state;
     }
