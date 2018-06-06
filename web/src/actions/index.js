@@ -2,15 +2,20 @@
 
 const actionTypes = require('./action-types');
 
-const initHomeAction = require('./init-home');
-const initLoginModalAction = require('./init-login-modal');
+const getUserDefaultAction = require('./get-use-default');
+const updateRegisterFormAction = require('./update-register-form');
+const updateLoginFromAction = require('./update-login-form');
+const registerAction = require('./register');
+const loginAction = require('./login');
 
 const actions = {
     actionTypes,
 
-    initLoginModalAction,
-
-    initHomeAction,
+    getUserDefaultAction,
+    updateRegisterFormAction,
+    updateLoginFromAction,
+    registerAction,
+    loginAction,
 };
 
 module.exports = actions;

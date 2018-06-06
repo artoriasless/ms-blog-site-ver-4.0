@@ -34,6 +34,8 @@ const api = require('./api');
  */
 //  根据当前 session ，获取默认登录用户
 _router.get('/api/user/default', api.user.getUserDefault);
+//  退出登录
+_router.post('/api/user/logout', api.user.logout);
 //  登录
 _router.post('/api/user/login', api.user.login);
 //  注册

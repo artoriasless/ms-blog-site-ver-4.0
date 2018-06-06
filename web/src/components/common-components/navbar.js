@@ -4,7 +4,8 @@ const { connect } = require('react-redux');
 
 const UI_navbar = require('../ui-components/navbar');
 const actions = require('../../actions');
-const initHomeAction = actions.initHomeAction;
+
+const getUserDefaultAction = actions.getUserDefaultAction;
 
 const mapState2Props = (state, props) => ({ //  eslint-disable-line
     current: state.appReducer.current,
@@ -17,7 +18,7 @@ const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
 
         return (
             $.get(requestUrl, function(data) {
-                dispatch(initHomeAction(data));
+                dispatch(getUserDefaultAction(data));
             })
         );
     };

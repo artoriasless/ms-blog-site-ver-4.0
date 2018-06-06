@@ -35,14 +35,18 @@ class LoginModalBody extends React.Component {
                         className = "tab-pane fade show active"
                         role="tabpanel"
                     >
-                        <LoginForm/>
+                        <LoginForm
+                            updateLoginForm={ this.props.updateLoginForm }
+                        />
                     </div>
                     <div
                         id="content_register"
                         className = "tab-pane fade"
                         role="tabpanel"
                     >
-                        <RegisterForm/>
+                        <RegisterForm
+                            updateRegisterForm={ this.props.updateRegisterForm }
+                        />
                     </div>
                 </div>
             </div>
@@ -73,7 +77,7 @@ class SwitchButton extends React.Component {
                 <input
                     id="switchBtn"
                     checked="true"
-                    readOnly="true"
+                    readOnly="false"
                     type="checkbox"
                 />
             </div>

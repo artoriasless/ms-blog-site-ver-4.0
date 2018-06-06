@@ -21,8 +21,15 @@ class LoginModal extends React.Component {
                 >
                     <div className="modal-content">
                         <Header/>
-                        <Body/>
-                        <Footer/>
+                        <Body
+                            updateRegisterForm={ this.props.updateRegisterForm }
+                            updateLoginForm={ this.props.updateLoginForm }
+                        />
+                        <Footer
+                            register={ this.props.register }
+                            login={ this.props.login }
+                            cache={ this.props.cache }
+                        />
                     </div>
                 </div>
             </div>
