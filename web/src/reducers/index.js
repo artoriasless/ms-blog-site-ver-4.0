@@ -2,7 +2,7 @@
 
 const { actionTypes } = require('../actions');
 
-const getUserDefaultFunc = require('./get-user-default');
+const initUserInfoDefaultFunc = require('./init-user-info-default');
 const updateRegisterFormFunc = require('./update-register-form');
 const updateLoginFormFunc = require('./update-login-form');
 const registerFunc = require('./register');
@@ -11,7 +11,7 @@ const loginFunc = require('./login');
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
     case actionTypes.GET_USER_DEFAULT:
-        return getUserDefaultFunc(state, action);
+        return initUserInfoDefaultFunc(state, action);
 
     case actionTypes.UPDATE_REGISTER_FORM:
         return updateRegisterFormFunc(state, action);

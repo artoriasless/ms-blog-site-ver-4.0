@@ -112,34 +112,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./actions/get-use-default.js":
-/*!************************************!*\
-  !*** ./actions/get-use-default.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getUserDefault = function getUserDefault(data) {
-    var url = document.URL;
-    var reg = /^[^/]+\/\/[^/]+/;
-    var current = url.replace(reg, '');
-
-    return {
-        type: 'GET_USER_DEFAULT',
-        payload: {
-            current: current,
-            data: data
-        }
-    };
-};
-
-module.exports = getUserDefault;
-
-/***/ }),
-
 /***/ "./actions/index.js":
 /*!**************************!*\
   !*** ./actions/index.js ***!
@@ -152,7 +124,7 @@ module.exports = getUserDefault;
 
 var actionTypes = __webpack_require__(/*! ./action-types */ "./actions/action-types.js");
 
-var getUserDefaultAction = __webpack_require__(/*! ./get-use-default */ "./actions/get-use-default.js");
+var initUserInfoDefaultAction = __webpack_require__(/*! ./init-user-info-default */ "./actions/init-user-info-default.js");
 var updateRegisterFormAction = __webpack_require__(/*! ./update-register-form */ "./actions/update-register-form.js");
 var updateLoginFromAction = __webpack_require__(/*! ./update-login-form */ "./actions/update-login-form.js");
 var registerAction = __webpack_require__(/*! ./register */ "./actions/register.js");
@@ -161,7 +133,7 @@ var loginAction = __webpack_require__(/*! ./login */ "./actions/login.js");
 var actions = {
     actionTypes: actionTypes,
 
-    getUserDefaultAction: getUserDefaultAction,
+    initUserInfoDefaultAction: initUserInfoDefaultAction,
     updateRegisterFormAction: updateRegisterFormAction,
     updateLoginFromAction: updateLoginFromAction,
     registerAction: registerAction,
@@ -169,6 +141,34 @@ var actions = {
 };
 
 module.exports = actions;
+
+/***/ }),
+
+/***/ "./actions/init-user-info-default.js":
+/*!*******************************************!*\
+  !*** ./actions/init-user-info-default.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var initUserInfoDefault = function initUserInfoDefault(userInfo) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_USER_DEFAULT',
+        payload: {
+            current: current,
+            userInfo: userInfo
+        }
+    };
+};
+
+module.exports = initUserInfoDefault;
 
 /***/ }),
 
@@ -400,9 +400,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
     //  eslint-disable-line
     var ajaxRegister = function ajaxRegister(jsonData) {
         return function (dispatch) {
-            console.info('register', jsonData);
             var requestUrl = '/api/user/register';
             var successFunc = function successFunc(data) {
+                console.info('register', data);
                 dispatch(registerAction(data));
             };
             var failFunc = function failFunc(err) {
@@ -414,9 +414,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
     };
     var ajaxLogin = function ajaxLogin(jsonData) {
         return function (dispatch) {
-            console.info('login', jsonData);
             var requestUrl = '/api/user/login';
             var successFunc = function successFunc(data) {
+                console.info('login', data);
                 dispatch(loginAction(data));
             };
             var failFunc = function failFunc(err) {
@@ -463,33 +463,40 @@ module.exports = LoginModal;
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
+var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
 var UI_navbar = __webpack_require__(/*! ../ui-components/navbar */ "./components/ui-components/navbar.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
 
-var getUserDefaultAction = actions.getUserDefaultAction;
+var initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
 
 var mapState2Props = function mapState2Props(state, props) {
-    return { //  eslint-disable-line
-        current: state.appReducer.current,
-        data: state.appReducer.data
-    };
-};
+    return state.appReducer;
+}; //  eslint-disable-line
 
 var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
     //  eslint-disable-line
-    var ajaxInitUserInfo = function ajaxInitUserInfo() {
+    var ajaxInitUserInfoDefault = function ajaxInitUserInfoDefault() {
         return function (dispatch) {
             var requestUrl = '/api/user/default';
+            var successFunc = function successFunc(data) {
+                console.info('default', data);
+                dispatch(initUserInfoDefaultAction(data));
+            };
+            var failFunc = function failFunc(err) {
+                console.info(err);
+            };
+            var opts = {
+                type: 'get'
+            };
 
-            return $.get(requestUrl, function (data) {
-                dispatch(getUserDefaultAction(data));
-            });
+            return ajaxAction(requestUrl, {}, successFunc, failFunc, opts);
         };
     };
 
     return {
         initUserInfo: function initUserInfo() {
-            return dispatch(ajaxInitUserInfo());
+            return dispatch(ajaxInitUserInfoDefault());
         }
     };
 };
@@ -48360,29 +48367,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ "./reducers/get-user-default.js":
-/*!**************************************!*\
-  !*** ./reducers/get-user-default.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-var getUserDefault = function getUserDefault(originalState, action) {
-    //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
-
-    return newState;
-};
-
-module.exports = getUserDefault;
-
-/***/ }),
-
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -48396,7 +48380,7 @@ module.exports = getUserDefault;
 var _require = __webpack_require__(/*! ../actions */ "./actions/index.js"),
     actionTypes = _require.actionTypes;
 
-var getUserDefaultFunc = __webpack_require__(/*! ./get-user-default */ "./reducers/get-user-default.js");
+var initUserInfoDefaultFunc = __webpack_require__(/*! ./init-user-info-default */ "./reducers/init-user-info-default.js");
 var updateRegisterFormFunc = __webpack_require__(/*! ./update-register-form */ "./reducers/update-register-form.js");
 var updateLoginFormFunc = __webpack_require__(/*! ./update-login-form */ "./reducers/update-login-form.js");
 var registerFunc = __webpack_require__(/*! ./register */ "./reducers/register.js");
@@ -48408,7 +48392,7 @@ var reducers = function reducers() {
 
     switch (action.type) {
         case actionTypes.GET_USER_DEFAULT:
-            return getUserDefaultFunc(state, action);
+            return initUserInfoDefaultFunc(state, action);
 
         case actionTypes.UPDATE_REGISTER_FORM:
             return updateRegisterFormFunc(state, action);
@@ -48453,6 +48437,29 @@ module.exports = reducers;
     }
 
 */
+
+/***/ }),
+
+/***/ "./reducers/init-user-info-default.js":
+/*!********************************************!*\
+  !*** ./reducers/init-user-info-default.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+var initUserInfoDefault = function initUserInfoDefault(originalState, action) {
+    //  eslint-disable-line
+    var newState = _.merge(_.merge({}, originalState), action.payload);
+
+    return newState;
+};
+
+module.exports = initUserInfoDefault;
 
 /***/ }),
 

@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
+        uuid: {
+            type: DataTypes.STRING(100),
+            allowNull: false,
+            field: 'uuid',
+            comment: '不同于 id ，生成的唯一 uuid',
+        },
         userName: {
             type: DataTypes.STRING(50),
             allowNull: false,

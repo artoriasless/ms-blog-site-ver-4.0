@@ -1,18 +1,25 @@
 'use strict';
 
+const service = require('../../../service');
+const userService = service.userService;
+
 module.exports = {
     async getUserDefault(ctx) {
         const user = ctx.session.user || {};
 
         ctx.body = {
-            user,
+            success: true,
+            message: '',
+            data: user,
         };
     },
     async logout(ctx) {
-        const data = ctx.request.body;
+        ctx.session.user = {};
 
         ctx.body = {
             success: true,
+            message: '',
+            data: {},
         };
     },
     async login(ctx) {
@@ -24,6 +31,7 @@ module.exports = {
     },
     async register(ctx) {
         const data = ctx.request.body;
+        console.info(data);
 
         ctx.body = {
             success: true,

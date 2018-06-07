@@ -16,9 +16,9 @@ const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-l
 
 const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
     const ajaxRegister = jsonData => dispatch => {
-        console.info('register', jsonData);
         const requestUrl = '/api/user/register';
         const successFunc = function(data) {
+            console.info('register', data);
             dispatch(registerAction(data));
         };
         const failFunc = function(err) {
@@ -28,9 +28,9 @@ const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
     };
     const ajaxLogin = jsonData => dispatch => {
-        console.info('login', jsonData);
         const requestUrl = '/api/user/login';
         const successFunc = function(data) {
+            console.info('login', data);
             dispatch(loginAction(data));
         };
         const failFunc = function(err) {

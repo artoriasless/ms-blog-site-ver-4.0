@@ -1,6 +1,6 @@
 'use strict';
 
-const getUserDefault = (data) => {
+const initUserInfoDefault = userInfo => {
     const url = document.URL;
     const reg = /^[^/]+\/\/[^/]+/;
     const current = url.replace(reg, '');
@@ -9,9 +9,9 @@ const getUserDefault = (data) => {
         type: 'GET_USER_DEFAULT',
         payload: {
             current,
-            data,
+            userInfo,
         },
     });
 };
 
-module.exports = getUserDefault;
+module.exports = initUserInfoDefault;
