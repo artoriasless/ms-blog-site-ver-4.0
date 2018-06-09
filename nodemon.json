@@ -5,12 +5,13 @@
 		".gitignore",
 		"node_modules/**/node_modules",
 		"web/src",
-		"web/public",
 		"web/template"
 	],
 	"verbose": true,
 	"execMap": {},
-	"watch": [],
+	"watch": [
+		"web/public"
+	],
 	"env": {},
-	"ext": "js json css sass less postcss"
+	"ext": "js json css sass less postcss jpg jpeg png gif"
 }

@@ -22,66 +22,6 @@ function stanAlert() {
     var alertContent = options.content || '';
     var autoClose  = Boolean((options.autoClose === undefined) ? true : options.autoClose);
     var shownExpires = Number((options.shownExpires === undefined) ? 3 : options.shownExpires);
-    var styleDom = '' +
-        `
-        <style class="stan-alert">
-            .stan-alert-container {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 9999999;
-                background-color: rgba(255,255,255,0.5);
-            }
-            .stan-alert-container .alert {
-                position: absolute;
-                width: 750px;
-                height: 100px;
-                top: 50%;
-                left: 50%;
-                padding: 25px 25px 15px;
-                margin-left: -375px;
-                margin-top: -100px;
-            }
-            .stan-alert-container .alert .close {
-                position: absolute;
-                display:  block;
-                width: 25px;
-                height: 25px;
-                line-height: 25px;
-                text-align: center;
-                right: 0;
-                top: 0;
-            }
-            @media (min-width: 768px) and (max-width: 979px) {
-                .stan-alert-container .alert {
-                    width: 600px;
-                    height: 150px;
-                    margin-left: -300px;
-                    margin-top: -75px;
-                }
-            }
-
-            @media (max-width: 767px) {
-                .stan-alert-container .alert {
-                    width: 500px;
-                    height: 200px;
-                    margin-left: -250px;
-                    margin-top: -100px;
-                }
-            }
-
-            @media (max-width: 480px) {
-                .stan-alert-container .alert {
-                    width: 250px;
-                    height: 250px;
-                    margin-left: -125px;
-                    margin-top: -125px;
-                }
-            }
-        </style>
-        `;
     var alertDom = '' +
         '<div class="stan-alert-container">' +
             '<div class="alert alert-' + alertType + '" role="alert">' +
@@ -98,9 +38,6 @@ function stanAlert() {
             $(this).remove();
         });
     });
-    if ($('style.stan-alert').length === 0) {
-        $('body').append(styleDom);
-    }
 
     if (autoClose) {
         setTimeout(function() {
