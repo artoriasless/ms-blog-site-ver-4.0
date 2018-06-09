@@ -7,6 +7,7 @@ const updateRegisterFormAction = require('./update-register-form');
 const updateLoginFromAction = require('./update-login-form');
 const registerAction = require('./register');
 const loginAction = require('./login');
+const logoutAction = require('./logout');
 
 const actions = {
     actionTypes,
@@ -16,6 +17,7 @@ const actions = {
     updateLoginFromAction,
     registerAction,
     loginAction,
+    logoutAction,
 };
 
 module.exports = actions;
