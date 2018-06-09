@@ -1,9 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
-
 const login = (originalState, action) => {   //  eslint-disable-line
-    const newState = _.merge(_.merge({}, originalState), action.payload);
+    const newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
 
     return newState;
 };

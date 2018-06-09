@@ -30,11 +30,21 @@ class NavbarRight extends React.Component {
                     aria-label="Toggle navigation">
                     <i className="fa fa-bars"></i>
                 </a>
-                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                <div
+                    id="navbarNavDropdown"
+                    className="collapse navbar-collapse"
+                >
                     <ul className="navbar-nav">
                         <NavbarRightCatalogue/>
-                        <NavbarRightUser userInfo = { userInfo }/>
-                        <NavbarRightLogout userInfo = { userInfo }/>
+                        <NavbarRightUser userInfo={ userInfo }/>
+                        {
+                            userInfo.id && userInfo.uuid && userInfo.userName ? (
+                                <NavbarRightLogout
+                                    userInfo={ userInfo }
+                                    logout={ this.props.logout }
+                                />
+                            ) : null
+                        }
                     </ul>
                 </div>
             </nav>

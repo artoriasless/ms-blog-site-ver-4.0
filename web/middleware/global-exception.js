@@ -20,8 +20,15 @@ module.exports = async (ctx, next) => {
             throw(error);
         }
     } catch (err) {
-        const filePath = path.resolve(__dirname, `../template/status/${err.code}.html`);
-        const data = fs.readFileSync(filePath).toString();
+        const errorType = err.code || 'unknown';
+        const filePath = path.resolve(__dirname, `../template/status/${errorType}.html`);
+        var data;
+
+        if (errorArr.indexOf(errorType) === -1) {
+            data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.toString());
+        } else {
+            data = fs.readFileSync(filePath).toString();
+        }
 
         ctx.body = data;
     }

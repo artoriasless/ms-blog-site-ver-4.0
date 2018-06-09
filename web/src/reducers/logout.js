@@ -1,6 +1,6 @@
 'use strict';
 
-const register = (originalState, action) => {   //  eslint-disable-line
+const logout = (originalState, action) => {   //  eslint-disable-line
     const newState = JSON.parse(JSON.stringify(originalState));
 
     newState.current = action.payload.current;
@@ -9,4 +9,4 @@ const register = (originalState, action) => {   //  eslint-disable-line
     return newState;
 };
 
-module.exports = register;
+module.exports = logout;

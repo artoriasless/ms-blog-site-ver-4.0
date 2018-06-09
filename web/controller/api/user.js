@@ -1,12 +1,14 @@
 'use strict';
 
 const service = require('../../../service');
-const userService = service.userService;
+const userService = service.user;
 
 module.exports = {
     async getUserDefault(ctx) {
-        const user = ctx.session.user || {};
+        const loginUser = ctx.session.user || {};
+        const user = await userService.findById(Number(loginUser.id)) || {};
 
+        ctx.session.user = user;
         ctx.body = {
             success: true,
             message: '',
@@ -18,7 +20,7 @@ module.exports = {
 
         ctx.body = {
             success: true,
-            message: '',
+            message: 'logout success!',
             data: {},
         };
     },

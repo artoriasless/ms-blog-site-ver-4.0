@@ -38,7 +38,7 @@ Object.keys(models).forEach(key => {
 
 if (process.env.NODE_ENV === 'development') {
     db.sequelize.sync({
-        force: true,
+        // force: true, //  for local test,avoid lost test data
     });
 }
 

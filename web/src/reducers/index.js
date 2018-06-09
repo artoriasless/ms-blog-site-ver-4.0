@@ -7,6 +7,7 @@ const updateRegisterFormFunc = require('./update-register-form');
 const updateLoginFormFunc = require('./update-login-form');
 const registerFunc = require('./register');
 const loginFunc = require('./login');
+const logoutFunc = require('./logout');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -24,6 +25,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.LOGIN:
         return loginFunc(state, action);
+
+    case actionTypes.LOGOUT:
+        return logoutFunc(state, action);
 
     default:
         return state;

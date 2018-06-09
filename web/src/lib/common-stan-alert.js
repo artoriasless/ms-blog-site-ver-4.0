@@ -8,6 +8,7 @@
  *      {string}  [content]      （可选）指定 alert 内容的正文
  *      {boolean} [autoClose]    （可选）指定 alert 是否自动隐藏，默认 true ，传入的参数会被类型转换
  *      {number}  [shownExpires] （可选）指定 alert 多少秒后自动隐藏，默认 3 秒，若传入的 autoClose 为 false ，此参数将不生效
+ *      {string}  [textAlign]    （可选）指定 alert 中主体内容的文案对齐方式，默认 left ，可传入值为 left/center/right
  */
 function stanAlert() {
     var typeMap = {
@@ -16,21 +17,27 @@ function stanAlert() {
         'warning': 'warning',
         'success': 'success',
     };
+    var alignMap = {
+        'left': 'left',
+        'center': 'center',
+        'right': 'right',
+    };
     var options = arguments[0] || {};
     var alertType = options.type ? (typeMap[options.type] || 'danger') : 'danger';
     var alertTitle = options.title || '';
     var alertContent = options.content || '';
     var autoClose  = Boolean((options.autoClose === undefined) ? true : options.autoClose);
     var shownExpires = Number((options.shownExpires === undefined) ? 3 : options.shownExpires);
+    var textAlign = options.textAlign ? (alignMap[options.textAlign] || 'left') : 'left';
     var alertDom = '' +
-        '<div class="stan-alert-container">' +
-            '<div class="alert alert-' + alertType + '" role="alert">' +
-                '<button type="button" class="close"><span aria-hidden="true">&times;</span></button>' +
-                '<strong>' + alertTitle + '</strong>' +
-                '<br/>' +
-                alertContent +
-            '</div>' +
-        '</div>';
+        `<div class="stan-alert-container">
+            <div class="alert alert-${alertType}" role="alert">
+                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                <strong>${alertTitle}</strong>
+                <br/>
+                <div class="text-${textAlign}">${alertContent}</div>
+            </div>
+        </div>`;
 
     $('body').append(alertDom);
     $('.stan-alert-container button.close').on('click', function() {

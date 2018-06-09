@@ -211,18 +211,18 @@ code {
 @media (max-width: 767px) {
     .stan-alert-container .alert {
         width: 500px;
-        height: 200px;
+        height: 150px;
         margin-left: -250px;
-        margin-top: -100px;
+        margin-top: -75px;
     }
 }
 
 @media (max-width: 480px) {
     .stan-alert-container .alert {
         width: 250px;
-        height: 250px;
+        height: 150px;
         margin-left: -125px;
-        margin-top: -125px;
+        margin-top: -75px;
     }
 }
 
@@ -338,6 +338,15 @@ code {
                     padding: 0 1rem;
                     text-align: center;
                     cursor: pointer;
+                }
+
+.app .page-section-header .page-section-header-container .navbar .user-center-link:before {
+                        content: "Welcom, ";
+                        color: #fd7e14;
+                    }
+
+.app .page-section-header .page-section-header-container .navbar .logout-link {
+                    color: #dc3545;
                 }
 
 /* 小屏设备 */

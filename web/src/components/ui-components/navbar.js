@@ -13,13 +13,16 @@ class Navbar extends React.Component {
     }
 
     render() {
-        const userInfo = this.props.data ? this.props.data.user : {};
+        const userInfo = this.props.userInfo || {};
 
         return (
             <div className="page-section-header">
                 <div className="page-section-header-container">
                     <NavbarLeft/>
-                    <NavbarRight userInfo = { userInfo }/>
+                    <NavbarRight
+                        userInfo={ userInfo }
+                        logout={ this.props.logout }
+                    />
                 </div>
             </div>
         );

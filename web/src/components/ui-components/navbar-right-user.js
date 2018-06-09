@@ -18,7 +18,7 @@ class NavbarRightUser extends React.Component {
         const userInfo = this.props.userInfo;
         const userName = userInfo.userName || 'Guest,please login...';
         const hrefLink = userInfo.userName ? '/user' : 'javascript:;';
-        const domClass = userInfo.userName ? 'nav-link' : 'nav-link login-link';
+        const domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
 
         return (
             <li className="nav-item">

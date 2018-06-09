@@ -1,17 +1,9 @@
 {
 	"restartable": "rs",
-	"ignore": [
-		".git",
-		".gitignore",
-		"node_modules/**/node_modules",
-		"web/src",
-		"web/template"
-	],
+	"ignore": [],
 	"verbose": true,
 	"execMap": {},
-	"watch": [
-		"web/public"
-	],
+	"watch": [],
 	"env": {},
 	"ext": "js json css sass less postcss jpg jpeg png gif"
 }

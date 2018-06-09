@@ -101,13 +101,15 @@ var UPDATE_REGISTER_FORM = 'UPDATE_REGISTER_FORM';
 var UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM';
 var REGISTER = 'REGISTER';
 var LOGIN = 'LOGIN';
+var LOGOUT = 'LOGOUT';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
     UPDATE_REGISTER_FORM: UPDATE_REGISTER_FORM,
     UPDATE_LOGIN_FORM: UPDATE_LOGIN_FORM,
     REGISTER: REGISTER,
-    LOGIN: LOGIN
+    LOGIN: LOGIN,
+    LOGOUT: LOGOUT
 };
 
 /***/ }),
@@ -129,6 +131,7 @@ var updateRegisterFormAction = __webpack_require__(/*! ./update-register-form */
 var updateLoginFromAction = __webpack_require__(/*! ./update-login-form */ "./actions/update-login-form.js");
 var registerAction = __webpack_require__(/*! ./register */ "./actions/register.js");
 var loginAction = __webpack_require__(/*! ./login */ "./actions/login.js");
+var logoutAction = __webpack_require__(/*! ./logout */ "./actions/logout.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -137,7 +140,8 @@ var actions = {
     updateRegisterFormAction: updateRegisterFormAction,
     updateLoginFromAction: updateLoginFromAction,
     registerAction: registerAction,
-    loginAction: loginAction
+    loginAction: loginAction,
+    logoutAction: logoutAction
 };
 
 module.exports = actions;
@@ -197,6 +201,34 @@ var login = function login(userInfo) {
 };
 
 module.exports = login;
+
+/***/ }),
+
+/***/ "./actions/logout.js":
+/*!***************************!*\
+  !*** ./actions/logout.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var logout = function logout(userInfo) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'LOGOUT',
+        payload: {
+            current: current,
+            userInfo: userInfo
+        }
+    };
+};
+
+module.exports = logout;
 
 /***/ }),
 
@@ -458,17 +490,18 @@ module.exports = LoginModal;
 
 "use strict";
 
-/* global $ */
 
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 var UI_navbar = __webpack_require__(/*! ../ui-components/navbar */ "./components/ui-components/navbar.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
 
 var initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
+var logoutAction = actions.logoutAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -478,6 +511,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
     return { //  eslint-disable-line
         initUserInfo: function initUserInfo() {
             return dispatch(ajaxInitUserInfoDefault());
+        },
+        logout: function logout() {
+            return dispatch(ajaxLogout());
         }
     };
 };
@@ -487,18 +523,41 @@ var Navbar = connect(mapState2Props, mapDispatch2Props)(UI_navbar);
 function ajaxInitUserInfoDefault() {
     return function (dispatch) {
         var requestUrl = '/api/user/default';
-        var successFunc = function successFunc(data) {
-            console.info('default', data);
-            dispatch(initUserInfoDefaultAction(data));
+        var successFunc = function successFunc(result) {
+            dispatch(initUserInfoDefaultAction(result.data));
         };
         var failFunc = function failFunc(err) {
-            console.info(err);
+            console.info(err); //  eslint-disable-line
         };
         var opts = {
             type: 'get'
         };
 
         return ajaxAction(requestUrl, {}, successFunc, failFunc, opts);
+    };
+}
+
+function ajaxLogout() {
+    return function (dispatch) {
+        var requestUrl = '/api/user/logout';
+        var successFunc = function successFunc(result) {
+            stanAlert({
+                type: 'success',
+                content: result.message,
+                textAlign: 'center'
+            });
+            dispatch(logoutAction(result.data));
+        };
+        var failFunc = function failFunc(err) {
+            stanAlert({
+                type: 'danger',
+                title: 'Error!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, {}, successFunc, failFunc);
     };
 }
 
@@ -1257,45 +1316,29 @@ var LogoutLink = function (_React$Component) {
     function LogoutLink() {
         _classCallCheck(this, LogoutLink);
 
-        var _this = _possibleConstructorReturn(this, (LogoutLink.__proto__ || Object.getPrototypeOf(LogoutLink)).call(this));
-
-        _this.logout = _this.logout.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (LogoutLink.__proto__ || Object.getPrototypeOf(LogoutLink)).apply(this, arguments));
     }
 
     _createClass(LogoutLink, [{
-        key: 'logout',
-        value: function logout() {
-            //  TO DELETE
-            console.info('logout'); //  eslint-disable-line
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var userInfo = this.props.userInfo;
-
-            if (userInfo.userName) {
-                //  用户信息里存在用户名，表明当前用户已登录
-                return React.createElement(
-                    'li',
-                    { className: 'nav-item' },
-                    React.createElement(
-                        'a',
-                        {
-                            className: 'nav-link logout-link',
-                            href: 'javascript:;',
-                            onClick: function onClick() {
-                                return _this2.logout();
-                            }
-                        },
-                        'Logout'
-                    )
-                );
-            } else {
-                return null;
-            }
+            return React.createElement(
+                'li',
+                { className: 'nav-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: 'nav-link logout-link',
+                        href: 'javascript:;',
+                        onClick: function onClick() {
+                            return _this2.props.logout();
+                        }
+                    },
+                    'Logout'
+                )
+            );
         }
     }]);
 
@@ -1353,7 +1396,7 @@ var NavbarRightUser = function (_React$Component) {
             var userInfo = this.props.userInfo;
             var userName = userInfo.userName || 'Guest,please login...';
             var hrefLink = userInfo.userName ? '/user' : 'javascript:;';
-            var domClass = userInfo.userName ? 'nav-link' : 'nav-link login-link';
+            var domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
 
             return React.createElement(
                 'li',
@@ -1445,13 +1488,19 @@ var NavbarRight = function (_React$Component) {
                 ),
                 React.createElement(
                     'div',
-                    { className: 'collapse navbar-collapse', id: 'navbarNavDropdown' },
+                    {
+                        id: 'navbarNavDropdown',
+                        className: 'collapse navbar-collapse'
+                    },
                     React.createElement(
                         'ul',
                         { className: 'navbar-nav' },
                         React.createElement(NavbarRightCatalogue, null),
                         React.createElement(NavbarRightUser, { userInfo: userInfo }),
-                        React.createElement(NavbarRightLogout, { userInfo: userInfo })
+                        userInfo.id && userInfo.uuid && userInfo.userName ? React.createElement(NavbarRightLogout, {
+                            userInfo: userInfo,
+                            logout: this.props.logout
+                        }) : null
                     )
                 )
             );
@@ -1508,7 +1557,7 @@ var Navbar = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var userInfo = this.props.data ? this.props.data.user : {};
+            var userInfo = this.props.userInfo || {};
 
             return React.createElement(
                 'div',
@@ -1517,7 +1566,10 @@ var Navbar = function (_React$Component) {
                     'div',
                     { className: 'page-section-header-container' },
                     React.createElement(NavbarLeft, null),
-                    React.createElement(NavbarRight, { userInfo: userInfo })
+                    React.createElement(NavbarRight, {
+                        userInfo: userInfo,
+                        logout: this.props.logout
+                    })
                 )
             );
         }
@@ -1885,6 +1937,68 @@ function initNavbarBG() {
 }
 
 module.exports = initNavbarBG;
+
+/***/ }),
+
+/***/ "./lib/common-stan-alert.js":
+/*!**********************************!*\
+  !*** ./lib/common-stan-alert.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+/**
+ * 通用的 alert 方法，警告内容支持 html 格式标签
+ * @param {object} [options] （可选）相关参数、设定
+ *      {string}  [type]         （可选）指定 alert 类型：可选 info、danger、warning、success，默认为 danger
+ *      {string}  [title]        （可选）指定 alert 内容的小标题
+ *      {string}  [content]      （可选）指定 alert 内容的正文
+ *      {boolean} [autoClose]    （可选）指定 alert 是否自动隐藏，默认 true ，传入的参数会被类型转换
+ *      {number}  [shownExpires] （可选）指定 alert 多少秒后自动隐藏，默认 3 秒，若传入的 autoClose 为 false ，此参数将不生效
+ *      {string}  [textAlign]    （可选）指定 alert 中主体内容的文案对齐方式，默认 left ，可传入值为 left/center/right
+ */
+
+function stanAlert() {
+    var typeMap = {
+        'info': 'info',
+        'danger': 'danger',
+        'warning': 'warning',
+        'success': 'success'
+    };
+    var alignMap = {
+        'left': 'left',
+        'center': 'center',
+        'right': 'right'
+    };
+    var options = arguments[0] || {};
+    var alertType = options.type ? typeMap[options.type] || 'danger' : 'danger';
+    var alertTitle = options.title || '';
+    var alertContent = options.content || '';
+    var autoClose = Boolean(options.autoClose === undefined ? true : options.autoClose);
+    var shownExpires = Number(options.shownExpires === undefined ? 3 : options.shownExpires);
+    var textAlign = options.textAlign ? alignMap[options.textAlign] || 'left' : 'left';
+    var alertDom = '' + ('<div class="stan-alert-container">\n            <div class="alert alert-' + alertType + '" role="alert">\n                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>\n                <strong>' + alertTitle + '</strong>\n                <br/>\n                <div class="text-' + textAlign + '">' + alertContent + '</div>\n            </div>\n        </div>');
+
+    $('body').append(alertDom);
+    $('.stan-alert-container button.close').on('click', function () {
+        $('.stan-alert-container').fadeOut('fast', function () {
+            $(this).remove();
+        });
+    });
+
+    if (autoClose) {
+        setTimeout(function () {
+            $('.stan-alert-container').fadeOut('slow', function () {
+                $(this).remove();
+            });
+        }, shownExpires * 1000);
+    }
+}
+
+module.exports = stanAlert;
 
 /***/ }),
 
@@ -48384,6 +48498,7 @@ var updateRegisterFormFunc = __webpack_require__(/*! ./update-register-form */ "
 var updateLoginFormFunc = __webpack_require__(/*! ./update-login-form */ "./reducers/update-login-form.js");
 var registerFunc = __webpack_require__(/*! ./register */ "./reducers/register.js");
 var loginFunc = __webpack_require__(/*! ./login */ "./reducers/login.js");
+var logoutFunc = __webpack_require__(/*! ./logout */ "./reducers/logout.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -48404,6 +48519,9 @@ var reducers = function reducers() {
 
         case actionTypes.LOGIN:
             return loginFunc(state, action);
+
+        case actionTypes.LOGOUT:
+            return logoutFunc(state, action);
 
         default:
             return state;
@@ -48449,11 +48567,12 @@ module.exports = reducers;
 "use strict";
 
 
-var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
 var initUserInfoDefault = function initUserInfoDefault(originalState, action) {
     //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
 
     return newState;
 };
@@ -48472,16 +48591,41 @@ module.exports = initUserInfoDefault;
 "use strict";
 
 
-var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
 var login = function login(originalState, action) {
     //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
 
     return newState;
 };
 
 module.exports = login;
+
+/***/ }),
+
+/***/ "./reducers/logout.js":
+/*!****************************!*\
+  !*** ./reducers/logout.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var logout = function logout(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
+
+    return newState;
+};
+
+module.exports = logout;
 
 /***/ }),
 
@@ -48495,11 +48639,12 @@ module.exports = login;
 "use strict";
 
 
-var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
 var register = function register(originalState, action) {
     //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
 
     return newState;
 };
@@ -48522,7 +48667,10 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 var updateLoginForm = function updateLoginForm(originalState, action) {
     //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache.login = action.payload.cache.login;
 
     return newState;
 };
@@ -48545,7 +48693,10 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 var updateRegisterForm = function updateRegisterForm(originalState, action) {
     //  eslint-disable-line
-    var newState = _.merge(_.merge({}, originalState), action.payload);
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache.register = action.payload.cache.register;
 
     return newState;
 };
