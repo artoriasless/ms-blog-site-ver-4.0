@@ -11,8 +11,17 @@ const initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
-const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
-    const ajaxInitUserInfoDefault = () => dispatch => {
+const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
+    initUserInfo: () => dispatch(ajaxInitUserInfoDefault()),
+});
+
+const Navbar = connect(
+    mapState2Props,
+    mapDispatch2Props
+)(UI_navbar);
+
+function ajaxInitUserInfoDefault() {
+    return (dispatch => {
         const requestUrl = '/api/user/default';
         const successFunc = function(data) {
             console.info('default', data);
@@ -26,16 +35,7 @@ const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, {}, successFunc, failFunc, opts);
-    };
-
-    return ({
-        initUserInfo: () => dispatch(ajaxInitUserInfoDefault()),
     });
-};
-
-const Navbar = connect(
-    mapState2Props,
-    mapDispatch2Props
-)(UI_navbar);
+}
 
 module.exports = Navbar;

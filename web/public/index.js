@@ -397,37 +397,7 @@ var mapState2Props = function mapState2Props(state, props) {
 }; //  eslint-disable-line
 
 var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
-    //  eslint-disable-line
-    var ajaxRegister = function ajaxRegister(jsonData) {
-        return function (dispatch) {
-            var requestUrl = '/api/user/register';
-            var successFunc = function successFunc(data) {
-                console.info('register', data);
-                dispatch(registerAction(data));
-            };
-            var failFunc = function failFunc(err) {
-                console.info(err);
-            };
-
-            return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
-        };
-    };
-    var ajaxLogin = function ajaxLogin(jsonData) {
-        return function (dispatch) {
-            var requestUrl = '/api/user/login';
-            var successFunc = function successFunc(data) {
-                console.info('login', data);
-                dispatch(loginAction(data));
-            };
-            var failFunc = function failFunc(err) {
-                console.info(err);
-            };
-
-            return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
-        };
-    };
-
-    return {
+    return { //  eslint-disable-line
         updateRegisterForm: function updateRegisterForm(formData) {
             return dispatch(updateRegisterFormAction(formData));
         },
@@ -444,6 +414,36 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
 };
 
 var LoginModal = connect(mapState2Props, mapDispatch2Props)(UI_loginModal);
+
+function ajaxRegister(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/user/register';
+        var successFunc = function successFunc(data) {
+            console.info('register', data);
+            dispatch(registerAction(data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err);
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+function ajaxLogin(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/user/login';
+        var successFunc = function successFunc(data) {
+            console.info('login', data);
+            dispatch(loginAction(data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err);
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
 
 module.exports = LoginModal;
 
@@ -475,26 +475,7 @@ var mapState2Props = function mapState2Props(state, props) {
 }; //  eslint-disable-line
 
 var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
-    //  eslint-disable-line
-    var ajaxInitUserInfoDefault = function ajaxInitUserInfoDefault() {
-        return function (dispatch) {
-            var requestUrl = '/api/user/default';
-            var successFunc = function successFunc(data) {
-                console.info('default', data);
-                dispatch(initUserInfoDefaultAction(data));
-            };
-            var failFunc = function failFunc(err) {
-                console.info(err);
-            };
-            var opts = {
-                type: 'get'
-            };
-
-            return ajaxAction(requestUrl, {}, successFunc, failFunc, opts);
-        };
-    };
-
-    return {
+    return { //  eslint-disable-line
         initUserInfo: function initUserInfo() {
             return dispatch(ajaxInitUserInfoDefault());
         }
@@ -502,6 +483,24 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
 };
 
 var Navbar = connect(mapState2Props, mapDispatch2Props)(UI_navbar);
+
+function ajaxInitUserInfoDefault() {
+    return function (dispatch) {
+        var requestUrl = '/api/user/default';
+        var successFunc = function successFunc(data) {
+            console.info('default', data);
+            dispatch(initUserInfoDefaultAction(data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err);
+        };
+        var opts = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, {}, successFunc, failFunc, opts);
+    };
+}
 
 module.exports = Navbar;
 

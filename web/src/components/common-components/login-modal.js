@@ -14,8 +14,20 @@ const loginAction = actions.loginAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
-const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
-    const ajaxRegister = jsonData => dispatch => {
+const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
+    updateRegisterForm: formData => dispatch(updateRegisterFormAction(formData)),
+    updateLoginForm: formData => dispatch(updateLoginFormAction(formData)),
+    register: jsonData => dispatch(ajaxRegister(jsonData)),
+    login: jsonData => dispatch(ajaxLogin(jsonData)),
+});
+
+const LoginModal = connect(
+    mapState2Props,
+    mapDispatch2Props
+)(UI_loginModal);
+
+function ajaxRegister(jsonData) {
+    return (dispatch => {
         const requestUrl = '/api/user/register';
         const successFunc = function(data) {
             console.info('register', data);
@@ -26,8 +38,11 @@ const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
-    };
-    const ajaxLogin = jsonData => dispatch => {
+    });
+}
+
+function ajaxLogin(jsonData) {
+    return (dispatch => {
         const requestUrl = '/api/user/login';
         const successFunc = function(data) {
             console.info('login', data);
@@ -38,19 +53,7 @@ const mapDispatch2Props = (dispatch, props) => {    //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
-    };
-
-    return ({
-        updateRegisterForm: formData => dispatch(updateRegisterFormAction(formData)),
-        updateLoginForm: formData => dispatch(updateLoginFormAction(formData)),
-        register: jsonData => dispatch(ajaxRegister(jsonData)),
-        login: jsonData => dispatch(ajaxLogin(jsonData)),
     });
-};
-
-const LoginModal = connect(
-    mapState2Props,
-    mapDispatch2Props
-)(UI_loginModal);
+}
 
 module.exports = LoginModal;
