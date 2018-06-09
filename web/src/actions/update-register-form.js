@@ -6,7 +6,7 @@ const updateRegisterForm = formData => {
     const current = url.replace(reg, '');
 
     return ({
-        type: 'REGISTER',
+        type: 'UPDATE_REGISTER_FORM',
         payload: {
             current,
             cache: {

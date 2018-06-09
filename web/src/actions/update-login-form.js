@@ -6,7 +6,7 @@ const updateLoginForm = formData => {
     const current = url.replace(reg, '');
 
     return ({
-        type: 'LOGIN',
+        type: 'UPDATE_LOGIN_FORM',
         payload: {
             current,
             cache: {
