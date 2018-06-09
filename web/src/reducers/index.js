@@ -1,6 +1,6 @@
 'use strict';
 
-const { actionTypes } = require('../actions');
+const { actionTypes } = require('/actions');
 
 const initUserInfoDefaultFunc = require('./init-user-info-default');
 const updateRegisterFormFunc = require('./update-register-form');

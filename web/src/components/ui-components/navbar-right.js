@@ -1,11 +1,11 @@
 'use strict';
 /* eslint-disable */
 const React = require('react');
+
 const NavbarRightCatalogue = require('./navbar-right-catalogue');
 const NavbarRightUser = require('./navbar-right-user');
 const NavbarRightLogout = require('./navbar-right-logout');
 /* eslint-disable */
-
 class NavbarRight extends React.Component {
     componentDidMount() {
         /* 组件初始化时，添加事件托管，点击非 navbar-collapse 的位置隐藏 navbar 下拉菜单 */

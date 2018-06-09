@@ -276,7 +276,7 @@ var updateLoginForm = function updateLoginForm(formData) {
     var current = url.replace(reg, '');
 
     return {
-        type: 'LOGIN',
+        type: 'UPDATE_LOGIN_FORM',
         payload: {
             current: current,
             cache: {
@@ -306,7 +306,7 @@ var updateRegisterForm = function updateRegisterForm(formData) {
     var current = url.replace(reg, '');
 
     return {
-        type: 'REGISTER',
+        type: 'UPDATE_REGISTER_FORM',
         payload: {
             current: current,
             cache: {
@@ -416,9 +416,9 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 
-var UI_loginModal = __webpack_require__(/*! ../ui-components/login-modal */ "./components/ui-components/login-modal.js");
-
+var UI_loginModal = __webpack_require__(/*! ../../components/ui-components/login-modal */ "./components/ui-components/login-modal.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
+
 var updateRegisterFormAction = actions.updateRegisterFormAction;
 var updateLoginFormAction = actions.updateLoginFromAction;
 var registerAction = actions.registerAction;
@@ -497,7 +497,7 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
-var UI_navbar = __webpack_require__(/*! ../ui-components/navbar */ "./components/ui-components/navbar.js");
+var UI_navbar = __webpack_require__(/*! ../../components/ui-components/navbar */ "./components/ui-components/navbar.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
 
 var initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
@@ -574,7 +574,7 @@ module.exports = Navbar;
 
 "use strict";
 
-/* global $ */
+/* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -585,7 +585,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* eslint-disable */
+
 var LoginForm = __webpack_require__(/*! ./login-modal-login-form */ "./components/ui-components/login-modal-login-form.js");
 var RegisterForm = __webpack_require__(/*! ./login-modal-register-form */ "./components/ui-components/login-modal-register-form.js");
 
@@ -731,6 +731,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
 var LoginModalFooter = function (_React$Component) {
     _inherits(LoginModalFooter, _React$Component);
 
@@ -747,16 +749,68 @@ var LoginModalFooter = function (_React$Component) {
     _createClass(LoginModalFooter, [{
         key: 'submitValidate',
         value: function submitValidate(type, formData) {
+            var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            var pwdReg = /^\S{10,18}$/;
+            var alertInfo = {
+                title: 'Warning!',
+                email: {
+                    null: 'please type the email address!',
+                    illegal: 'please type legal email address!'
+                },
+                password: {
+                    null: 'please type the password!',
+                    illegal: 'please type legal password!<br/>pwd length from 10 to 16.'
+                },
+                passwordConfirm: {
+                    null: 'please retype the password to check!',
+                    illegal: 'the password to confirm is inconsistent!'
+                }
+            };
+
             if (!formData.email) {
+                stanAlert({
+                    title: alertInfo.title,
+                    content: alertInfo.email.null
+                });
+
+                return false;
+            } else if (!emailReg.test(formData.email)) {
+                stanAlert({
+                    title: alertInfo.title,
+                    content: alertInfo.email.illegal
+                });
+
                 return false;
             } else if (!formData.password) {
+                stanAlert({
+                    title: alertInfo.title,
+                    content: alertInfo.password.null
+                });
+
+                return false;
+            } else if (!pwdReg.test(formData.password)) {
+                stanAlert({
+                    title: alertInfo.title,
+                    content: alertInfo.password.illegal
+                });
+
                 return false;
             }
             //  如果是注册，需要再校验确认的模态框
             if (type === 'register') {
                 if (!formData.passwordConfirm) {
+                    stanAlert({
+                        title: alertInfo.title,
+                        content: alertInfo.passwordConfirm.null
+                    });
+
                     return false;
                 } else if (formData.password !== formData.passwordConfirm) {
+                    stanAlert({
+                        title: alertInfo.title,
+                        content: alertInfo.passwordConfirm.illegal
+                    });
+
                     return false;
                 }
             }
@@ -774,11 +828,11 @@ var LoginModalFooter = function (_React$Component) {
             var submitType = activeTabPane === 'content_login' ? 'login' : 'register';
 
             if (submitType === 'login') {
-                if (this.submitValidate('login', cache.login)) {
+                if (this.submitValidate('login', cache.login || {})) {
                     login(cache.login);
                 }
             } else if (submitType === 'register') {
-                if (this.submitValidate('register', cache.register)) {
+                if (this.submitValidate('register', cache.register || {})) {
                     register(cache.register);
                 }
             }
@@ -916,9 +970,11 @@ var LoginForm = function (_React$Component) {
             var $email = reactDom.findDOMNode(this.refs.login_email);
             var $pwd = reactDom.findDOMNode(this.refs.login_password);
             var formData = {
-                email: $email.value,
-                password: $pwd.value
+                email: $email.value.trim(),
+                password: $pwd.value.trim()
             };
+            $email.value = formData.email;
+            $pwd.value = formData.password;
 
             updateLoginForm(formData);
         }
@@ -1025,10 +1081,13 @@ var RegisterForm = function (_React$Component) {
             var $pwd = reactDom.findDOMNode(this.refs.register_password);
             var $pwdConfirm = reactDom.findDOMNode(this.refs.register_passwordConfirm);
             var formData = {
-                email: $email.value,
-                password: $pwd.value,
-                passwordConfirm: $pwdConfirm.value
+                email: $email.value.trim(),
+                password: $pwd.value.trim(),
+                passwordConfirm: $pwdConfirm.value.trim()
             };
+            $email.value = formData.email;
+            $pwd.value = formData.password;
+            $pwdConfirm.value = formData.passwordConfirm;
 
             updateRegisterForm(formData);
         }
@@ -1443,6 +1502,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 var NavbarRightCatalogue = __webpack_require__(/*! ./navbar-right-catalogue */ "./components/ui-components/navbar-right-catalogue.js");
 var NavbarRightUser = __webpack_require__(/*! ./navbar-right-user */ "./components/ui-components/navbar-right-user.js");
 var NavbarRightLogout = __webpack_require__(/*! ./navbar-right-logout */ "./components/ui-components/navbar-right-logout.js");
@@ -1534,6 +1594,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 var NavbarLeft = __webpack_require__(/*! ./navbar-left */ "./components/ui-components/navbar-left.js");
 var NavbarRight = __webpack_require__(/*! ./navbar-right */ "./components/ui-components/navbar-right.js");
 /* eslint-disable */
@@ -1662,6 +1723,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
 /* eslint-disable */
@@ -1719,6 +1781,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
 /* eslint-disable */
@@ -1981,21 +2044,23 @@ function stanAlert() {
     var shownExpires = Number(options.shownExpires === undefined ? 3 : options.shownExpires);
     var textAlign = options.textAlign ? alignMap[options.textAlign] || 'left' : 'left';
     var alertDom = '' + ('<div class="stan-alert-container">\n            <div class="alert alert-' + alertType + '" role="alert">\n                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>\n                <strong>' + alertTitle + '</strong>\n                <br/>\n                <div class="text-' + textAlign + '">' + alertContent + '</div>\n            </div>\n        </div>');
-
-    $('body').append(alertDom);
-    $('.stan-alert-container button.close').on('click', function () {
-        $('.stan-alert-container').fadeOut('fast', function () {
-            $(this).remove();
-        });
-    });
+    var autoCloseFunc;
 
     if (autoClose) {
-        setTimeout(function () {
+        autoCloseFunc = setTimeout(function () {
             $('.stan-alert-container').fadeOut('slow', function () {
                 $(this).remove();
             });
         }, shownExpires * 1000);
     }
+
+    $('body').append(alertDom);
+    $('.stan-alert-container button.close').on('click', function () {
+        $('.stan-alert-container').fadeOut('fast', function () {
+            $(this).remove();
+            clearTimeout(autoCloseFunc);
+        });
+    });
 }
 
 module.exports = stanAlert;
@@ -48670,6 +48735,7 @@ var updateLoginForm = function updateLoginForm(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
     newState.cache.login = action.payload.cache.login;
 
     return newState;
@@ -48696,6 +48762,7 @@ var updateRegisterForm = function updateRegisterForm(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
     newState.cache.register = action.payload.cache.register;
 
     return newState;

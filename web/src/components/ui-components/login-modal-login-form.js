@@ -14,9 +14,11 @@ class LoginForm extends React.Component {
         const $email = reactDom.findDOMNode(this.refs.login_email);
         const $pwd = reactDom.findDOMNode(this.refs.login_password);
         const formData = {
-            email: $email.value,
-            password: $pwd.value,
+            email: $email.value.trim(),
+            password: $pwd.value.trim(),
         };
+        $email.value = formData.email;
+        $pwd.value = formData.password;
 
         updateLoginForm(formData);
     }

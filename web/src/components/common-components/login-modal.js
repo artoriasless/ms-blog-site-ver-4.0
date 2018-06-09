@@ -4,9 +4,9 @@ const { connect } = require('react-redux');
 
 const ajaxAction = require('/lib/common-ajax-action');
 
-const UI_loginModal = require('../ui-components/login-modal');
+const UI_loginModal = require('/components/ui-components/login-modal');
+const actions = require('/actions');
 
-const actions = require('../../actions');
 const updateRegisterFormAction = actions.updateRegisterFormAction;
 const updateLoginFormAction = actions.updateLoginFromAction;
 const registerAction = actions.registerAction;

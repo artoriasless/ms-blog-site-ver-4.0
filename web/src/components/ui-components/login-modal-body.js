@@ -1,13 +1,12 @@
 'use strict';
-/* global $ */
-const React = require('react');
 /* eslint-disable */
+const React = require('react');
+
 const LoginForm = require('./login-modal-login-form');
 const RegisterForm = require('./login-modal-register-form');
 
 require('/plugins/switch-button/js/index.js');
 /* eslint-disable */
-
 class LoginModalBody extends React.Component {
     render() {
         return (

@@ -5,8 +5,8 @@ const { connect } = require('react-redux');
 const ajaxAction = require('/lib/common-ajax-action');
 const stanAlert = require('/lib/common-stan-alert');
 
-const UI_navbar = require('../ui-components/navbar');
-const actions = require('../../actions');
+const UI_navbar = require('/components/ui-components/navbar');
+const actions = require('/actions');
 
 const initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
 const logoutAction = actions.logoutAction;

@@ -15,10 +15,13 @@ class RegisterForm extends React.Component {
         const $pwd = reactDom.findDOMNode(this.refs.register_password);
         const $pwdConfirm = reactDom.findDOMNode(this.refs.register_passwordConfirm);
         const formData = {
-            email: $email.value,
-            password: $pwd.value,
-            passwordConfirm: $pwdConfirm.value,
+            email: $email.value.trim(),
+            password: $pwd.value.trim(),
+            passwordConfirm: $pwdConfirm.value.trim(),
         };
+        $email.value = formData.email;
+        $pwd.value = formData.password;
+        $pwdConfirm.value = formData.passwordConfirm;
 
         updateRegisterForm(formData);
     }

@@ -38,21 +38,23 @@ function stanAlert() {
                 <div class="text-${textAlign}">${alertContent}</div>
             </div>
         </div>`;
-
-    $('body').append(alertDom);
-    $('.stan-alert-container button.close').on('click', function() {
-        $('.stan-alert-container').fadeOut('fast', function() {
-            $(this).remove();
-        });
-    });
+    var autoCloseFunc;
 
     if (autoClose) {
-        setTimeout(function() {
+        autoCloseFunc = setTimeout(function() {
             $('.stan-alert-container').fadeOut('slow', function() {
                 $(this).remove();
             });
         }, shownExpires * 1000);
     }
+
+    $('body').append(alertDom);
+    $('.stan-alert-container button.close').on('click', function() {
+        $('.stan-alert-container').fadeOut('fast', function() {
+            $(this).remove();
+            clearTimeout(autoCloseFunc);
+        });
+    });
 }
 
 module.exports = stanAlert;
