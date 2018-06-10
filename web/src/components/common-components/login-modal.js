@@ -1,8 +1,9 @@
 'use strict';
-
+/* global $ */
 const { connect } = require('react-redux');
 
 const ajaxAction = require('/lib/common-ajax-action');
+const stanAlert = require('/lib/common-stan-alert');
 
 const UI_loginModal = require('/components/ui-components/login-modal');
 const actions = require('/actions');
@@ -29,12 +30,29 @@ const LoginModal = connect(
 function ajaxRegister(jsonData) {
     return (dispatch => {
         const requestUrl = '/api/user/register';
-        const successFunc = function(data) {
-            console.info('register', data);
-            dispatch(registerAction(data));
+        const successFunc = function(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                });
+
+                $('#loginModal').modal('hide');
+                dispatch(registerAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message,
+                });
+            }
         };
         const failFunc = function(err) {
-            console.info(err);
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString(),
+            });
+            console.info(err);  //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
@@ -44,12 +62,29 @@ function ajaxRegister(jsonData) {
 function ajaxLogin(jsonData) {
     return (dispatch => {
         const requestUrl = '/api/user/login';
-        const successFunc = function(data) {
-            console.info('login', data);
-            dispatch(loginAction(data));
+        const successFunc = function(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                });
+
+                $('#loginModal').modal('hide');
+                dispatch(loginAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message,
+                });
+            }
         };
         const failFunc = function(err) {
-            console.info(err);
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString(),
+            });
+            console.info(err);  //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);

@@ -20,14 +20,26 @@ module.exports = async (ctx, next) => {
             throw(error);
         }
     } catch (err) {
+        const apiUrlReg = /^\/{0,1}api\//;
+        const requestUrl = ctx.request.url;
         const errorType = err.code || 'unknown';
         const filePath = path.resolve(__dirname, `../template/status/${errorType}.html`);
         var data;
 
-        if (errorArr.indexOf(errorType) === -1) {
-            data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.toString());
+        if (apiUrlReg.test(requestUrl)) {
+            //  ajax 请求
+            data = {
+                success: false,
+                message: err.toString(),
+                data: null,
+            }
         } else {
-            data = fs.readFileSync(filePath).toString();
+            //  页面访问
+            if (errorArr.indexOf(errorType) === -1) {
+                data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.toString());
+            } else {
+                data = fs.readFileSync(filePath).toString();
+            }
         }
 
         ctx.body = data;

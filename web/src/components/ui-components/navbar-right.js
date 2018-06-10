@@ -38,7 +38,7 @@ class NavbarRight extends React.Component {
                         <NavbarRightCatalogue/>
                         <NavbarRightUser userInfo={ userInfo }/>
                         {
-                            userInfo.id && userInfo.uuid && userInfo.userName ? (
+                            userInfo.id && userInfo.email && userInfo.password ? (
                                 <NavbarRightLogout
                                     userInfo={ userInfo }
                                     logout={ this.props.logout }

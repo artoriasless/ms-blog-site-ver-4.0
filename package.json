@@ -36,8 +36,10 @@
         "moment": "~2.22.2",
         "mysql": "~2.15.0",
         "nodemon": "~1.17.5",
+        "object-hash": "^1.3.0",
         "path": "~0.12.7",
-        "sequelize": "~3.33.0"
+        "sequelize": "~3.33.0",
+        "uuid": "^3.2.1"
     },
     "devDependencies": {
         "eslint": "^4.19.1",

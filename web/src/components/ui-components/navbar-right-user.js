@@ -19,6 +19,7 @@ class NavbarRightUser extends React.Component {
         const userName = userInfo.userName || 'Guest,please login...';
         const hrefLink = userInfo.userName ? '/user' : 'javascript:;';
         const domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
+        const actived = !userInfo.isEnabled;
 
         return (
             <li className="nav-item">
@@ -28,6 +29,13 @@ class NavbarRightUser extends React.Component {
                     onClick = { () => this.showLoginModal() }
                 >
                     { userName }
+                    {
+                        userInfo.id && userInfo.email && userInfo.password ? (
+                            actived ? (
+                                <span className="inactived-tips">&nbsp;(inactived)</span>
+                            ) : null
+                        ) : null
+                    }
                 </a>
             </li>
         );

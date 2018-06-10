@@ -19,19 +19,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(50),
             allowNull: false,
             field: 'user_name',
-            comment: '用户名，作为登录账号',
+            comment: '用户名，用于显示的用户名称',
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             field: 'password',
             comment: '密码，存入数据库的为经过哈希计算的密码',
-        },
-        nickName: {
-            type: DataTypes.STRING(50),
-            allowNull: false,
-            field: 'nick_name',
-            comment: '昵称，用于显示的用户别名',
         },
         email: {
             type: DataTypes.STRING,

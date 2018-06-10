@@ -410,11 +410,13 @@ render();
 
 "use strict";
 
+/* global $ */
 
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 var UI_loginModal = __webpack_require__(/*! ../../components/ui-components/login-modal */ "./components/ui-components/login-modal.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
@@ -450,12 +452,29 @@ var LoginModal = connect(mapState2Props, mapDispatch2Props)(UI_loginModal);
 function ajaxRegister(jsonData) {
     return function (dispatch) {
         var requestUrl = '/api/user/register';
-        var successFunc = function successFunc(data) {
-            console.info('register', data);
-            dispatch(registerAction(data));
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center'
+                });
+
+                $('#loginModal').modal('hide');
+                dispatch(registerAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
         };
         var failFunc = function failFunc(err) {
-            console.info(err);
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
@@ -465,12 +484,29 @@ function ajaxRegister(jsonData) {
 function ajaxLogin(jsonData) {
     return function (dispatch) {
         var requestUrl = '/api/user/login';
-        var successFunc = function successFunc(data) {
-            console.info('login', data);
-            dispatch(loginAction(data));
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center'
+                });
+
+                $('#loginModal').modal('hide');
+                dispatch(loginAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
         };
         var failFunc = function failFunc(err) {
-            console.info(err);
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
         };
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
@@ -1456,6 +1492,7 @@ var NavbarRightUser = function (_React$Component) {
             var userName = userInfo.userName || 'Guest,please login...';
             var hrefLink = userInfo.userName ? '/user' : 'javascript:;';
             var domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
+            var actived = !userInfo.isEnabled;
 
             return React.createElement(
                 'li',
@@ -1469,7 +1506,12 @@ var NavbarRightUser = function (_React$Component) {
                             return _this2.showLoginModal();
                         }
                     },
-                    userName
+                    userName,
+                    userInfo.id && userInfo.email && userInfo.password ? actived ? React.createElement(
+                        'span',
+                        { className: 'inactived-tips' },
+                        '\xA0(inactived)'
+                    ) : null : null
                 )
             );
         }
@@ -1557,7 +1599,7 @@ var NavbarRight = function (_React$Component) {
                         { className: 'navbar-nav' },
                         React.createElement(NavbarRightCatalogue, null),
                         React.createElement(NavbarRightUser, { userInfo: userInfo }),
-                        userInfo.id && userInfo.uuid && userInfo.userName ? React.createElement(NavbarRightLogout, {
+                        userInfo.id && userInfo.email && userInfo.password ? React.createElement(NavbarRightLogout, {
                             userInfo: userInfo,
                             logout: this.props.logout
                         }) : null

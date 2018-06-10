@@ -345,6 +345,11 @@ code {
                         color: #fd7e14;
                     }
 
+.app .page-section-header .page-section-header-container .navbar .user-center-link .inactived-tips {
+                        color: #aaa;
+                        font-size: 0.75em;
+                    }
+
 .app .page-section-header .page-section-header-container .navbar .logout-link {
                     color: #dc3545;
                 }
