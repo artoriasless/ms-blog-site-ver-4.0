@@ -5,9 +5,13 @@ const paper = require('./paper');
 const reply = require('./reply');
 const message = require('./message');
 
+const util = require('./util');
+
 module.exports = {
     user,
     paper,
     reply,
     message,
+
+    util,
 };

@@ -15,4 +15,12 @@ module.exports = {
         rolling: false,
         renew: false,
     },
+    email: {
+        _____: 'https://myaccount.google.com/lesssecureapps',   //  enable login to gmail
+        service: 'gmail',
+        auth: {
+            user: 'monkingstand@gmail.com',
+            pass: 'monkingstand1111+2222=3333',
+        }
+    },
 };

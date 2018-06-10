@@ -20,7 +20,6 @@ module.exports = {
     },
     async logout(ctx) {
         ctx.session.user = {};
-
         ctx.body = {
             success: true,
             message: 'logout success!',
