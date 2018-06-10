@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+    domain: 'http://www.monkingstand.cn',
     db: {
         host: 'test',
         port: 3306,

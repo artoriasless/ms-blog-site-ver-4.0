@@ -3,15 +3,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const errorArr = [
-    404,
-];
-
 module.exports = async (ctx, next) => {
     try {
         await next();
 
-        if (errorArr.indexOf(ctx.status) !== -1) {
+        const statusCode = String(ctx.status);
+
+        if (statusCode[0] !== '2' && statusCode !== '3') {
             const error = {
                 code: ctx.status,
                 message: ctx.message,
@@ -22,8 +20,7 @@ module.exports = async (ctx, next) => {
     } catch (err) {
         const apiUrlReg = /^\/{0,1}api\//;
         const requestUrl = ctx.request.url;
-        const errorType = err.code || 'unknown';
-        const filePath = path.resolve(__dirname, `../template/status/${errorType}.html`);
+        const filePath = path.resolve(__dirname, '../template/status/oops.html');
         var data;
 
         if (apiUrlReg.test(requestUrl)) {
@@ -32,14 +29,10 @@ module.exports = async (ctx, next) => {
                 success: false,
                 message: err.toString(),
                 data: null,
-            }
+            };
         } else {
             //  页面访问
-            if (errorArr.indexOf(errorType) === -1) {
-                data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.toString());
-            } else {
-                data = fs.readFileSync(filePath).toString();
-            }
+            data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.message.toString().trim());
         }
 
         ctx.body = data;

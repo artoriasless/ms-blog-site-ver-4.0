@@ -34,7 +34,7 @@ function ajaxRegister(jsonData) {
             if (result.success) {
                 stanAlert({
                     type: 'success',
-                    content: result.message,
+                    content: `${result.message}<br/>login your email to activate account`,
                     textAlign: 'center',
                 });
 

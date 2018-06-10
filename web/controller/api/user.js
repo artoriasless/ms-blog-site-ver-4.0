@@ -1,10 +1,15 @@
 'use strict';
+/* global __dirname */
+const fs = require('fs');
+const path = require('path');
 
 const uuid = require('uuid/v4');
 const hash = require('object-hash');
 
+const config = require('../../../config');
 const service = require('../../../service');
 const userService = service.user;
+const utilService = service.util;
 
 module.exports = {
     async getUserDefault(ctx) {
@@ -75,13 +80,24 @@ module.exports = {
         };
         var user = {};
         var success = true;
-        var message = 'rigister success!';
+        var message = 'rigister success';
 
         if (users.length > 0) {
             success = false;
             message = 'the email that submited has been registered!';
         } else {
             user = await userService.create(userData);
+
+            const activateLink = `${config.domain}/util/activate/${user.uuid}`;
+            const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.html')).toString();
+            const emailOpts = {
+                to: user.email,
+                subject: 'Activate Your MonkingStand Account',
+                text: 'activate your monkingstand account to comment',
+                html: emailTpl.replace(/<activateLink>/g, activateLink),
+            };
+
+            utilService.email(emailOpts);
         }
 
         ctx.session.user = user;
