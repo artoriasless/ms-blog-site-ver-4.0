@@ -13,11 +13,8 @@ const utilService = service.util;
 
 module.exports = {
     async getUserDefault(ctx) {
-        if (ctx.session.user.id === undefined) {
-            ctx.session.user = {
-                id: 0,
-            };
-        }
+        if (ctx.session.user === undefined) ctx.session.user = {id: 0};
+        if (ctx.session.user.id === undefined) ctx.session.user = {id: 0};
 
         const loginUser = ctx.session.user;
         const user = await userService.findById(Number(loginUser.id)) || {};

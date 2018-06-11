@@ -7,7 +7,7 @@ module.exports = {
         'user'
     ],
     session: {
-        key: 'koa:session',
+        key: 'koa-monkingstand-session',
         maxAge: 86400000,
         overwrite: true,
         httpOnly: true,
