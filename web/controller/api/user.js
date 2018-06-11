@@ -89,7 +89,7 @@ module.exports = {
             user = await userService.create(userData);
 
             const activateLink = `${config.domain}/util/activate/${user.uuid}`;
-            const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.html')).toString();
+            const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.tpl')).toString();
             const emailOpts = {
                 to: user.email,
                 subject: 'Activate Your MonkingStand Account',
