@@ -100,6 +100,7 @@ var GET_USER_DEFAULT = 'GET_USER_DEFAULT';
 var UPDATE_REGISTER_FORM = 'UPDATE_REGISTER_FORM';
 var UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM';
 var REGISTER = 'REGISTER';
+var ACTIVATE_ACCOUNT = 'ACTIVATE_ACCOUNT';
 var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
 
@@ -108,9 +109,38 @@ module.exports = {
     UPDATE_REGISTER_FORM: UPDATE_REGISTER_FORM,
     UPDATE_LOGIN_FORM: UPDATE_LOGIN_FORM,
     REGISTER: REGISTER,
+    ACTIVATE_ACCOUNT: ACTIVATE_ACCOUNT,
     LOGIN: LOGIN,
     LOGOUT: LOGOUT
 };
+
+/***/ }),
+
+/***/ "./actions/activate-account.js":
+/*!*************************************!*\
+  !*** ./actions/activate-account.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var activateAccount = function activateAccount(userInfo) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'ACTIVATE_ACCOUNT',
+        payload: {
+            current: current,
+            userInfo: userInfo
+        }
+    };
+};
+
+module.exports = activateAccount;
 
 /***/ }),
 
@@ -130,6 +160,7 @@ var initUserInfoDefaultAction = __webpack_require__(/*! ./init-user-info-default
 var updateRegisterFormAction = __webpack_require__(/*! ./update-register-form */ "./actions/update-register-form.js");
 var updateLoginFromAction = __webpack_require__(/*! ./update-login-form */ "./actions/update-login-form.js");
 var registerAction = __webpack_require__(/*! ./register */ "./actions/register.js");
+var activateAccountAction = __webpack_require__(/*! ./activate-account */ "./actions/activate-account.js");
 var loginAction = __webpack_require__(/*! ./login */ "./actions/login.js");
 var logoutAction = __webpack_require__(/*! ./logout */ "./actions/logout.js");
 
@@ -140,6 +171,7 @@ var actions = {
     updateRegisterFormAction: updateRegisterFormAction,
     updateLoginFromAction: updateLoginFromAction,
     registerAction: registerAction,
+    activateAccountAction: activateAccountAction,
     loginAction: loginAction,
     logoutAction: logoutAction
 };
@@ -429,6 +461,97 @@ render();
 
 /***/ }),
 
+/***/ "./components/activate-account.js":
+/*!****************************************!*\
+  !*** ./components/activate-account.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var stanLoading = __webpack_require__(/*! ../lib/common-stan-loading */ "./lib/common-stan-loading.js");
+
+var UI_activateAccount = __webpack_require__(/*! ../components/ui-components/activate-account */ "./components/ui-components/activate-account.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var activateAccountAction = actions.activateAccountAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        activateAccount: function activateAccount(jsonData) {
+            return dispatch(ajaxActivateAccount(jsonData));
+        }
+    };
+};
+
+var ActivateAccount = connect(mapState2Props, mapDispatch2Props)(UI_activateAccount);
+
+function ajaxActivateAccount(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/user/activate';
+        var successFunc = function successFunc(result) {
+            stanLoading('hide');
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 1
+                });
+
+                dispatch(activateAccountAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+            //  1s 后提示跳转到首页的信息
+            setTimeout(function () {
+                //  信息提示
+                stanAlert({
+                    type: 'success',
+                    content: 'ready to home page...',
+                    textAlign: 'center',
+                    shownExpires: 1
+                });
+                //  1s 后跳转到首页
+                setTimeout(function () {
+                    location.href = '/';
+                }, 1000);
+            }, 1500);
+        };
+        var failFunc = function failFunc(err) {
+            stanLoading('hide');
+            setTimeout(function () {
+                stanAlert({
+                    title: 'Warning!',
+                    content: err.toString()
+                });
+                console.info(err); //  eslint-disable-line
+            }, 1000);
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+module.exports = ActivateAccount;
+
+/***/ }),
+
 /***/ "./components/common-components/login-modal.js":
 /*!*****************************************************!*\
   !*** ./components/common-components/login-modal.js ***!
@@ -626,6 +749,65 @@ function ajaxLogout() {
 }
 
 module.exports = Navbar;
+
+/***/ }),
+
+/***/ "./components/ui-components/activate-account.js":
+/*!******************************************************!*\
+  !*** ./components/ui-components/activate-account.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var stanLoading = __webpack_require__(/*! ../../lib/common-stan-loading */ "./lib/common-stan-loading.js");
+
+var ActivateContent = function (_React$Component) {
+    _inherits(ActivateContent, _React$Component);
+
+    function ActivateContent() {
+        _classCallCheck(this, ActivateContent);
+
+        return _possibleConstructorReturn(this, (ActivateContent.__proto__ || Object.getPrototypeOf(ActivateContent)).apply(this, arguments));
+    }
+
+    _createClass(ActivateContent, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            stanLoading();
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var jsonData = {
+                uuid: this.props.uuid
+            };
+
+            this.props.activateAccount(jsonData);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return null;
+        }
+    }]);
+
+    return ActivateContent;
+}(React.Component);
+
+module.exports = ActivateContent;
 
 /***/ }),
 
@@ -1796,6 +1978,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var ActivateAccount = __webpack_require__(/*! ../components/activate-account */ "./components/activate-account.js");
 /* eslint-disable */
 
 var PageActivate = function (_React$Component) {
@@ -1810,8 +1993,6 @@ var PageActivate = function (_React$Component) {
     _createClass(PageActivate, [{
         key: 'render',
         value: function render() {
-            var uuid = this.props.params.uuid;
-
             return React.createElement(
                 'div',
                 { className: 'page-activate' },
@@ -1819,8 +2000,9 @@ var PageActivate = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
-                    '\u6FC0\u6D3B\u8D26\u53F7:',
-                    uuid
+                    React.createElement(ActivateAccount, {
+                        uuid: this.props.params.uuid
+                    })
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -2380,6 +2562,35 @@ function stanAlert() {
 }
 
 module.exports = stanAlert;
+
+/***/ }),
+
+/***/ "./lib/common-stan-loading.js":
+/*!************************************!*\
+  !*** ./lib/common-stan-loading.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+function stanLoading(hide) {
+    var loadingDom = '' + '<div class="stan-loading-container">\n            <div class="stan-loading-content">\n                <img class="loading" src="/img/loading.gif"/>\n            </div>\n        </div>';
+
+    if (hide) {
+        $('.stan-loading-container').fadeOut('fast', function () {
+            $(this).remove();
+        });
+    } else {
+        if ($('.stan-loading-container').length === 0) {
+            $('body').append(loadingDom);
+        }
+    }
+}
+
+module.exports = stanLoading;
 
 /***/ }),
 
@@ -48861,6 +49072,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
+/***/ "./reducers/activate-account.js":
+/*!**************************************!*\
+  !*** ./reducers/activate-account.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var activateAccount = function activateAccount(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
+
+    return newState;
+};
+
+module.exports = activateAccount;
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -48878,6 +49113,7 @@ var initUserInfoDefaultFunc = __webpack_require__(/*! ./init-user-info-default *
 var updateRegisterFormFunc = __webpack_require__(/*! ./update-register-form */ "./reducers/update-register-form.js");
 var updateLoginFormFunc = __webpack_require__(/*! ./update-login-form */ "./reducers/update-login-form.js");
 var registerFunc = __webpack_require__(/*! ./register */ "./reducers/register.js");
+var activateAccountFunc = __webpack_require__(/*! ./activate-account */ "./reducers/activate-account.js");
 var loginFunc = __webpack_require__(/*! ./login */ "./reducers/login.js");
 var logoutFunc = __webpack_require__(/*! ./logout */ "./reducers/logout.js");
 
@@ -48897,6 +49133,9 @@ var reducers = function reducers() {
 
         case actionTypes.REGISTER:
             return registerFunc(state, action);
+
+        case actionTypes.ACTIVATE_ACCOUNT:
+            return activateAccountFunc(state, action);
 
         case actionTypes.LOGIN:
             return loginFunc(state, action);

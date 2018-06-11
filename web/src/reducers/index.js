@@ -6,6 +6,7 @@ const initUserInfoDefaultFunc = require('./init-user-info-default');
 const updateRegisterFormFunc = require('./update-register-form');
 const updateLoginFormFunc = require('./update-login-form');
 const registerFunc = require('./register');
+const activateAccountFunc = require('./activate-account');
 const loginFunc = require('./login');
 const logoutFunc = require('./logout');
 
@@ -22,6 +23,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.REGISTER:
         return registerFunc(state, action);
+
+    case actionTypes.ACTIVATE_ACCOUNT:
+        return activateAccountFunc(state, action);
 
     case actionTypes.LOGIN:
         return loginFunc(state, action);

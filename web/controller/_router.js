@@ -46,5 +46,7 @@ _router.post('/api/user/logout', api.user.logout);
 _router.post('/api/user/login', api.user.login);
 //  注册
 _router.post('/api/user/register', api.user.register);
+//  激活
+_router.post('/api/user/activate', api.user.activate);
 
 module.exports = _router;

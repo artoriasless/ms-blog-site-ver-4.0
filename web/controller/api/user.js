@@ -109,5 +109,41 @@ module.exports = {
             message,
             data: user,
         };
-    }
+    },
+    async activate(ctx) {
+        const data = ctx.request.body;
+        const query = {
+            where: {
+                uuid: data.uuid,
+            },
+        };
+        const users = await userService.findMany(query);
+        const userData = {
+            isEnabled: 1,
+        };
+        var user;
+        var success = true;
+        var message = 'account has been activated!';
+
+        if (users.length === 0) {
+            success = false;
+            message = 'please check the url link is right!';
+        } else {
+            user = users[0];
+
+            if (user.isEnabled) {
+                success = false;
+                message = 'the account has been actived,don\'t activate repeatedly!';
+            } else {
+                userData.id = user.id;
+                user = await userService.update(userData);
+            }
+        }
+
+        ctx.body = {
+            success,
+            message,
+            data: user,
+        };
+    },
 };
