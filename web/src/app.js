@@ -11,9 +11,11 @@ const { syncHistoryWithStore, routerReducer } = require('react-router-redux');
 
 /* App 对应总容器 */
 /* Page 前缀，对应一个个页面，即不同的路由 */
-const App = require('./containers/app');
-const PageHome = require('./containers/page-home');
-const PageCatalogue = require('./containers/page-catalogue');
+const App = require('/containers/app');
+const PageHome = require('/containers/page-home');
+const PageCatalogue = require('/containers/page-catalogue');
+const PageUser = require('/containers/page-user');
+const PageActivate = require('/containers/page-activate');
 /* 引入自定义的 reducers */
 const appReducer = require('./reducers');
 /* 生成 store */
@@ -38,6 +40,14 @@ const router = (
             <Route
                 path = '/catalogue'
                 component = { PageCatalogue }
+            />
+            <Route
+                path = '/user/:uuid'
+                component = { PageUser }
+            />
+            <Route
+                path = '/util/activate/:uuid'
+                component = { PageActivate }
             />
         </Route>
     </Router>

@@ -17,7 +17,7 @@ class NavbarRightUser extends React.Component {
     render() {
         const userInfo = this.props.userInfo;
         const userName = userInfo.userName || 'Guest,please login...';
-        const hrefLink = userInfo.userName ? '/user' : 'javascript:;';
+        const hrefLink = userInfo.userName ? `/user/${userInfo.uuid}` : 'javascript:;';
         const domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
         const actived = !userInfo.isEnabled;
 

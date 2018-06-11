@@ -12,7 +12,9 @@ const staticVersion = (config.env === 'production') ? `.${require('../src/packag
 //  前端将使用 react ，网站采用 SPA 模式，固定模板页面，设定路由列表
 const routeList = [
     '/',
-    '/catalogue'
+    '/catalogue',
+    '/user/:uuid',
+    '/util/activate/:uuid',
 ];
 
 async function page(ctx) {

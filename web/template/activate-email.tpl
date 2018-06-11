@@ -10,8 +10,10 @@
     after your account is enabled,you can submit comment for papers;otherwise,you're not allowed to submit comment on papers.
 </p>
 <br/>
-<a target="_blank" href="<activateLink>">activate link</a>
+<p>
+    <a target="_blank" href="<activateLink>">activate link</a>
+</p>
 <br/>
 <p>
-    tips: if link jump fails,try to copy the link url into browser to activate.
+    tips: if jump link address fails,try to copy the link url into browser to activate.
 </p>

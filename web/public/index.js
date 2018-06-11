@@ -361,6 +361,8 @@ var _require4 = __webpack_require__(/*! react-router-redux */ "./node_modules/re
 var App = __webpack_require__(/*! ./containers/app */ "./containers/app.js");
 var PageHome = __webpack_require__(/*! ./containers/page-home */ "./containers/page-home.js");
 var PageCatalogue = __webpack_require__(/*! ./containers/page-catalogue */ "./containers/page-catalogue.js");
+var PageUser = __webpack_require__(/*! ./containers/page-user */ "./containers/page-user.js");
+var PageActivate = __webpack_require__(/*! ./containers/page-activate */ "./containers/page-activate.js");
 /* 引入自定义的 reducers */
 var appReducer = __webpack_require__(/*! ./reducers */ "./reducers/index.js");
 /* 生成 store */
@@ -385,6 +387,14 @@ var router = React.createElement(
         React.createElement(Route, {
             path: '/catalogue',
             component: PageCatalogue
+        }),
+        React.createElement(Route, {
+            path: '/user/:uuid',
+            component: PageUser
+        }),
+        React.createElement(Route, {
+            path: '/util/activate/:uuid',
+            component: PageActivate
         })
     )
 );
@@ -1490,7 +1500,7 @@ var NavbarRightUser = function (_React$Component) {
 
             var userInfo = this.props.userInfo;
             var userName = userInfo.userName || 'Guest,please login...';
-            var hrefLink = userInfo.userName ? '/user' : 'javascript:;';
+            var hrefLink = userInfo.userName ? '/user/' + userInfo.uuid : 'javascript:;';
             var domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
             var actived = !userInfo.isEnabled;
 
@@ -1745,6 +1755,64 @@ module.exports = App;
 
 /***/ }),
 
+/***/ "./containers/page-activate.js":
+/*!*************************************!*\
+  !*** ./containers/page-activate.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+/* eslint-disable */
+
+var PageActivate = function (_React$Component) {
+    _inherits(PageActivate, _React$Component);
+
+    function PageActivate() {
+        _classCallCheck(this, PageActivate);
+
+        return _possibleConstructorReturn(this, (PageActivate.__proto__ || Object.getPrototypeOf(PageActivate)).apply(this, arguments));
+    }
+
+    _createClass(PageActivate, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'page-activate' },
+                React.createElement(Navbar, null),
+                React.createElement(
+                    'div',
+                    { className: 'page-section-body' },
+                    '\u6FC0\u6D3B\u8D26\u53F7'
+                ),
+                React.createElement(LoginModal, null)
+            );
+        }
+    }]);
+
+    return PageActivate;
+}(React.Component);
+
+module.exports = PageActivate;
+
+/***/ }),
+
 /***/ "./containers/page-catalogue.js":
 /*!**************************************!*\
   !*** ./containers/page-catalogue.js ***!
@@ -1900,6 +1968,64 @@ var PageHome = function (_React$Component) {
 }(React.Component);
 
 module.exports = PageHome;
+
+/***/ }),
+
+/***/ "./containers/page-user.js":
+/*!*********************************!*\
+  !*** ./containers/page-user.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+/* eslint-disable */
+
+var PageUser = function (_React$Component) {
+    _inherits(PageUser, _React$Component);
+
+    function PageUser() {
+        _classCallCheck(this, PageUser);
+
+        return _possibleConstructorReturn(this, (PageUser.__proto__ || Object.getPrototypeOf(PageUser)).apply(this, arguments));
+    }
+
+    _createClass(PageUser, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'page-user' },
+                React.createElement(Navbar, null),
+                React.createElement(
+                    'div',
+                    { className: 'page-section-body' },
+                    '\u4E2A\u4EBA\u4E2D\u5FC3'
+                ),
+                React.createElement(LoginModal, null)
+            );
+        }
+    }]);
+
+    return PageUser;
+}(React.Component);
+
+module.exports = PageUser;
 
 /***/ }),
 
