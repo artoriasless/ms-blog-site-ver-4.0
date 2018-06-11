@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = async (ctx, next) => {
+    const statusCode = String(ctx.status);
+
     try {
         await next();
-
-        const statusCode = String(ctx.status);
 
         if (statusCode[0] !== '2' && statusCode !== '3') {
             const error = {
@@ -20,14 +20,14 @@ module.exports = async (ctx, next) => {
     } catch (err) {
         const apiUrlReg = /^\/{0,1}api\//;
         const requestUrl = ctx.request.url;
-        const filePath = path.resolve(__dirname, '../template/status/oops.html');
+        const filePath = path.resolve(__dirname, `../template/status/${statusCode == 404 ? '404' : 'unknown'}.html`);
         var data;
 
         if (apiUrlReg.test(requestUrl)) {
             //  ajax 请求
             data = {
                 success: false,
-                message: err.toString(),
+                message: err.message.toString(),
                 data: null,
             };
         } else {
