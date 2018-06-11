@@ -19,7 +19,6 @@ const globalException = require('./middleware/global-exception');
 const maxage = (config.env === 'development') ? 0 : 365 * 24 * 60 * 60;
 
 app.keys = config.sessionKeys;
-app.proxy = true;
 
 app.use(koaSession(config.session, app))
     .use(koaStatic(path.resolve(__dirname, './public'), {
@@ -27,8 +26,8 @@ app.use(koaSession(config.session, app))
     }))
     .use(koaBody())
     .use(koaLogger({transporter: koaLoggerTransporter}))
-    .use(globalException)
     .use(router.routes())
-    .use(router.allowedMethods());
+    .use(router.allowedMethods())
+    .use(globalException);
 
 app.listen(config.port);

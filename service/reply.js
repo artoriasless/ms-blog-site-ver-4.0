@@ -10,7 +10,7 @@ module.exports = {
     async create(data) {
         const reply = await Reply.create(data);
 
-        return reply.toJSON();
+        return (reply ? reply.toJSON() : {});
     },
     async update(data) {
         const id = data.id;
@@ -19,21 +19,21 @@ module.exports = {
         if (reply) {
             const result = await reply.update(data);
 
-            return result;
+            return (result ? result.toJSON() : {});
         }
         return null;
     },
     async findById(id) {
         const reply = await Reply.findById(id);
 
-        return reply.toJSON();
+        return (reply ? reply.toJSON() : {});
     },
     async findMany(query){
         query = query || {};
 
         const replies = await Reply.findAll(query);
 
-        return replies.map(reply => reply.toJSON());
+        return replies.map(reply => (reply ? reply.toJSON() : {}));
     },
     async page(where, page) {
         where = where || {};
@@ -49,7 +49,7 @@ module.exports = {
         return ({
             page,
             count: result.count,
-            rows: result.rows.map(reply => reply.toJSON()),
+            rows: result.rows.map(reply => (reply ? reply.toJSON() : {})),
         });
     },
 };

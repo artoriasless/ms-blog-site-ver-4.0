@@ -10,7 +10,7 @@ module.exports = {
     async create(data) {
         const user = await User.create(data);
 
-        return user.toJSON();
+        return (user ? user.toJSON() : {});
     },
     async update(data) {
         const id = data.id;
@@ -19,21 +19,21 @@ module.exports = {
         if (user) {
             const result = await user.update(data);
 
-            return result;
+            return (result ? result.toJSON() : {});
         }
         return null;
     },
     async findById(id) {
         const user = await User.findById(id);
 
-        return user.toJSON();
+        return (user ? user.toJSON() : {});
     },
     async findMany(query){
         query = query || {};
 
         const users = await User.findAll(query);
 
-        return users.map(user => user.toJSON());
+        return users.map(user => (user ? user.toJSON() : {}));
     },
     async page(where, page) {
         where = where || {};
@@ -49,7 +49,7 @@ module.exports = {
         return ({
             page,
             count: result.count,
-            rows: result.rows.map(user => user.toJSON()),
+            rows: result.rows.map(user => (user ? user.toJSON() : {})),
         });
     },
 };
