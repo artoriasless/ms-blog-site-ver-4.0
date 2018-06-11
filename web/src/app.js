@@ -14,6 +14,8 @@ const { syncHistoryWithStore, routerReducer } = require('react-router-redux');
 const App = require('/containers/app');
 const PageHome = require('/containers/page-home');
 const PageCatalogue = require('/containers/page-catalogue');
+const PagePaper = require('/containers/page-paper');
+const PagePaperCreate = require('/containers/page-paper-create');
 const PageUser = require('/containers/page-user');
 const PageActivate = require('/containers/page-activate');
 /* 引入自定义的 reducers */
@@ -40,6 +42,22 @@ const router = (
             <Route
                 path = '/catalogue'
                 component = { PageCatalogue }
+            />
+            <Route
+                path = '/catalogue/:filterType'
+                component = { PageCatalogue }
+            />
+            <Route
+                path = '/catalogue/:filterType/:filterParam'
+                component = { PageCatalogue }
+            />
+            <Route
+                path = '/paper/:paperId'
+                component = { PagePaper }
+            />
+            <Route
+                path = '/paper/create'
+                component = { PagePaperCreate }
             />
             <Route
                 path = '/user/:uuid'

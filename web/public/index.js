@@ -361,6 +361,8 @@ var _require4 = __webpack_require__(/*! react-router-redux */ "./node_modules/re
 var App = __webpack_require__(/*! ./containers/app */ "./containers/app.js");
 var PageHome = __webpack_require__(/*! ./containers/page-home */ "./containers/page-home.js");
 var PageCatalogue = __webpack_require__(/*! ./containers/page-catalogue */ "./containers/page-catalogue.js");
+var PagePaper = __webpack_require__(/*! ./containers/page-paper */ "./containers/page-paper.js");
+var PagePaperCreate = __webpack_require__(/*! ./containers/page-paper-create */ "./containers/page-paper-create.js");
 var PageUser = __webpack_require__(/*! ./containers/page-user */ "./containers/page-user.js");
 var PageActivate = __webpack_require__(/*! ./containers/page-activate */ "./containers/page-activate.js");
 /* 引入自定义的 reducers */
@@ -387,6 +389,22 @@ var router = React.createElement(
         React.createElement(Route, {
             path: '/catalogue',
             component: PageCatalogue
+        }),
+        React.createElement(Route, {
+            path: '/catalogue/:filterType',
+            component: PageCatalogue
+        }),
+        React.createElement(Route, {
+            path: '/catalogue/:filterType/:filterParam',
+            component: PageCatalogue
+        }),
+        React.createElement(Route, {
+            path: '/paper/:paperId',
+            component: PagePaper
+        }),
+        React.createElement(Route, {
+            path: '/paper/create',
+            component: PagePaperCreate
         }),
         React.createElement(Route, {
             path: '/user/:uuid',
@@ -1792,6 +1810,8 @@ var PageActivate = function (_React$Component) {
     _createClass(PageActivate, [{
         key: 'render',
         value: function render() {
+            var uuid = this.props.params.uuid;
+
             return React.createElement(
                 'div',
                 { className: 'page-activate' },
@@ -1799,7 +1819,8 @@ var PageActivate = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
-                    '\u6FC0\u6D3B\u8D26\u53F7'
+                    '\u6FC0\u6D3B\u8D26\u53F7:',
+                    uuid
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -1850,6 +1871,11 @@ var PageCatalogue = function (_React$Component) {
     _createClass(PageCatalogue, [{
         key: 'render',
         value: function render() {
+            var filterArr = ['latest', 'timeline', 'tag'];
+            var filterType = this.props.params.filterType;
+            var filterParam = this.props.params.filterParam || '';
+            filterType = filterArr.indexOf(filterType) === -1 ? 'ALL' : filterType.toUpperCase();
+
             return React.createElement(
                 'div',
                 { className: 'page-catalogue' },
@@ -1857,7 +1883,10 @@ var PageCatalogue = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
-                    '\u76EE\u5F55\u9875'
+                    '\u76EE\u5F55\u9875:',
+                    filterType,
+                    ',',
+                    filterParam
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -1968,6 +1997,125 @@ var PageHome = function (_React$Component) {
 }(React.Component);
 
 module.exports = PageHome;
+
+/***/ }),
+
+/***/ "./containers/page-paper-create.js":
+/*!*****************************************!*\
+  !*** ./containers/page-paper-create.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+/* eslint-disable */
+
+var PagePaperCreate = function (_React$Component) {
+    _inherits(PagePaperCreate, _React$Component);
+
+    function PagePaperCreate() {
+        _classCallCheck(this, PagePaperCreate);
+
+        return _possibleConstructorReturn(this, (PagePaperCreate.__proto__ || Object.getPrototypeOf(PagePaperCreate)).apply(this, arguments));
+    }
+
+    _createClass(PagePaperCreate, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'page-paper' },
+                React.createElement(Navbar, null),
+                React.createElement(
+                    'div',
+                    { className: 'page-section-body' },
+                    '\u65B0\u589E\u6587\u7AE0\u9875'
+                ),
+                React.createElement(LoginModal, null)
+            );
+        }
+    }]);
+
+    return PagePaperCreate;
+}(React.Component);
+
+module.exports = PagePaperCreate;
+
+/***/ }),
+
+/***/ "./containers/page-paper.js":
+/*!**********************************!*\
+  !*** ./containers/page-paper.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+/* eslint-disable */
+
+var PagePaper = function (_React$Component) {
+    _inherits(PagePaper, _React$Component);
+
+    function PagePaper() {
+        _classCallCheck(this, PagePaper);
+
+        return _possibleConstructorReturn(this, (PagePaper.__proto__ || Object.getPrototypeOf(PagePaper)).apply(this, arguments));
+    }
+
+    _createClass(PagePaper, [{
+        key: 'render',
+        value: function render() {
+            var paperId = this.props.params.paperId;
+
+            return React.createElement(
+                'div',
+                { className: 'page-paper' },
+                React.createElement(Navbar, null),
+                React.createElement(
+                    'div',
+                    { className: 'page-section-body' },
+                    '\u6587\u7AE0\u9875:',
+                    paperId
+                ),
+                React.createElement(LoginModal, null)
+            );
+        }
+    }]);
+
+    return PagePaper;
+}(React.Component);
+
+module.exports = PagePaper;
 
 /***/ }),
 

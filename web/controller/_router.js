@@ -13,6 +13,10 @@ const staticVersion = (config.env === 'production') ? `.${require('../src/packag
 const routeList = [
     '/',
     '/catalogue',
+    '/catalogue/:filterType',
+    '/catalogue/:filterType/:filterParam',
+    '/paper/:paperId',
+    '/paper/create',
     '/user/:uuid',
     '/util/activate/:uuid',
 ];

@@ -5,15 +5,15 @@ const React = require('react');
 const Navbar = require('/components/common-components/navbar');
 const LoginModal = require('/components/common-components/login-modal');
 /* eslint-disable */
-class PageActivate extends React.Component {
+class PagePaper extends React.Component {
     render() {
-        const uuid = this.props.params.uuid;
+        const paperId = this.props.params.paperId;
 
         return (
-            <div className="page-activate">
+            <div className="page-paper">
                 <Navbar/>
                 <div className="page-section-body">
-                    激活账号:{uuid}
+                    文章页:{paperId}
                 </div>
                 <LoginModal/>
             </div>
@@ -21,4 +21,4 @@ class PageActivate extends React.Component {
     }
 }
 
-module.exports = PageActivate;
+module.exports = PagePaper;
