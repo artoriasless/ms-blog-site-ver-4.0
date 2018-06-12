@@ -130,9 +130,9 @@ module.exports = {
             message = 'please check the url link is right!';
         } else {
             user = users[0];
+            ctx.session.user = user;
 
             if (user.isEnabled) {
-                success = false;
                 message = 'the account has been actived,don\'t activate repeatedly!';
             } else {
                 userData.id = user.id;

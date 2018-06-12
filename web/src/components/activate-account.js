@@ -26,7 +26,6 @@ function ajaxActivateAccount(jsonData) {
     return (dispatch => {
         const requestUrl = '/api/user/activate';
         const successFunc = function(result) {
-            stanLoading('hide');
             if (result.success) {
                 stanAlert({
                     type: 'success',
@@ -44,6 +43,7 @@ function ajaxActivateAccount(jsonData) {
             }
             //  1s 后提示跳转到首页的信息
             setTimeout(() => {
+                stanLoading('hide');
                 //  信息提示
                 stanAlert({
                     type: 'success',

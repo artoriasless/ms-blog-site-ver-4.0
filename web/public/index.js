@@ -502,7 +502,6 @@ function ajaxActivateAccount(jsonData) {
     return function (dispatch) {
         var requestUrl = '/api/user/activate';
         var successFunc = function successFunc(result) {
-            stanLoading('hide');
             if (result.success) {
                 stanAlert({
                     type: 'success',
@@ -520,6 +519,7 @@ function ajaxActivateAccount(jsonData) {
             }
             //  1s 后提示跳转到首页的信息
             setTimeout(function () {
+                stanLoading('hide');
                 //  信息提示
                 stanAlert({
                     type: 'success',
