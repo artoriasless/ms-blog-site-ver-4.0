@@ -28,6 +28,8 @@
         *   `npm run pack-development`
 *   **提醒**
     *   在运行上述两个脚本之前，请确保已经安装了所有依赖：项目的依赖，以及前端模块的依赖
+    *   本应用使用了作者的个人 gmail 邮箱进行发送邮件的操作，出于保护隐私，这部分的配置信息添加到了 **`.gitignore`** 中，如果有用户需要进行二次开发，在 **`config`** 中添加 **`email-config.js`** 的配置信息即可（内容参考 **`config/email-config-tpl.js`**）
+    *   本应用使用了 oss 上传文件，使用了作者个人的阿里云相关密钥等信息，出于保护隐私，这部分的配置信息添加到了 **`.gitignore`** 中，如果有用户需要进行二次开发，在 **`config`** 中添加 **`oss-config.js`** 的配置信息即可（内容参考 **`config/oss-config-tpl.js`**）
 
 ## 技术栈说明
 +   前端打包方案：gulp + webpack

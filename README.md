@@ -28,6 +28,8 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
         *   `npm run pack-development`
 *   **Info**
     *   before you run scripts above,you must have install all dependencies,for web project and webpack
+    *   I use my personal gmail to auto-send email for activate user account,this config info has been added into **`.gitignore`** in order to protect privacy.You can add config info to **`config/email-config.js`** for secondary development(refer to **`config/email-config-tpl.js`** for config content)
+    *   I use my personal **Alibaba Cloud** for upload service ,this config info has been added into **`.gitignore`** in order to protect privacy.You can add config info to **`config/oss-config.js`** for secondary development(refer to **`config/oss-config-tpl.js`** for config content)
 
 ## Tech Stack
 +   Bundle Solution: gulp + webpack

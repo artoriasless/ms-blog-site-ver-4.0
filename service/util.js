@@ -5,7 +5,7 @@ const OSS = require('ali-oss');
 const nodemailer = require('nodemailer');
 
 const ossConfig = require('../config/oss-config');
-const config = require('../config');
+const emailConfig = require('../config/email-config');
 
 module.exports = {
     async: {
@@ -50,7 +50,7 @@ module.exports = {
         },
     },
     email(options) {
-        const transporter = nodemailer.createTransport(config.email);
+        const transporter = nodemailer.createTransport(emailConfig);
         const mailOpts = {
             from: 'MonkingStand@gmail.com',
             to: options.to,
