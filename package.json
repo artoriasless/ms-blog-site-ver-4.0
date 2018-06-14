@@ -25,6 +25,8 @@
     },
     "homepage": "https://github.com/MonkingStand/ms-blog-site-ver-4.0#readme",
     "dependencies": {
+        "ali-oss": "~5.2.0",
+        "co": "~4.6.0",
         "forever-monitor": "~1.7.1",
         "koa": "~2.5.1",
         "koa-bodyparser": "~4.2.1",
