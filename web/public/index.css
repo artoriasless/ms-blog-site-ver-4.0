@@ -36,6 +36,10 @@ body, #root, #root .app {
     bottom: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 body {
     overflow: hidden;
 }
@@ -134,6 +138,24 @@ code {
     max-width: 1200px;
     padding: 0.25rem;
     margin: calc(2.5rem + 1px) auto 0;
+}
+
+@keyframes fade-in {
+	0% { opacity: 0;-webkit-transform: translateY(10px);transform: translateY(10px); }
+	100% {opacity: 1;-webkit-transform: translateY(0);transform: translateY(0); }
+}
+
+@-webkit-keyframes fade-in {
+	0% { opacity: 0;-webkit-transform: translateY(10px);transform: translateY(10px); }
+	100% {opacity: 1;-webkit-transform: translateY(0);transform: translateY(0); }
+}
+
+.fade-in-animate {
+	animation: fade-in 1s ease;
+	-o-animation: fade-in 1s ease;
+	-ms-animation: fade-in 1s ease;
+	-moz-animation: fade-in 1s ease;
+	-webkit-animation: fade-in 1s ease;
 }
 
 .stan-loading-container {

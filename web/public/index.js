@@ -1919,6 +1919,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var hideMainScrollerbar = __webpack_require__(/*! ../lib/common-hide-main-scrollerbar */ "./lib/common-hide-main-scrollerbar.js");
 var initCompassIcon = __webpack_require__(/*! ../lib/common-init-compass-icon */ "./lib/common-init-compass-icon.js");
 var initNavbarBG = __webpack_require__(/*! ../lib/common-init-navbar-bg */ "./lib/common-init-navbar-bg.js");
+var stanLoading = __webpack_require__(/*! ../lib/common-stan-loading */ "./lib/common-stan-loading.js");
 /* eslint-disable */
 
 var App = function (_React$Component) {
@@ -1931,11 +1932,21 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            stanLoading();
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             hideMainScrollerbar();
             initCompassIcon();
             initNavbarBG();
+            //  动画显示页面
+            setTimeout(function () {
+                stanLoading('hide');
+                $('#root').removeClass('hidden').addClass('fade-in-animate');
+            }, 500);
         }
     }, {
         key: 'render',
