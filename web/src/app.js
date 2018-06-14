@@ -35,37 +35,37 @@ const rootDom = document.getElementById('root');
 const router = (
     <Router history = { history }>
         <Route
-            path = "/"
-            component = { App }
+            path="/"
+            component={ App }
         >
-            <IndexRoute component = { PageHome }/>
+            <IndexRoute component={ PageHome }/>
             <Route
-                path = '/catalogue'
-                component = { PageCatalogue }
+                path="/catalogue"
+                component={ PageCatalogue }
             />
             <Route
-                path = '/catalogue/:filterType'
-                component = { PageCatalogue }
+                path="/catalogue/:filterType"
+                component={ PageCatalogue }
             />
             <Route
-                path = '/catalogue/:filterType/:filterParam'
-                component = { PageCatalogue }
+                path="/catalogue/:filterType/:filterParam"
+                component={ PageCatalogue }
             />
             <Route
-                path = '/paper/:paperId'
-                component = { PagePaper }
+                path="/paper/:paperId"
+                component={ PagePaper }
             />
             <Route
-                path = '/paper/create'
-                component = { PagePaperCreate }
+                path="/paper/create"
+                component={ PagePaperCreate }
             />
             <Route
-                path = '/user/:uuid'
-                component = { PageUser }
+                path="/user/:uuid"
+                component={ PageUser }
             />
             <Route
-                path = '/util/activate/:uuid'
-                component = { PageActivate }
+                path="/util/activate/:uuid"
+                component={ PageActivate }
             />
         </Route>
     </Router>

@@ -24,7 +24,7 @@ function stanAlert() {
     };
     var options = arguments[0] || {};
     var alertType = options.type ? (typeMap[options.type] || 'danger') : 'danger';
-    var alertTitle = options.title || '';
+    var alertTitle = options.title ? `<strong>${options.title}</strong><br/>` : '';
     var alertContent = options.content || '';
     var autoClose  = Boolean((options.autoClose === undefined) ? true : options.autoClose);
     var shownExpires = Number((options.shownExpires === undefined) ? 3 : options.shownExpires);
@@ -33,9 +33,10 @@ function stanAlert() {
         `<div class="stan-alert-container">
             <div class="alert alert-${alertType}" role="alert">
                 <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
-                <strong>${alertTitle}</strong>
-                <br/>
-                <div class="text-${textAlign}">${alertContent}</div>
+                <div class="alert-content">
+                    ${alertTitle}
+                    <div class="text-${textAlign}">${alertContent}</div>
+                </div>
             </div>
         </div>`;
     var autoCloseFunc;

@@ -1674,6 +1674,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var config = __webpack_require__(/*! ../../config */ "./config.js");
 
 var NavbarRightUser = function (_React$Component) {
     _inherits(NavbarRightUser, _React$Component);
@@ -1681,13 +1684,39 @@ var NavbarRightUser = function (_React$Component) {
     function NavbarRightUser() {
         _classCallCheck(this, NavbarRightUser);
 
-        var _this = _possibleConstructorReturn(this, (NavbarRightUser.__proto__ || Object.getPrototypeOf(NavbarRightUser)).call(this));
-
-        _this.showLoginModal = _this.showLoginModal.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (NavbarRightUser.__proto__ || Object.getPrototypeOf(NavbarRightUser)).apply(this, arguments));
     }
 
     _createClass(NavbarRightUser, [{
+        key: 'render',
+        value: function render() {
+            var userInfo = this.props.userInfo;
+
+            return React.createElement(
+                'li',
+                { className: 'nav-item' },
+                userInfo.id && userInfo.email && userInfo.password ? React.createElement(UserLink, { userInfo: userInfo }) : React.createElement(LoginLink, null)
+            );
+        }
+    }]);
+
+    return NavbarRightUser;
+}(React.Component);
+
+var LoginLink = function (_React$Component2) {
+    _inherits(LoginLink, _React$Component2);
+
+    //  eslint-disable-line
+    function LoginLink() {
+        _classCallCheck(this, LoginLink);
+
+        var _this2 = _possibleConstructorReturn(this, (LoginLink.__proto__ || Object.getPrototypeOf(LoginLink)).call(this));
+
+        _this2.showLoginModal = _this2.showLoginModal.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(LoginLink, [{
         key: 'showLoginModal',
         value: function showLoginModal() {
             $('.navbar-collapse').collapse('hide');
@@ -1696,38 +1725,86 @@ var NavbarRightUser = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
-            var userInfo = this.props.userInfo;
-            var userName = userInfo.userName || 'Guest,please login...';
-            var hrefLink = userInfo.userName ? '/user/' + userInfo.uuid : 'javascript:;';
-            var domClass = userInfo.userName ? 'nav-link user-center-link' : 'nav-link login-link';
-            var actived = !userInfo.isEnabled;
+            var _this3 = this;
 
             return React.createElement(
-                'li',
-                { className: 'nav-item' },
-                React.createElement(
-                    'a',
-                    {
-                        className: domClass,
-                        href: hrefLink,
-                        onClick: function onClick() {
-                            return _this2.showLoginModal();
-                        }
-                    },
-                    userName,
-                    userInfo.id && userInfo.email && userInfo.password ? actived ? React.createElement(
-                        'span',
-                        { className: 'inactived-tips' },
-                        '\xA0(inactived)'
-                    ) : null : null
-                )
+                'a',
+                {
+                    className: 'nav-link login-link',
+                    href: 'javascript:;',
+                    onClick: function onClick() {
+                        return _this3.showLoginModal();
+                    }
+                },
+                'Guest,please login...'
             );
         }
     }]);
 
-    return NavbarRightUser;
+    return LoginLink;
+}(React.Component);
+
+var UserLink = function (_React$Component3) {
+    _inherits(UserLink, _React$Component3);
+
+    //  eslint-disable-line
+    function UserLink() {
+        _classCallCheck(this, UserLink);
+
+        var _this4 = _possibleConstructorReturn(this, (UserLink.__proto__ || Object.getPrototypeOf(UserLink)).call(this));
+
+        _this4.errHandler = _this4.errHandler.bind(_this4);
+        return _this4;
+    }
+
+    _createClass(UserLink, [{
+        key: 'errHandler',
+        value: function errHandler(evt) {
+            //  eslint-disable-line
+            var $userAvatar = reactDom.findDOMNode(this.refs.userAvatar);
+            var defaultAvatarLink = config.ossPublic.user + '/default.jpg?' + Date.parse(new Date());
+
+            $userAvatar.setAttribute('src', defaultAvatarLink);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this5 = this;
+
+            var userInfo = this.props.userInfo;
+            var userName = userInfo.userName;
+            var actived = !userInfo.isEnabled;
+            var avatarLink = config.ossPublic.user + '/' + userInfo.uuid + '.jpg?' + Date.parse(new Date()); //  eslint-disable-line
+
+            return React.createElement(
+                'a',
+                {
+                    className: 'nav-link user-center-link',
+                    href: '/user/' + userInfo.uuid
+                },
+                React.createElement('img', {
+                    className: 'user-avatar',
+                    src: '{ avatarLink }',
+                    onError: function onError(event) {
+                        return _this5.errHandler(event);
+                    },
+                    ref: 'userAvatar'
+                }),
+                React.createElement(
+                    'span',
+                    { className: 'user-name' },
+                    userName
+                ),
+                actived ? React.createElement(
+                    'span',
+                    { className: 'inactived-tips' },
+                    '\xA0(inactived)'
+                ) : null
+            );
+        }
+    }]);
+
+    return UserLink;
 }(React.Component);
 
 module.exports = NavbarRightUser;
@@ -1892,6 +1969,25 @@ var Navbar = function (_React$Component) {
 }(React.Component);
 
 module.exports = Navbar;
+
+/***/ }),
+
+/***/ "./config.js":
+/*!*******************!*\
+  !*** ./config.js ***!
+  \*******************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+    ossPublic: {
+        user: 'https://monkingstand.oss-cn-beijing.aliyuncs.com/user',
+        paper: 'https://monkingstand.oss-cn-beijing.aliyuncs.com/paper'
+    }
+};
 
 /***/ }),
 
@@ -2547,12 +2643,12 @@ function stanAlert() {
     };
     var options = arguments[0] || {};
     var alertType = options.type ? typeMap[options.type] || 'danger' : 'danger';
-    var alertTitle = options.title || '';
+    var alertTitle = options.title ? '<strong>' + options.title + '</strong><br/>' : '';
     var alertContent = options.content || '';
     var autoClose = Boolean(options.autoClose === undefined ? true : options.autoClose);
     var shownExpires = Number(options.shownExpires === undefined ? 3 : options.shownExpires);
     var textAlign = options.textAlign ? alignMap[options.textAlign] || 'left' : 'left';
-    var alertDom = '' + ('<div class="stan-alert-container">\n            <div class="alert alert-' + alertType + '" role="alert">\n                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>\n                <strong>' + alertTitle + '</strong>\n                <br/>\n                <div class="text-' + textAlign + '">' + alertContent + '</div>\n            </div>\n        </div>');
+    var alertDom = '' + ('<div class="stan-alert-container">\n            <div class="alert alert-' + alertType + '" role="alert">\n                <button type="button" class="close"><span aria-hidden="true">&times;</span></button>\n                <div class="alert-content">\n                    ' + alertTitle + '\n                    <div class="text-' + textAlign + '">' + alertContent + '</div>\n                </div>\n            </div>\n        </div>');
     var autoCloseFunc;
 
     if (autoClose) {

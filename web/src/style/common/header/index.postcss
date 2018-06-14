@@ -72,7 +72,17 @@
                 }
 
                 .user-center-link {
-                    &:before {
+                    .user-avatar {
+                        display: block;
+                        width: 1.6rem;
+                        height: 1.6rem;
+                        line-height: 2rem;
+                        margin: 0.2rem 0.25rem 0.2rem 0;
+                        border-radius: 50%;
+                        float: left;
+                    }
+
+                    .user-name:before {
                         content: "Welcom, ";
                         color: var(--color-orange);
                     }

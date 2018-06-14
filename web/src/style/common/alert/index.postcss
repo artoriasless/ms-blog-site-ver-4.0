@@ -13,9 +13,10 @@
         height: 100px;
         top: 50%;
         left: 50%;
-        padding: 25px 25px 15px;
+        padding: 25px;
         margin-left: -375px;
         margin-top: -100px;
+        overflow-y: auto;
 
         .close {
             position: absolute;
@@ -26,6 +27,13 @@
             text-align: center;
             right: 0;
             top: 0;
+        }
+
+        .alert-content {
+            position: absolute;
+            width: calc(100% - 50px);
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
 }
