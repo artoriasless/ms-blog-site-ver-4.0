@@ -470,7 +470,6 @@ render();
 
 "use strict";
 
-/* global $ */
 
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
@@ -479,7 +478,7 @@ var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/com
 var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 var stanLoading = __webpack_require__(/*! ../lib/common-stan-loading */ "./lib/common-stan-loading.js");
 
-var UI_activateAccount = __webpack_require__(/*! ../components/ui-components/activate-account */ "./components/ui-components/activate-account.js");
+var UI_activateAccount = __webpack_require__(/*! ../components/ui-components/activate-account */ "./components/ui-components/activate-account/index.js");
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var activateAccountAction = actions.activateAccountAction;
@@ -569,7 +568,7 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
-var UI_loginModal = __webpack_require__(/*! ../../components/ui-components/login-modal */ "./components/ui-components/login-modal.js");
+var UI_loginModal = __webpack_require__(/*! ../../components/ui-components/login-modal */ "./components/ui-components/login-modal/index.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
 
 var updateRegisterFormAction = actions.updateRegisterFormAction;
@@ -684,7 +683,7 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
-var UI_navbar = __webpack_require__(/*! ../../components/ui-components/navbar */ "./components/ui-components/navbar.js");
+var UI_navbar = __webpack_require__(/*! ../../components/ui-components/navbar */ "./components/ui-components/navbar/index.js");
 var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
 
 var initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
@@ -752,10 +751,10 @@ module.exports = Navbar;
 
 /***/ }),
 
-/***/ "./components/ui-components/activate-account.js":
-/*!******************************************************!*\
-  !*** ./components/ui-components/activate-account.js ***!
-  \******************************************************/
+/***/ "./components/ui-components/activate-account/index.js":
+/*!************************************************************!*\
+  !*** ./components/ui-components/activate-account/index.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -772,7 +771,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var stanLoading = __webpack_require__(/*! ../../lib/common-stan-loading */ "./lib/common-stan-loading.js");
+var stanLoading = __webpack_require__(/*! ../../../lib/common-stan-loading */ "./lib/common-stan-loading.js");
 
 var ActivateContent = function (_React$Component) {
     _inherits(ActivateContent, _React$Component);
@@ -811,10 +810,10 @@ module.exports = ActivateContent;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal-body.js":
-/*!******************************************************!*\
-  !*** ./components/ui-components/login-modal-body.js ***!
-  \******************************************************/
+/***/ "./components/ui-components/login-modal/index.js":
+/*!*******************************************************!*\
+  !*** ./components/ui-components/login-modal/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -832,10 +831,88 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var LoginForm = __webpack_require__(/*! ./login-modal-login-form */ "./components/ui-components/login-modal-login-form.js");
-var RegisterForm = __webpack_require__(/*! ./login-modal-register-form */ "./components/ui-components/login-modal-register-form.js");
+var Header = __webpack_require__(/*! ./login-modal-header */ "./components/ui-components/login-modal/login-modal-header.js");
+var Body = __webpack_require__(/*! ./login-modal-body */ "./components/ui-components/login-modal/login-modal-body.js");
+var Footer = __webpack_require__(/*! ./login-modal-footer */ "./components/ui-components/login-modal/login-modal-footer.js");
+/* eslint-disable */
 
-__webpack_require__(/*! ../../plugins/switch-button/js/index.js */ "./plugins/switch-button/js/index.js");
+var LoginModal = function (_React$Component) {
+    _inherits(LoginModal, _React$Component);
+
+    function LoginModal() {
+        _classCallCheck(this, LoginModal);
+
+        return _possibleConstructorReturn(this, (LoginModal.__proto__ || Object.getPrototypeOf(LoginModal)).apply(this, arguments));
+    }
+
+    _createClass(LoginModal, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                {
+                    id: 'loginModal',
+                    className: 'modal fade',
+                    tabIndex: '-1',
+                    role: 'dialog'
+                },
+                React.createElement(
+                    'div',
+                    {
+                        className: 'modal-dialog',
+                        role: 'document'
+                    },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        React.createElement(Header, null),
+                        React.createElement(Body, {
+                            updateRegisterForm: this.props.updateRegisterForm,
+                            updateLoginForm: this.props.updateLoginForm
+                        }),
+                        React.createElement(Footer, {
+                            register: this.props.register,
+                            login: this.props.login,
+                            cache: this.props.cache
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return LoginModal;
+}(React.Component);
+
+module.exports = LoginModal;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal/login-modal-body.js":
+/*!******************************************************************!*\
+  !*** ./components/ui-components/login-modal/login-modal-body.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var LoginForm = __webpack_require__(/*! ./login-modal-login-form */ "./components/ui-components/login-modal/login-modal-login-form.js");
+var RegisterForm = __webpack_require__(/*! ./login-modal-register-form */ "./components/ui-components/login-modal/login-modal-register-form.js");
+
+__webpack_require__(/*! ../../../plugins/switch-button/js/index.js */ "./plugins/switch-button/js/index.js");
 /* eslint-disable */
 
 var LoginModalBody = function (_React$Component) {
@@ -956,10 +1033,10 @@ module.exports = LoginModalBody;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal-footer.js":
-/*!********************************************************!*\
-  !*** ./components/ui-components/login-modal-footer.js ***!
-  \********************************************************/
+/***/ "./components/ui-components/login-modal/login-modal-footer.js":
+/*!********************************************************************!*\
+  !*** ./components/ui-components/login-modal/login-modal-footer.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -977,7 +1054,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 var LoginModalFooter = function (_React$Component) {
     _inherits(LoginModalFooter, _React$Component);
@@ -1112,10 +1189,10 @@ module.exports = LoginModalFooter;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal-header.js":
-/*!********************************************************!*\
-  !*** ./components/ui-components/login-modal-header.js ***!
-  \********************************************************/
+/***/ "./components/ui-components/login-modal/login-modal-header.js":
+/*!********************************************************************!*\
+  !*** ./components/ui-components/login-modal/login-modal-header.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1175,10 +1252,10 @@ module.exports = LoginModalHeader;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal-login-form.js":
-/*!************************************************************!*\
-  !*** ./components/ui-components/login-modal-login-form.js ***!
-  \************************************************************/
+/***/ "./components/ui-components/login-modal/login-modal-login-form.js":
+/*!************************************************************************!*\
+  !*** ./components/ui-components/login-modal/login-modal-login-form.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1285,10 +1362,10 @@ module.exports = LoginForm;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal-register-form.js":
-/*!***************************************************************!*\
-  !*** ./components/ui-components/login-modal-register-form.js ***!
-  \***************************************************************/
+/***/ "./components/ui-components/login-modal/login-modal-register-form.js":
+/*!***************************************************************************!*\
+  !*** ./components/ui-components/login-modal/login-modal-register-form.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1419,10 +1496,10 @@ module.exports = RegisterForm;
 
 /***/ }),
 
-/***/ "./components/ui-components/login-modal.js":
-/*!*************************************************!*\
-  !*** ./components/ui-components/login-modal.js ***!
-  \*************************************************/
+/***/ "./components/ui-components/navbar/index.js":
+/*!**************************************************!*\
+  !*** ./components/ui-components/navbar/index.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1440,67 +1517,58 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Header = __webpack_require__(/*! ./login-modal-header */ "./components/ui-components/login-modal-header.js");
-var Body = __webpack_require__(/*! ./login-modal-body */ "./components/ui-components/login-modal-body.js");
-var Footer = __webpack_require__(/*! ./login-modal-footer */ "./components/ui-components/login-modal-footer.js");
+var NavbarLeft = __webpack_require__(/*! ./navbar-left */ "./components/ui-components/navbar/navbar-left.js");
+var NavbarRight = __webpack_require__(/*! ./navbar-right */ "./components/ui-components/navbar/navbar-right.js");
 /* eslint-disable */
 
-var LoginModal = function (_React$Component) {
-    _inherits(LoginModal, _React$Component);
+var Navbar = function (_React$Component) {
+    _inherits(Navbar, _React$Component);
 
-    function LoginModal() {
-        _classCallCheck(this, LoginModal);
+    function Navbar() {
+        _classCallCheck(this, Navbar);
 
-        return _possibleConstructorReturn(this, (LoginModal.__proto__ || Object.getPrototypeOf(LoginModal)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
     }
 
-    _createClass(LoginModal, [{
+    _createClass(Navbar, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var initUserInfo = this.props.initUserInfo;
+
+            initUserInfo();
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var userInfo = this.props.userInfo || {};
+
             return React.createElement(
                 'div',
-                {
-                    id: 'loginModal',
-                    className: 'modal fade',
-                    tabIndex: '-1',
-                    role: 'dialog'
-                },
+                { className: 'page-section-header' },
                 React.createElement(
                     'div',
-                    {
-                        className: 'modal-dialog',
-                        role: 'document'
-                    },
-                    React.createElement(
-                        'div',
-                        { className: 'modal-content' },
-                        React.createElement(Header, null),
-                        React.createElement(Body, {
-                            updateRegisterForm: this.props.updateRegisterForm,
-                            updateLoginForm: this.props.updateLoginForm
-                        }),
-                        React.createElement(Footer, {
-                            register: this.props.register,
-                            login: this.props.login,
-                            cache: this.props.cache
-                        })
-                    )
+                    { className: 'page-section-header-container' },
+                    React.createElement(NavbarLeft, null),
+                    React.createElement(NavbarRight, {
+                        userInfo: userInfo,
+                        logout: this.props.logout
+                    })
                 )
             );
         }
     }]);
 
-    return LoginModal;
+    return Navbar;
 }(React.Component);
 
-module.exports = LoginModal;
+module.exports = Navbar;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar-left.js":
-/*!*************************************************!*\
-  !*** ./components/ui-components/navbar-left.js ***!
-  \*************************************************/
+/***/ "./components/ui-components/navbar/navbar-left.js":
+/*!********************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-left.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1544,10 +1612,10 @@ module.exports = NavbarLeft;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar-right-catalogue.js":
-/*!************************************************************!*\
-  !*** ./components/ui-components/navbar-right-catalogue.js ***!
-  \************************************************************/
+/***/ "./components/ui-components/navbar/navbar-right-catalogue.js":
+/*!*******************************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-right-catalogue.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1595,10 +1663,10 @@ module.exports = NavbarRightCatalogue;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar-right-logout.js":
-/*!*********************************************************!*\
-  !*** ./components/ui-components/navbar-right-logout.js ***!
-  \*********************************************************/
+/***/ "./components/ui-components/navbar/navbar-right-logout.js":
+/*!****************************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-right-logout.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1654,10 +1722,10 @@ module.exports = LogoutLink;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar-right-user.js":
-/*!*******************************************************!*\
-  !*** ./components/ui-components/navbar-right-user.js ***!
-  \*******************************************************/
+/***/ "./components/ui-components/navbar/navbar-right-user.js":
+/*!**************************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-right-user.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1676,7 +1744,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
-var config = __webpack_require__(/*! ../../config */ "./config.js");
+var config = __webpack_require__(/*! ../../../config */ "./config.js");
 
 var NavbarRightUser = function (_React$Component) {
     _inherits(NavbarRightUser, _React$Component);
@@ -1775,7 +1843,6 @@ var UserLink = function (_React$Component3) {
             var userName = userInfo.userName;
             var actived = !userInfo.isEnabled;
             var avatarLink = config.ossPublic.user + '/' + userInfo.uuid + '.jpg?' + Date.parse(new Date()); //  eslint-disable-line
-
             return React.createElement(
                 'a',
                 {
@@ -1784,7 +1851,7 @@ var UserLink = function (_React$Component3) {
                 },
                 React.createElement('img', {
                     className: 'user-avatar',
-                    src: '{ avatarLink }',
+                    src: avatarLink,
                     onError: function onError(event) {
                         return _this5.errHandler(event);
                     },
@@ -1811,10 +1878,10 @@ module.exports = NavbarRightUser;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar-right.js":
-/*!**************************************************!*\
-  !*** ./components/ui-components/navbar-right.js ***!
-  \**************************************************/
+/***/ "./components/ui-components/navbar/navbar-right.js":
+/*!*********************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-right.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1832,9 +1899,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var NavbarRightCatalogue = __webpack_require__(/*! ./navbar-right-catalogue */ "./components/ui-components/navbar-right-catalogue.js");
-var NavbarRightUser = __webpack_require__(/*! ./navbar-right-user */ "./components/ui-components/navbar-right-user.js");
-var NavbarRightLogout = __webpack_require__(/*! ./navbar-right-logout */ "./components/ui-components/navbar-right-logout.js");
+var NavbarRightCatalogue = __webpack_require__(/*! ./navbar-right-catalogue */ "./components/ui-components/navbar/navbar-right-catalogue.js");
+var NavbarRightUser = __webpack_require__(/*! ./navbar-right-user */ "./components/ui-components/navbar/navbar-right-user.js");
+var NavbarRightLogout = __webpack_require__(/*! ./navbar-right-logout */ "./components/ui-components/navbar/navbar-right-logout.js");
 /* eslint-disable */
 
 var NavbarRight = function (_React$Component) {
@@ -1903,10 +1970,10 @@ module.exports = NavbarRight;
 
 /***/ }),
 
-/***/ "./components/ui-components/navbar.js":
-/*!********************************************!*\
-  !*** ./components/ui-components/navbar.js ***!
-  \********************************************/
+/***/ "./components/ui-components/user-center/index.js":
+/*!*******************************************************!*\
+  !*** ./components/ui-components/user-center/index.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1924,51 +1991,237 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var NavbarLeft = __webpack_require__(/*! ./navbar-left */ "./components/ui-components/navbar-left.js");
-var NavbarRight = __webpack_require__(/*! ./navbar-right */ "./components/ui-components/navbar-right.js");
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+var UserOverview = __webpack_require__(/*! ./user-overview */ "./components/ui-components/user-center/user-overview.js");
+var UserInfo = __webpack_require__(/*! ./user-info */ "./components/ui-components/user-center/user-info.js");
+var UserComment = __webpack_require__(/*! ./user-comment */ "./components/ui-components/user-center/user-comment.js");
 /* eslint-disable */
 
-var Navbar = function (_React$Component) {
-    _inherits(Navbar, _React$Component);
+var UserCenter = function (_React$Component) {
+    _inherits(UserCenter, _React$Component);
 
-    function Navbar() {
-        _classCallCheck(this, Navbar);
+    function UserCenter() {
+        _classCallCheck(this, UserCenter);
 
-        return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (UserCenter.__proto__ || Object.getPrototypeOf(UserCenter)).call(this));
+
+        _this.redirectHandler = _this.redirectHandler.bind(_this);
+        return _this;
     }
 
-    _createClass(Navbar, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var initUserInfo = this.props.initUserInfo;
+    _createClass(UserCenter, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var loginTag = this.props.cache ? this.props.cache.loginTag : false;
 
-            initUserInfo();
+            this.redirectHandler(loginTag);
+        }
+    }, {
+        key: 'redirectHandler',
+        value: function redirectHandler(loginTag) {
+            if (!loginTag) {
+                //  退出登录了，重新跳转至首页
+                stanAlert({
+                    type: 'success',
+                    content: 'please login,ready to home page...',
+                    textAlign: 'center',
+                    shownExpires: 1
+                });
+                //  1s 后跳转到首页
+                setTimeout(function () {
+                    location.href = '/';
+                }, 1000);
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var userInfo = this.props.userInfo || {};
-
             return React.createElement(
                 'div',
-                { className: 'page-section-header' },
-                React.createElement(
-                    'div',
-                    { className: 'page-section-header-container' },
-                    React.createElement(NavbarLeft, null),
-                    React.createElement(NavbarRight, {
-                        userInfo: userInfo,
-                        logout: this.props.logout
-                    })
-                )
+                { className: 'user-center' },
+                React.createElement(UserOverview, null),
+                React.createElement(UserInfo, null),
+                React.createElement(UserComment, null)
             );
         }
     }]);
 
-    return Navbar;
+    return UserCenter;
 }(React.Component);
 
-module.exports = Navbar;
+module.exports = UserCenter;
+
+/***/ }),
+
+/***/ "./components/ui-components/user-center/user-comment.js":
+/*!**************************************************************!*\
+  !*** ./components/ui-components/user-center/user-comment.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var UserComment = function (_React$Component) {
+    _inherits(UserComment, _React$Component);
+
+    function UserComment() {
+        _classCallCheck(this, UserComment);
+
+        return _possibleConstructorReturn(this, (UserComment.__proto__ || Object.getPrototypeOf(UserComment)).apply(this, arguments));
+    }
+
+    _createClass(UserComment, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                '\u7528\u6237\u53D1\u8868\u8FC7\u7684\u8BC4\u8BBA'
+            );
+        }
+    }]);
+
+    return UserComment;
+}(React.Component);
+
+module.exports = UserComment;
+
+/***/ }),
+
+/***/ "./components/ui-components/user-center/user-info.js":
+/*!***********************************************************!*\
+  !*** ./components/ui-components/user-center/user-info.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var UserInfo = function (_React$Component) {
+    _inherits(UserInfo, _React$Component);
+
+    function UserInfo() {
+        _classCallCheck(this, UserInfo);
+
+        return _possibleConstructorReturn(this, (UserInfo.__proto__ || Object.getPrototypeOf(UserInfo)).apply(this, arguments));
+    }
+
+    _createClass(UserInfo, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                '\u5176\u4ED6\u4E0D\u53EF\u53D8\u7684\u4FE1\u606F\uFF1A\u6CE8\u518C\u90AE\u7BB1\u3001\u6CE8\u518C\u65F6\u95F4\u3001\u6CE8\u518C ip'
+            );
+        }
+    }]);
+
+    return UserInfo;
+}(React.Component);
+
+module.exports = UserInfo;
+
+/***/ }),
+
+/***/ "./components/ui-components/user-center/user-overview.js":
+/*!***************************************************************!*\
+  !*** ./components/ui-components/user-center/user-overview.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var UserOverview = function (_React$Component) {
+    _inherits(UserOverview, _React$Component);
+
+    function UserOverview() {
+        _classCallCheck(this, UserOverview);
+
+        return _possibleConstructorReturn(this, (UserOverview.__proto__ || Object.getPrototypeOf(UserOverview)).apply(this, arguments));
+    }
+
+    _createClass(UserOverview, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                '\u7528\u6237\u4FE1\u606F\u6982\u89C8'
+            );
+        }
+    }]);
+
+    return UserOverview;
+}(React.Component);
+
+module.exports = UserOverview;
+
+/***/ }),
+
+/***/ "./components/user-center.js":
+/*!***********************************!*\
+  !*** ./components/user-center.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var UI_userCenter = __webpack_require__(/*! ../components/ui-components/user-center */ "./components/ui-components/user-center/index.js");
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {//  eslint-disable-line
+    };
+};
+
+var UserCenter = connect(mapState2Props, mapDispatch2Props)(UI_userCenter);
+
+module.exports = UserCenter;
 
 /***/ }),
 
@@ -2431,6 +2684,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var UserCenter = __webpack_require__(/*! ../components/user-center */ "./components/user-center.js");
 /* eslint-disable */
 
 var PageUser = function (_React$Component) {
@@ -2452,7 +2706,7 @@ var PageUser = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
-                    '\u4E2A\u4EBA\u4E2D\u5FC3'
+                    React.createElement(UserCenter, null)
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -49193,6 +49447,8 @@ var activateAccount = function activateAccount(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
+    newState.cache = originalState.cache || {};
+    newState.cache.loginTag = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49298,8 +49554,14 @@ var initUserInfoDefault = function initUserInfoDefault(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
+    newState.cache = originalState.cache || {};
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
+    if (newState.userInfo.id && newState.userInfo.email && newState.userInfo.password) {
+        newState.cache.loginTag = true;
+    } else {
+        newState.cache.loginTag = false;
+    }
 
     return newState;
 };
@@ -49322,6 +49584,8 @@ var login = function login(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
+    newState.cache = originalState.cache || {};
+    newState.cache.loginTag = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49346,6 +49610,8 @@ var logout = function logout(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
+    newState.cache = originalState.cache || {};
+    newState.cache.loginTag = false;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49370,6 +49636,8 @@ var register = function register(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
+    newState.cache = originalState.cache || {};
+    newState.cache.loginTag = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 

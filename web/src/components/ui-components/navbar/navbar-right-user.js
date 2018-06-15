@@ -63,7 +63,6 @@ class UserLink extends React.Component {    //  eslint-disable-line
         const userName = userInfo.userName;
         const actived = !userInfo.isEnabled;
         const avatarLink = `${config.ossPublic.user}/${userInfo.uuid}.jpg?${Date.parse(new Date())}`; //  eslint-disable-line
-
         return (
             <a
                 className="nav-link user-center-link"
@@ -71,7 +70,7 @@ class UserLink extends React.Component {    //  eslint-disable-line
             >
                 <img
                     className="user-avatar"
-                    src="{ avatarLink }"
+                    src={ avatarLink }
                     onError={ event => this.errHandler(event) }
                     ref="userAvatar"
                 />
