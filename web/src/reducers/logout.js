@@ -4,7 +4,7 @@ const logout = (originalState, action) => {   //  eslint-disable-line
     const newState = JSON.parse(JSON.stringify(originalState));
 
     newState.cache = originalState.cache || {};
-    newState.cache.loginTag = false;
+    newState.cache.isLogin = false;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 

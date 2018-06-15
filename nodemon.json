@@ -1,9 +1,21 @@
 {
 	"restartable": "rs",
-	"ignore": [],
+	"ignore": [
+		"node_modules"
+	],
 	"verbose": true,
 	"execMap": {},
-	"watch": [],
+	"watch": [
+		"config",
+		"model",
+		"service",
+		"web/controller",
+		"web/lib",
+		"web/middleware",
+		"web/public/img",
+		"web/public/index.css",
+		"web/public/index.js"
+	],
 	"env": {},
 	"ext": "js json css sass less postcss jpg jpeg png gif"
 }

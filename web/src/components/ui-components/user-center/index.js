@@ -6,6 +6,7 @@ const stanAlert = require('/lib/common-stan-alert');
 
 const UserOverview = require('./user-overview');
 const UserInfo = require('./user-info');
+const UserAd = require('./user-ad');
 const UserComment = require('./user-comment');
 /* eslint-disable */
 class UserCenter extends React.Component {
@@ -16,13 +17,13 @@ class UserCenter extends React.Component {
     }
 
     componentDidUpdate() {
-        const loginTag = this.props.cache ? this.props.cache.loginTag : false;
+        const isLogin = this.props.cache ? this.props.cache.isLogin : false;
 
-        this.redirectHandler(loginTag);
+        this.redirectHandler(isLogin);
     }
 
-    redirectHandler(loginTag) {
-        if (!loginTag) {
+    redirectHandler(isLogin) {
+        if (!isLogin) {
             //  退出登录了，重新跳转至首页
             stanAlert({
                 type: 'success',
@@ -39,9 +40,10 @@ class UserCenter extends React.Component {
 
     render() {
         return (
-            <div className="user-center">
+            <div className="user-center row no-gutters">
                 <UserOverview/>
                 <UserInfo/>
+                <UserAd/>
                 <UserComment/>
             </div>
         );

@@ -698,4 +698,90 @@ code {
         }
 }
 
+.page-user .user-center {
+        padding-top: 0;
+    }
+
+@media (min-width: 576px) {
+        .page-user .user-center {
+            padding-top: 1rem;
+        }
+}
+
+.page-user .user-overview {
+        padding: 10px 15px;
+        margin: 0 0 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px 5px 0 0;
+    }
+
+@media (min-width: 576px) {
+        .page-user .user-overview {
+            padding: 10px 15px;
+            margin: 0 5px 10px 0;
+            border: 1px solid #ddd;
+            -webkit-box-flex: 0;
+                -ms-flex: 0 0 calc(33.33333% - 5px);
+                    flex: 0 0 calc(33.33333% - 5px);
+            border-radius: 5px 0 0 0;
+        }
+}
+
+.page-user .user-info {
+        padding: 10px 15px;
+        margin: 0 0 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 0;
+    }
+
+@media (min-width: 576px) {
+        .page-user .user-info {
+            padding: 10px 15px;
+            margin: 0 0 10px 5px;
+            border: 1px solid #ddd;
+            -webkit-box-flex: 0;
+                -ms-flex: 0 0 calc(66.66667% - 5px);
+                    flex: 0 0 calc(66.66667% - 5px);
+            border-radius: 0 5px 0 0;
+        }
+}
+
+.page-user .user-ad {
+        padding: 10px 15px;
+        margin: 0 0 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 0;
+    }
+
+@media (min-width: 576px) {
+        .page-user .user-ad {
+            padding: 10px 15px;
+            margin: 0 5px 10px 0;
+            border: 1px solid #ddd;
+            -webkit-box-flex: 0;
+                -ms-flex: 0 0 calc(33.33333% - 5px);
+                    flex: 0 0 calc(33.33333% - 5px);
+            border-radius: 0 0 0 5px;
+        }
+}
+
+.page-user .user-comment {
+        padding: 10px 15px;
+        margin: 0 0 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 0 0 5px 5px;
+    }
+
+@media (min-width: 576px) {
+        .page-user .user-comment {
+            padding: 10px 15px;
+            margin: 0 0 10px 5px;
+            border: 1px solid #ddd;
+            -webkit-box-flex: 0;
+                -ms-flex: 0 0 calc(66.66667% - 5px);
+                    flex: 0 0 calc(66.66667% - 5px);
+            border-radius: 0 0 5px 0;
+        }
+}
+
 

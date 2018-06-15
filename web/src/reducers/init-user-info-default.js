@@ -7,9 +7,9 @@ const initUserInfoDefault = (originalState, action) => {   //  eslint-disable-li
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
     if (newState.userInfo.id && newState.userInfo.email && newState.userInfo.password) {
-        newState.cache.loginTag = true;
+        newState.cache.isLogin = true;
     } else {
-        newState.cache.loginTag = false;
+        newState.cache.isLogin = false;
     }
 
     return newState;

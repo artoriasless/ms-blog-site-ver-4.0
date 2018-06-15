@@ -5,7 +5,9 @@ const React = require('react');
 class UserOverview extends React.Component {
     render() {
         return (
-            <div>用户信息概览</div>
+            <div className="col-xs-12 col-sm-4 user-overview">
+                用户信息概览
+            </div>
         );
     }
 }

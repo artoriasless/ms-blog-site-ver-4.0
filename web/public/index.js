@@ -1995,6 +1995,7 @@ var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib
 
 var UserOverview = __webpack_require__(/*! ./user-overview */ "./components/ui-components/user-center/user-overview.js");
 var UserInfo = __webpack_require__(/*! ./user-info */ "./components/ui-components/user-center/user-info.js");
+var UserAd = __webpack_require__(/*! ./user-ad */ "./components/ui-components/user-center/user-ad.js");
 var UserComment = __webpack_require__(/*! ./user-comment */ "./components/ui-components/user-center/user-comment.js");
 /* eslint-disable */
 
@@ -2013,14 +2014,14 @@ var UserCenter = function (_React$Component) {
     _createClass(UserCenter, [{
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
-            var loginTag = this.props.cache ? this.props.cache.loginTag : false;
+            var isLogin = this.props.cache ? this.props.cache.isLogin : false;
 
-            this.redirectHandler(loginTag);
+            this.redirectHandler(isLogin);
         }
     }, {
         key: 'redirectHandler',
-        value: function redirectHandler(loginTag) {
-            if (!loginTag) {
+        value: function redirectHandler(isLogin) {
+            if (!isLogin) {
                 //  退出登录了，重新跳转至首页
                 stanAlert({
                     type: 'success',
@@ -2039,9 +2040,10 @@ var UserCenter = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'user-center' },
+                { className: 'user-center row no-gutters' },
                 React.createElement(UserOverview, null),
                 React.createElement(UserInfo, null),
+                React.createElement(UserAd, null),
                 React.createElement(UserComment, null)
             );
         }
@@ -2051,6 +2053,53 @@ var UserCenter = function (_React$Component) {
 }(React.Component);
 
 module.exports = UserCenter;
+
+/***/ }),
+
+/***/ "./components/ui-components/user-center/user-ad.js":
+/*!*********************************************************!*\
+  !*** ./components/ui-components/user-center/user-ad.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var UserAd = function (_React$Component) {
+    _inherits(UserAd, _React$Component);
+
+    function UserAd() {
+        _classCallCheck(this, UserAd);
+
+        return _possibleConstructorReturn(this, (UserAd.__proto__ || Object.getPrototypeOf(UserAd)).apply(this, arguments));
+    }
+
+    _createClass(UserAd, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'col-xs-12 col-sm-4 user-ad' },
+                '\u5E7F\u544A\u4F4D\u62DB\u79DF'
+            );
+        }
+    }]);
+
+    return UserAd;
+}(React.Component);
+
+module.exports = UserAd;
 
 /***/ }),
 
@@ -2088,7 +2137,7 @@ var UserComment = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { className: 'col-xs-12 col-sm-8 user-comment' },
                 '\u7528\u6237\u53D1\u8868\u8FC7\u7684\u8BC4\u8BBA'
             );
         }
@@ -2135,7 +2184,7 @@ var UserInfo = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { className: 'col-xs-12 col-sm-8 user-info' },
                 '\u5176\u4ED6\u4E0D\u53EF\u53D8\u7684\u4FE1\u606F\uFF1A\u6CE8\u518C\u90AE\u7BB1\u3001\u6CE8\u518C\u65F6\u95F4\u3001\u6CE8\u518C ip'
             );
         }
@@ -2182,7 +2231,7 @@ var UserOverview = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                null,
+                { className: 'col-xs-12 col-sm-4 user-overview' },
                 '\u7528\u6237\u4FE1\u606F\u6982\u89C8'
             );
         }
@@ -49450,7 +49499,7 @@ var activateAccount = function activateAccount(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.cache = originalState.cache || {};
-    newState.cache.loginTag = true;
+    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49560,9 +49609,9 @@ var initUserInfoDefault = function initUserInfoDefault(originalState, action) {
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
     if (newState.userInfo.id && newState.userInfo.email && newState.userInfo.password) {
-        newState.cache.loginTag = true;
+        newState.cache.isLogin = true;
     } else {
-        newState.cache.loginTag = false;
+        newState.cache.isLogin = false;
     }
 
     return newState;
@@ -49587,7 +49636,7 @@ var login = function login(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.cache = originalState.cache || {};
-    newState.cache.loginTag = true;
+    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49613,7 +49662,7 @@ var logout = function logout(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.cache = originalState.cache || {};
-    newState.cache.loginTag = false;
+    newState.cache.isLogin = false;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -49639,7 +49688,7 @@ var register = function register(originalState, action) {
     var newState = JSON.parse(JSON.stringify(originalState));
 
     newState.cache = originalState.cache || {};
-    newState.cache.loginTag = true;
+    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
