@@ -2,8 +2,9 @@
 /* eslint-disable */
 const React = require('react');
 
-const Navbar = require('/components/common-components/navbar');
-const LoginModal = require('/components/common-components/login-modal');
+const Navbar = require('/components/common-navbar');
+const LoginModal = require('/components/common-login-modal');
+
 const ActivateAccount = require('/components/activate-account');
 /* eslint-disable */
 class PageActivate extends React.Component {

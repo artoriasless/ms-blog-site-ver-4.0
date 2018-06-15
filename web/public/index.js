@@ -551,10 +551,10 @@ module.exports = ActivateAccount;
 
 /***/ }),
 
-/***/ "./components/common-components/login-modal.js":
-/*!*****************************************************!*\
-  !*** ./components/common-components/login-modal.js ***!
-  \*****************************************************/
+/***/ "./components/common-login-modal.js":
+/*!******************************************!*\
+  !*** ./components/common-login-modal.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -565,11 +565,11 @@ module.exports = ActivateAccount;
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
-var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
-var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
-var UI_loginModal = __webpack_require__(/*! ../../components/ui-components/login-modal */ "./components/ui-components/login-modal/index.js");
-var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
+var UI_loginModal = __webpack_require__(/*! ../components/ui-components/login-modal */ "./components/ui-components/login-modal/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var updateRegisterFormAction = actions.updateRegisterFormAction;
 var updateLoginFormAction = actions.updateLoginFromAction;
@@ -667,10 +667,10 @@ module.exports = LoginModal;
 
 /***/ }),
 
-/***/ "./components/common-components/navbar.js":
-/*!************************************************!*\
-  !*** ./components/common-components/navbar.js ***!
-  \************************************************/
+/***/ "./components/common-navbar.js":
+/*!*************************************!*\
+  !*** ./components/common-navbar.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -680,11 +680,11 @@ module.exports = LoginModal;
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
-var ajaxAction = __webpack_require__(/*! ../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
-var stanAlert = __webpack_require__(/*! ../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
-var UI_navbar = __webpack_require__(/*! ../../components/ui-components/navbar */ "./components/ui-components/navbar/index.js");
-var actions = __webpack_require__(/*! ../../actions */ "./actions/index.js");
+var UI_navbar = __webpack_require__(/*! ../components/ui-components/navbar */ "./components/ui-components/navbar/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var initUserInfoDefaultAction = actions.initUserInfoDefaultAction;
 var logoutAction = actions.logoutAction;
@@ -2336,8 +2336,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
+
 var ActivateAccount = __webpack_require__(/*! ../components/activate-account */ "./components/activate-account.js");
 /* eslint-disable */
 
@@ -2397,8 +2398,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
 var PageCatalogue = function (_React$Component) {
@@ -2463,8 +2464,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
 var PageHome = function (_React$Component) {
@@ -2563,8 +2564,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
 var PagePaperCreate = function (_React$Component) {
@@ -2621,8 +2622,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
 var PagePaper = function (_React$Component) {
@@ -2682,8 +2683,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var Navbar = __webpack_require__(/*! ../components/common-components/navbar */ "./components/common-components/navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-components/login-modal */ "./components/common-components/login-modal.js");
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
+
 var UserCenter = __webpack_require__(/*! ../components/user-center */ "./components/user-center.js");
 /* eslint-disable */
 
