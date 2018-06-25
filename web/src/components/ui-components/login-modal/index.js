@@ -24,6 +24,9 @@ class LoginModal extends React.Component {
                         <Body
                             updateRegisterForm={ this.props.updateRegisterForm }
                             updateLoginForm={ this.props.updateLoginForm }
+                            login={ this.props.login }
+                            register={ this.props.register }
+                            cache={ this.props.cache }
                         />
                         <Footer
                             register={ this.props.register }

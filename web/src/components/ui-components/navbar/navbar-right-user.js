@@ -31,6 +31,8 @@ class LoginLink extends React.Component {   //  eslint-disable-line
     showLoginModal() {
         $('.navbar-collapse').collapse('hide');
         $('#loginModal').modal();
+        document.querySelector('#registerForm').reset();
+        document.querySelector('#loginForm').reset();
     }
 
     render() {
@@ -61,8 +63,9 @@ class UserLink extends React.Component {    //  eslint-disable-line
     render() {
         const userInfo = this.props.userInfo;
         const userName = userInfo.userName;
-        const actived = !userInfo.isEnabled;
         const avatarLink = `${config.ossPublic.user}/${userInfo.uuid}.jpg?${Date.parse(new Date())}`; //  eslint-disable-line
+        const userNameClass = !userInfo.isEnabled ? 'user-name inactivated' : 'user-name';
+
         return (
             <a
                 className="nav-link user-center-link"
@@ -74,12 +77,7 @@ class UserLink extends React.Component {    //  eslint-disable-line
                     onError={ event => this.errHandler(event) }
                     ref="userAvatar"
                 />
-                <span className="user-name">{ userName }</span>
-                {
-                    actived ? (
-                        <span className="inactived-tips">&nbsp;(inactived)</span>
-                    ) : null
-                }
+                <span className={ userNameClass }>{ userName }</span>
             </a>
         );
     }

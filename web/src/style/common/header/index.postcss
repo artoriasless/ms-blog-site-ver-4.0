@@ -82,14 +82,23 @@
                         float: left;
                     }
 
-                    .user-name:before {
-                        content: "Welcom, ";
-                        color: var(--color-orange);
+                    .user-name {
+                        display: inline-block;
+                        max-width: 15em;
+                        height: 2rem;
+                        line-height: 2rem;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+
+                        &:before {
+                            content: "Welcom, ";
+                            color: var(--color-orange);
+                        }
                     }
 
-                    .inactived-tips {
-                        color: var(--color-grey-light);
-                        font-size: 0.75em;
+                    .user-name.inactivated {
+                        color: var(--color-grey);
                     }
                 }
 

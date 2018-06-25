@@ -48,6 +48,7 @@ function ajaxLogout() {
                 type: 'success',
                 content: result.message,
                 textAlign: 'center',
+                shownExpires: 0.75,
             });
             dispatch(logoutAction(result.data));
         };

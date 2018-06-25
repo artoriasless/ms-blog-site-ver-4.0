@@ -607,7 +607,8 @@ function ajaxRegister(jsonData) {
                 stanAlert({
                     type: 'success',
                     content: result.message + '<br/>login your email to activate account',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    shownExpires: 0.75
                 });
 
                 $('#loginModal').modal('hide');
@@ -639,7 +640,8 @@ function ajaxLogin(jsonData) {
                 stanAlert({
                     type: 'success',
                     content: result.message,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    shownExpires: 0.75
                 });
 
                 $('#loginModal').modal('hide');
@@ -730,7 +732,8 @@ function ajaxLogout() {
             stanAlert({
                 type: 'success',
                 content: result.message,
-                textAlign: 'center'
+                textAlign: 'center',
+                shownExpires: 0.75
             });
             dispatch(logoutAction(result.data));
         };
@@ -868,7 +871,10 @@ var LoginModal = function (_React$Component) {
                         React.createElement(Header, null),
                         React.createElement(Body, {
                             updateRegisterForm: this.props.updateRegisterForm,
-                            updateLoginForm: this.props.updateLoginForm
+                            updateLoginForm: this.props.updateLoginForm,
+                            login: this.props.login,
+                            register: this.props.register,
+                            cache: this.props.cache
                         }),
                         React.createElement(Footer, {
                             register: this.props.register,
@@ -964,7 +970,9 @@ var LoginModalBody = function (_React$Component) {
                             role: 'tabpanel'
                         },
                         React.createElement(LoginForm, {
-                            updateLoginForm: this.props.updateLoginForm
+                            updateLoginForm: this.props.updateLoginForm,
+                            login: this.props.login,
+                            cache: this.props.cache
                         })
                     ),
                     React.createElement(
@@ -975,7 +983,9 @@ var LoginModalBody = function (_React$Component) {
                             role: 'tabpanel'
                         },
                         React.createElement(RegisterForm, {
-                            updateRegisterForm: this.props.updateRegisterForm
+                            updateRegisterForm: this.props.updateRegisterForm,
+                            register: this.props.register,
+                            cache: this.props.cache
                         })
                     )
                 )
@@ -1054,7 +1064,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/login-modal/util-submit-validate.js");
 
 var LoginModalFooter = function (_React$Component) {
     _inherits(LoginModalFooter, _React$Component);
@@ -1064,82 +1074,11 @@ var LoginModalFooter = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (LoginModalFooter.__proto__ || Object.getPrototypeOf(LoginModalFooter)).call(this));
 
-        _this.submitValidate = _this.submitValidate.bind(_this);
         _this.submitSignInUp = _this.submitSignInUp.bind(_this);
         return _this;
     }
 
     _createClass(LoginModalFooter, [{
-        key: 'submitValidate',
-        value: function submitValidate(type, formData) {
-            var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-            var pwdReg = /^\S{10,18}$/;
-            var alertInfo = {
-                title: 'Warning!',
-                email: {
-                    null: 'please type the email address!',
-                    illegal: 'please type legal email address!'
-                },
-                password: {
-                    null: 'please type the password!',
-                    illegal: 'please type legal password!<br/>pwd length from 10 to 16.'
-                },
-                passwordConfirm: {
-                    null: 'please retype the password to check!',
-                    illegal: 'the password to confirm is inconsistent!'
-                }
-            };
-
-            if (!formData.email) {
-                stanAlert({
-                    title: alertInfo.title,
-                    content: alertInfo.email.null
-                });
-
-                return false;
-            } else if (!emailReg.test(formData.email)) {
-                stanAlert({
-                    title: alertInfo.title,
-                    content: alertInfo.email.illegal
-                });
-
-                return false;
-            } else if (!formData.password) {
-                stanAlert({
-                    title: alertInfo.title,
-                    content: alertInfo.password.null
-                });
-
-                return false;
-            } else if (!pwdReg.test(formData.password)) {
-                stanAlert({
-                    title: alertInfo.title,
-                    content: alertInfo.password.illegal
-                });
-
-                return false;
-            }
-            //  如果是注册，需要再校验确认的模态框
-            if (type === 'register') {
-                if (!formData.passwordConfirm) {
-                    stanAlert({
-                        title: alertInfo.title,
-                        content: alertInfo.passwordConfirm.null
-                    });
-
-                    return false;
-                } else if (formData.password !== formData.passwordConfirm) {
-                    stanAlert({
-                        title: alertInfo.title,
-                        content: alertInfo.passwordConfirm.illegal
-                    });
-
-                    return false;
-                }
-            }
-            return true;
-        }
-    }, {
         key: 'submitSignInUp',
         value: function submitSignInUp(evt) {
             //  eslint-disable-line
@@ -1151,11 +1090,11 @@ var LoginModalFooter = function (_React$Component) {
             var submitType = activeTabPane === 'content_login' ? 'login' : 'register';
 
             if (submitType === 'login') {
-                if (this.submitValidate('login', cache.login || {})) {
+                if (submitValidate('login', cache.login || {})) {
                     login(cache.login);
                 }
             } else if (submitType === 'register') {
-                if (this.submitValidate('register', cache.register || {})) {
+                if (submitValidate('register', cache.register || {})) {
                     register(cache.register);
                 }
             }
@@ -1273,6 +1212,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
+var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/login-modal/util-submit-validate.js");
+
 var LoginForm = function (_React$Component) {
     _inherits(LoginForm, _React$Component);
 
@@ -1282,6 +1223,7 @@ var LoginForm = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this));
 
         _this.formChangeHandler = _this.formChangeHandler.bind(_this);
+        _this.enterLoginHandler = _this.enterLoginHandler.bind(_this);
         return _this;
     }
 
@@ -1300,6 +1242,19 @@ var LoginForm = function (_React$Component) {
             $pwd.value = formData.password;
 
             updateLoginForm(formData);
+        }
+    }, {
+        key: 'enterLoginHandler',
+        value: function enterLoginHandler(evt) {
+            var enterTag = evt.keyCode === 13;
+            var login = this.props.login;
+            var cache = this.props.cache || {};
+
+            if (enterTag) {
+                if (submitValidate('login', cache.login || {})) {
+                    login(cache.login);
+                }
+            }
         }
     }, {
         key: 'render',
@@ -1348,6 +1303,9 @@ var LoginForm = function (_React$Component) {
                         ref: 'login_password',
                         onChange: function onChange(event) {
                             return _this2.formChangeHandler(event);
+                        },
+                        onKeyDown: function onKeyDown(event) {
+                            return _this2.enterLoginHandler(event);
                         }
                     })
                 )
@@ -1383,6 +1341,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
+var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/login-modal/util-submit-validate.js");
+
 var RegisterForm = function (_React$Component) {
     _inherits(RegisterForm, _React$Component);
 
@@ -1392,6 +1352,7 @@ var RegisterForm = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this));
 
         _this.formChangeHandler = _this.formChangeHandler.bind(_this);
+        _this.enterLoginHandler = _this.enterLoginHandler.bind(_this);
         return _this;
     }
 
@@ -1413,6 +1374,19 @@ var RegisterForm = function (_React$Component) {
             $pwdConfirm.value = formData.passwordConfirm;
 
             updateRegisterForm(formData);
+        }
+    }, {
+        key: 'enterLoginHandler',
+        value: function enterLoginHandler(evt) {
+            var enterTag = evt.keyCode === 13;
+            var register = this.props.register;
+            var cache = this.props.cache || {};
+
+            if (enterTag) {
+                if (submitValidate('register', cache.register || {})) {
+                    register(cache.register);
+                }
+            }
         }
     }, {
         key: 'render',
@@ -1482,6 +1456,9 @@ var RegisterForm = function (_React$Component) {
                         ref: 'register_passwordConfirm',
                         onChange: function onChange(event) {
                             return _this2.formChangeHandler(event);
+                        },
+                        onKeyDown: function onKeyDown(event) {
+                            return _this2.enterLoginHandler(event);
                         }
                     })
                 )
@@ -1493,6 +1470,91 @@ var RegisterForm = function (_React$Component) {
 }(React.Component);
 
 module.exports = RegisterForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal/util-submit-validate.js":
+/*!**********************************************************************!*\
+  !*** ./components/ui-components/login-modal/util-submit-validate.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+function submitValidate(type, formData) {
+    var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var pwdReg = /^\S{10,18}$/;
+    var alertInfo = {
+        title: 'Warning!',
+        email: {
+            null: 'please type the email address!',
+            illegal: 'please type legal email address!'
+        },
+        password: {
+            null: 'please type the password!',
+            illegal: 'please type legal password!<br/>pwd length from 10 to 16.'
+        },
+        passwordConfirm: {
+            null: 'please retype the password to check!',
+            illegal: 'the password to confirm is inconsistent!'
+        }
+    };
+
+    if (!formData.email) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.email.null
+        });
+
+        return false;
+    } else if (!emailReg.test(formData.email)) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.email.illegal
+        });
+
+        return false;
+    } else if (!formData.password) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.password.null
+        });
+
+        return false;
+    } else if (!pwdReg.test(formData.password)) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.password.illegal
+        });
+
+        return false;
+    }
+    //  如果是注册，需要再校验确认的模态框
+    if (type === 'register') {
+        if (!formData.passwordConfirm) {
+            stanAlert({
+                title: alertInfo.title,
+                content: alertInfo.passwordConfirm.null
+            });
+
+            return false;
+        } else if (formData.password !== formData.passwordConfirm) {
+            stanAlert({
+                title: alertInfo.title,
+                content: alertInfo.passwordConfirm.illegal
+            });
+
+            return false;
+        }
+    }
+    return true;
+}
+
+module.exports = submitValidate;
 
 /***/ }),
 
@@ -1789,6 +1851,8 @@ var LoginLink = function (_React$Component2) {
         value: function showLoginModal() {
             $('.navbar-collapse').collapse('hide');
             $('#loginModal').modal();
+            document.querySelector('#registerForm').reset();
+            document.querySelector('#loginForm').reset();
         }
     }, {
         key: 'render',
@@ -1841,8 +1905,9 @@ var UserLink = function (_React$Component3) {
 
             var userInfo = this.props.userInfo;
             var userName = userInfo.userName;
-            var actived = !userInfo.isEnabled;
             var avatarLink = config.ossPublic.user + '/' + userInfo.uuid + '.jpg?' + Date.parse(new Date()); //  eslint-disable-line
+            var userNameClass = !userInfo.isEnabled ? 'user-name inactivated' : 'user-name';
+
             return React.createElement(
                 'a',
                 {
@@ -1859,14 +1924,9 @@ var UserLink = function (_React$Component3) {
                 }),
                 React.createElement(
                     'span',
-                    { className: 'user-name' },
+                    { className: userNameClass },
                     userName
-                ),
-                actived ? React.createElement(
-                    'span',
-                    { className: 'inactived-tips' },
-                    '\xA0(inactived)'
-                ) : null
+                )
             );
         }
     }]);
@@ -2041,8 +2101,11 @@ var UserCenter = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'user-center row no-gutters' },
-                React.createElement(UserOverview, null),
-                React.createElement(UserInfo, null),
+                React.createElement(UserOverview, {
+                    userInfo: this.props.userInfo,
+                    sendActivateMail: this.props.sendActivateMail
+                }),
+                React.createElement(UserInfo, { userInfo: this.props.userInfo }),
                 React.createElement(UserAd, null),
                 React.createElement(UserComment, null)
             );
@@ -2090,7 +2153,7 @@ var UserAd = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'col-xs-12 col-sm-4 user-ad' },
+                { className: 'col-xs-12 col-md-4 user-ad' },
                 '\u5E7F\u544A\u4F4D\u62DB\u79DF'
             );
         }
@@ -2137,7 +2200,7 @@ var UserComment = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'col-xs-12 col-sm-8 user-comment' },
+                { className: 'col-xs-12 col-md-8 user-comment' },
                 '\u7528\u6237\u53D1\u8868\u8FC7\u7684\u8BC4\u8BBA'
             );
         }
@@ -2182,10 +2245,53 @@ var UserInfo = function (_React$Component) {
     _createClass(UserInfo, [{
         key: 'render',
         value: function render() {
+            var userInfo = this.props.userInfo || {};
+
             return React.createElement(
                 'div',
-                { className: 'col-xs-12 col-sm-8 user-info' },
-                '\u5176\u4ED6\u4E0D\u53EF\u53D8\u7684\u4FE1\u606F\uFF1A\u6CE8\u518C\u90AE\u7BB1\u3001\u6CE8\u518C\u65F6\u95F4\u3001\u6CE8\u518C ip'
+                { className: 'col-xs-12 col-md-8 user-info' },
+                React.createElement(
+                    'div',
+                    { className: 'user-info-item' },
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-title' },
+                        'Register Mail'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-content' },
+                        userInfo.email
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'user-info-item' },
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-title' },
+                        'Register Date'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-content' },
+                        userInfo.gmtCreate
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'user-info-item' },
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-title' },
+                        'Register Ip'
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'user-info-content' },
+                        userInfo.registerIp
+                    )
+                )
             );
         }
     }]);
@@ -2216,6 +2322,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var config = __webpack_require__(/*! ../../../config */ "./config.js");
 
 var UserOverview = function (_React$Component) {
     _inherits(UserOverview, _React$Component);
@@ -2231,13 +2340,268 @@ var UserOverview = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'col-xs-12 col-sm-4 user-overview' },
-                '\u7528\u6237\u4FE1\u606F\u6982\u89C8'
+                { className: 'col-xs-12 col-md-4 user-overview' },
+                React.createElement(
+                    'div',
+                    { className: 'overview-container' },
+                    React.createElement(AvatarContainer, { userInfo: this.props.userInfo }),
+                    React.createElement(InfoContainer, {
+                        userInfo: this.props.userInfo,
+                        sendActivateMail: this.props.sendActivateMail
+                    })
+                ),
+                React.createElement(OperateContainer, { userInfo: this.props.userInfo })
             );
         }
     }]);
 
     return UserOverview;
+}(React.Component);
+
+var AvatarContainer = function (_React$Component2) {
+    _inherits(AvatarContainer, _React$Component2);
+
+    //  eslint-disable-line
+    function AvatarContainer() {
+        _classCallCheck(this, AvatarContainer);
+
+        var _this2 = _possibleConstructorReturn(this, (AvatarContainer.__proto__ || Object.getPrototypeOf(AvatarContainer)).call(this));
+
+        _this2.errHandler = _this2.errHandler.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(AvatarContainer, [{
+        key: 'errHandler',
+        value: function errHandler(evt) {
+            //  eslint-disable-line
+            var $userAvatar = reactDom.findDOMNode(this.refs.userAvatar);
+            var defaultAvatarLink = config.ossPublic.user + '/default.jpg?' + Date.parse(new Date());
+
+            $userAvatar.setAttribute('src', defaultAvatarLink);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var userInfo = this.props.userInfo || {};
+            var $userAvatar = reactDom.findDOMNode(this.refs.userAvatar);
+            var avatarLink = config.ossPublic.user + '/' + userInfo.uuid + '.jpg?' + Date.parse(new Date());
+
+            $userAvatar.setAttribute('src', avatarLink);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            var defaultAvatarLink = config.ossPublic.user + '/default.jpg?' + Date.parse(new Date());
+
+            return React.createElement(
+                'div',
+                { className: 'avatar-container' },
+                React.createElement('img', {
+                    className: 'avatar-content',
+                    src: defaultAvatarLink,
+                    onError: function onError(event) {
+                        return _this3.errHandler(event);
+                    },
+                    ref: 'userAvatar'
+                })
+            );
+        }
+    }]);
+
+    return AvatarContainer;
+}(React.Component);
+
+var InfoContainer = function (_React$Component3) {
+    _inherits(InfoContainer, _React$Component3);
+
+    function InfoContainer() {
+        _classCallCheck(this, InfoContainer);
+
+        return _possibleConstructorReturn(this, (InfoContainer.__proto__ || Object.getPrototypeOf(InfoContainer)).apply(this, arguments));
+    }
+
+    _createClass(InfoContainer, [{
+        key: 'render',
+        //  eslint-disable-line
+        value: function render() {
+            var genderMap = ['mars', 'venus', 'transgender'];
+            var userInfo = this.props.userInfo || {};
+            var genderClass = 'user-gender fa fa-' + genderMap[userInfo.gender || 0];
+
+            return React.createElement(
+                'div',
+                { className: 'info-container' },
+                React.createElement(
+                    'div',
+                    { className: 'user-name' },
+                    React.createElement('i', {
+                        className: genderClass
+                    }),
+                    userInfo.userName
+                ),
+                React.createElement(AccountActive, {
+                    userInfo: this.props.userInfo,
+                    sendActivateMail: this.props.sendActivateMail
+                })
+            );
+        }
+    }]);
+
+    return InfoContainer;
+}(React.Component);
+
+var AccountActive = function (_React$Component4) {
+    _inherits(AccountActive, _React$Component4);
+
+    //  eslint-disable-line
+    function AccountActive() {
+        _classCallCheck(this, AccountActive);
+
+        var _this5 = _possibleConstructorReturn(this, (AccountActive.__proto__ || Object.getPrototypeOf(AccountActive)).call(this));
+
+        _this5.clickHandler = _this5.clickHandler.bind(_this5);
+        return _this5;
+    }
+
+    _createClass(AccountActive, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt) {
+            //  eslint-disable-line
+            var sendActivateMail = this.props.sendActivateMail;
+
+            sendActivateMail();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this6 = this;
+
+            var userInfo = this.props.userInfo || {};
+
+            if (userInfo.isEnabled) {
+                return React.createElement(
+                    'div',
+                    { className: 'account-activated' },
+                    React.createElement(
+                        'span',
+                        {
+                            className: 'activated-tips activated'
+                        },
+                        'Activated'
+                    )
+                );
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: 'account-activated' },
+                    React.createElement(
+                        'span',
+                        {
+                            className: 'activated-tips inactivated'
+                        },
+                        'Inactivated'
+                    ),
+                    '\xA0\xA0\xA0\xA0\xA0',
+                    React.createElement(
+                        'a',
+                        {
+                            className: 'send-activate-mail-link',
+                            href: 'javascript:;',
+                            onClick: function onClick(event) {
+                                return _this6.clickHandler(event);
+                            }
+                        },
+                        'send activate email'
+                    )
+                );
+            }
+        }
+    }]);
+
+    return AccountActive;
+}(React.Component);
+
+var OperateContainer = function (_React$Component5) {
+    _inherits(OperateContainer, _React$Component5);
+
+    //  eslint-disable-line
+    function OperateContainer() {
+        _classCallCheck(this, OperateContainer);
+
+        var _this7 = _possibleConstructorReturn(this, (OperateContainer.__proto__ || Object.getPrototypeOf(OperateContainer)).call(this));
+
+        _this7.editInfo = _this7.editInfo.bind(_this7);
+        _this7.editPwd = _this7.editPwd.bind(_this7);
+        _this7.resetPwd = _this7.resetPwd.bind(_this7);
+        return _this7;
+    }
+
+    _createClass(OperateContainer, [{
+        key: 'editInfo',
+        value: function editInfo(evt) {
+            //  eslint-disable-line
+            console.info('edit info');
+        }
+    }, {
+        key: 'editPwd',
+        value: function editPwd(evt) {
+            //  eslint-disable-line
+            console.info('edit pwd');
+        }
+    }, {
+        key: 'resetPwd',
+        value: function resetPwd(evt) {
+            //  eslint-disable-line
+            console.info('reset pwd');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this8 = this;
+
+            return React.createElement(
+                'div',
+                { className: 'operate-container' },
+                React.createElement(
+                    'a',
+                    {
+                        className: 'operate-link',
+                        onClick: function onClick(event) {
+                            return _this8.editInfo(event);
+                        }
+                    },
+                    'Edit Info'
+                ),
+                '\xA0|\xA0',
+                React.createElement(
+                    'a',
+                    {
+                        className: 'operate-link',
+                        onClick: function onClick(event) {
+                            return _this8.editPwd(event);
+                        }
+                    },
+                    'Edit Pwd'
+                ),
+                '\xA0|\xA0',
+                React.createElement(
+                    'a',
+                    {
+                        className: 'operate-link',
+                        onClick: function onClick(event) {
+                            return _this8.resetPwd(event);
+                        }
+                    },
+                    'Reset Pwd'
+                )
+            );
+        }
+    }]);
+
+    return OperateContainer;
 }(React.Component);
 
 module.exports = UserOverview;
@@ -2257,6 +2621,9 @@ module.exports = UserOverview;
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
 var UI_userCenter = __webpack_require__(/*! ../components/ui-components/user-center */ "./components/ui-components/user-center/index.js");
 
 var mapState2Props = function mapState2Props(state, props) {
@@ -2264,11 +2631,43 @@ var mapState2Props = function mapState2Props(state, props) {
 }; //  eslint-disable-line
 
 var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
-    return {//  eslint-disable-line
+    return { //  eslint-disable-line
+        sendActivateMail: function sendActivateMail() {
+            return _sendActivateMail();
+        }
     };
 };
 
 var UserCenter = connect(mapState2Props, mapDispatch2Props)(UI_userCenter);
+
+function _sendActivateMail() {
+    //  发送账号激活邮件不会改变 state ，故该操作没有对应 action ，也无需调用 dispatch
+    var requestUrl = '/api/user/send-activate-mail';
+    var successFunc = function successFunc(result) {
+        if (result.success) {
+            stanAlert({
+                type: 'success',
+                content: result.message,
+                textAlign: 'center',
+                shownExpires: 0.75
+            });
+        } else {
+            stanAlert({
+                title: 'Warning!',
+                content: result.message
+            });
+        }
+    };
+    var failFunc = function failFunc(err) {
+        stanAlert({
+            title: 'Warning!',
+            content: err.toString()
+        });
+        console.info(err); //  eslint-disable-line
+    };
+
+    ajaxAction(requestUrl, {}, successFunc, failFunc);
+}
 
 module.exports = UserCenter;
 

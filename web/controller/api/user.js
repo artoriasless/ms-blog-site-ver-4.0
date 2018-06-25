@@ -11,6 +11,19 @@ const service = require('../../../service');
 const userService = service.user;
 const utilService = service.util;
 
+function sendActivateMail(uuid, email) {
+    const activateLink = `${config.domain}/util/activate/${uuid}`;
+    const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.tpl')).toString();
+    const emailOpts = {
+        to: email,
+        subject: 'Activate Your MonkingStand Account',
+        text: 'activate your monkingstand account to comment',
+        html: emailTpl.replace(/<activateLink>/g, activateLink),
+    };
+
+    utilService.email(emailOpts);
+}
+
 module.exports = {
     async getUserDefault(ctx) {
         if (ctx.session.user === undefined) ctx.session.user = {id: 0};
@@ -77,7 +90,7 @@ module.exports = {
             userName: `guest${Math.round(Math.random() * 100)}`,
             email: data.email,
             password: hash.sha1(data.password),
-            gender: 1,
+            gender: 0,
             isEnabled: 0,
             registerIp: ctx.request.ip.match(/\d+\.\d+\.\d+\.\d+/)[0],
         };
@@ -91,16 +104,7 @@ module.exports = {
         } else {
             user = await userService.create(userData);
 
-            const activateLink = `${config.domain}/util/activate/${user.uuid}`;
-            const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.tpl')).toString();
-            const emailOpts = {
-                to: user.email,
-                subject: 'Activate Your MonkingStand Account',
-                text: 'activate your monkingstand account to comment',
-                html: emailTpl.replace(/<activateLink>/g, activateLink),
-            };
-
-            utilService.email(emailOpts);
+            sendActivateMail(user.uuid, user.email);
         }
 
         ctx.session.user = user;
@@ -144,6 +148,20 @@ module.exports = {
             success,
             message,
             data: user,
+        };
+    },
+    async sendActivateMail(ctx) {
+        //  jsonData 由后端拿前端暂存的 session
+        const data = ctx.session.user;
+        var success = true;
+        var message = 'activate email has been sent!';
+
+        sendActivateMail(data.uuid, data.email);
+
+        ctx.body = {
+            success,
+            message,
+            data,
         };
     },
 };

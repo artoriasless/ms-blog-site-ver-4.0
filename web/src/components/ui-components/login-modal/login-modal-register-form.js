@@ -3,10 +3,13 @@
 const React = require('react');
 const reactDom = require('react-dom');
 
+const submitValidate = require('./util-submit-validate');
+
 class RegisterForm extends React.Component {
     constructor() {
         super();
         this.formChangeHandler = this.formChangeHandler.bind(this);
+        this.enterLoginHandler = this.enterLoginHandler.bind(this);
     }
 
     formChangeHandler(evt) {    //  eslint-disable-line
@@ -24,6 +27,19 @@ class RegisterForm extends React.Component {
         $pwdConfirm.value = formData.passwordConfirm;
 
         updateRegisterForm(formData);
+    }
+
+    enterLoginHandler(evt) {
+        const enterTag = evt.keyCode === 13;
+        const register = this.props.register;
+        const cache = this.props.cache || {};
+
+
+        if (enterTag) {
+            if (submitValidate('register', cache.register || {})) {
+                register(cache.register);
+            }
+        }
     }
 
     render() {
@@ -66,6 +82,7 @@ class RegisterForm extends React.Component {
                         placeholder="confirm your password"
                         ref="register_passwordConfirm"
                         onChange={ event => this.formChangeHandler(event) }
+                        onKeyDown={ event => this.enterLoginHandler(event) }
                     />
                 </div>
             </form>

@@ -36,6 +36,7 @@ function ajaxRegister(jsonData) {
                     type: 'success',
                     content: `${result.message}<br/>login your email to activate account`,
                     textAlign: 'center',
+                    shownExpires: 0.75,
                 });
 
                 $('#loginModal').modal('hide');
@@ -68,6 +69,7 @@ function ajaxLogin(jsonData) {
                     type: 'success',
                     content: result.message,
                     textAlign: 'center',
+                    shownExpires: 0.75,
                 });
 
                 $('#loginModal').modal('hide');

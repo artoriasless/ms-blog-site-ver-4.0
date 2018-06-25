@@ -41,8 +41,11 @@ class UserCenter extends React.Component {
     render() {
         return (
             <div className="user-center row no-gutters">
-                <UserOverview/>
-                <UserInfo/>
+                <UserOverview
+                    userInfo={ this.props.userInfo }
+                    sendActivateMail={ this.props.sendActivateMail }
+                />
+                <UserInfo userInfo={ this.props.userInfo }/>
                 <UserAd/>
                 <UserComment/>
             </div>
