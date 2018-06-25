@@ -2,15 +2,15 @@
 /* eslint-disable */
 const React = require('react');
 
-const Header = require('./login-modal-header');
-const Body = require('./login-modal-body');
-const Footer = require('./login-modal-footer');
+const Header = require('./edit-info-modal-header');
+const Body = require('./edit-info-modal-body');
+const Footer = require('./edit-info-modal-footer');
 /* eslint-disable */
-class LoginModal extends React.Component {
+class EditInfoModal extends React.Component {
     render() {
         return (
             <div
-                id="loginModal"
+                id="editInfoModal"
                 className="common-modal modal fade"
                 tabIndex="-1"
                 role="dialog"
@@ -22,16 +22,12 @@ class LoginModal extends React.Component {
                     <div className="modal-content">
                         <Header/>
                         <Body
-                            updateRegisterForm={ this.props.updateRegisterForm }
-                            updateLoginForm={ this.props.updateLoginForm }
-                            login={ this.props.login }
-                            register={ this.props.register }
-                            cache={ this.props.cache }
+                            userInfo={ this.props.userInfo }
+                            updateUserInfoForm={ this.props.updateUserInfoForm }
                         />
                         <Footer
-                            register={ this.props.register }
-                            login={ this.props.login }
                             cache={ this.props.cache }
+                            updateUserInfo={ this.props.updateUserInfo }
                         />
                     </div>
                 </div>
@@ -40,4 +36,4 @@ class LoginModal extends React.Component {
     }
 }
 
-module.exports = LoginModal;
+module.exports = EditInfoModal;

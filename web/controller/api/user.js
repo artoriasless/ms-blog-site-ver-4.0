@@ -150,6 +150,22 @@ module.exports = {
             data: user,
         };
     },
+    async update(ctx) {
+        const data = ctx.request.body;
+        var user = ctx.session.user;
+        var message = 'update success!';
+        var success = true;
+
+        data.id = user.id;
+        user = await userService.update(data);
+
+        ctx.session.user = user;
+        ctx.body = {
+            success,
+            message,
+            data: user,
+        };
+    },
     async sendActivateMail(ctx) {
         //  jsonData 由后端拿前端暂存的 session
         const data = ctx.session.user;

@@ -48,6 +48,8 @@ _router.post('/api/user/login', api.user.login);
 _router.post('/api/user/register', api.user.register);
 //  激活
 _router.post('/api/user/activate', api.user.activate);
+//  修改信息
+_router.post('/api/user/update', api.user.update);
 //  发送激活邮件
 _router.post('/api/user/send-activate-mail', api.user.sendActivateMail);
 

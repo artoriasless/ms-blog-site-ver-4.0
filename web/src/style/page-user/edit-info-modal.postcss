@@ -1,0 +1,18 @@
+/*
+    避免 gulp 多次重复打包，在入口文件处只引入一次
+    @import url(/style/common/modal/index.postcss);
+*/
+#editInfoModal {
+    .gender-radio-contaienr {
+        padding-left: 1.25rem;
+
+        .stan-radio {
+            color: var(--color-theme);
+
+            .fa {
+                margin-right: 5px;
+            }
+        }
+    }
+}
+@import url(/style/common/stan-radio.postcss);

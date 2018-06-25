@@ -6,10 +6,14 @@ const ajaxAction = require('/lib/common-ajax-action');
 const stanAlert = require('/lib/common-stan-alert');
 
 const UI_userCenter = require('/components/ui-components/user-center');
+const actions = require('/actions');
+
+const updateUserInfoFormAction = actions.updateUserInfoFormAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
 const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
+    updateUserInfoForm: formData => dispatch(updateUserInfoFormAction(formData)),
     sendActivateMail: () => sendActivateMail(),
 });
 

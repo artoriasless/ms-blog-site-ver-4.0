@@ -21,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
             field: 'content',
             comment: '一条消息的主要内容',
         },
+        userId: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            field: 'user_id',
+            comment: '该信息对应的用户 id',
+        },
         paperId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,

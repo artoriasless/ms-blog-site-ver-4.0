@@ -431,6 +431,62 @@ code {
                         }
 }
 
+.common-modal {
+    z-index: 999999;
+
+}
+
+.common-modal .modal-dialog {
+        top: 50%;
+        margin-top: -10rem;   /* (0.25 + 1.5 + 0.25 + 0.25 + 15 + 0.25) / 2 + 1.25 */
+    }
+
+.common-modal .modal-header {
+    padding: 0.25rem 0.75rem;
+}
+
+.common-modal .modal-header .modal-title {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+.common-modal .modal-header .close {
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+.common-modal .modal-body {
+    min-height: 12.5rem;
+    padding: 0.25rem 0.75rem;
+}
+
+.common-modal .modal-body form .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+.common-modal .modal-body form .form-group label {
+                margin-bottom: 0.25rem;
+            }
+
+.common-modal .modal-footer {
+    padding: 0 0.75rem 0.75rem;
+    border-top: none;
+}
+
+.common-modal .modal-footer .submit-btn {
+        height: 2rem;
+        line-height: calc(2rem - 2px);
+        padding: 0 0.75rem;
+        color: #fff;
+    }
+
 /*! ========================================================================
  * Bootstrap Toggle: bootstrap-toggle.css v2.2.0
  * http://www.bootstraptoggle.com
@@ -556,61 +612,10 @@ code {
                 pointer-events: none;
             }
 
-#loginModal {
-    z-index: 999999;
-
-}
-
-#loginModal .modal-dialog {
-        top: 50%;
-        margin-top: -10rem;   /* (0.25 + 1.5 + 0.25 + 0.25 + 15 + 0.25) / 2 + 1.25 */
-    }
-
-#loginModal .modal-header {
-    padding: 0.25rem 0.75rem;
-}
-
-#loginModal .modal-header .modal-title {
-        height: 1.5rem;
-        line-height: 1.5rem;
-        font-size: 1rem;
-        font-weight: 400;
-    }
-
-#loginModal .modal-header .close {
-        width: 1.5rem;
-        height: 1.5rem;
-        line-height: 1.5rem;
-        padding: 0;
-        margin: 0;
-        text-align: center;
-        font-size: 1rem;
-    }
-
-#loginModal .modal-body {
-    min-height: 12.5rem;
-    padding: 0.25rem 0.75rem;
-}
-
-#loginModal .modal-body #loginForm .form-group, #loginModal .modal-body #registerForm .form-group {
-            margin-bottom: 0.5rem;
-        }
-
-#loginModal .modal-body #loginForm .form-group label, #loginModal .modal-body #registerForm .form-group label {
-                margin-bottom: 0.25rem;
-            }
-
-#loginModal .modal-footer {
-    padding: 0 0.75rem 0.75rem;
-    border-top: none;
-}
-
-#loginModal .modal-footer .submit-btn {
-        height: 2rem;
-        line-height: calc(2rem - 2px);
-        padding: 0 0.75rem;
-        color: #fff;
-    }
+/*
+    避免 gulp 多次重复打包，在入口文件处只引入一次
+    @import url(/style/common/modal/index.postcss);
+*/
 
 .page-home .main {
         text-align: center;
@@ -809,6 +814,7 @@ code {
                 display: inline-block;
                 padding: 0 10px;
                 color: #5e87a2;
+                cursor: pointer;
             }
 
 @media (min-width: 768px) {
@@ -828,9 +834,12 @@ code {
         font-family: consola;
     }
 
+.page-user .user-info .user-info-item:not(:last-of-type) {
+            margin-bottom: 10px;
+        }
+
 .page-user .user-info .user-info-item {
             height: 25px;
-            margin-bottom: 10px;
         }
 
 .page-user .user-info .user-info-item .user-info-title {
@@ -911,5 +920,91 @@ code {
             border-radius: 0 0 5px 0;
         }
 }
+
+/*
+    避免 gulp 多次重复打包，在入口文件处只引入一次
+    @import url(/style/common/modal/index.postcss);
+*/
+
+#editInfoModal .gender-radio-contaienr {
+        padding-left: 1.25rem;
+    }
+
+#editInfoModal .gender-radio-contaienr .stan-radio {
+            color: #5e87a2;
+        }
+
+#editInfoModal .gender-radio-contaienr .stan-radio .fa {
+                margin-right: 5px;
+            }
+
+.stan-radio {
+    display: inline-block;
+    position: relative;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    padding-left: 1.75rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.stan-radio .stan-radio-input {
+    display: none;
+}
+
+.stan-radio .stan-radio-indicator {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 0;
+    left: 0;
+    margin: 0.125rem;
+    border-radius: 50%;
+    background: #e6e6e6;
+}
+
+.stan-radio:hover .stan-radio-input ~ .stan-radio-indicator, .stan-radio .stan-radio-input:focus ~ .stan-radio-indicator {
+    background: #ccc;
+}
+
+.stan-radio .stan-radio-input:checked ~ .stan-radio-indicator {
+    background: #2aa1c0;
+}
+
+.stan-radio:hover .stan-radio-input:not([disabled]):checked ~ .stan-radio-indicator, .stan-radio .stan-radio-input:checked:focus ~ .stan-radio-indicator {
+    background: #0e647d;
+}
+
+.stan-radio .stan-radio-input:disabled ~ .stan-radio-indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.stan-radio .stan-radio-indicator:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.stan-radio .stan-radio-input:checked ~ .stan-radio-indicator:after {
+    display: block;
+}
+
+.stan-radio .stan-radio-indicator:after {
+    width: 0.5rem;
+    height: 0.5rem;
+    left: 0;
+    top: 0;
+    margin: 0.375rem;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.stan-radio .stan-radio-input:disabled ~ .stan-radio-indicator:after {
+    background: #7b7b7b;
+}
+
 
 

@@ -1,9 +1,11 @@
 'use strict';
-
+/* global $ */
 const React = require('react');
 const reactDom = require('react-dom');
 
 const config = require('/config');
+
+const resetInfoForm = require('../edit-info-modal/util-reset-info-form');
 
 class UserOverview extends React.Component {
     render() {
@@ -16,7 +18,10 @@ class UserOverview extends React.Component {
                         sendActivateMail={ this.props.sendActivateMail }
                     />
                 </div>
-                <OperateContainer userInfo={ this.props.userInfo }/>
+                <OperateContainer
+                    userInfo={ this.props.userInfo }
+                    updateUserInfoForm={ this.props.updateUserInfoForm }
+                />
             </div>
         );
     }
@@ -136,11 +141,18 @@ class OperateContainer extends React.Component {    //  eslint-disable-line
     }
 
     editInfo(evt) { //  eslint-disable-line
-        console.info('edit info');
+        const userInfo = this.props.userInfo || {};
+
+        resetInfoForm(userInfo);
+        $('#editInfoModal').modal();
+        this.props.updateUserInfoForm({
+            userName: userInfo.userName,
+            gender: userInfo.gender,
+        });
     }
 
     editPwd(evt) {  //  eslint-disable-line
-        console.info('edit pwd');
+        $('#editPwdModal').modal();
     }
 
     resetPwd(evt) { //  eslint-disable-line

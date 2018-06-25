@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-
 const updateLoginForm = (originalState, action) => {   //  eslint-disable-line
     const newState = JSON.parse(JSON.stringify(originalState));
 

@@ -1,16 +1,6 @@
 @import url(./switch-button.postcss);
 
-#loginModal {
-    z-index: 999999;
-
-    .modal-dialog {
-        top: 50%;
-        margin-top: -10rem;   /* (0.25 + 1.5 + 0.25 + 0.25 + 15 + 0.25) / 2 + 1.25 */
-    }
-
-    @import url(./modal-header.postcss);
-
-    @import url(./modal-body.postcss);
-
-    @import url(./modal-footer.postcss);
-}
+/*
+    避免 gulp 多次重复打包，在入口文件处只引入一次
+    @import url(/style/common/modal/index.postcss);
+*/

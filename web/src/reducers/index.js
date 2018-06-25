@@ -5,10 +5,12 @@ const { actionTypes } = require('/actions');
 const initUserInfoDefaultFunc = require('./init-user-info-default');
 const updateRegisterFormFunc = require('./update-register-form');
 const updateLoginFormFunc = require('./update-login-form');
+const updateUserInfoFormFunc = require('./update-user-info-form');
 const registerFunc = require('./register');
 const activateAccountFunc = require('./activate-account');
 const loginFunc = require('./login');
 const logoutFunc = require('./logout');
+const updateUserInfoFunc = require('./update-user-info');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -21,6 +23,9 @@ const reducers = (state = {}, action = {}) => {
     case actionTypes.UPDATE_LOGIN_FORM:
         return updateLoginFormFunc(state, action);
 
+    case actionTypes.UPDATE_USER_INFO_FORM:
+        return updateUserInfoFormFunc(state, action);
+
     case actionTypes.REGISTER:
         return registerFunc(state, action);
 
@@ -32,6 +37,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.LOGOUT:
         return logoutFunc(state, action);
+
+    case actionTypes.UPDATE_USER_INFO:
+        return updateUserInfoFunc(state, action);
 
     default:
         return state;
@@ -53,6 +61,9 @@ module.exports = reducers;
 
         },
         userInfo: {
+            ···
+        },
+        message: {
             ···
         },
         reply: {

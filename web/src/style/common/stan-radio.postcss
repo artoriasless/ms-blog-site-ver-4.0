@@ -1,0 +1,59 @@
+.stan-radio {
+    display: inline-block;
+    position: relative;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    padding-left: 1.75rem;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.stan-radio .stan-radio-input {
+    display: none;
+}
+.stan-radio .stan-radio-indicator {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    top: 0;
+    left: 0;
+    margin: 0.125rem;
+    border-radius: 50%;
+    background: #e6e6e6;
+}
+.stan-radio:hover .stan-radio-input ~ .stan-radio-indicator,
+.stan-radio .stan-radio-input:focus ~ .stan-radio-indicator {
+    background: #ccc;
+}
+.stan-radio .stan-radio-input:checked ~ .stan-radio-indicator {
+    background: #2aa1c0;
+}
+.stan-radio:hover .stan-radio-input:not([disabled]):checked ~ .stan-radio-indicator,
+.stan-radio .stan-radio-input:checked:focus ~ .stan-radio-indicator {
+    background: #0e647d;
+}
+.stan-radio .stan-radio-input:disabled ~ .stan-radio-indicator {
+    background: #e6e6e6;
+    opacity: 0.6;
+    pointer-events: none;
+}
+.stan-radio .stan-radio-indicator:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+.stan-radio .stan-radio-input:checked ~ .stan-radio-indicator:after {
+    display: block;
+}
+.stan-radio .stan-radio-indicator:after {
+    width: 0.5rem;
+    height: 0.5rem;
+    left: 0;
+    top: 0;
+    margin: 0.375rem;
+    border-radius: 50%;
+    background: #fff;
+}
+.stan-radio .stan-radio-input:disabled ~ .stan-radio-indicator:after {
+    background: #7b7b7b;
+}

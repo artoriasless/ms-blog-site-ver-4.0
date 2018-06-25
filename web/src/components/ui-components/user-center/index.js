@@ -43,6 +43,7 @@ class UserCenter extends React.Component {
             <div className="user-center row no-gutters">
                 <UserOverview
                     userInfo={ this.props.userInfo }
+                    updateUserInfoForm={ this.props.updateUserInfoForm }
                     sendActivateMail={ this.props.sendActivateMail }
                 />
                 <UserInfo userInfo={ this.props.userInfo }/>

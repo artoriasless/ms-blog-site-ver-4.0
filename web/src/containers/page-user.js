@@ -5,6 +5,8 @@ const React = require('react');
 const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
 
+const EditInfoModal = require('/components/edit-info-modal');
+const EditPwdModal = require('/components/edit-pwd-modal');
 const UserCenter = require('/components/user-center');
 /* eslint-disable */
 class PageUser extends React.Component {
@@ -16,6 +18,8 @@ class PageUser extends React.Component {
                     <UserCenter/>
                 </div>
                 <LoginModal/>
+                <EditInfoModal/>
+                <EditPwdModal/>
             </div>
         );
     }
