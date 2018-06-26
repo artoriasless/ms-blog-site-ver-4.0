@@ -100,22 +100,26 @@ var GET_USER_DEFAULT = 'GET_USER_DEFAULT';
 var UPDATE_REGISTER_FORM = 'UPDATE_REGISTER_FORM';
 var UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM';
 var UPDATE_USER_INFO_FORM = 'UPDATE_USER_INFO_FORM';
+var UPDATE_PWD_FORM = 'UPDATE_PWD_FORM';
 var REGISTER = 'REGISTER';
 var ACTIVATE_ACCOUNT = 'ACTIVATE_ACCOUNT';
 var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
 var UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+var UPDATE_PWD = 'UPDATE_PWD';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
     UPDATE_REGISTER_FORM: UPDATE_REGISTER_FORM,
     UPDATE_LOGIN_FORM: UPDATE_LOGIN_FORM,
     UPDATE_USER_INFO_FORM: UPDATE_USER_INFO_FORM,
+    UPDATE_PWD_FORM: UPDATE_PWD_FORM,
     REGISTER: REGISTER,
     ACTIVATE_ACCOUNT: ACTIVATE_ACCOUNT,
     LOGIN: LOGIN,
     LOGOUT: LOGOUT,
-    UPDATE_USER_INFO: UPDATE_USER_INFO
+    UPDATE_USER_INFO: UPDATE_USER_INFO,
+    UPDATE_PWD: UPDATE_PWD
 };
 
 /***/ }),
@@ -164,11 +168,13 @@ var initUserInfoDefaultAction = __webpack_require__(/*! ./init-user-info-default
 var updateRegisterFormAction = __webpack_require__(/*! ./update-register-form */ "./actions/update-register-form.js");
 var updateLoginFromAction = __webpack_require__(/*! ./update-login-form */ "./actions/update-login-form.js");
 var updateUserInfoFormAction = __webpack_require__(/*! ./update-user-info-form */ "./actions/update-user-info-form.js");
+var updatePwdFormAction = __webpack_require__(/*! ./update-pwd-form */ "./actions/update-pwd-form.js");
 var registerAction = __webpack_require__(/*! ./register */ "./actions/register.js");
 var activateAccountAction = __webpack_require__(/*! ./activate-account */ "./actions/activate-account.js");
 var loginAction = __webpack_require__(/*! ./login */ "./actions/login.js");
 var logoutAction = __webpack_require__(/*! ./logout */ "./actions/logout.js");
 var updateUserInfoAction = __webpack_require__(/*! ./update-user-info */ "./actions/update-user-info.js");
+var updatePwdAction = __webpack_require__(/*! ./update-pwd */ "./actions/update-pwd.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -177,11 +183,13 @@ var actions = {
     updateRegisterFormAction: updateRegisterFormAction,
     updateLoginFromAction: updateLoginFromAction,
     updateUserInfoFormAction: updateUserInfoFormAction,
+    updatePwdFormAction: updatePwdFormAction,
     registerAction: registerAction,
     activateAccountAction: activateAccountAction,
     loginAction: loginAction,
     logoutAction: logoutAction,
-    updateUserInfoAction: updateUserInfoAction
+    updateUserInfoAction: updateUserInfoAction,
+    updatePwdAction: updatePwdAction
 };
 
 module.exports = actions;
@@ -327,6 +335,64 @@ var updateLoginForm = function updateLoginForm(formData) {
 };
 
 module.exports = updateLoginForm;
+
+/***/ }),
+
+/***/ "./actions/update-pwd-form.js":
+/*!************************************!*\
+  !*** ./actions/update-pwd-form.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updatePwdForm = function updatePwdForm(formData) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'UPDATE_PWD_FORM',
+        payload: {
+            current: current,
+            cache: {
+                pwd: formData
+            }
+        }
+    };
+};
+
+module.exports = updatePwdForm;
+
+/***/ }),
+
+/***/ "./actions/update-pwd.js":
+/*!*******************************!*\
+  !*** ./actions/update-pwd.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updatePwd = function updatePwd(userInfo) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'UPDATE_PWD',
+        payload: {
+            current: current,
+            userInfo: userInfo
+        }
+    };
+};
+
+module.exports = updatePwd;
 
 /***/ }),
 
@@ -862,7 +928,7 @@ var EditInfoModal = connect(mapState2Props, mapDispatch2Props)(UI_editInfoModal)
 
 function ajaxUpdateUserInfo(jsonData) {
     return function (dispatch) {
-        var requestUrl = '/api/user/update';
+        var requestUrl = '/api/user/update-info';
         var successFunc = function successFunc(result) {
             if (result.success) {
                 stanAlert({
@@ -906,22 +972,69 @@ module.exports = EditInfoModal;
 
 "use strict";
 
+/* global $ */
 
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
 var UI_editPwdModal = __webpack_require__(/*! ../components/ui-components/edit-pwd-modal */ "./components/ui-components/edit-pwd-modal/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var updatePwdFormAction = actions.updatePwdFormAction;
+var updatePwdAction = actions.updatePwdAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
 }; //  eslint-disable-line
 
 var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
-    return {//  eslint-disable-line
+    return { //  eslint-disable-line
+        updatePwdForm: function updatePwdForm(formData) {
+            return dispatch(updatePwdFormAction(formData));
+        },
+        updatePwd: function updatePwd(jsonData) {
+            return dispatch(ajaxUpdatePwd(jsonData));
+        }
     };
 };
 
 var EditPwdModal = connect(mapState2Props, mapDispatch2Props)(UI_editPwdModal);
+
+function ajaxUpdatePwd(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/user/update-pwd';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75
+                });
+
+                $('#editPwdModal').modal('hide');
+                dispatch(updatePwdAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
 
 module.exports = EditPwdModal;
 
@@ -1048,7 +1161,7 @@ var EditInfoForm = function (_React$Component2) {
         key: 'formChangeHandler',
         value: function formChangeHandler(evt) {
             //  eslint-disable-line
-            var userName = reactDom.findDOMNode(this.refs.editInfo_userName).value;
+            var userName = reactDom.findDOMNode(this.refs.editInfo_userName).value.trim();
             var gender = Number($('#editInfoForm').find('[name=gender]:checked').val());
 
             this.props.updateUserInfoForm({
@@ -1420,6 +1533,30 @@ module.exports = resetForm;
 var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 function submitValidate(formData) {
+    var alertInfo = {
+        title: 'Warning!',
+        userName: {
+            null: 'please type your user name!',
+            illegal: 'the user name can\'t exceed 15 characters in length!'
+        }
+    };
+
+    if (!formData.userName) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.userName.null
+        });
+
+        return false;
+    } else if (formData.userName.length > 15) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.userName.illegal
+        });
+
+        return false;
+    }
+
     return true;
 }
 
@@ -1446,6 +1583,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
 var EditPwdModalBody = function (_React$Component) {
     _inherits(EditPwdModalBody, _React$Component);
@@ -1462,7 +1600,7 @@ var EditPwdModalBody = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'modal-body' },
-                React.createElement(EditPwdForm, null)
+                React.createElement(EditPwdForm, { updatePwdForm: this.props.updatePwdForm })
             );
         }
     }]);
@@ -1473,20 +1611,101 @@ var EditPwdModalBody = function (_React$Component) {
 var EditPwdForm = function (_React$Component2) {
     _inherits(EditPwdForm, _React$Component2);
 
+    //  eslint-disable-line
     function EditPwdForm() {
         _classCallCheck(this, EditPwdForm);
 
-        return _possibleConstructorReturn(this, (EditPwdForm.__proto__ || Object.getPrototypeOf(EditPwdForm)).apply(this, arguments));
+        var _this2 = _possibleConstructorReturn(this, (EditPwdForm.__proto__ || Object.getPrototypeOf(EditPwdForm)).call(this));
+
+        _this2.formChangeHandler = _this2.formChangeHandler.bind(_this2);
+        return _this2;
     }
 
     _createClass(EditPwdForm, [{
+        key: 'formChangeHandler',
+        value: function formChangeHandler(evt) {
+            //  eslint-disable-line
+            var original = reactDom.findDOMNode(this.refs.editPwd_original).value.trim();
+            var modify = reactDom.findDOMNode(this.refs.editPwd_new).value.trim();
+            var confirm = reactDom.findDOMNode(this.refs.editPwd_confirm).value.trim();
+
+            this.props.updatePwdForm({
+                original: original,
+                modify: modify,
+                confirm: confirm
+            });
+        }
+    }, {
         key: 'render',
-        //  eslint-disable-line
         value: function render() {
+            var _this3 = this;
+
             return React.createElement(
                 'form',
                 { id: 'editPwdForm' },
-                '\u4FEE\u6539\u5BC6\u7801'
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            htmlFor: 'editPwd_original'
+                        },
+                        'original password'
+                    ),
+                    React.createElement('input', {
+                        id: 'editPwd_original',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'type your original pwd',
+                        ref: 'editPwd_original',
+                        onChange: function onChange(event) {
+                            return _this3.formChangeHandler(event);
+                        }
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            htmlFor: 'editPwd_new'
+                        },
+                        'original password'
+                    ),
+                    React.createElement('input', {
+                        id: 'editPwd_new',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'type your new pwd',
+                        ref: 'editPwd_new',
+                        onChange: function onChange(event) {
+                            return _this3.formChangeHandler(event);
+                        }
+                    })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    React.createElement(
+                        'label',
+                        {
+                            htmlFor: 'editPwd_confirm'
+                        },
+                        'original password'
+                    ),
+                    React.createElement('input', {
+                        id: 'editPwd_confirm',
+                        className: 'form-control',
+                        type: 'password',
+                        placeholder: 'confirm your new pwd',
+                        ref: 'editPwd_confirm',
+                        onChange: function onChange(event) {
+                            return _this3.formChangeHandler(event);
+                        }
+                    })
+                )
             );
         }
     }]);
@@ -1507,7 +1726,6 @@ module.exports = EditPwdModalBody;
 
 "use strict";
 
-/* global $ */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1519,24 +1737,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/edit-pwd-modal/util-submit-validate.js");
+
 var EditPwdModalFooter = function (_React$Component) {
     _inherits(EditPwdModalFooter, _React$Component);
 
     function EditPwdModalFooter() {
         _classCallCheck(this, EditPwdModalFooter);
 
-        return _possibleConstructorReturn(this, (EditPwdModalFooter.__proto__ || Object.getPrototypeOf(EditPwdModalFooter)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (EditPwdModalFooter.__proto__ || Object.getPrototypeOf(EditPwdModalFooter)).call(this));
+
+        _this.clickHandler = _this.clickHandler.bind(_this);
+        return _this;
     }
 
     _createClass(EditPwdModalFooter, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt) {
+            //  eslint-disable-line
+            var cache = this.props.cache || {};
+
+            if (submitValidate(cache.pwd || {})) {
+                this.props.updatePwd(cache.pwd);
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return React.createElement(
                 'div',
                 { className: 'modal-footer' },
                 React.createElement(
                     'a',
-                    { className: 'btn btn-primary submit-btn' },
+                    {
+                        onClick: function onClick(event) {
+                            return _this2.clickHandler(event);
+                        },
+                        className: 'btn btn-primary submit-btn'
+                    },
                     'Submit'
                 )
             );
@@ -1669,8 +1909,11 @@ var EditPwdModal = function (_React$Component) {
                         'div',
                         { className: 'modal-content' },
                         React.createElement(Header, null),
-                        React.createElement(Body, null),
-                        React.createElement(Footer, null)
+                        React.createElement(Body, { updatePwdForm: this.props.updatePwdForm }),
+                        React.createElement(Footer, {
+                            cache: this.props.cache,
+                            updatePwd: this.props.updatePwd
+                        })
                     )
                 )
             );
@@ -1681,6 +1924,87 @@ var EditPwdModal = function (_React$Component) {
 }(React.Component);
 
 module.exports = EditPwdModal;
+
+/***/ }),
+
+/***/ "./components/ui-components/edit-pwd-modal/util-submit-validate.js":
+/*!*************************************************************************!*\
+  !*** ./components/ui-components/edit-pwd-modal/util-submit-validate.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+function submitValidate(formData) {
+    var pwdReg = /^\S{10,18}$/;
+    var alertInfo = {
+        title: 'Warning!',
+        original: {
+            null: 'please type the original pwd!',
+            illegal: 'please type legal pwd!<br/>pwd length from 10 to 16.'
+        },
+        modify: {
+            null: 'please type the new pwd!',
+            illegal: 'please type legal pwd!<br/>pwd length from 10 to 16.'
+        },
+        confirm: {
+            null: 'please retype the pwd to check!',
+            illegal: 'the pwd to confirm is inconsistent!'
+        }
+    };
+
+    if (!formData.original) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.original.null
+        });
+
+        return false;
+    } else if (!pwdReg.test(formData.original)) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.original.illegal
+        });
+
+        return false;
+    } else if (!formData.modify) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.modify.null
+        });
+
+        return false;
+    } else if (!pwdReg.test(formData.modify)) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.modify.illegal
+        });
+
+        return false;
+    } else if (!formData.confirm) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.confirm.null
+        });
+
+        return false;
+    } else if (formData.modify !== formData.confirm) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.confirm.illegal
+        });
+
+        return false;
+    }
+
+    return true;
+}
+
+module.exports = submitValidate;
 
 /***/ }),
 
@@ -3452,6 +3776,7 @@ var OperateContainer = function (_React$Component5) {
         key: 'editPwd',
         value: function editPwd(evt) {
             //  eslint-disable-line
+            document.querySelector('#editPwdForm').reset();
             $('#editPwdModal').modal();
         }
     }, {
@@ -33690,11 +34015,13 @@ var initUserInfoDefaultFunc = __webpack_require__(/*! ./init-user-info-default *
 var updateRegisterFormFunc = __webpack_require__(/*! ./update-register-form */ "./reducers/update-register-form.js");
 var updateLoginFormFunc = __webpack_require__(/*! ./update-login-form */ "./reducers/update-login-form.js");
 var updateUserInfoFormFunc = __webpack_require__(/*! ./update-user-info-form */ "./reducers/update-user-info-form.js");
+var updatePwdFormFunc = __webpack_require__(/*! ./update-pwd-form */ "./reducers/update-pwd-form.js");
 var registerFunc = __webpack_require__(/*! ./register */ "./reducers/register.js");
 var activateAccountFunc = __webpack_require__(/*! ./activate-account */ "./reducers/activate-account.js");
 var loginFunc = __webpack_require__(/*! ./login */ "./reducers/login.js");
 var logoutFunc = __webpack_require__(/*! ./logout */ "./reducers/logout.js");
 var updateUserInfoFunc = __webpack_require__(/*! ./update-user-info */ "./reducers/update-user-info.js");
+var updatePwdFunc = __webpack_require__(/*! ./update-pwd */ "./reducers/update-pwd.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -33713,6 +34040,9 @@ var reducers = function reducers() {
         case actionTypes.UPDATE_USER_INFO_FORM:
             return updateUserInfoFormFunc(state, action);
 
+        case actionTypes.UPDATE_PWD_FORM:
+            return updatePwdFormFunc(state, action);
+
         case actionTypes.REGISTER:
             return registerFunc(state, action);
 
@@ -33727,6 +34057,9 @@ var reducers = function reducers() {
 
         case actionTypes.UPDATE_USER_INFO:
             return updateUserInfoFunc(state, action);
+
+        case actionTypes.UPDATE_PWD:
+            return updatePwdFunc(state, action);
 
         default:
             return state;
@@ -33757,7 +34090,22 @@ module.exports = reducers;
             ···
         },
         cache: {
-            ···
+            isLogin: true | false,
+            login: {
+                ···
+            },
+            register: {
+                ···
+            },
+            userInfo: {
+                userName,
+                gender,
+            },
+            pwd: {
+                original,
+                modify,
+                confirm,
+            }
         }
     }
 
@@ -33895,6 +34243,57 @@ var updateLoginForm = function updateLoginForm(originalState, action) {
 };
 
 module.exports = updateLoginForm;
+
+/***/ }),
+
+/***/ "./reducers/update-pwd-form.js":
+/*!*************************************!*\
+  !*** ./reducers/update-pwd-form.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updatePwdForm = function updatePwdForm(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
+    newState.cache.pwd = action.payload.cache.pwd;
+
+    return newState;
+};
+
+module.exports = updatePwdForm;
+
+/***/ }),
+
+/***/ "./reducers/update-pwd.js":
+/*!********************************!*\
+  !*** ./reducers/update-pwd.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updatePwd = function updatePwd(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.cache = originalState.cache || {};
+    newState.cache.isLogin = true;
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
+
+    return newState;
+};
+
+module.exports = updatePwd;
 
 /***/ }),
 

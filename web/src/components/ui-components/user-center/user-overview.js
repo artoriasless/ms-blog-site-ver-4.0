@@ -152,6 +152,7 @@ class OperateContainer extends React.Component {    //  eslint-disable-line
     }
 
     editPwd(evt) {  //  eslint-disable-line
+        document.querySelector('#editPwdForm').reset();
         $('#editPwdModal').modal();
     }
 

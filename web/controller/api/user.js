@@ -150,7 +150,7 @@ module.exports = {
             data: user,
         };
     },
-    async update(ctx) {
+    async updateInfo(ctx) {
         const data = ctx.request.body;
         var user = ctx.session.user;
         var message = 'update success!';
@@ -158,6 +158,30 @@ module.exports = {
 
         data.id = user.id;
         user = await userService.update(data);
+
+        ctx.session.user = user;
+        ctx.body = {
+            success,
+            message,
+            data: user,
+        };
+    },
+    async updatePwd(ctx) {
+        const data = ctx.request.body;
+        const originUser = ctx.session.user;
+        var message = 'update success!';
+        var success = true;
+        var user = await userService.findById(originUser.id);
+
+        if (user.password === hash.sha1(data.original)) {
+            user = await userService.update({
+                id: user.id,
+                password: hash.sha1(data.modify),
+            });
+        } else {
+            message = 'the original password you typed is wrong!';
+            success = false;
+        }
 
         ctx.session.user = user;
         ctx.body = {

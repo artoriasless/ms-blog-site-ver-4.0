@@ -25,7 +25,7 @@ const EditInfoModal = connect(
 
 function ajaxUpdateUserInfo(jsonData) {
     return (dispatch => {
-        const requestUrl = '/api/user/update';
+        const requestUrl = '/api/user/update-info';
         const successFunc = function(result) {
             if (result.success) {
                 stanAlert({

@@ -20,7 +20,7 @@ class EditInfoForm extends React.Component {    //  eslint-disable-line
     }
 
     formChangeHandler(evt) {    //  eslint-disable-line
-        const userName = reactDom.findDOMNode(this.refs.editInfo_userName).value;
+        const userName = reactDom.findDOMNode(this.refs.editInfo_userName).value.trim();
         const gender = Number($('#editInfoForm').find('[name=gender]:checked').val());
 
         this.props.updateUserInfoForm({

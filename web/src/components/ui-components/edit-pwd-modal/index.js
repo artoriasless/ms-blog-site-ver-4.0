@@ -21,8 +21,11 @@ class EditPwdModal extends React.Component {
                 >
                     <div className="modal-content">
                         <Header/>
-                        <Body/>
-                        <Footer/>
+                        <Body updatePwdForm={ this.props.updatePwdForm }/>
+                        <Footer
+                            cache={ this.props.cache }
+                            updatePwd={ this.props.updatePwd }
+                        />
                     </div>
                 </div>
             </div>
