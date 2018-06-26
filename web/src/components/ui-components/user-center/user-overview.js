@@ -21,6 +21,7 @@ class UserOverview extends React.Component {
                 <OperateContainer
                     userInfo={ this.props.userInfo }
                     updateUserInfoForm={ this.props.updateUserInfoForm }
+                    resetPwd={ this.props.resetPwd }
                 />
             </div>
         );
@@ -157,7 +158,7 @@ class OperateContainer extends React.Component {    //  eslint-disable-line
     }
 
     resetPwd(evt) { //  eslint-disable-line
-        console.info('reset pwd');
+        this.props.resetPwd();
     }
 
     render() {

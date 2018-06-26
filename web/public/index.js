@@ -107,6 +107,7 @@ var LOGIN = 'LOGIN';
 var LOGOUT = 'LOGOUT';
 var UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 var UPDATE_PWD = 'UPDATE_PWD';
+var RESET_PWD = 'RESET_PWD';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -119,7 +120,8 @@ module.exports = {
     LOGIN: LOGIN,
     LOGOUT: LOGOUT,
     UPDATE_USER_INFO: UPDATE_USER_INFO,
-    UPDATE_PWD: UPDATE_PWD
+    UPDATE_PWD: UPDATE_PWD,
+    RESET_PWD: RESET_PWD
 };
 
 /***/ }),
@@ -175,6 +177,7 @@ var loginAction = __webpack_require__(/*! ./login */ "./actions/login.js");
 var logoutAction = __webpack_require__(/*! ./logout */ "./actions/logout.js");
 var updateUserInfoAction = __webpack_require__(/*! ./update-user-info */ "./actions/update-user-info.js");
 var updatePwdAction = __webpack_require__(/*! ./update-pwd */ "./actions/update-pwd.js");
+var resetPwdAction = __webpack_require__(/*! ./reset-pwd */ "./actions/reset-pwd.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -189,7 +192,8 @@ var actions = {
     loginAction: loginAction,
     logoutAction: logoutAction,
     updateUserInfoAction: updateUserInfoAction,
-    updatePwdAction: updatePwdAction
+    updatePwdAction: updatePwdAction,
+    resetPwdAction: resetPwdAction
 };
 
 module.exports = actions;
@@ -305,6 +309,34 @@ var register = function register(userInfo) {
 };
 
 module.exports = register;
+
+/***/ }),
+
+/***/ "./actions/reset-pwd.js":
+/*!******************************!*\
+  !*** ./actions/reset-pwd.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var resetPwd = function resetPwd(userInfo) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'RESET_PWD',
+        payload: {
+            current: current,
+            userInfo: userInfo
+        }
+    };
+};
+
+module.exports = resetPwd;
 
 /***/ }),
 
@@ -3277,16 +3309,18 @@ var UserCenter = function (_React$Component) {
         key: 'redirectHandler',
         value: function redirectHandler(isLogin) {
             if (!isLogin) {
-                //  退出登录了，重新跳转至首页
-                stanAlert({
-                    type: 'success',
-                    content: 'please login,ready to home page...',
-                    textAlign: 'center',
-                    shownExpires: 1
-                });
-                //  1s 后跳转到首页
                 setTimeout(function () {
-                    location.href = '/';
+                    //  退出登录了，重新跳转至首页
+                    stanAlert({
+                        type: 'success',
+                        content: 'please login,ready to home page...',
+                        textAlign: 'center',
+                        shownExpires: 1
+                    });
+                    //  1s 后跳转到首页
+                    setTimeout(function () {
+                        location.href = '/';
+                    }, 1000);
                 }, 1000);
             }
         }
@@ -3299,7 +3333,8 @@ var UserCenter = function (_React$Component) {
                 React.createElement(UserOverview, {
                     userInfo: this.props.userInfo,
                     updateUserInfoForm: this.props.updateUserInfoForm,
-                    sendActivateMail: this.props.sendActivateMail
+                    sendActivateMail: this.props.sendActivateMail,
+                    resetPwd: this.props.resetPwd
                 }),
                 React.createElement(UserInfo, { userInfo: this.props.userInfo }),
                 React.createElement(UserAd, null),
@@ -3569,7 +3604,8 @@ var UserOverview = function (_React$Component) {
                 ),
                 React.createElement(OperateContainer, {
                     userInfo: this.props.userInfo,
-                    updateUserInfoForm: this.props.updateUserInfoForm
+                    updateUserInfoForm: this.props.updateUserInfoForm,
+                    resetPwd: this.props.resetPwd
                 })
             );
         }
@@ -3783,7 +3819,7 @@ var OperateContainer = function (_React$Component5) {
         key: 'resetPwd',
         value: function resetPwd(evt) {
             //  eslint-disable-line
-            console.info('reset pwd');
+            this.props.resetPwd();
         }
     }, {
         key: 'render',
@@ -3856,6 +3892,7 @@ var UI_userCenter = __webpack_require__(/*! ../components/ui-components/user-cen
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var updateUserInfoFormAction = actions.updateUserInfoFormAction;
+var resetPwdAction = actions.resetPwdAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -3868,6 +3905,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
         },
         sendActivateMail: function sendActivateMail() {
             return _sendActivateMail();
+        },
+        resetPwd: function resetPwd() {
+            return dispatch(ajaxResetPwd());
         }
     };
 };
@@ -3901,6 +3941,38 @@ function _sendActivateMail() {
     };
 
     ajaxAction(requestUrl, {}, successFunc, failFunc);
+}
+
+function ajaxResetPwd() {
+    return function (dispatch) {
+        var requestUrl = '/api/user/reset-pwd';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75
+                });
+
+                dispatch(resetPwdAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, {}, successFunc, failFunc);
+    };
 }
 
 module.exports = UserCenter;
@@ -34022,6 +34094,7 @@ var loginFunc = __webpack_require__(/*! ./login */ "./reducers/login.js");
 var logoutFunc = __webpack_require__(/*! ./logout */ "./reducers/logout.js");
 var updateUserInfoFunc = __webpack_require__(/*! ./update-user-info */ "./reducers/update-user-info.js");
 var updatePwdFunc = __webpack_require__(/*! ./update-pwd */ "./reducers/update-pwd.js");
+var resetPwdFunc = __webpack_require__(/*! ./reset-pwd */ "./reducers/reset-pwd.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -34060,6 +34133,9 @@ var reducers = function reducers() {
 
         case actionTypes.UPDATE_PWD:
             return updatePwdFunc(state, action);
+
+        case actionTypes.RESET_PWD:
+            return resetPwdFunc(state, action);
 
         default:
             return state;
@@ -34218,6 +34294,32 @@ var register = function register(originalState, action) {
 };
 
 module.exports = register;
+
+/***/ }),
+
+/***/ "./reducers/reset-pwd.js":
+/*!*******************************!*\
+  !*** ./reducers/reset-pwd.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var resetPwd = function resetPwd(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.cache = originalState.cache || {};
+    newState.cache.isLogin = false;
+    newState.current = action.payload.current;
+    newState.userInfo = action.payload.userInfo;
+
+    return newState;
+};
+
+module.exports = resetPwd;
 
 /***/ }),
 

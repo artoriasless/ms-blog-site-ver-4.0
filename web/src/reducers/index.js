@@ -13,6 +13,7 @@ const loginFunc = require('./login');
 const logoutFunc = require('./logout');
 const updateUserInfoFunc = require('./update-user-info');
 const updatePwdFunc = require('./update-pwd');
+const resetPwdFunc = require('./reset-pwd');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -48,6 +49,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.UPDATE_PWD:
         return updatePwdFunc(state, action);
+
+    case actionTypes.RESET_PWD:
+        return resetPwdFunc(state, action);
 
     default:
         return state;

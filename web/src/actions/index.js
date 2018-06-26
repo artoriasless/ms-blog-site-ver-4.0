@@ -13,6 +13,7 @@ const loginAction = require('./login');
 const logoutAction = require('./logout');
 const updateUserInfoAction = require('./update-user-info');
 const updatePwdAction = require('./update-pwd');
+const resetPwdAction = require('./reset-pwd');
 
 const actions = {
     actionTypes,
@@ -28,6 +29,7 @@ const actions = {
     logoutAction,
     updateUserInfoAction,
     updatePwdAction,
+    resetPwdAction,
 };
 
 module.exports = actions;

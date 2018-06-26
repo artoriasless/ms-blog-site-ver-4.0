@@ -11,7 +11,7 @@
 </p>
 <br/>
 <p>
-    <a target="_blank" href="<activateLink>">activate link</a>
+    <a target="_blank" href="<activateLink>">activate link</activateLink>
 </p>
 <br/>
 <p>

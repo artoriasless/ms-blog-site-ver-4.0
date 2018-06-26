@@ -9,12 +9,14 @@ const UI_userCenter = require('/components/ui-components/user-center');
 const actions = require('/actions');
 
 const updateUserInfoFormAction = actions.updateUserInfoFormAction;
+const resetPwdAction = actions.resetPwdAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
 const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
     updateUserInfoForm: formData => dispatch(updateUserInfoFormAction(formData)),
     sendActivateMail: () => sendActivateMail(),
+    resetPwd: () => dispatch(ajaxResetPwd()),
 });
 
 const UserCenter = connect(
@@ -49,6 +51,38 @@ function sendActivateMail() {
     };
 
     ajaxAction(requestUrl, {}, successFunc, failFunc);
+}
+
+function ajaxResetPwd() {
+    return (dispatch => {
+        const requestUrl = '/api/user/reset-pwd';
+        const successFunc = function(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75,
+                });
+
+                dispatch(resetPwdAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message,
+                });
+            }
+        };
+        const failFunc = function(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString(),
+            });
+            console.info(err);  //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, {}, successFunc, failFunc);
+    });
 }
 
 module.exports = UserCenter;

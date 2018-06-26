@@ -52,6 +52,8 @@ _router.post('/api/user/activate', api.user.activate);
 _router.post('/api/user/update-info', api.user.updateInfo);
 //  修改密码
 _router.post('/api/user/update-pwd', api.user.updatePwd);
+//  重置密码
+_router.post('/api/user/reset-pwd', api.user.resetPwd);
 //  发送激活邮件
 _router.post('/api/user/send-activate-mail', api.user.sendActivateMail);
 

@@ -1,28 +1,12 @@
 'use strict';
-/* global __dirname */
-const fs = require('fs');
-const path = require('path');
 
 const uuid = require('uuid/v4');
 const hash = require('object-hash');
 
-const config = require('../../../config');
 const service = require('../../../service');
 const userService = service.user;
-const utilService = service.util;
 
-function sendActivateMail(uuid, email) {
-    const activateLink = `${config.domain}/util/activate/${uuid}`;
-    const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.tpl')).toString();
-    const emailOpts = {
-        to: email,
-        subject: 'Activate Your MonkingStand Account',
-        text: 'activate your monkingstand account to comment',
-        html: emailTpl.replace(/<activateLink>/g, activateLink),
-    };
-
-    utilService.email(emailOpts);
-}
+const util = require('./util');
 
 module.exports = {
     async getUserDefault(ctx) {
@@ -104,7 +88,7 @@ module.exports = {
         } else {
             user = await userService.create(userData);
 
-            sendActivateMail(user.uuid, user.email);
+            util.sendActivateMail(user.uuid, user.email);
         }
 
         ctx.session.user = user;
@@ -190,13 +174,32 @@ module.exports = {
             data: user,
         };
     },
+    async resetPwd(ctx) {
+        const newPwd = Date.parse(new Date());
+        const user = ctx.session.user;
+        var message = 'new random pwd has been sent to your email!';
+        var success = true;
+
+        await userService.update({
+            id: user.id,
+            password: hash.sha1(String(newPwd)),
+        });
+
+        util.sendResetPwdMail(user.email, newPwd);
+        ctx.session.user = {};
+        ctx.body = {
+            success,
+            message,
+            data: {},
+        };
+    },
     async sendActivateMail(ctx) {
         //  jsonData 由后端拿前端暂存的 session
         const data = ctx.session.user;
         var success = true;
         var message = 'activate email has been sent!';
 
-        sendActivateMail(data.uuid, data.email);
+        util.sendActivateMail(data.uuid, data.email);
 
         ctx.body = {
             success,

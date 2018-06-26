@@ -24,16 +24,18 @@ class UserCenter extends React.Component {
 
     redirectHandler(isLogin) {
         if (!isLogin) {
-            //  退出登录了，重新跳转至首页
-            stanAlert({
-                type: 'success',
-                content: 'please login,ready to home page...',
-                textAlign: 'center',
-                shownExpires: 1,
-            });
-            //  1s 后跳转到首页
             setTimeout(() => {
-                location.href='/';
+                //  退出登录了，重新跳转至首页
+                stanAlert({
+                    type: 'success',
+                    content: 'please login,ready to home page...',
+                    textAlign: 'center',
+                    shownExpires: 1,
+                });
+                //  1s 后跳转到首页
+                setTimeout(() => {
+                    location.href='/';
+                }, 1000);
             }, 1000);
         }
     }
@@ -45,6 +47,7 @@ class UserCenter extends React.Component {
                     userInfo={ this.props.userInfo }
                     updateUserInfoForm={ this.props.updateUserInfoForm }
                     sendActivateMail={ this.props.sendActivateMail }
+                    resetPwd={ this.props.resetPwd }
                 />
                 <UserInfo userInfo={ this.props.userInfo }/>
                 <UserAd/>
