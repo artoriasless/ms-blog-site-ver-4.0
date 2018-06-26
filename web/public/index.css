@@ -617,6 +617,13 @@ code {
     @import url(/style/common/modal/index.postcss);
 */
 
+#loginModal #loginForm .reset-pwd-link {
+    height: 25px;
+    line-height: 25px;
+    font-size: 0.75em;
+    float: right;
+}
+
 .page-home .main {
         text-align: center;
         max-width: 750px;

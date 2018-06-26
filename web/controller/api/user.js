@@ -176,16 +176,29 @@ module.exports = {
     },
     async resetPwd(ctx) {
         const newPwd = Date.parse(new Date());
-        const user = ctx.session.user;
+        const data = ctx.request.body;
+        var query = {
+            where: {
+                email: data.email || ctx.session.user.email,
+            },
+        };
         var message = 'new random pwd has been sent to your email!';
         var success = true;
 
-        await userService.update({
-            id: user.id,
-            password: hash.sha1(String(newPwd)),
-        });
+        var users = await userService.findMany(query);
 
-        util.sendResetPwdMail(user.email, newPwd);
+        if (users.length === 0) {
+            message = 'the email hasn\'t been registered,please check the email is right!';
+            success = false;
+        } else {
+            await userService.update({
+                id: users[0].id,
+                password: hash.sha1(String(newPwd)),
+            });
+
+            util.sendResetPwdMail(users[0].email, newPwd);
+        }
+
         ctx.session.user = {};
         ctx.body = {
             success,

@@ -37,6 +37,7 @@ class LoginModalBody extends React.Component {
                         <LoginForm
                             updateLoginForm={ this.props.updateLoginForm }
                             login={ this.props.login }
+                            resetPwd={ this.props.resetPwd }
                             cache={ this.props.cache }
                         />
                     </div>

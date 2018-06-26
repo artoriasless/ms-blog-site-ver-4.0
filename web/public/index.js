@@ -739,6 +739,7 @@ var updateRegisterFormAction = actions.updateRegisterFormAction;
 var updateLoginFormAction = actions.updateLoginFromAction;
 var registerAction = actions.registerAction;
 var loginAction = actions.loginAction;
+var resetPwdAction = actions.resetPwdAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -757,6 +758,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
         },
         login: function login(jsonData) {
             return dispatch(ajaxLogin(jsonData));
+        },
+        resetPwd: function resetPwd(jsonData) {
+            return dispatch(ajaxResetPwd(jsonData));
         }
     };
 };
@@ -810,6 +814,38 @@ function ajaxLogin(jsonData) {
 
                 $('#loginModal').modal('hide');
                 dispatch(loginAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+function ajaxResetPwd(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/user/reset-pwd';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75
+                });
+
+                dispatch(resetPwdAction(result.data));
             } else {
                 stanAlert({
                     title: 'Warning!',
@@ -2101,6 +2137,7 @@ var LoginModal = function (_React$Component) {
                             updateLoginForm: this.props.updateLoginForm,
                             login: this.props.login,
                             register: this.props.register,
+                            resetPwd: this.props.resetPwd,
                             cache: this.props.cache
                         }),
                         React.createElement(Footer, {
@@ -2199,6 +2236,7 @@ var LoginModalBody = function (_React$Component) {
                         React.createElement(LoginForm, {
                             updateLoginForm: this.props.updateLoginForm,
                             login: this.props.login,
+                            resetPwd: this.props.resetPwd,
                             cache: this.props.cache
                         })
                     ),
@@ -2439,6 +2477,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 
+var resetPwdValidate = __webpack_require__(/*! ./util-reset-pwd-validate */ "./components/ui-components/login-modal/util-reset-pwd-validate.js");
 var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/login-modal/util-submit-validate.js");
 
 var LoginForm = function (_React$Component) {
@@ -2449,12 +2488,25 @@ var LoginForm = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this));
 
+        _this.resetPwdHandler = _this.resetPwdHandler.bind(_this);
         _this.formChangeHandler = _this.formChangeHandler.bind(_this);
         _this.enterLoginHandler = _this.enterLoginHandler.bind(_this);
         return _this;
     }
 
     _createClass(LoginForm, [{
+        key: 'resetPwdHandler',
+        value: function resetPwdHandler(evt) {
+            //  eslint-disable-line
+            var email = reactDom.findDOMNode(this.refs.login_email).value.trim();
+
+            if (resetPwdValidate(email)) {
+                this.props.resetPwd({
+                    email: email
+                });
+            }
+        }
+    }, {
         key: 'formChangeHandler',
         value: function formChangeHandler(evt) {
             //  eslint-disable-line
@@ -2516,11 +2568,26 @@ var LoginForm = function (_React$Component) {
                     'div',
                     { className: 'form-group' },
                     React.createElement(
-                        'label',
-                        {
-                            htmlFor: 'login_password'
-                        },
-                        'password'
+                        'div',
+                        null,
+                        React.createElement(
+                            'label',
+                            {
+                                htmlFor: 'login_password'
+                            },
+                            'password'
+                        ),
+                        React.createElement(
+                            'a',
+                            {
+                                className: 'reset-pwd-link',
+                                href: 'javascript:;',
+                                onClick: function onClick(event) {
+                                    return _this2.resetPwdHandler(event);
+                                }
+                            },
+                            'forget pwd?'
+                        )
                     ),
                     React.createElement('input', {
                         id: 'login_password',
@@ -2697,6 +2764,51 @@ var RegisterForm = function (_React$Component) {
 }(React.Component);
 
 module.exports = RegisterForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/login-modal/util-reset-pwd-validate.js":
+/*!*************************************************************************!*\
+  !*** ./components/ui-components/login-modal/util-reset-pwd-validate.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+function resetPwdValidate(email) {
+    var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var alertInfo = {
+        title: 'Warning!',
+        email: {
+            null: 'please type the email address!',
+            illegal: 'please type legal email address!'
+        }
+    };
+
+    if (!email) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.email.null
+        });
+
+        return false;
+    } else if (!emailReg.test(email)) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.email.illegal
+        });
+
+        return false;
+    }
+
+    return true;
+}
+
+module.exports = resetPwdValidate;
 
 /***/ }),
 

@@ -3,13 +3,25 @@
 const React = require('react');
 const reactDom = require('react-dom');
 
+const resetPwdValidate = require('./util-reset-pwd-validate');
 const submitValidate = require('./util-submit-validate');
 
 class LoginForm extends React.Component {
     constructor() {
         super();
+        this.resetPwdHandler = this.resetPwdHandler.bind(this);
         this.formChangeHandler = this.formChangeHandler.bind(this);
         this.enterLoginHandler = this.enterLoginHandler.bind(this);
+    }
+
+    resetPwdHandler(evt) {  //  eslint-disable-line
+        const email = reactDom.findDOMNode(this.refs.login_email).value.trim();
+
+        if (resetPwdValidate(email)) {
+            this.props.resetPwd({
+                email,
+            });
+        }
     }
 
     formChangeHandler(evt) {    //  eslint-disable-line
@@ -55,9 +67,16 @@ class LoginForm extends React.Component {
                     />
                 </div>
                 <div className="form-group">
-                    <label
-                        htmlFor="login_password"
-                    >password</label>
+                    <div>
+                        <label
+                            htmlFor="login_password"
+                        >password</label>
+                        <a
+                            className="reset-pwd-link"
+                            href="javascript:;"
+                            onClick={ event => this.resetPwdHandler(event) }
+                        >forget pwd?</a>
+                    </div>
                     <input
                         id="login_password"
                         className="form-control"
