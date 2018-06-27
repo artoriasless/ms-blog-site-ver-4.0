@@ -32,17 +32,25 @@ module.exports = {
             } catch(err) {
                 uploadResult = err;
             }
-            if (uploadResult.res.status == 200 || uploadResult.status == 200) {
-                result = {
-                    success: true,
-                    message: 'upload success!',
-                    data: uploadResult,
-                };
+            if (uploadResult.res) {
+                if (uploadResult.res.status == 200 || uploadResult.status == 200) {
+                    result = {
+                        success: true,
+                        message: 'upload success!',
+                        data: uploadResult.toString(),
+                    };
+                } else {
+                    result = {
+                        success: false,
+                        message: 'upload faild!',
+                        data: uploadResult.toString(),
+                    };
+                }
             } else {
                 result = {
                     success: false,
                     message: 'upload faild!',
-                    data: uploadResult,
+                    data: uploadResult.toString(),
                 };
             }
 

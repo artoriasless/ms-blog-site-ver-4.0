@@ -30,6 +30,7 @@
         "forever-monitor": "~1.7.1",
         "koa": "~2.5.1",
         "koa-bodyparser": "~4.2.1",
+        "koa-formidable": "~1.1.0",
         "koa-logger": "~3.2.0",
         "koa-router": "~7.4.0",
         "koa-session": "~5.8.1",

@@ -5,6 +5,10 @@ const reactDom = require('react-dom');
 
 const config = require('/config');
 
+const ajaxAction = require('/lib/common-ajax-action');
+const stanAlert = require('/lib/common-stan-alert');
+const stanLoading = require('/lib/common-stan-loading');
+
 const resetInfoForm = require('../edit-info-modal/util-reset-info-form');
 
 class UserOverview extends React.Component {
@@ -32,6 +36,7 @@ class AvatarContainer extends React.Component { //  eslint-disable-line
     constructor() {
         super();
         this.errHandler = this.errHandler.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
     }
 
     errHandler(evt) {   //  eslint-disable-line
@@ -39,6 +44,48 @@ class AvatarContainer extends React.Component { //  eslint-disable-line
         const defaultAvatarLink = `${config.ossPublic.user}/default.jpg?${Date.parse(new Date())}`;
 
         $userAvatar.setAttribute('src', defaultAvatarLink);
+    }
+
+    changeHandler(evt) {    //  eslint-disable-line
+        const userInfo = this.props.userInfo || {};
+        const $userAvatar = reactDom.findDOMNode(this.refs.userAvatar);
+        const avatarLink = `${config.ossPublic.user}/${userInfo.uuid}.jpg?${Date.parse(new Date())}`;
+
+        const requestUrl = '/util/upload-file';
+        const jsonData = new FormData(document.querySelector('#avatarForm'));
+        const successFunc = function(result) {
+            stanLoading('hide');
+            if (result.success) {
+                $userAvatar.setAttribute('src', avatarLink);
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75,
+                });
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message,
+                });
+            }
+        };
+        const failFunc = function(err) {
+            stanLoading('hide');
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString(),
+            });
+            console.info(err);  //  eslint-disable-line
+        };
+        const options = {
+            cache: false,
+            processData: false,
+            contentType: false,
+        };
+
+        stanLoading();
+        ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
     }
 
     componentDidUpdate() {
@@ -54,12 +101,44 @@ class AvatarContainer extends React.Component { //  eslint-disable-line
 
         return (
             <div className="avatar-container">
-                <img
-                    className="avatar-content"
-                    src={ defaultAvatarLink }
-                    onError={ event => this.errHandler(event) }
-                    ref="userAvatar"
-                />
+                <form
+                    id="avatarForm"
+                    method="POST"
+                    encType="multipart/form-data"
+                >
+                    <img
+                        className="avatar-content"
+                        src={ defaultAvatarLink }
+                        onError={ event => this.errHandler(event) }
+                        ref="userAvatar"
+                    />
+                    <label
+                        htmlFor="avatarInput"
+                        className="edit-icon-container"
+                    >
+                        <i className="fa fa-edit"></i>
+                    </label>
+                    <input
+                        className="hidden"
+                        name="type"
+                        defaultValue="USER_AVATAR"
+                        type="text"
+                    />
+                    <input
+                        className="hidden"
+                        name="fileType"
+                        defaultValue="image"
+                        type="text"
+                    />
+                    <input
+                        id="avatarInput"
+                        type="file"
+                        accept="image/jpg,image/jpeg,image/gif,image/png,image/bmp"
+                        className="hidden"
+                        onChange={ event => this.changeHandler(event) }
+                        name="file"
+                    />
+                </form>
             </div>
         );
     }

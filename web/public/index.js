@@ -3688,6 +3688,10 @@ var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/in
 
 var config = __webpack_require__(/*! ../../../config */ "./config.js");
 
+var ajaxAction = __webpack_require__(/*! ../../../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+var stanLoading = __webpack_require__(/*! ../../../lib/common-stan-loading */ "./lib/common-stan-loading.js");
+
 var resetInfoForm = __webpack_require__(/*! ../edit-info-modal/util-reset-info-form */ "./components/ui-components/edit-info-modal/util-reset-info-form.js");
 
 var UserOverview = function (_React$Component) {
@@ -3736,6 +3740,7 @@ var AvatarContainer = function (_React$Component2) {
         var _this2 = _possibleConstructorReturn(this, (AvatarContainer.__proto__ || Object.getPrototypeOf(AvatarContainer)).call(this));
 
         _this2.errHandler = _this2.errHandler.bind(_this2);
+        _this2.changeHandler = _this2.changeHandler.bind(_this2);
         return _this2;
     }
 
@@ -3747,6 +3752,50 @@ var AvatarContainer = function (_React$Component2) {
             var defaultAvatarLink = config.ossPublic.user + '/default.jpg?' + Date.parse(new Date());
 
             $userAvatar.setAttribute('src', defaultAvatarLink);
+        }
+    }, {
+        key: 'changeHandler',
+        value: function changeHandler(evt) {
+            //  eslint-disable-line
+            var userInfo = this.props.userInfo || {};
+            var $userAvatar = reactDom.findDOMNode(this.refs.userAvatar);
+            var avatarLink = config.ossPublic.user + '/' + userInfo.uuid + '.jpg?' + Date.parse(new Date());
+
+            var requestUrl = '/util/upload-file';
+            var jsonData = new FormData(document.querySelector('#avatarForm'));
+            var successFunc = function successFunc(result) {
+                stanLoading('hide');
+                if (result.success) {
+                    $userAvatar.setAttribute('src', avatarLink);
+                    stanAlert({
+                        type: 'success',
+                        content: result.message,
+                        textAlign: 'center',
+                        shownExpires: 0.75
+                    });
+                } else {
+                    stanAlert({
+                        title: 'Warning!',
+                        content: result.message
+                    });
+                }
+            };
+            var failFunc = function failFunc(err) {
+                stanLoading('hide');
+                stanAlert({
+                    title: 'Warning!',
+                    content: err.toString()
+                });
+                console.info(err); //  eslint-disable-line
+            };
+            var options = {
+                cache: false,
+                processData: false,
+                contentType: false
+            };
+
+            stanLoading();
+            ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
         }
     }, {
         key: 'componentDidUpdate',
@@ -3767,14 +3816,52 @@ var AvatarContainer = function (_React$Component2) {
             return React.createElement(
                 'div',
                 { className: 'avatar-container' },
-                React.createElement('img', {
-                    className: 'avatar-content',
-                    src: defaultAvatarLink,
-                    onError: function onError(event) {
-                        return _this3.errHandler(event);
+                React.createElement(
+                    'form',
+                    {
+                        id: 'avatarForm',
+                        method: 'POST',
+                        encType: 'multipart/form-data'
                     },
-                    ref: 'userAvatar'
-                })
+                    React.createElement('img', {
+                        className: 'avatar-content',
+                        src: defaultAvatarLink,
+                        onError: function onError(event) {
+                            return _this3.errHandler(event);
+                        },
+                        ref: 'userAvatar'
+                    }),
+                    React.createElement(
+                        'label',
+                        {
+                            htmlFor: 'avatarInput',
+                            className: 'edit-icon-container'
+                        },
+                        React.createElement('i', { className: 'fa fa-edit' })
+                    ),
+                    React.createElement('input', {
+                        className: 'hidden',
+                        name: 'type',
+                        defaultValue: 'USER_AVATAR',
+                        type: 'text'
+                    }),
+                    React.createElement('input', {
+                        className: 'hidden',
+                        name: 'fileType',
+                        defaultValue: 'image',
+                        type: 'text'
+                    }),
+                    React.createElement('input', {
+                        id: 'avatarInput',
+                        type: 'file',
+                        accept: 'image/jpg,image/jpeg,image/gif,image/png,image/bmp',
+                        className: 'hidden',
+                        onChange: function onChange(event) {
+                            return _this3.changeHandler(event);
+                        },
+                        name: 'file'
+                    })
+                )
             );
         }
     }]);

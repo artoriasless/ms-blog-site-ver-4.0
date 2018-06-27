@@ -32,8 +32,15 @@ routeList.forEach(routeLink => {
     _router.get(routeLink, page);
 });
 
+//  通用的工具接口
+const util = require('./util');
 //  用户相关的 api 接口
 const api = require('./api');
+
+/**
+ *  Util
+ */
+_router.post('/util/upload-file', util.uploadFile);
 
 /**
  *  User
