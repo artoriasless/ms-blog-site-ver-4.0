@@ -35,7 +35,7 @@ async function resolveFileOpts(req, ctx) {
         break;
     //  TODO
     // case 'PAPER_MATERIAL_IMAGE':
-    //     fileName = `paper/${fileName}${ext}`;
+    //     fileName = `paper/image/${fileName}${ext}`;
     //     fileOpts.message = 'upload image success!';
     //     fileOpts.data = {
     //         fileName,
@@ -43,7 +43,7 @@ async function resolveFileOpts(req, ctx) {
     //     break;
     // case 'PAPER_MATERIAL_ATTACHMENT':
     //     ext = files.file.name.match(/\.[^.]+$/)[0];
-    //     fileName = `paper/${fileName}${ext}`;
+    //     fileName = `paper/attachment/${fileName}${ext}`;
     //     fileOpts.data = {
     //         fileName,
     //     };
