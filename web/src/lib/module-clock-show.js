@@ -27,128 +27,146 @@ class ModuleClockShow extends React.Component {
                 return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
             },
             easeInQuad: function (x, t, b, c, d) {
-                return c*(t/=d)*t + b;
+                return c * (t /= d) * t + b;
             },
             easeOutQuad: function (x, t, b, c, d) {
-                return -c *(t/=d)*(t-2) + b;
+                return -c * (t /= d) * (t - 2) + b;
             },
             easeInOutQuad: function (x, t, b, c, d) {
-                if ((t/=d/2) < 1) return c/2*t*t + b;
-                return -c/2 * ((--t)*(t-2) - 1) + b;
+                if ((t /= d / 2) < 1) return c / 2 * t * t + b;
+                return -c / 2 * ((--t) * (t - 2) - 1) + b;
             },
             easeInCubic: function (x, t, b, c, d) {
-                return c*(t/=d)*t*t + b;
+                return c * (t /= d) * t * t + b;
             },
             easeOutCubic: function (x, t, b, c, d) {
-                return c*((t=t/d-1)*t*t + 1) + b;
+                return c * ((t = t / d - 1) * t * t + 1) + b;
             },
             easeInOutCubic: function (x, t, b, c, d) {
-                if ((t/=d/2) < 1) return c/2*t*t*t + b;
-                return c/2*((t-=2)*t*t + 2) + b;
+                if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
+                return c / 2 * ((t -= 2) * t * t + 2) + b;
             },
             easeInQuart: function (x, t, b, c, d) {
-                return c*(t/=d)*t*t*t + b;
+                return c * (t /= d) * t * t * t + b;
             },
             easeOutQuart: function (x, t, b, c, d) {
-                return -c * ((t=t/d-1)*t*t*t - 1) + b;
+                return -c * ((t = t / d - 1) * t * t * t - 1) + b;
             },
             easeInOutQuart: function (x, t, b, c, d) {
-                if ((t/=d/2) < 1) return c/2*t*t*t*t + b;
-                return -c/2 * ((t-=2)*t*t*t - 2) + b;
+                if ((t /= d / 2) < 1) return c / 2 * t * t * t * t + b;
+                return -c / 2 * ((t -= 2) * t * t * t - 2) + b;
             },
             easeInQuint: function (x, t, b, c, d) {
-                return c*(t/=d)*t*t*t*t + b;
+                return c * (t /= d) * t * t * t * t + b;
             },
             easeOutQuint: function (x, t, b, c, d) {
-                return c*((t=t/d-1)*t*t*t*t + 1) + b;
+                return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
             },
             easeInOutQuint: function (x, t, b, c, d) {
-                if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
-                return c/2*((t-=2)*t*t*t*t + 2) + b;
+                if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
+                return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
             },
             easeInSine: function (x, t, b, c, d) {
-                return -c * Math.cos(t/d * (Math.PI/2)) + c + b;
+                return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
             },
             easeOutSine: function (x, t, b, c, d) {
-                return c * Math.sin(t/d * (Math.PI/2)) + b;
+                return c * Math.sin(t / d * (Math.PI / 2)) + b;
             },
             easeInOutSine: function (x, t, b, c, d) {
-                return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+                return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
             },
             easeInExpo: function (x, t, b, c, d) {
-                return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
+                return (t == 0) ? b : c * Math.pow(2, 10 * (t / d - 1)) + b;
             },
             easeOutExpo: function (x, t, b, c, d) {
-                return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+                return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
             },
             easeInOutExpo: function (x, t, b, c, d) {
-                if (t==0) return b;
-                if (t==d) return b+c;
-                if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-                return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+                if (t == 0) return b;
+                if (t == d) return b + c;
+                if ((t /= d / 2) < 1) return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
+                return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;
             },
             easeInCirc: function (x, t, b, c, d) {
-                return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+                return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
             },
             easeOutCirc: function (x, t, b, c, d) {
-                return c * Math.sqrt(1 - (t=t/d-1)*t) + b;
+                return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;
             },
             easeInOutCirc: function (x, t, b, c, d) {
-                if ((t/=d/2) < 1) return -c/2 * (Math.sqrt(1 - t*t) - 1) + b;
-                return c/2 * (Math.sqrt(1 - (t-=2)*t) + 1) + b;
+                if ((t /= d / 2) < 1) return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;
+                return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
             },
             easeInElastic: function (x, t, b, c, d) {
-                var s=1.70158;var p=0;var a=c;
-                if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-                if (a < Math.abs(c)) { a=c; var s=p/4; }
-                else var s = p/(2*Math.PI) * Math.asin (c/a);
-                return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+                var s = 1.70158;
+                var p = 0;
+                var a = c;
+                if (t == 0) return b;
+                if ((t /= d) == 1) return b + c;
+                if (!p) p = d * .3;
+                if (a < Math.abs(c)) {
+                    a = c;
+                    var s = p / 4;
+                } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+                return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
             },
             easeOutElastic: function (x, t, b, c, d) {
-                var s=1.70158;var p=0;var a=c;
-                if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-                if (a < Math.abs(c)) { a=c; var s=p/4; }
-                else var s = p/(2*Math.PI) * Math.asin (c/a);
-                return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+                var s = 1.70158;
+                var p = 0;
+                var a = c;
+                if (t == 0) return b;
+                if ((t /= d) == 1) return b + c;
+                if (!p) p = d * .3;
+                if (a < Math.abs(c)) {
+                    a = c;
+                    var s = p / 4;
+                } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+                return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
             },
             easeInOutElastic: function (x, t, b, c, d) {
-                var s=1.70158;var p=0;var a=c;
-                if (t==0) return b;  if ((t/=d/2)==2) return b+c;  if (!p) p=d*(.3*1.5);
-                if (a < Math.abs(c)) { a=c; var s=p/4; }
-                else var s = p/(2*Math.PI) * Math.asin (c/a);
-                if (t < 1) return -.5*(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
-                return a*Math.pow(2,-10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )*.5 + c + b;
+                var s = 1.70158;
+                var p = 0;
+                var a = c;
+                if (t == 0) return b;
+                if ((t /= d / 2) == 2) return b + c;
+                if (!p) p = d * (.3 * 1.5);
+                if (a < Math.abs(c)) {
+                    a = c;
+                    var s = p / 4;
+                } else var s = p / (2 * Math.PI) * Math.asin(c / a);
+                if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+                return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
             },
             easeInBack: function (x, t, b, c, d, s) {
                 if (s == undefined) s = 1.70158;
-                return c*(t/=d)*t*((s+1)*t - s) + b;
+                return c * (t /= d) * t * ((s + 1) * t - s) + b;
             },
             easeOutBack: function (x, t, b, c, d, s) {
                 if (s == undefined) s = 1.70158;
-                return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+                return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
             },
             easeInOutBack: function (x, t, b, c, d, s) {
                 if (s == undefined) s = 1.70158;
-                if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-                return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+                if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
+                return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
             },
             easeInBounce: function (x, t, b, c, d) {
-                return c - jQuery.easing.easeOutBounce (x, d-t, 0, c, d) + b;
+                return c - jQuery.easing.easeOutBounce(x, d - t, 0, c, d) + b;
             },
             easeOutBounce: function (x, t, b, c, d) {
-                if ((t/=d) < (1/2.75)) {
-                    return c*(7.5625*t*t) + b;
-                } else if (t < (2/2.75)) {
-                    return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
-                } else if (t < (2.5/2.75)) {
-                    return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+                if ((t /= d) < (1 / 2.75)) {
+                    return c * (7.5625 * t * t) + b;
+                } else if (t < (2 / 2.75)) {
+                    return c * (7.5625 * (t -= (1.5 / 2.75)) * t + .75) + b;
+                } else if (t < (2.5 / 2.75)) {
+                    return c * (7.5625 * (t -= (2.25 / 2.75)) * t + .9375) + b;
                 } else {
-                    return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+                    return c * (7.5625 * (t -= (2.625 / 2.75)) * t + .984375) + b;
                 }
             },
             easeInOutBounce: function (x, t, b, c, d) {
-                if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
-                return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
+                if (t < d / 2) return jQuery.easing.easeInBounce(x, t * 2, 0, c, d) * .5 + b;
+                return jQuery.easing.easeOutBounce(x, t * 2 - d, 0, c, d) * .5 + c * .5 + b;
             }
         });
     }
@@ -163,9 +181,9 @@ class ModuleClockShow extends React.Component {
                 lazySusan: function (r, a, t) {
                     return {
                         x: Math.sin(r + a),
-                        y: (Math.sin(r + 3*Math.PI/2 + a) / 8) * t,
+                        y: (Math.sin(r + 3 * Math.PI / 2 + a) / 8) * t,
                         z: (Math.cos(r + a) + 1) / 2,
-                        scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                        scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                     };
                 }
             }
@@ -182,32 +200,32 @@ class ModuleClockShow extends React.Component {
             maxScale: 1.0,
             duration: 600,
             btnNext: null,
-            btnNextCallback: function() {},
+            btnNextCallback: function () {},
             btnPrev: null,
-            btnPrevCallback: function() {},
+            btnPrevCallback: function () {},
             btnToggleAutoplay: null,
             btnStartAutoplay: null,
             btnStopAutoplay: null,
-            easing: "swing",
+            easing: 'swing',
             clickToFocus: true,
-            clickToFocusCallback: function() {},
+            clickToFocusCallback: function () {},
             focusBearing: 0.0,
-            shape: "lazySusan",
+            shape: 'lazySusan',
             debug: false,
-            childSelector: "li",
+            childSelector: 'li',
             startingChild: null,
             reflect: false,
             floatComparisonThreshold: 0.001,
             autoplay: false,
             autoplayDuration: 1000,
             autoplayPauseOnHover: false,
-            autoplayCallback: function() {},
+            autoplayCallback: function () {},
             enableDrag: false,
             dropDuration: 600,
-            dropEasing: "swing",
-            dropAnimateTo: "nearest",
-            dropCallback: function() {},
-            dragAxis: "x",
+            dropEasing: 'swing',
+            dropAnimateTo: 'nearest',
+            dropCallback: function () {},
+            dragAxis: 'x',
             dragFactor: 4,
             triggerFocusEvents: true,
             triggerBlurEvents: true,
@@ -231,37 +249,35 @@ class ModuleClockShow extends React.Component {
 
             // init
             // starts up roundabout
-            init: function(options, callback, relayout) {
+            init: function (options, callback, relayout) {
                 var settings,
                     now = (new Date()).getTime();
 
-                options   = (typeof options === "object") ? options : {};
-                callback  = ($.isFunction(callback)) ? callback : function() {};
-                callback  = ($.isFunction(options)) ? options : callback;
-                settings  = $.extend({}, defaults, options, internalData);
+                options = (typeof options === 'object') ? options : {};
+                callback = ($.isFunction(callback)) ? callback : function () {};
+                callback = ($.isFunction(options)) ? options : callback;
+                settings = $.extend({}, defaults, options, internalData);
 
                 return this
-                    .each(function() {
+                    .each(function () {
                         // make options
                         var self = $(this),
                             childCount = self.children(settings.childSelector).length,
                             period = 360.0 / childCount,
                             startingChild = (settings.startingChild && settings.startingChild > (childCount - 1)) ? (childCount - 1) : settings.startingChild,
                             startBearing = (settings.startingChild === null) ? settings.bearing : 360 - (startingChild * period),
-                            holderCSSPosition = (self.css("position") !== "static") ? self.css("position") : "relative";
+                            holderCSSPosition = (self.css('position') !== 'static') ? self.css('position') : 'relative';
 
                         self
-                            .css({  // starting styles
-                                padding:   0,
-                                position:  holderCSSPosition
+                            .css({ // starting styles
+                                padding: 0,
+                                position: holderCSSPosition
                             })
-                            .addClass("roundabout-holder")
-                            .data(  // starting options
-                                "roundabout",
-                                $.extend(
-                                    {},
-                                    settings,
-                                    {
+                            .addClass('roundabout-holder')
+                            .data( // starting options
+                                'roundabout',
+                                $.extend({},
+                                    settings, {
                                         startingChild: startingChild,
                                         bearing: startBearing,
                                         oppositeOfFocusBearing: methods.normalize.apply(null, [settings.focusBearing - 180]),
@@ -277,15 +293,15 @@ class ModuleClockShow extends React.Component {
                             if (settings.clickToFocus) {
                                 self
                                     .children(settings.childSelector)
-                                    .each(function(i) {
+                                    .each(function (i) {
                                         $(this)
-                                            .bind("click.roundabout", function() {
+                                            .bind('click.roundabout', function () {
                                                 var degrees = methods.getPlacement.apply(self, [i]);
 
                                                 if (!methods.isInFocus.apply(self, [degrees])) {
                                                     methods.stopAnimation.apply($(this));
-                                                    if (!self.data("roundabout").animating) {
-                                                        methods.animateBearingToFocus.apply(self, [degrees, self.data("roundabout").clickToFocusCallback]);
+                                                    if (!self.data('roundabout').animating) {
+                                                        methods.animateBearingToFocus.apply(self, [degrees, self.data('roundabout').clickToFocusCallback]);
                                                     }
                                                     return false;
                                                 }
@@ -296,9 +312,9 @@ class ModuleClockShow extends React.Component {
                             // bind next buttons
                             if (settings.btnNext) {
                                 $(settings.btnNext)
-                                    .bind("click.roundabout", function() {
-                                        if (!self.data("roundabout").animating) {
-                                            methods.animateToNextChild.apply(self, [self.data("roundabout").btnNextCallback]);
+                                    .bind('click.roundabout', function () {
+                                        if (!self.data('roundabout').animating) {
+                                            methods.animateToNextChild.apply(self, [self.data('roundabout').btnNextCallback]);
                                         }
                                         return false;
                                     });
@@ -307,8 +323,8 @@ class ModuleClockShow extends React.Component {
                             // bind previous buttons
                             if (settings.btnPrev) {
                                 $(settings.btnPrev)
-                                    .bind("click.roundabout", function() {
-                                        methods.animateToPreviousChild.apply(self, [self.data("roundabout").btnPrevCallback]);
+                                    .bind('click.roundabout', function () {
+                                        methods.animateToPreviousChild.apply(self, [self.data('roundabout').btnPrevCallback]);
                                         return false;
                                     });
                             }
@@ -316,7 +332,7 @@ class ModuleClockShow extends React.Component {
                             // bind toggle autoplay buttons
                             if (settings.btnToggleAutoplay) {
                                 $(settings.btnToggleAutoplay)
-                                    .bind("click.roundabout", function() {
+                                    .bind('click.roundabout', function () {
                                         methods.toggleAutoplay.apply(self);
                                         return false;
                                     });
@@ -325,7 +341,7 @@ class ModuleClockShow extends React.Component {
                             // bind start autoplay buttons
                             if (settings.btnStartAutoplay) {
                                 $(settings.btnStartAutoplay)
-                                    .bind("click.roundabout", function() {
+                                    .bind('click.roundabout', function () {
                                         methods.startAutoplay.apply(self);
                                         return false;
                                     });
@@ -334,7 +350,7 @@ class ModuleClockShow extends React.Component {
                             // bind stop autoplay buttons
                             if (settings.btnStopAutoplay) {
                                 $(settings.btnStopAutoplay)
-                                    .bind("click.roundabout", function() {
+                                    .bind('click.roundabout', function () {
                                         methods.stopAutoplay.apply(self);
                                         return false;
                                     });
@@ -343,10 +359,10 @@ class ModuleClockShow extends React.Component {
                             // autoplay pause on hover
                             if (settings.autoplayPauseOnHover) {
                                 self
-                                    .bind("mouseenter.roundabout.autoplay", function() {
+                                    .bind('mouseenter.roundabout.autoplay', function () {
                                         methods.stopAutoplay.apply(self, [true]);
                                     })
-                                    .bind("mouseleave.roundabout.autoplay", function() {
+                                    .bind('mouseleave.roundabout.autoplay', function () {
                                         methods.startAutoplay.apply(self);
                                     });
                             }
@@ -356,22 +372,22 @@ class ModuleClockShow extends React.Component {
                                 // on screen
                                 if (!$.isFunction(self.drag)) {
                                     if (settings.debug) {
-                                        alert("You do not have the drag plugin loaded.");
+                                        alert('You do not have the drag plugin loaded.');
                                     }
                                 } else if (!$.isFunction(self.drop)) {
                                     if (settings.debug) {
-                                        alert("You do not have the drop plugin loaded.");
+                                        alert('You do not have the drop plugin loaded.');
                                     }
                                 } else {
                                     self
-                                        .drag(function(e, properties) {
-                                            var data = self.data("roundabout"),
-                                                delta = (data.dragAxis.toLowerCase() === "x") ? "deltaX" : "deltaY";
+                                        .drag(function (e, properties) {
+                                            var data = self.data('roundabout'),
+                                                delta = (data.dragAxis.toLowerCase() === 'x') ? 'deltaX' : 'deltaY';
                                             methods.stopAnimation.apply(self);
                                             methods.setBearing.apply(self, [data.dragBearing + properties[delta] / data.dragFactor]);
                                         })
-                                        .drop(function(e) {
-                                            var data = self.data("roundabout"),
+                                        .drop(function (e) {
+                                            var data = self.data('roundabout'),
                                                 method = methods.getAnimateToMethod(data.dropAnimateTo);
                                             methods.allowAnimation.apply(self);
                                             methods[method].apply(self, [data.dropDuration, data.dropEasing, data.dropCallback]);
@@ -381,26 +397,26 @@ class ModuleClockShow extends React.Component {
 
                                 // on mobile
                                 self
-                                    .each(function() {
+                                    .each(function () {
                                         var element = $(this).get(0),
-                                            data = $(this).data("roundabout"),
-                                            page = (data.dragAxis.toLowerCase() === "x") ? "pageX" : "pageY",
+                                            data = $(this).data('roundabout'),
+                                            page = (data.dragAxis.toLowerCase() === 'x') ? 'pageX' : 'pageY',
                                             method = methods.getAnimateToMethod(data.dropAnimateTo);
 
                                         // some versions of IE don't like this
                                         if (element.addEventListener) {
-                                            element.addEventListener("touchstart", function(e) {
+                                            element.addEventListener('touchstart', function (e) {
                                                 data.touchMoveStartPosition = e.touches[0][page];
                                             }, false);
 
-                                            element.addEventListener("touchmove", function(e) {
+                                            element.addEventListener('touchmove', function (e) {
                                                 var delta = (e.touches[0][page] - data.touchMoveStartPosition) / data.dragFactor;
                                                 e.preventDefault();
                                                 methods.stopAnimation.apply($(this));
                                                 methods.setBearing.apply($(this), [data.dragBearing + delta]);
                                             }, false);
 
-                                            element.addEventListener("touchend", function(e) {
+                                            element.addEventListener('touchend', function (e) {
                                                 e.preventDefault();
                                                 methods.allowAnimation.apply($(this));
                                                 method = methods.getAnimateToMethod(data.dropAnimateTo);
@@ -413,7 +429,7 @@ class ModuleClockShow extends React.Component {
 
                             // responsive
                             if (settings.responsive) {
-                                $(window).resize(function() {
+                                $(window).resize(function () {
                                     methods.relayoutChildren.apply(self);
                                 });
                             }
@@ -427,36 +443,35 @@ class ModuleClockShow extends React.Component {
 
             // initChildren
             // applys settings to child elements, starts roundabout
-            initChildren: function(callback, relayout) {
+            initChildren: function (callback, relayout) {
                 var self = $(this),
-                    data = self.data("roundabout");
+                    data = self.data('roundabout');
 
-                callback = callback || function() {};
+                callback = callback || function () {};
 
-                self.children(data.childSelector).each(function(i) {
+                self.children(data.childSelector).each(function (i) {
                     var startWidth, startHeight, startFontSize,
                         degrees = methods.getPlacement.apply(self, [i]);
 
                     // on relayout, grab these values from current data
                     if (relayout) {
-                        startWidth = $(this).data("roundabout").startWidth;
-                        startHeight = $(this).data("roundabout").startHeight;
-                        startFontSize = $(this).data("roundabout").startFontSize;
+                        startWidth = $(this).data('roundabout').startWidth;
+                        startHeight = $(this).data('roundabout').startHeight;
+                        startFontSize = $(this).data('roundabout').startFontSize;
                     }
 
                     // apply classes and css first
                     $(this)
-                        .addClass("roundabout-moveable-item")
-                        .css("position", "absolute");
+                        .addClass('roundabout-moveable-item')
+                        .css('position', 'absolute');
 
                     // now measure
                     $(this)
                         .data(
-                            "roundabout",
-                            {
+                            'roundabout', {
                                 startWidth: startWidth || $(this).width(),
                                 startHeight: startHeight || $(this).height(),
-                                startFontSize: startFontSize || parseInt($(this).css("font-size"), 10),
+                                startFontSize: startFontSize || parseInt($(this).css('font-size'), 10),
                                 degrees: degrees,
                                 backDegrees: methods.normalize.apply(null, [degrees - 180]),
                                 childNumber: i,
@@ -485,11 +500,11 @@ class ModuleClockShow extends React.Component {
 
             // updateChildren
             // move children elements into their proper locations
-            updateChildren: function() {
+            updateChildren: function () {
                 return this
-                    .each(function() {
+                    .each(function () {
                         var self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             inFocus = -1,
                             info = {
                                 bearing: data.bearing,
@@ -535,12 +550,14 @@ class ModuleClockShow extends React.Component {
 
                         // update child positions
                         self.children(data.childSelector)
-                            .each(function(i) {
-                                if (methods.updateChild.apply(self, [$(this), info, i, function() { $(this).trigger('ready'); }]) && (!info.animating || data.lastAnimationStep)) {
+                            .each(function (i) {
+                                if (methods.updateChild.apply(self, [$(this), info, i, function () {
+                                        $(this).trigger('ready');
+                                    }]) && (!info.animating || data.lastAnimationStep)) {
                                     inFocus = i;
-                                    $(this).addClass("roundabout-in-focus");
+                                    $(this).addClass('roundabout-in-focus');
                                 } else {
-                                    $(this).removeClass("roundabout-in-focus");
+                                    $(this).removeClass('roundabout-in-focus');
                                 }
                             });
 
@@ -549,7 +566,7 @@ class ModuleClockShow extends React.Component {
                             if (data.triggerBlurEvents) {
                                 self.children(data.childSelector)
                                     .eq(info.inFocus)
-                                        .trigger("blur");
+                                    .trigger('blur');
                             }
 
                             data.childInFocus = inFocus;
@@ -558,26 +575,26 @@ class ModuleClockShow extends React.Component {
                                 // focus new child
                                 self.children(data.childSelector)
                                     .eq(inFocus)
-                                        .trigger("focus");
+                                    .trigger('focus');
                             }
                         }
 
-                        self.trigger("childrenUpdated");
+                        self.trigger('childrenUpdated');
                     });
             },
 
 
             // updateChild
             // repositions a child element into its new position
-            updateChild: function(childElement, info, childPos, callback) {
+            updateChild: function (childElement, info, childPos, callback) {
                 var factors,
                     self = this,
                     child = $(childElement),
-                    data = child.data("roundabout"),
+                    data = child.data('roundabout'),
                     out = [],
                     rad = methods.degToRad.apply(null, [(360.0 - data.degrees) + info.bearing]);
 
-                callback = callback || function() {};
+                callback = callback || function () {};
 
                 // adjust radians to be between 0 and Math.PI * 2
                 rad = methods.normalizeRad.apply(null, [rad]);
@@ -594,35 +611,35 @@ class ModuleClockShow extends React.Component {
                 // update item
                 child
                     .css({
-                        left: ((factors.x * info.midStage.width + info.nudge.width) - factors.width / 2.0).toFixed(0) + "px",
-                        top: ((factors.y * info.midStage.height + info.nudge.height) - factors.height / 2.0).toFixed(0) + "px",
-                        width: factors.width + "px",
-                        height: factors.height + "px",
+                        left: ((factors.x * info.midStage.width + info.nudge.width) - factors.width / 2.0).toFixed(0) + 'px',
+                        top: ((factors.y * info.midStage.height + info.nudge.height) - factors.height / 2.0).toFixed(0) + 'px',
+                        width: factors.width + 'px',
+                        height: factors.height + 'px',
                         opacity: (info.opacity.min + (info.opacity.diff * factors.scale)).toFixed(2),
                         zIndex: Math.round(info.zValues.min + (info.zValues.diff * factors.z)),
-                        fontSize: (factors.adjustedScale * data.startFontSize).toFixed(1) + "px"
+                        fontSize: (factors.adjustedScale * data.startFontSize).toFixed(1) + 'px'
                     });
                 data.currentScale = factors.adjustedScale;
 
                 // for debugging purposes
-                if (self.data("roundabout").debug) {
-                    out.push("<div style=\"font-weight: normal; font-size: 10px; padding: 2px; width: " + child.css("width") + "; background-color: #ffc;\">");
-                    out.push("<strong style=\"font-size: 12px; white-space: nowrap;\">Child " + childPos + "</strong><br />");
-                    out.push("<strong>left:</strong> " + child.css("left") + "<br />");
-                    out.push("<strong>top:</strong> " + child.css("top") + "<br />");
-                    out.push("<strong>width:</strong> " + child.css("width") + "<br />");
-                    out.push("<strong>opacity:</strong> " + child.css("opacity") + "<br />");
-                    out.push("<strong>height:</strong> " + child.css("height") + "<br />");
-                    out.push("<strong>z-index:</strong> " + child.css("z-index") + "<br />");
-                    out.push("<strong>font-size:</strong> " + child.css("font-size") + "<br />");
-                    out.push("<strong>scale:</strong> " + child.data("roundabout").currentScale);
-                    out.push("</div>");
+                if (self.data('roundabout').debug) {
+                    out.push('<div style=\'font-weight: normal; font-size: 10px; padding: 2px; width: ' + child.css('width') + '; background-color: #ffc;\'>');
+                    out.push('<strong style=\'font-size: 12px; white-space: nowrap;\'>Child ' + childPos + '</strong><br />');
+                    out.push('<strong>left:</strong> ' + child.css('left') + '<br />');
+                    out.push('<strong>top:</strong> ' + child.css('top') + '<br />');
+                    out.push('<strong>width:</strong> ' + child.css('width') + '<br />');
+                    out.push('<strong>opacity:</strong> ' + child.css('opacity') + '<br />');
+                    out.push('<strong>height:</strong> ' + child.css('height') + '<br />');
+                    out.push('<strong>z-index:</strong> ' + child.css('z-index') + '<br />');
+                    out.push('<strong>font-size:</strong> ' + child.css('font-size') + '<br />');
+                    out.push('<strong>scale:</strong> ' + child.data('roundabout').currentScale);
+                    out.push('</div>');
 
-                    child.html(out.join(""));
+                    child.html(out.join(''));
                 }
 
                 // trigger event
-                child.trigger("reposition");
+                child.trigger('reposition');
 
                 // callback
                 callback.apply(self);
@@ -637,20 +654,20 @@ class ModuleClockShow extends React.Component {
 
             // setBearing
             // changes the bearing of the roundabout
-            setBearing: function(bearing, callback) {
-                callback = callback || function() {};
+            setBearing: function (bearing, callback) {
+                callback = callback || function () {};
                 bearing = methods.normalize.apply(null, [bearing]);
 
                 this
-                    .each(function() {
+                    .each(function () {
                         var diff, lowerValue, higherValue,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             oldBearing = data.bearing;
 
                         // set bearing
                         data.bearing = bearing;
-                        self.trigger("bearingSet");
+                        self.trigger('bearingSet');
                         methods.updateChildren.apply(self);
 
                         // not animating? we're done here
@@ -661,12 +678,12 @@ class ModuleClockShow extends React.Component {
 
                         // check to see if any of the children went through the back
                         diff = Math.abs(oldBearing - bearing);
-                        self.children(data.childSelector).each(function(i) {
+                        self.children(data.childSelector).each(function (i) {
                             var eventType;
 
                             if (methods.isChildBackDegreesBetween.apply($(this), [bearing, oldBearing])) {
-                                eventType = (oldBearing > bearing) ? "Clockwise" : "Counterclockwise";
-                                $(this).trigger("move" + eventType + "ThroughBack");
+                                eventType = (oldBearing > bearing) ? 'Clockwise' : 'Counterclockwise';
+                                $(this).trigger('move' + eventType + 'ThroughBack');
                             }
                         });
                     });
@@ -679,15 +696,15 @@ class ModuleClockShow extends React.Component {
 
             // adjustBearing
             // change the bearing of the roundabout by a given degree
-            adjustBearing: function(delta, callback) {
-                callback = callback || function() {};
+            adjustBearing: function (delta, callback) {
+                callback = callback || function () {};
                 if (delta === 0) {
                     return this;
                 }
 
                 this
-                    .each(function() {
-                        methods.setBearing.apply($(this), [$(this).data("roundabout").bearing + delta]);
+                    .each(function () {
+                        methods.setBearing.apply($(this), [$(this).data('roundabout').bearing + delta]);
                     });
 
                 callback.apply(this);
@@ -697,12 +714,12 @@ class ModuleClockShow extends React.Component {
 
             // setTilt
             // changes the tilt of the roundabout
-            setTilt: function(tilt, callback) {
-                callback = callback || function() {};
+            setTilt: function (tilt, callback) {
+                callback = callback || function () {};
 
                 this
-                    .each(function() {
-                        $(this).data("roundabout").tilt = tilt;
+                    .each(function () {
+                        $(this).data('roundabout').tilt = tilt;
                         methods.updateChildren.apply($(this));
                     });
 
@@ -714,12 +731,12 @@ class ModuleClockShow extends React.Component {
 
             // adjustTilt
             // changes the tilt of the roundabout
-            adjustTilt: function(delta, callback) {
-                callback = callback || function() {};
+            adjustTilt: function (delta, callback) {
+                callback = callback || function () {};
 
                 this
-                    .each(function() {
-                        methods.setTilt.apply($(this), [$(this).data("roundabout").tilt + delta]);
+                    .each(function () {
+                        methods.setTilt.apply($(this), [$(this).data('roundabout').tilt + delta]);
                     });
 
                 callback.apply(this);
@@ -733,10 +750,10 @@ class ModuleClockShow extends React.Component {
 
             // animateToBearing
             // animates the roundabout to a given bearing, all animations come through here
-            animateToBearing: function(bearing, duration, easing, passedData, callback) {
+            animateToBearing: function (bearing, duration, easing, passedData, callback) {
                 var now = (new Date()).getTime();
 
-                callback = callback || function() {};
+                callback = callback || function () {};
 
                 // find callback function in arguments
                 if ($.isFunction(passedData)) {
@@ -751,12 +768,12 @@ class ModuleClockShow extends React.Component {
                 }
 
                 this
-                    .each(function() {
+                    .each(function () {
                         var timer, easingFn, newBearing,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             thisDuration = (!duration) ? data.duration : duration,
-                            thisEasingType = (easing) ? easing : data.easing || "swing";
+                            thisEasingType = (easing) ? easing : data.easing || 'swing';
 
                         // is this your first time?
                         if (!passedData) {
@@ -779,12 +796,12 @@ class ModuleClockShow extends React.Component {
                         // we need to animate more
                         if (timer < thisDuration) {
                             if (!data.animating) {
-                                self.trigger("animationStart");
+                                self.trigger('animationStart');
                             }
 
                             data.animating = true;
 
-                            if (typeof $.easing.def === "string") {
+                            if (typeof $.easing.def === 'string') {
                                 easingFn = $.easing[thisEasingType] || $.easing[$.easing.def];
                                 newBearing = easingFn(null, timer, passedData.start, bearing - passedData.start, passedData.totalTime);
                             } else {
@@ -794,16 +811,16 @@ class ModuleClockShow extends React.Component {
                             newBearing = methods.normalize.apply(null, [newBearing]);
                             data.dragBearing = newBearing;
 
-                            methods.setBearing.apply(self, [newBearing, function() {
-                                setTimeout(function() {  // done with a timeout so that each step is displayed
+                            methods.setBearing.apply(self, [newBearing, function () {
+                                setTimeout(function () { // done with a timeout so that each step is displayed
                                     methods.animateToBearing.apply(self, [bearing, thisDuration, thisEasingType, passedData, callback]);
                                 }, 0);
                             }]);
 
-                        // we're done animating
+                            // we're done animating
                         } else {
                             if (data.animating) {
-                                self.trigger("animationEnd");
+                                self.trigger('animationEnd');
                             }
 
                             data.lastAnimationStep = true;
@@ -824,10 +841,10 @@ class ModuleClockShow extends React.Component {
 
             // animateToNearbyChild
             // animates roundabout to a nearby child
-            animateToNearbyChild: function(passedArgs, which) {
+            animateToNearbyChild: function (passedArgs, which) {
                 var duration = passedArgs[0],
                     easing = passedArgs[1],
-                    callback = passedArgs[2] || function() {};
+                    callback = passedArgs[2] || function () {};
 
                 // find callback
                 if ($.isFunction(easing)) {
@@ -839,16 +856,16 @@ class ModuleClockShow extends React.Component {
                 }
 
                 return this
-                    .each(function() {
+                    .each(function () {
                         var j, range,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             bearing = (!data.reflect) ? data.bearing % 360 : data.bearing,
                             length = self.children(data.childSelector).length;
 
                         if (!data.animating) {
                             // reflecting, not moving to previous || not reflecting, moving to next
-                            if ((data.reflect && which === "previous") || (!data.reflect && which === "next")) {
+                            if ((data.reflect && which === 'previous') || (!data.reflect && which === 'next')) {
                                 // slightly adjust for rounding issues
                                 bearing = (Math.abs(bearing) < data.floatComparisonThreshold) ? 360 : bearing;
 
@@ -898,8 +915,8 @@ class ModuleClockShow extends React.Component {
 
             // animateToNearestChild
             // animates roundabout to the nearest child
-            animateToNearestChild: function(duration, easing, callback) {
-                callback = callback || function() {};
+            animateToNearestChild: function (duration, easing, callback) {
+                callback = callback || function () {};
 
                 // find callback
                 if ($.isFunction(easing)) {
@@ -911,7 +928,7 @@ class ModuleClockShow extends React.Component {
                 }
 
                 return this
-                    .each(function() {
+                    .each(function () {
                         var nearest = methods.getNearestChild.apply($(this));
                         methods.animateToChild.apply($(this), [nearest, duration, easing, callback]);
                     });
@@ -920,8 +937,8 @@ class ModuleClockShow extends React.Component {
 
             // animateToChild
             // animates roundabout to a given child position
-            animateToChild: function(childPosition, duration, easing, callback) {
-                callback = callback || function() {};
+            animateToChild: function (childPosition, duration, easing, callback) {
+                callback = callback || function () {};
 
                 // find callback
                 if ($.isFunction(easing)) {
@@ -933,14 +950,14 @@ class ModuleClockShow extends React.Component {
                 }
 
                 return this
-                    .each(function() {
+                    .each(function () {
                         var child,
                             self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         if (data.childInFocus !== childPosition && !data.animating) {
                             child = self.children(data.childSelector).eq(childPosition);
-                            methods.animateBearingToFocus.apply(self, [child.data("roundabout").degrees, duration, easing, callback]);
+                            methods.animateBearingToFocus.apply(self, [child.data('roundabout').degrees, duration, easing, callback]);
                         }
                     });
             },
@@ -948,22 +965,22 @@ class ModuleClockShow extends React.Component {
 
             // animateToNextChild
             // animates roundabout to the next child
-            animateToNextChild: function(duration, easing, callback) {
-                return methods.animateToNearbyChild.apply(this, [arguments, "next"]);
+            animateToNextChild: function (duration, easing, callback) {
+                return methods.animateToNearbyChild.apply(this, [arguments, 'next']);
             },
 
 
             // animateToPreviousChild
             // animates roundabout to the preious child
-            animateToPreviousChild: function(duration, easing, callback) {
-                return methods.animateToNearbyChild.apply(this, [arguments, "previous"]);
+            animateToPreviousChild: function (duration, easing, callback) {
+                return methods.animateToNearbyChild.apply(this, [arguments, 'previous']);
             },
 
 
             // animateToDelta
             // animates roundabout to a given delta (in degrees)
-            animateToDelta: function(degrees, duration, easing, callback) {
-                callback = callback || function() {};
+            animateToDelta: function (degrees, duration, easing, callback) {
+                callback = callback || function () {};
 
                 // find callback
                 if ($.isFunction(easing)) {
@@ -975,8 +992,8 @@ class ModuleClockShow extends React.Component {
                 }
 
                 return this
-                    .each(function() {
-                        var delta = $(this).data("roundabout").bearing + degrees;
+                    .each(function () {
+                        var delta = $(this).data('roundabout').bearing + degrees;
                         methods.animateToBearing.apply($(this), [delta, duration, easing, callback]);
                     });
             },
@@ -984,8 +1001,8 @@ class ModuleClockShow extends React.Component {
 
             // animateBearingToFocus
             // animates roundabout to bring a given angle into focus
-            animateBearingToFocus: function(degrees, duration, easing, callback) {
-                callback = callback || function() {};
+            animateBearingToFocus: function (degrees, duration, easing, callback) {
+                callback = callback || function () {};
 
                 // find callback
                 if ($.isFunction(easing)) {
@@ -997,8 +1014,8 @@ class ModuleClockShow extends React.Component {
                 }
 
                 return this
-                    .each(function() {
-                        var delta = $(this).data("roundabout").bearing - degrees;
+                    .each(function () {
+                        var delta = $(this).data('roundabout').bearing - degrees;
                         delta = (Math.abs(360 - delta) < Math.abs(delta)) ? 360 - delta : -delta;
                         delta = (delta > 180) ? -(360 - delta) : delta;
 
@@ -1011,20 +1028,20 @@ class ModuleClockShow extends React.Component {
 
             // stopAnimation
             // if an animation is currently in progress, stop it
-            stopAnimation: function() {
+            stopAnimation: function () {
                 return this
-                    .each(function() {
-                        $(this).data("roundabout").stopAnimation = true;
+                    .each(function () {
+                        $(this).data('roundabout').stopAnimation = true;
                     });
             },
 
 
             // allowAnimation
             // clears the stop-animation hold placed by stopAnimation
-            allowAnimation: function() {
+            allowAnimation: function () {
                 return this
-                    .each(function() {
-                        $(this).data("roundabout").stopAnimation = false;
+                    .each(function () {
+                        $(this).data('roundabout').stopAnimation = false;
                     });
             },
 
@@ -1035,53 +1052,53 @@ class ModuleClockShow extends React.Component {
 
             // startAutoplay
             // starts autoplaying this roundabout
-            startAutoplay: function(callback) {
+            startAutoplay: function (callback) {
                 return this
-                    .each(function() {
+                    .each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
-                        callback = callback || data.autoplayCallback || function() {};
+                        callback = callback || data.autoplayCallback || function () {};
 
                         clearInterval(data.autoplayInterval);
-                        data.autoplayInterval = setInterval(function() {
+                        data.autoplayInterval = setInterval(function () {
                             methods.animateToNextChild.apply(self, [callback]);
                         }, data.autoplayDuration);
                         data.autoplayIsRunning = true;
 
-                        self.trigger("autoplayStart");
+                        self.trigger('autoplayStart');
                     });
             },
 
 
             // stopAutoplay
             // stops autoplaying this roundabout
-            stopAutoplay: function(keepAutoplayBindings) {
+            stopAutoplay: function (keepAutoplayBindings) {
                 return this
-                    .each(function() {
-                        clearInterval($(this).data("roundabout").autoplayInterval);
-                        $(this).data("roundabout").autoplayInterval = null;
-                        $(this).data("roundabout").autoplayIsRunning = false;
+                    .each(function () {
+                        clearInterval($(this).data('roundabout').autoplayInterval);
+                        $(this).data('roundabout').autoplayInterval = null;
+                        $(this).data('roundabout').autoplayIsRunning = false;
 
                         // this will prevent autoplayPauseOnHover from restarting autoplay
                         if (!keepAutoplayBindings) {
-                            $(this).unbind(".autoplay")
+                            $(this).unbind('.autoplay')
                         }
 
-                        $(this).trigger("autoplayStop");
+                        $(this).trigger('autoplayStop');
                     });
             },
 
 
             // toggleAutoplay
             // toggles autoplay pause/resume
-            toggleAutoplay: function(callback) {
+            toggleAutoplay: function (callback) {
                 return this
-                    .each(function() {
+                    .each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
-                        callback = callback || data.autoplayCallback || function() {};
+                        callback = callback || data.autoplayCallback || function () {};
 
                         if (!methods.isAutoplaying.apply($(this))) {
                             methods.startAutoplay.apply($(this), [callback]);
@@ -1094,24 +1111,24 @@ class ModuleClockShow extends React.Component {
 
             // isAutoplaying
             // is this roundabout currently autoplaying?
-            isAutoplaying: function() {
-                return (this.data("roundabout").autoplayIsRunning);
+            isAutoplaying: function () {
+                return (this.data('roundabout').autoplayIsRunning);
             },
 
 
             // changeAutoplayDuration
             // stops the autoplay, changes the duration, restarts autoplay
-            changeAutoplayDuration: function(duration) {
+            changeAutoplayDuration: function (duration) {
                 return this
-                    .each(function() {
+                    .each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         data.autoplayDuration = duration;
 
                         if (methods.isAutoplaying.apply(self)) {
                             methods.stopAutoplay.apply(self);
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 methods.startAutoplay.apply(self);
                             }, 10);
                         }
@@ -1125,7 +1142,7 @@ class ModuleClockShow extends React.Component {
 
             // normalize
             // regulates degrees to be >= 0.0 and < 360
-            normalize: function(degrees) {
+            normalize: function (degrees) {
                 var inRange = degrees % 360.0;
                 return (inRange < 0) ? 360 + inRange : inRange;
             },
@@ -1133,7 +1150,7 @@ class ModuleClockShow extends React.Component {
 
             // normalizeRad
             // regulates radians to be >= 0 and < Math.PI * 2
-            normalizeRad: function(radians) {
+            normalizeRad: function (radians) {
                 while (radians < 0) {
                     radians += (Math.PI * 2);
                 }
@@ -1148,8 +1165,8 @@ class ModuleClockShow extends React.Component {
 
             // isChildBackDegreesBetween
             // checks that a given child's backDegrees is between two values
-            isChildBackDegreesBetween: function(value1, value2) {
-                var backDegrees = $(this).data("roundabout").backDegrees;
+            isChildBackDegreesBetween: function (value1, value2) {
+                var backDegrees = $(this).data('roundabout').backDegrees;
 
                 if (value1 > value2) {
                     return (backDegrees >= value2 && backDegrees < value1);
@@ -1161,29 +1178,29 @@ class ModuleClockShow extends React.Component {
 
             // getAnimateToMethod
             // takes a user-entered option and maps it to an animation method
-            getAnimateToMethod: function(effect) {
+            getAnimateToMethod: function (effect) {
                 effect = effect.toLowerCase();
 
-                if (effect === "next") {
-                    return "animateToNextChild";
-                } else if (effect === "previous") {
-                    return "animateToPreviousChild";
+                if (effect === 'next') {
+                    return 'animateToNextChild';
+                } else if (effect === 'previous') {
+                    return 'animateToPreviousChild';
                 }
 
                 // default selection
-                return "animateToNearestChild";
+                return 'animateToNearestChild';
             },
 
 
             // relayoutChildren
             // lays out children again with new contextual information
-            relayoutChildren: function() {
+            relayoutChildren: function () {
                 return this
-                    .each(function() {
+                    .each(function () {
                         var self = $(this),
-                            settings = $.extend({}, self.data("roundabout"));
+                            settings = $.extend({}, self.data('roundabout'));
 
-                        settings.startingChild = self.data("roundabout").childInFocus;
+                        settings.startingChild = self.data('roundabout').childInFocus;
                         methods.init.apply(self, [settings, null, true]);
                     });
             },
@@ -1191,9 +1208,9 @@ class ModuleClockShow extends React.Component {
 
             // getNearestChild
             // gets the nearest child from the current bearing
-            getNearestChild: function() {
+            getNearestChild: function () {
                 var self = $(this),
-                    data = self.data("roundabout"),
+                    data = self.data('roundabout'),
                     length = self.children(data.childSelector).length;
 
                 if (!data.reflect) {
@@ -1206,25 +1223,25 @@ class ModuleClockShow extends React.Component {
 
             // degToRad
             // converts degrees to radians
-            degToRad: function(degrees) {
+            degToRad: function (degrees) {
                 return methods.normalize.apply(null, [degrees]) * Math.PI / 180.0;
             },
 
 
             // getPlacement
             // returns the starting degree for a given child
-            getPlacement: function(child) {
-                var data = this.data("roundabout");
+            getPlacement: function (child) {
+                var data = this.data('roundabout');
                 return (!data.reflect) ? 360.0 - (data.period * child) : data.period * child;
             },
 
 
             // isInFocus
             // is this roundabout currently in focus?
-            isInFocus: function(degrees) {
+            isInFocus: function (degrees) {
                 var diff,
                     self = this,
-                    data = self.data("roundabout"),
+                    data = self.data('roundabout'),
                     bearing = methods.normalize.apply(null, [data.bearing]);
 
                 degrees = methods.normalize.apply(null, [degrees]);
@@ -1238,62 +1255,62 @@ class ModuleClockShow extends React.Component {
 
 
         // start the plugin
-        $.fn.roundabout = function(method) {
+        $.fn.roundabout = function (method) {
             if (methods[method]) {
                 return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-            } else if (typeof method === "object" || $.isFunction(method) || !method) {
+            } else if (typeof method === 'object' || $.isFunction(method) || !method) {
                 return methods.init.apply(this, arguments);
             } else {
-                $.error("Method " + method + " does not exist for jQuery.roundabout.");
+                $.error('Method ' + method + ' does not exist for jQuery.roundabout.');
             }
         };
     }
 
     roundabout_shapes() {
         jQuery.extend(jQuery.roundaboutShapes, {
-            theJuggler: function(r, a, t) {
+            theJuggler: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
                     y: Math.tan(Math.exp(Math.log(r)) + a) / (t - 1),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            figure8: function(r, a, t) {
+            figure8: function (r, a, t) {
                 return {
                     x: Math.sin(r * 2 + a),
-                    y: (Math.sin(r + Math.PI/2 + a) / 8) * t,
+                    y: (Math.sin(r + Math.PI / 2 + a) / 8) * t,
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            waterWheel: function(r, a, t) {
+            waterWheel: function (r, a, t) {
                 return {
-                    x: (Math.sin(r + Math.PI/2 + a) / 8) * t,
-                    y: Math.sin(r + a) / (Math.PI/2),
+                    x: (Math.sin(r + Math.PI / 2 + a) / 8) * t,
+                    y: Math.sin(r + a) / (Math.PI / 2),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            square: function(r, a, t) {
+            square: function (r, a, t) {
                 var sq_x, sq_y, sq_z;
 
-                if (r <= Math.PI/2) {
-                    sq_x = (2/Math.PI) * r;
-                    sq_y = -(2/Math.PI) * r + 1;
-                    sq_z = -(1/Math.PI) * r + 1;
-                } else if (r > Math.PI/2 && r <= Math.PI) {
-                    sq_x = -(2/Math.PI) * r + 2;
-                    sq_y = -(2/Math.PI) * r + 1;
-                    sq_z = -(1/Math.PI) * r + 1;
+                if (r <= Math.PI / 2) {
+                    sq_x = (2 / Math.PI) * r;
+                    sq_y = -(2 / Math.PI) * r + 1;
+                    sq_z = -(1 / Math.PI) * r + 1;
+                } else if (r > Math.PI / 2 && r <= Math.PI) {
+                    sq_x = -(2 / Math.PI) * r + 2;
+                    sq_y = -(2 / Math.PI) * r + 1;
+                    sq_z = -(1 / Math.PI) * r + 1;
                 } else if (r > Math.PI && r <= (3 * Math.PI) / 2) {
-                    sq_x = -(2/Math.PI) * r + 2;
-                    sq_y = (2/Math.PI) * r - 3;
-                    sq_z = (1/Math.PI) * r - 1;
+                    sq_x = -(2 / Math.PI) * r + 2;
+                    sq_y = (2 / Math.PI) * r - 3;
+                    sq_z = (1 / Math.PI) * r - 1;
                 } else {
-                    sq_x = (2/Math.PI) * r - 4;
-                    sq_y = (2/Math.PI) * r - 3;
-                    sq_z = (1/Math.PI) * r - 1;
+                    sq_x = (2 / Math.PI) * r - 4;
+                    sq_y = (2 / Math.PI) * r - 3;
+                    sq_z = (1 / Math.PI) * r - 1;
                 }
 
                 return {
@@ -1303,92 +1320,92 @@ class ModuleClockShow extends React.Component {
                     scale: sq_z
                 };
             },
-            conveyorBeltLeft: function(r, a, t) {
+            conveyorBeltLeft: function (r, a, t) {
                 return {
                     x: -Math.cos(r + a),
-                    y: (Math.cos(r + 3*Math.PI/2 + a) / 8) * t,
+                    y: (Math.cos(r + 3 * Math.PI / 2 + a) / 8) * t,
                     z: (Math.sin(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            conveyorBeltRight: function(r, a, t) {
+            conveyorBeltRight: function (r, a, t) {
                 return {
                     x: Math.cos(r + a),
-                    y: (Math.cos(r + 3*Math.PI/2 + a) / 8) * t,
+                    y: (Math.cos(r + 3 * Math.PI / 2 + a) / 8) * t,
                     z: (Math.sin(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            goodbyeCruelWorld: function(r, a, t) {
+            goodbyeCruelWorld: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
-                    y: (Math.tan(r + 3*Math.PI/2 + a) / 8) * (t + 0.5),
+                    y: (Math.tan(r + 3 * Math.PI / 2 + a) / 8) * (t + 0.5),
                     z: (Math.sin(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            diagonalRingLeft: function(r, a, t) {
+            diagonalRingLeft: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
                     y: -Math.cos(r + Math.tan(Math.cos(a))) / (t + 1.5),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            diagonalRingRight: function(r, a, t) {
+            diagonalRingRight: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
                     y: Math.cos(r + Math.tan(Math.cos(a))) / (t + 1.5),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            rollerCoaster: function(r, a, t) {
+            rollerCoaster: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
                     y: Math.sin((2 + t) * r),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            tearDrop: function(r, a, t) {
+            tearDrop: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
-                    y: -Math.sin(r/2 + t) + 0.35,
+                    y: -Math.sin(r / 2 + t) + 0.35,
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            tickingClock: function(r, a, t) {
+            tickingClock: function (r, a, t) {
                 return {
-                    x: Math.cos(r + a - Math.PI/2),
-                    y: Math.sin(r + a - Math.PI/2),
+                    x: Math.cos(r + a - Math.PI / 2),
+                    y: Math.sin(r + a - Math.PI / 2),
                     z: Math.cos(r),
                     scale: Math.cos(r) + 0.5
                 }
             },
-            flurry: function(r, a, t) {
+            flurry: function (r, a, t) {
                 return {
                     x: Math.sin(r * 3 + a),
-                    y: (Math.cos(r + Math.PI/2 + a) / 2) * t,
+                    y: (Math.cos(r + Math.PI / 2 + a) / 2) * t,
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            nowSlide: function(r, a, t) {
+            nowSlide: function (r, a, t) {
                 return {
                     x: Math.tan(r * 2 + a) * 0.5,
-                    y: Math.cos(r*2 + t) / 6,
+                    y: Math.cos(r * 2 + t) / 6,
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             },
-            risingEssence: function(r, a, t) {
+            risingEssence: function (r, a, t) {
                 return {
                     x: Math.sin(r + a),
                     y: Math.tan((2 + t) * r),
                     z: (Math.cos(r + a) + 1) / 2,
-                    scale: (Math.sin(r + Math.PI/2 + a) / 2) + 0.5
+                    scale: (Math.sin(r + Math.PI / 2 + a) / 2) + 0.5
                 };
             }
         });
@@ -1396,7 +1413,8 @@ class ModuleClockShow extends React.Component {
 
     roundaboutInit() {
         function getDateBreakdown() {
-            var date = new Date(), breakdown = {};
+            var date = new Date(),
+                breakdown = {};
             breakdown.hoursTens = (date.getHours() === 0 || date.getHours() == 23 || date.getHours() == 22 || date.getHours() == 11 || date.getHours() == 12 || date.getHours() == 10) ? 1 : 0;
             breakdown.hoursOnes = (date.getHours() === 0 || date.getHours() > 12) ? Math.abs(date.getHours() - 12) % 10 : date.getHours() % 10;
             breakdown.minutesTens = (date.getMinutes() - (date.getMinutes() % 10)) / 10;
@@ -1455,7 +1473,7 @@ class ModuleClockShow extends React.Component {
             shape: 'waterWheel'
         });
 
-        setInterval(function() {
+        setInterval(function () {
             var breakdown = getDateBreakdown();
             $('ul#hours-tens').roundabout('animateToChild', breakdown.hoursTens);
             $('ul#hours-ones').roundabout('animateToChild', breakdown.hoursOnes);
@@ -1469,70 +1487,70 @@ class ModuleClockShow extends React.Component {
 
     roundaboutCss() {
         const timeBlock = {
-            padding           : '0.125em 0',
-            borderRadius      : '15px',
-            overflow          : 'hidden',
-            backgroundColor   : '#fff',
-            backgroundSize    : 'cover',
+            padding: '0.125em 0',
+            borderRadius: '15px',
+            overflow: 'hidden',
+            backgroundColor: '#fff',
+            backgroundSize: 'cover',
             backgroundPosition: 'center center',
-            fontSize          : '16px'
+            fontSize: '16px'
         };
         const crappy_plastic_part_made_in_china = {
-            width   : '185px',
-            height  : '0.75em',
-            margin  : '0 auto',
+            width: '185px',
+            height: '0.75em',
+            margin: '0 auto',
             overflow: 'hidden',
             fontSize: '3em'
         };
         const pad = {
-            width             : '6em',
-            margin            : '0 auto',
-            backgroundColor   : '#fff',
+            width: '6em',
+            margin: '0 auto',
+            backgroundColor: '#fff',
             backgroundPosition: 'center center'
         };
         const pad__ul = {
-            width    : '0.75em',
-            height   : '6em',
-            padding  : '0',
-            margin   : '-2.6em -21px 0 0',
+            width: '0.75em',
+            height: '6em',
+            padding: '0',
+            margin: '-2.6em -21px 0 0',
             listStyle: 'none',
-            float    : 'left'
+            float: 'left'
         };
         const pad__li = {
-            width             : '0.6em',
-            height            : '1em',
-            lineHeight        : '1.2',
-            fontFamily        : 'consola,"microsoft yahei"',
-            fontSize          : '0.6em',
-            color             : '#888',
-            textAlign         : 'center',
-            backgroundColor   : '#fff',
+            width: '0.6em',
+            height: '1em',
+            lineHeight: '1.2',
+            fontFamily: 'consola,"microsoft yahei"',
+            fontSize: '0.6em',
+            color: '#888',
+            textAlign: 'center',
+            backgroundColor: '#fff',
             backgroundPosition: 'center center',
-            cursor            : 'pointer'
+            cursor: 'pointer'
         };
         const pad__liANDroundabout_in_focus = {
             cursor: 'default'
         };
         const ampm = {
-            width     : '1.8em',
+            width: '1.8em',
             marginLeft: '-0.1em',
-            opacity   : '0.75'
+            opacity: '0.75'
         };
         const ampm__li = {
             width: '1.8em'
         };
         const delimiter = {
-            width      : '0.5em',
-            textAlign  : 'center',
-            marginLeft : '6px',
+            width: '0.5em',
+            textAlign: 'center',
+            marginLeft: '6px',
             marginRight: '-12px'
         };
         const delimiter__li = {
-            width    : '0.5em',
+            width: '0.5em',
             textAlign: 'center'
         };
         const pad__li__span = {
-            display   : 'block',
+            display: 'block',
             paddingTop: '6em'
         };
 

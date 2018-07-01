@@ -51,7 +51,10 @@ class UserCenter extends React.Component {
                 />
                 <UserInfo userInfo={ this.props.userInfo }/>
                 <UserAd/>
-                <UserComment/>
+                <UserComment
+                    getMessage={ this.props.getMessage }
+                    message={ this.props.message }
+                />
             </div>
         );
     }

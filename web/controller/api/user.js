@@ -10,8 +10,11 @@ const util = require('./util');
 
 module.exports = {
     async getUserDefault(ctx) {
-        if (ctx.session.user === undefined) ctx.session.user = {id: 0};
-        if (ctx.session.user.id === undefined) ctx.session.user = {id: 0};
+        if (ctx.session.user === undefined || ctx.session.user.id === undefined) {
+            ctx.session.user = {
+                id: 0
+            };
+        }
 
         const loginUser = ctx.session.user;
         const user = await userService.findById(Number(loginUser.id)) || {};
@@ -32,10 +35,10 @@ module.exports = {
         };
     },
     async login(ctx) {
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         const query = {
             where: {
-                email: data.email,
+                email: jsonData.email,
             },
         };
         const users = await userService.findMany(query);
@@ -47,7 +50,7 @@ module.exports = {
             success = false;
             message = 'login failed.please check that if the email is right!';
         } else {
-            if (hash.sha1(data.password) !== user.password) {
+            if (hash.sha1(jsonData.password) !== user.password) {
                 user = {};
                 success = false;
                 message = 'login failed.please check that password is right!';
@@ -62,18 +65,18 @@ module.exports = {
         };
     },
     async register(ctx) {
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         const query = {
             where: {
-                email: data.email,
+                email: jsonData.email,
             },
         };
         const users = await userService.findMany(query);
         const userData = {
             uuid: uuid(),
             userName: `guest${Math.round(Math.random() * 100)}`,
-            email: data.email,
-            password: hash.sha1(data.password),
+            email: jsonData.email,
+            password: hash.sha1(jsonData.password),
             gender: 0,
             isEnabled: 0,
             registerIp: ctx.request.ip.match(/\d+\.\d+\.\d+\.\d+/)[0],
@@ -99,10 +102,10 @@ module.exports = {
         };
     },
     async activate(ctx) {
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         const query = {
             where: {
-                uuid: data.uuid,
+                uuid: jsonData.uuid,
             },
         };
         const users = await userService.findMany(query);
@@ -135,13 +138,13 @@ module.exports = {
         };
     },
     async updateInfo(ctx) {
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         var user = ctx.session.user;
         var message = 'update success!';
         var success = true;
 
-        data.id = user.id;
-        user = await userService.update(data);
+        jsonData.id = user.id;
+        user = await userService.update(jsonData);
 
         ctx.session.user = user;
         ctx.body = {
@@ -151,16 +154,16 @@ module.exports = {
         };
     },
     async updatePwd(ctx) {
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         const originUser = ctx.session.user;
         var message = 'update success!';
         var success = true;
         var user = await userService.findById(originUser.id);
 
-        if (user.password === hash.sha1(data.original)) {
+        if (user.password === hash.sha1(jsonData.original)) {
             user = await userService.update({
                 id: user.id,
-                password: hash.sha1(data.modify),
+                password: hash.sha1(jsonData.modify),
             });
         } else {
             message = 'the original password you typed is wrong!';
@@ -176,10 +179,10 @@ module.exports = {
     },
     async resetPwd(ctx) {
         const newPwd = Date.parse(new Date());
-        const data = ctx.request.body;
+        const jsonData = ctx.request.body;
         var query = {
             where: {
-                email: data.email || ctx.session.user.email,
+                email: jsonData.email || ctx.session.user.email,
             },
         };
         var message = 'new random pwd has been sent to your email!';
@@ -208,16 +211,16 @@ module.exports = {
     },
     async sendActivateMail(ctx) {
         //  jsonData 由后端拿前端暂存的 session
-        const data = ctx.session.user;
+        const user = ctx.session.user;
         var success = true;
         var message = 'activate email has been sent!';
 
-        util.sendActivateMail(data.uuid, data.email);
+        util.sendActivateMail(user.uuid, user.email);
 
         ctx.body = {
             success,
             message,
-            data,
+            data: user,
         };
     },
 };

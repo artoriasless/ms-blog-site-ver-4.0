@@ -12,6 +12,7 @@ const LOGOUT = 'LOGOUT';
 const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 const UPDATE_PWD = 'UPDATE_PWD';
 const RESET_PWD = 'RESET_PWD';
+const GET_MESSAGE = 'GET_MESSAGE';
 
 module.exports = {
     GET_USER_DEFAULT,
@@ -26,4 +27,5 @@ module.exports = {
     UPDATE_USER_INFO,
     UPDATE_PWD,
     RESET_PWD,
+    GET_MESSAGE,
 };

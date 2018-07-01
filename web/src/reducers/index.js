@@ -14,6 +14,7 @@ const logoutFunc = require('./logout');
 const updateUserInfoFunc = require('./update-user-info');
 const updatePwdFunc = require('./update-pwd');
 const resetPwdFunc = require('./reset-pwd');
+const getMessageFunc = require('./get-message');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -52,6 +53,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.RESET_PWD:
         return resetPwdFunc(state, action);
+
+    case actionTypes.GET_MESSAGE:
+        return getMessageFunc(state, action);
 
     default:
         return state;

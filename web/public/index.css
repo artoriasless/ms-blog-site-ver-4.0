@@ -164,6 +164,85 @@ code {
 	-webkit-animation: fade-in 1s ease;
 }
 
+.pager-container {
+    height: 1.5rem;
+    margin: 10px 0 5px;
+    font-family: consola,"microsoft yahei";
+}
+
+.pager-container .pager-tips {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding: 0 5px;
+        border-radius: 10px;
+        background-color: #777;
+        color: #fff;
+        text-align: center;
+        font-size: 0.75em;
+        font-style: italic;
+        float: left;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+.pager-container .pager-content {
+        float: right;
+    }
+
+.pager-container .pager-content .pagination {
+            margin: 0;
+        }
+
+.pager-container .pager-content .pagination .page-item .page-link {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    line-height: calc(1.5rem - 2px);
+                    padding: 0;
+                    margin: 0 2px;
+                    border: 1px solid #aaa;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    color: #5e87a2;
+                    font-size: 0.75em;
+                    text-align: center;
+                }
+
+.pager-container .pager-content .pagination .page-item .page-link:focus {
+                        -webkit-box-shadow: none;
+                                box-shadow: none;
+                        background-color: #fff;
+                    }
+
+.pager-container .pager-content .pagination .page-item .page-link.ellipsis {
+                    border-color: transparent;
+                    color: #aaa;
+                    background-color: transparent;
+                    pointer-events: none;
+                }
+
+.pager-container .pager-content .pagination .page-item .page-link.active {
+                    border-color: #5e87a2;
+                    color: #fff;
+                    background-color: #5e87a2;
+                }
+
+.pager-container .pager-content .pagination .page-item .page-link.disable {
+                    border-color: #ddd;
+                    color: #777;
+                    background-color: #ddd;
+                    pointer-events: none;
+                }
+
+.pager-container .pager-content .pagination .page-item:first-child .page-link {
+                    border-radius: 50%;
+                    margin-left: 0;
+                }
+
+.pager-container .pager-content .pagination .page-item:last-child .page-link {
+                    border-radius: 50%;
+                    margin-right: 0;
+                }
+
 .stan-loading-container {
     position: fixed;
     top: 0;
@@ -932,7 +1011,53 @@ code {
         margin: 0 0 10px 0;
         border: 1px solid #ddd;
         border-radius: 0 0 5px 5px;
+        overflow: hidden;
     }
+
+.page-user .user-comment .comment-title {
+            height: 2.25rem;
+            line-height: 2.25rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            font-family: consola,"microsoft yahei";
+            font-size: 1.25rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+.page-user .user-comment .comment-content {
+            padding: 15px 0;
+            font-size: 14px;
+        }
+
+.page-user .user-comment .comment-content .message-item {
+                height: 1.75rem;
+                line-height: 1.75rem;
+            }
+
+.page-user .user-comment .comment-content .message-item.paper-reply:before {
+                content: "paper reply:";
+                color: #aaa;
+                display:block;
+                width: 80px;
+                float: left;
+            }
+
+.page-user .user-comment .comment-content .message-item > a {
+                display: block;
+                width: calc(100% - 80px);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                height: 1.75rem;
+                line-height: 1.75rem;
+            }
+
+.page-user .user-comment .comment-content.empty {
+            font-family: consola,"microsoft yahei";
+            color: #aaa;
+            text-align: center;
+        }
 
 @media (min-width: 768px) {
         .page-user .user-comment {
@@ -943,6 +1068,7 @@ code {
                 -ms-flex: 0 0 calc(66.66667% - 10px);
                     flex: 0 0 calc(66.66667% - 10px);
             border-radius: 0 0 5px 0;
+            overflow: hidden;
         }
 }
 

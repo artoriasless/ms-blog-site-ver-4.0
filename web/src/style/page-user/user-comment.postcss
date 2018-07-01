@@ -4,6 +4,52 @@
         margin: 0 0 10px 0;
         border: 1px solid var(--color-grey-lighter);
         border-radius: 0 0 5px 5px;
+        overflow: hidden;
+
+        .comment-title {
+            height: 2.25rem;
+            line-height: 2.25rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--color-grey-lighter);
+            font-family: consola,"microsoft yahei";
+            font-size: 1.25rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .comment-content {
+            padding: 15px 0;
+            font-size: 14px;
+
+            .message-item {
+                height: 1.75rem;
+                line-height: 1.75rem;
+            }
+
+            .message-item.paper-reply:before {
+                content: "paper reply:";
+                color: var(--color-grey-light);
+                display:block;
+                width: 80px;
+                float: left;
+            }
+
+            .message-item > a {
+                display: block;
+                width: calc(100% - 80px);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                height: 1.75rem;
+                line-height: 1.75rem;
+            }
+        }
+
+        .comment-content.empty {
+            font-family: consola,"microsoft yahei";
+            color: var(--color-grey-light);
+            text-align: center;
+        }
     }
 }
 
@@ -15,6 +61,7 @@
             border: 1px solid var(--color-grey-lighter);
             flex: 0 0 calc(66.666667% - 10px);
             border-radius: 0 0 5px 0;
+            overflow: hidden;
         }
     }
 }

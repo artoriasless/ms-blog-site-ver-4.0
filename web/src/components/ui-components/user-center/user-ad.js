@@ -1,9 +1,9 @@
 'use strict';
-
+/* eslint-disable */
 const React = require('react');
 
-const ModuleClockShow = require('/lib/module-clock-show');  //  eslint-disable-line
-
+const ModuleClockShow = require('/lib/module-clock-show');
+/* eslint-disable */
 //  for advertise
 // const config = require('/config');
 // const ajaxAction = require('/lib/common-ajax-action');

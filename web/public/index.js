@@ -108,6 +108,7 @@ var LOGOUT = 'LOGOUT';
 var UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 var UPDATE_PWD = 'UPDATE_PWD';
 var RESET_PWD = 'RESET_PWD';
+var GET_MESSAGE = 'GET_MESSAGE';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -121,7 +122,8 @@ module.exports = {
     LOGOUT: LOGOUT,
     UPDATE_USER_INFO: UPDATE_USER_INFO,
     UPDATE_PWD: UPDATE_PWD,
-    RESET_PWD: RESET_PWD
+    RESET_PWD: RESET_PWD,
+    GET_MESSAGE: GET_MESSAGE
 };
 
 /***/ }),
@@ -154,6 +156,34 @@ module.exports = activateAccount;
 
 /***/ }),
 
+/***/ "./actions/get-message.js":
+/*!********************************!*\
+  !*** ./actions/get-message.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getMessage = function getMessage(message) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_MESSAGE',
+        payload: {
+            current: current,
+            message: message
+        }
+    };
+};
+
+module.exports = getMessage;
+
+/***/ }),
+
 /***/ "./actions/index.js":
 /*!**************************!*\
   !*** ./actions/index.js ***!
@@ -178,6 +208,7 @@ var logoutAction = __webpack_require__(/*! ./logout */ "./actions/logout.js");
 var updateUserInfoAction = __webpack_require__(/*! ./update-user-info */ "./actions/update-user-info.js");
 var updatePwdAction = __webpack_require__(/*! ./update-pwd */ "./actions/update-pwd.js");
 var resetPwdAction = __webpack_require__(/*! ./reset-pwd */ "./actions/reset-pwd.js");
+var getMessageAction = __webpack_require__(/*! ./get-message */ "./actions/get-message.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -193,7 +224,8 @@ var actions = {
     logoutAction: logoutAction,
     updateUserInfoAction: updateUserInfoAction,
     updatePwdAction: updatePwdAction,
-    resetPwdAction: resetPwdAction
+    resetPwdAction: resetPwdAction,
+    getMessageAction: getMessageAction
 };
 
 module.exports = actions;
@@ -3450,7 +3482,10 @@ var UserCenter = function (_React$Component) {
                 }),
                 React.createElement(UserInfo, { userInfo: this.props.userInfo }),
                 React.createElement(UserAd, null),
-                React.createElement(UserComment, null)
+                React.createElement(UserComment, {
+                    getMessage: this.props.getMessage,
+                    message: this.props.message
+                })
             );
         }
     }]);
@@ -3471,6 +3506,7 @@ module.exports = UserCenter;
 
 "use strict";
 
+/* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3482,8 +3518,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var ModuleClockShow = __webpack_require__(/*! ../../../lib/module-clock-show */ "./lib/module-clock-show.js"); //  eslint-disable-line
-
+var ModuleClockShow = __webpack_require__(/*! ../../../lib/module-clock-show */ "./lib/module-clock-show.js");
+/* eslint-disable */
 //  for advertise
 // const config = require('/config');
 // const ajaxAction = require('/lib/common-ajax-action');
@@ -3540,6 +3576,7 @@ module.exports = UserAd;
 
 "use strict";
 
+/* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3551,6 +3588,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var ModulePager = __webpack_require__(/*! ../../../lib/module-pager */ "./lib/module-pager.js");
+/* eslint-disable */
+
 var UserComment = function (_React$Component) {
     _inherits(UserComment, _React$Component);
 
@@ -3561,17 +3601,94 @@ var UserComment = function (_React$Component) {
     }
 
     _createClass(UserComment, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.props.getMessage({
+                page: 1
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
                 { className: 'col-xs-12 col-md-8 user-comment' },
-                '\u7528\u6237\u53D1\u8868\u8FC7\u7684\u8BC4\u8BBA'
+                React.createElement(
+                    'div',
+                    { className: 'comment-title' },
+                    'My Messages'
+                ),
+                React.createElement(CommentContent, { message: this.props.message }),
+                React.createElement(ModulePager, {
+                    jumpHandler: this.props.getMessage,
+                    data: this.props.message
+                })
             );
         }
     }]);
 
     return UserComment;
+}(React.Component);
+
+var CommentContent = function (_React$Component2) {
+    _inherits(CommentContent, _React$Component2);
+
+    function CommentContent() {
+        _classCallCheck(this, CommentContent);
+
+        return _possibleConstructorReturn(this, (CommentContent.__proto__ || Object.getPrototypeOf(CommentContent)).apply(this, arguments));
+    }
+
+    _createClass(CommentContent, [{
+        key: 'render',
+        value: function render() {
+            var msg = this.props.message || {};
+            var msgCount = msg.count || 0;
+            var msgArr = msg.rows || [];
+
+            if (msgCount === 0) {
+                return React.createElement(
+                    'div',
+                    { className: 'comment-content empty' },
+                    'message list is empty!'
+                );
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: 'comment-content' },
+                    msgArr.map(function (msgItem) {
+                        var msgItemClassArr = ['message-item'];
+
+                        if (!msgItem.isRead) {
+                            msgItemClassArr.push('unread');
+                        }
+                        //  TODO，后续将区分消息类型
+                        if (true) {
+                            msgItemClassArr.push('paper-reply');
+                        }
+
+                        return React.createElement(
+                            'div',
+                            {
+                                key: 'message_item_' + msgItem.id,
+                                className: msgItemClassArr.join(' ')
+                            },
+                            React.createElement(
+                                'a',
+                                {
+                                    href: '/paper/' + msgItem.paperId,
+                                    target: '_blank'
+                                },
+                                msgItem.content
+                            )
+                        );
+                    })
+                );
+            }
+        }
+    }]);
+
+    return CommentContent;
 }(React.Component);
 
 module.exports = UserComment;
@@ -4096,6 +4213,7 @@ var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var updateUserInfoFormAction = actions.updateUserInfoFormAction;
 var resetPwdAction = actions.resetPwdAction;
+var getMessageAction = actions.getMessageAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -4111,6 +4229,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
         },
         resetPwd: function resetPwd() {
             return dispatch(ajaxResetPwd());
+        },
+        getMessage: function getMessage(jsonData) {
+            return dispatch(ajaxGetMessage(jsonData));
         }
     };
 };
@@ -4175,6 +4296,34 @@ function ajaxResetPwd() {
         };
 
         return ajaxAction(requestUrl, {}, successFunc, failFunc);
+    };
+}
+
+function ajaxGetMessage(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/message/page';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                dispatch(getMessageAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString()
+            });
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
     };
 }
 
@@ -5044,26 +5193,41 @@ var ModuleClockShow = function (_React$Component) {
                     return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
                 },
                 easeInElastic: function easeInElastic(x, t, b, c, d) {
-                    var s = 1.70158;var p = 0;var a = c;
-                    if (t == 0) return b;if ((t /= d) == 1) return b + c;if (!p) p = d * .3;
+                    var s = 1.70158;
+                    var p = 0;
+                    var a = c;
+                    if (t == 0) return b;
+                    if ((t /= d) == 1) return b + c;
+                    if (!p) p = d * .3;
                     if (a < Math.abs(c)) {
-                        a = c;var s = p / 4;
+                        a = c;
+                        var s = p / 4;
                     } else var s = p / (2 * Math.PI) * Math.asin(c / a);
                     return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
                 },
                 easeOutElastic: function easeOutElastic(x, t, b, c, d) {
-                    var s = 1.70158;var p = 0;var a = c;
-                    if (t == 0) return b;if ((t /= d) == 1) return b + c;if (!p) p = d * .3;
+                    var s = 1.70158;
+                    var p = 0;
+                    var a = c;
+                    if (t == 0) return b;
+                    if ((t /= d) == 1) return b + c;
+                    if (!p) p = d * .3;
                     if (a < Math.abs(c)) {
-                        a = c;var s = p / 4;
+                        a = c;
+                        var s = p / 4;
                     } else var s = p / (2 * Math.PI) * Math.asin(c / a);
                     return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
                 },
                 easeInOutElastic: function easeInOutElastic(x, t, b, c, d) {
-                    var s = 1.70158;var p = 0;var a = c;
-                    if (t == 0) return b;if ((t /= d / 2) == 2) return b + c;if (!p) p = d * (.3 * 1.5);
+                    var s = 1.70158;
+                    var p = 0;
+                    var a = c;
+                    if (t == 0) return b;
+                    if ((t /= d / 2) == 2) return b + c;
+                    if (!p) p = d * (.3 * 1.5);
                     if (a < Math.abs(c)) {
-                        a = c;var s = p / 4;
+                        a = c;
+                        var s = p / 4;
                     } else var s = p / (2 * Math.PI) * Math.asin(c / a);
                     if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
                     return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
@@ -5138,13 +5302,13 @@ var ModuleClockShow = function (_React$Component) {
                 btnToggleAutoplay: null,
                 btnStartAutoplay: null,
                 btnStopAutoplay: null,
-                easing: "swing",
+                easing: 'swing',
                 clickToFocus: true,
                 clickToFocusCallback: function clickToFocusCallback() {},
                 focusBearing: 0.0,
-                shape: "lazySusan",
+                shape: 'lazySusan',
                 debug: false,
-                childSelector: "li",
+                childSelector: 'li',
                 startingChild: null,
                 reflect: false,
                 floatComparisonThreshold: 0.001,
@@ -5154,10 +5318,10 @@ var ModuleClockShow = function (_React$Component) {
                 autoplayCallback: function autoplayCallback() {},
                 enableDrag: false,
                 dropDuration: 600,
-                dropEasing: "swing",
-                dropAnimateTo: "nearest",
+                dropEasing: 'swing',
+                dropAnimateTo: 'nearest',
                 dropCallback: function dropCallback() {},
-                dragAxis: "x",
+                dragAxis: 'x',
                 dragFactor: 4,
                 triggerFocusEvents: true,
                 triggerBlurEvents: true,
@@ -5185,7 +5349,7 @@ var ModuleClockShow = function (_React$Component) {
                     var settings,
                         now = new Date().getTime();
 
-                    options = (typeof options === 'undefined' ? 'undefined' : _typeof(options)) === "object" ? options : {};
+                    options = (typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object' ? options : {};
                     callback = $.isFunction(callback) ? callback : function () {};
                     callback = $.isFunction(options) ? options : callback;
                     settings = $.extend({}, defaults, options, internalData);
@@ -5197,13 +5361,13 @@ var ModuleClockShow = function (_React$Component) {
                             period = 360.0 / childCount,
                             startingChild = settings.startingChild && settings.startingChild > childCount - 1 ? childCount - 1 : settings.startingChild,
                             startBearing = settings.startingChild === null ? settings.bearing : 360 - startingChild * period,
-                            holderCSSPosition = self.css("position") !== "static" ? self.css("position") : "relative";
+                            holderCSSPosition = self.css('position') !== 'static' ? self.css('position') : 'relative';
 
                         self.css({ // starting styles
                             padding: 0,
                             position: holderCSSPosition
-                        }).addClass("roundabout-holder").data( // starting options
-                        "roundabout", $.extend({}, settings, {
+                        }).addClass('roundabout-holder').data( // starting options
+                        'roundabout', $.extend({}, settings, {
                             startingChild: startingChild,
                             bearing: startBearing,
                             oppositeOfFocusBearing: methods.normalize.apply(null, [settings.focusBearing - 180]),
@@ -5216,13 +5380,13 @@ var ModuleClockShow = function (_React$Component) {
                             // bind click-to-focus
                             if (settings.clickToFocus) {
                                 self.children(settings.childSelector).each(function (i) {
-                                    $(this).bind("click.roundabout", function () {
+                                    $(this).bind('click.roundabout', function () {
                                         var degrees = methods.getPlacement.apply(self, [i]);
 
                                         if (!methods.isInFocus.apply(self, [degrees])) {
                                             methods.stopAnimation.apply($(this));
-                                            if (!self.data("roundabout").animating) {
-                                                methods.animateBearingToFocus.apply(self, [degrees, self.data("roundabout").clickToFocusCallback]);
+                                            if (!self.data('roundabout').animating) {
+                                                methods.animateBearingToFocus.apply(self, [degrees, self.data('roundabout').clickToFocusCallback]);
                                             }
                                             return false;
                                         }
@@ -5232,9 +5396,9 @@ var ModuleClockShow = function (_React$Component) {
 
                             // bind next buttons
                             if (settings.btnNext) {
-                                $(settings.btnNext).bind("click.roundabout", function () {
-                                    if (!self.data("roundabout").animating) {
-                                        methods.animateToNextChild.apply(self, [self.data("roundabout").btnNextCallback]);
+                                $(settings.btnNext).bind('click.roundabout', function () {
+                                    if (!self.data('roundabout').animating) {
+                                        methods.animateToNextChild.apply(self, [self.data('roundabout').btnNextCallback]);
                                     }
                                     return false;
                                 });
@@ -5242,15 +5406,15 @@ var ModuleClockShow = function (_React$Component) {
 
                             // bind previous buttons
                             if (settings.btnPrev) {
-                                $(settings.btnPrev).bind("click.roundabout", function () {
-                                    methods.animateToPreviousChild.apply(self, [self.data("roundabout").btnPrevCallback]);
+                                $(settings.btnPrev).bind('click.roundabout', function () {
+                                    methods.animateToPreviousChild.apply(self, [self.data('roundabout').btnPrevCallback]);
                                     return false;
                                 });
                             }
 
                             // bind toggle autoplay buttons
                             if (settings.btnToggleAutoplay) {
-                                $(settings.btnToggleAutoplay).bind("click.roundabout", function () {
+                                $(settings.btnToggleAutoplay).bind('click.roundabout', function () {
                                     methods.toggleAutoplay.apply(self);
                                     return false;
                                 });
@@ -5258,7 +5422,7 @@ var ModuleClockShow = function (_React$Component) {
 
                             // bind start autoplay buttons
                             if (settings.btnStartAutoplay) {
-                                $(settings.btnStartAutoplay).bind("click.roundabout", function () {
+                                $(settings.btnStartAutoplay).bind('click.roundabout', function () {
                                     methods.startAutoplay.apply(self);
                                     return false;
                                 });
@@ -5266,7 +5430,7 @@ var ModuleClockShow = function (_React$Component) {
 
                             // bind stop autoplay buttons
                             if (settings.btnStopAutoplay) {
-                                $(settings.btnStopAutoplay).bind("click.roundabout", function () {
+                                $(settings.btnStopAutoplay).bind('click.roundabout', function () {
                                     methods.stopAutoplay.apply(self);
                                     return false;
                                 });
@@ -5274,9 +5438,9 @@ var ModuleClockShow = function (_React$Component) {
 
                             // autoplay pause on hover
                             if (settings.autoplayPauseOnHover) {
-                                self.bind("mouseenter.roundabout.autoplay", function () {
+                                self.bind('mouseenter.roundabout.autoplay', function () {
                                     methods.stopAutoplay.apply(self, [true]);
-                                }).bind("mouseleave.roundabout.autoplay", function () {
+                                }).bind('mouseleave.roundabout.autoplay', function () {
                                     methods.startAutoplay.apply(self);
                                 });
                             }
@@ -5286,20 +5450,20 @@ var ModuleClockShow = function (_React$Component) {
                                 // on screen
                                 if (!$.isFunction(self.drag)) {
                                     if (settings.debug) {
-                                        alert("You do not have the drag plugin loaded.");
+                                        alert('You do not have the drag plugin loaded.');
                                     }
                                 } else if (!$.isFunction(self.drop)) {
                                     if (settings.debug) {
-                                        alert("You do not have the drop plugin loaded.");
+                                        alert('You do not have the drop plugin loaded.');
                                     }
                                 } else {
                                     self.drag(function (e, properties) {
-                                        var data = self.data("roundabout"),
-                                            delta = data.dragAxis.toLowerCase() === "x" ? "deltaX" : "deltaY";
+                                        var data = self.data('roundabout'),
+                                            delta = data.dragAxis.toLowerCase() === 'x' ? 'deltaX' : 'deltaY';
                                         methods.stopAnimation.apply(self);
                                         methods.setBearing.apply(self, [data.dragBearing + properties[delta] / data.dragFactor]);
                                     }).drop(function (e) {
-                                        var data = self.data("roundabout"),
+                                        var data = self.data('roundabout'),
                                             method = methods.getAnimateToMethod(data.dropAnimateTo);
                                         methods.allowAnimation.apply(self);
                                         methods[method].apply(self, [data.dropDuration, data.dropEasing, data.dropCallback]);
@@ -5310,24 +5474,24 @@ var ModuleClockShow = function (_React$Component) {
                                 // on mobile
                                 self.each(function () {
                                     var element = $(this).get(0),
-                                        data = $(this).data("roundabout"),
-                                        page = data.dragAxis.toLowerCase() === "x" ? "pageX" : "pageY",
+                                        data = $(this).data('roundabout'),
+                                        page = data.dragAxis.toLowerCase() === 'x' ? 'pageX' : 'pageY',
                                         method = methods.getAnimateToMethod(data.dropAnimateTo);
 
                                     // some versions of IE don't like this
                                     if (element.addEventListener) {
-                                        element.addEventListener("touchstart", function (e) {
+                                        element.addEventListener('touchstart', function (e) {
                                             data.touchMoveStartPosition = e.touches[0][page];
                                         }, false);
 
-                                        element.addEventListener("touchmove", function (e) {
+                                        element.addEventListener('touchmove', function (e) {
                                             var delta = (e.touches[0][page] - data.touchMoveStartPosition) / data.dragFactor;
                                             e.preventDefault();
                                             methods.stopAnimation.apply($(this));
                                             methods.setBearing.apply($(this), [data.dragBearing + delta]);
                                         }, false);
 
-                                        element.addEventListener("touchend", function (e) {
+                                        element.addEventListener('touchend', function (e) {
                                             e.preventDefault();
                                             methods.allowAnimation.apply($(this));
                                             method = methods.getAnimateToMethod(data.dropAnimateTo);
@@ -5355,7 +5519,7 @@ var ModuleClockShow = function (_React$Component) {
                 // applys settings to child elements, starts roundabout
                 initChildren: function initChildren(callback, relayout) {
                     var self = $(this),
-                        data = self.data("roundabout");
+                        data = self.data('roundabout');
 
                     callback = callback || function () {};
 
@@ -5367,19 +5531,19 @@ var ModuleClockShow = function (_React$Component) {
 
                         // on relayout, grab these values from current data
                         if (relayout) {
-                            startWidth = $(this).data("roundabout").startWidth;
-                            startHeight = $(this).data("roundabout").startHeight;
-                            startFontSize = $(this).data("roundabout").startFontSize;
+                            startWidth = $(this).data('roundabout').startWidth;
+                            startHeight = $(this).data('roundabout').startHeight;
+                            startFontSize = $(this).data('roundabout').startFontSize;
                         }
 
                         // apply classes and css first
-                        $(this).addClass("roundabout-moveable-item").css("position", "absolute");
+                        $(this).addClass('roundabout-moveable-item').css('position', 'absolute');
 
                         // now measure
-                        $(this).data("roundabout", {
+                        $(this).data('roundabout', {
                             startWidth: startWidth || $(this).width(),
                             startHeight: startHeight || $(this).height(),
-                            startFontSize: startFontSize || parseInt($(this).css("font-size"), 10),
+                            startFontSize: startFontSize || parseInt($(this).css('font-size'), 10),
                             degrees: degrees,
                             backDegrees: methods.normalize.apply(null, [degrees - 180]),
                             childNumber: i,
@@ -5408,7 +5572,7 @@ var ModuleClockShow = function (_React$Component) {
                 updateChildren: function updateChildren() {
                     return this.each(function () {
                         var self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             inFocus = -1,
                             info = {
                             bearing: data.bearing,
@@ -5458,27 +5622,27 @@ var ModuleClockShow = function (_React$Component) {
                                 $(this).trigger('ready');
                             }]) && (!info.animating || data.lastAnimationStep)) {
                                 inFocus = i;
-                                $(this).addClass("roundabout-in-focus");
+                                $(this).addClass('roundabout-in-focus');
                             } else {
-                                $(this).removeClass("roundabout-in-focus");
+                                $(this).removeClass('roundabout-in-focus');
                             }
                         });
 
                         if (inFocus !== info.inFocus) {
                             // blur old child
                             if (data.triggerBlurEvents) {
-                                self.children(data.childSelector).eq(info.inFocus).trigger("blur");
+                                self.children(data.childSelector).eq(info.inFocus).trigger('blur');
                             }
 
                             data.childInFocus = inFocus;
 
                             if (data.triggerFocusEvents && inFocus !== -1) {
                                 // focus new child
-                                self.children(data.childSelector).eq(inFocus).trigger("focus");
+                                self.children(data.childSelector).eq(inFocus).trigger('focus');
                             }
                         }
 
-                        self.trigger("childrenUpdated");
+                        self.trigger('childrenUpdated');
                     });
                 },
 
@@ -5488,7 +5652,7 @@ var ModuleClockShow = function (_React$Component) {
                     var factors,
                         self = this,
                         child = $(childElement),
-                        data = child.data("roundabout"),
+                        data = child.data('roundabout'),
                         out = [],
                         rad = methods.degToRad.apply(null, [360.0 - data.degrees + info.bearing]);
 
@@ -5508,35 +5672,35 @@ var ModuleClockShow = function (_React$Component) {
 
                     // update item
                     child.css({
-                        left: (factors.x * info.midStage.width + info.nudge.width - factors.width / 2.0).toFixed(0) + "px",
-                        top: (factors.y * info.midStage.height + info.nudge.height - factors.height / 2.0).toFixed(0) + "px",
-                        width: factors.width + "px",
-                        height: factors.height + "px",
+                        left: (factors.x * info.midStage.width + info.nudge.width - factors.width / 2.0).toFixed(0) + 'px',
+                        top: (factors.y * info.midStage.height + info.nudge.height - factors.height / 2.0).toFixed(0) + 'px',
+                        width: factors.width + 'px',
+                        height: factors.height + 'px',
                         opacity: (info.opacity.min + info.opacity.diff * factors.scale).toFixed(2),
                         zIndex: Math.round(info.zValues.min + info.zValues.diff * factors.z),
-                        fontSize: (factors.adjustedScale * data.startFontSize).toFixed(1) + "px"
+                        fontSize: (factors.adjustedScale * data.startFontSize).toFixed(1) + 'px'
                     });
                     data.currentScale = factors.adjustedScale;
 
                     // for debugging purposes
-                    if (self.data("roundabout").debug) {
-                        out.push("<div style=\"font-weight: normal; font-size: 10px; padding: 2px; width: " + child.css("width") + "; background-color: #ffc;\">");
-                        out.push("<strong style=\"font-size: 12px; white-space: nowrap;\">Child " + childPos + "</strong><br />");
-                        out.push("<strong>left:</strong> " + child.css("left") + "<br />");
-                        out.push("<strong>top:</strong> " + child.css("top") + "<br />");
-                        out.push("<strong>width:</strong> " + child.css("width") + "<br />");
-                        out.push("<strong>opacity:</strong> " + child.css("opacity") + "<br />");
-                        out.push("<strong>height:</strong> " + child.css("height") + "<br />");
-                        out.push("<strong>z-index:</strong> " + child.css("z-index") + "<br />");
-                        out.push("<strong>font-size:</strong> " + child.css("font-size") + "<br />");
-                        out.push("<strong>scale:</strong> " + child.data("roundabout").currentScale);
-                        out.push("</div>");
+                    if (self.data('roundabout').debug) {
+                        out.push('<div style=\'font-weight: normal; font-size: 10px; padding: 2px; width: ' + child.css('width') + '; background-color: #ffc;\'>');
+                        out.push('<strong style=\'font-size: 12px; white-space: nowrap;\'>Child ' + childPos + '</strong><br />');
+                        out.push('<strong>left:</strong> ' + child.css('left') + '<br />');
+                        out.push('<strong>top:</strong> ' + child.css('top') + '<br />');
+                        out.push('<strong>width:</strong> ' + child.css('width') + '<br />');
+                        out.push('<strong>opacity:</strong> ' + child.css('opacity') + '<br />');
+                        out.push('<strong>height:</strong> ' + child.css('height') + '<br />');
+                        out.push('<strong>z-index:</strong> ' + child.css('z-index') + '<br />');
+                        out.push('<strong>font-size:</strong> ' + child.css('font-size') + '<br />');
+                        out.push('<strong>scale:</strong> ' + child.data('roundabout').currentScale);
+                        out.push('</div>');
 
-                        child.html(out.join(""));
+                        child.html(out.join(''));
                     }
 
                     // trigger event
-                    child.trigger("reposition");
+                    child.trigger('reposition');
 
                     // callback
                     callback.apply(self);
@@ -5558,12 +5722,12 @@ var ModuleClockShow = function (_React$Component) {
                             lowerValue,
                             higherValue,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             oldBearing = data.bearing;
 
                         // set bearing
                         data.bearing = bearing;
-                        self.trigger("bearingSet");
+                        self.trigger('bearingSet');
                         methods.updateChildren.apply(self);
 
                         // not animating? we're done here
@@ -5578,8 +5742,8 @@ var ModuleClockShow = function (_React$Component) {
                             var eventType;
 
                             if (methods.isChildBackDegreesBetween.apply($(this), [bearing, oldBearing])) {
-                                eventType = oldBearing > bearing ? "Clockwise" : "Counterclockwise";
-                                $(this).trigger("move" + eventType + "ThroughBack");
+                                eventType = oldBearing > bearing ? 'Clockwise' : 'Counterclockwise';
+                                $(this).trigger('move' + eventType + 'ThroughBack');
                             }
                         });
                     });
@@ -5598,7 +5762,7 @@ var ModuleClockShow = function (_React$Component) {
                     }
 
                     this.each(function () {
-                        methods.setBearing.apply($(this), [$(this).data("roundabout").bearing + delta]);
+                        methods.setBearing.apply($(this), [$(this).data('roundabout').bearing + delta]);
                     });
 
                     callback.apply(this);
@@ -5611,7 +5775,7 @@ var ModuleClockShow = function (_React$Component) {
                     callback = callback || function () {};
 
                     this.each(function () {
-                        $(this).data("roundabout").tilt = tilt;
+                        $(this).data('roundabout').tilt = tilt;
                         methods.updateChildren.apply($(this));
                     });
 
@@ -5626,7 +5790,7 @@ var ModuleClockShow = function (_React$Component) {
                     callback = callback || function () {};
 
                     this.each(function () {
-                        methods.setTilt.apply($(this), [$(this).data("roundabout").tilt + delta]);
+                        methods.setTilt.apply($(this), [$(this).data('roundabout').tilt + delta]);
                     });
 
                     callback.apply(this);
@@ -5660,9 +5824,9 @@ var ModuleClockShow = function (_React$Component) {
                             easingFn,
                             newBearing,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             thisDuration = !duration ? data.duration : duration,
-                            thisEasingType = easing ? easing : data.easing || "swing";
+                            thisEasingType = easing ? easing : data.easing || 'swing';
 
                         // is this your first time?
                         if (!passedData) {
@@ -5685,12 +5849,12 @@ var ModuleClockShow = function (_React$Component) {
                         // we need to animate more
                         if (timer < thisDuration) {
                             if (!data.animating) {
-                                self.trigger("animationStart");
+                                self.trigger('animationStart');
                             }
 
                             data.animating = true;
 
-                            if (typeof $.easing.def === "string") {
+                            if (typeof $.easing.def === 'string') {
                                 easingFn = $.easing[thisEasingType] || $.easing[$.easing.def];
                                 newBearing = easingFn(null, timer, passedData.start, bearing - passedData.start, passedData.totalTime);
                             } else {
@@ -5710,7 +5874,7 @@ var ModuleClockShow = function (_React$Component) {
                             // we're done animating
                         } else {
                             if (data.animating) {
-                                self.trigger("animationEnd");
+                                self.trigger('animationEnd');
                             }
 
                             data.lastAnimationStep = true;
@@ -5748,13 +5912,13 @@ var ModuleClockShow = function (_React$Component) {
                         var j,
                             range,
                             self = $(this),
-                            data = self.data("roundabout"),
+                            data = self.data('roundabout'),
                             bearing = !data.reflect ? data.bearing % 360 : data.bearing,
                             length = self.children(data.childSelector).length;
 
                         if (!data.animating) {
                             // reflecting, not moving to previous || not reflecting, moving to next
-                            if (data.reflect && which === "previous" || !data.reflect && which === "next") {
+                            if (data.reflect && which === 'previous' || !data.reflect && which === 'next') {
                                 // slightly adjust for rounding issues
                                 bearing = Math.abs(bearing) < data.floatComparisonThreshold ? 360 : bearing;
 
@@ -5838,11 +6002,11 @@ var ModuleClockShow = function (_React$Component) {
                     return this.each(function () {
                         var child,
                             self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         if (data.childInFocus !== childPosition && !data.animating) {
                             child = self.children(data.childSelector).eq(childPosition);
-                            methods.animateBearingToFocus.apply(self, [child.data("roundabout").degrees, duration, easing, callback]);
+                            methods.animateBearingToFocus.apply(self, [child.data('roundabout').degrees, duration, easing, callback]);
                         }
                     });
                 },
@@ -5850,13 +6014,13 @@ var ModuleClockShow = function (_React$Component) {
                 // animateToNextChild
                 // animates roundabout to the next child
                 animateToNextChild: function animateToNextChild(duration, easing, callback) {
-                    return methods.animateToNearbyChild.apply(this, [arguments, "next"]);
+                    return methods.animateToNearbyChild.apply(this, [arguments, 'next']);
                 },
 
                 // animateToPreviousChild
                 // animates roundabout to the preious child
                 animateToPreviousChild: function animateToPreviousChild(duration, easing, callback) {
-                    return methods.animateToNearbyChild.apply(this, [arguments, "previous"]);
+                    return methods.animateToNearbyChild.apply(this, [arguments, 'previous']);
                 },
 
                 // animateToDelta
@@ -5874,7 +6038,7 @@ var ModuleClockShow = function (_React$Component) {
                     }
 
                     return this.each(function () {
-                        var delta = $(this).data("roundabout").bearing + degrees;
+                        var delta = $(this).data('roundabout').bearing + degrees;
                         methods.animateToBearing.apply($(this), [delta, duration, easing, callback]);
                     });
                 },
@@ -5894,7 +6058,7 @@ var ModuleClockShow = function (_React$Component) {
                     }
 
                     return this.each(function () {
-                        var delta = $(this).data("roundabout").bearing - degrees;
+                        var delta = $(this).data('roundabout').bearing - degrees;
                         delta = Math.abs(360 - delta) < Math.abs(delta) ? 360 - delta : -delta;
                         delta = delta > 180 ? -(360 - delta) : delta;
 
@@ -5908,7 +6072,7 @@ var ModuleClockShow = function (_React$Component) {
                 // if an animation is currently in progress, stop it
                 stopAnimation: function stopAnimation() {
                     return this.each(function () {
-                        $(this).data("roundabout").stopAnimation = true;
+                        $(this).data('roundabout').stopAnimation = true;
                     });
                 },
 
@@ -5916,7 +6080,7 @@ var ModuleClockShow = function (_React$Component) {
                 // clears the stop-animation hold placed by stopAnimation
                 allowAnimation: function allowAnimation() {
                     return this.each(function () {
-                        $(this).data("roundabout").stopAnimation = false;
+                        $(this).data('roundabout').stopAnimation = false;
                     });
                 },
 
@@ -5928,7 +6092,7 @@ var ModuleClockShow = function (_React$Component) {
                 startAutoplay: function startAutoplay(callback) {
                     return this.each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         callback = callback || data.autoplayCallback || function () {};
 
@@ -5938,7 +6102,7 @@ var ModuleClockShow = function (_React$Component) {
                         }, data.autoplayDuration);
                         data.autoplayIsRunning = true;
 
-                        self.trigger("autoplayStart");
+                        self.trigger('autoplayStart');
                     });
                 },
 
@@ -5946,16 +6110,16 @@ var ModuleClockShow = function (_React$Component) {
                 // stops autoplaying this roundabout
                 stopAutoplay: function stopAutoplay(keepAutoplayBindings) {
                     return this.each(function () {
-                        clearInterval($(this).data("roundabout").autoplayInterval);
-                        $(this).data("roundabout").autoplayInterval = null;
-                        $(this).data("roundabout").autoplayIsRunning = false;
+                        clearInterval($(this).data('roundabout').autoplayInterval);
+                        $(this).data('roundabout').autoplayInterval = null;
+                        $(this).data('roundabout').autoplayIsRunning = false;
 
                         // this will prevent autoplayPauseOnHover from restarting autoplay
                         if (!keepAutoplayBindings) {
-                            $(this).unbind(".autoplay");
+                            $(this).unbind('.autoplay');
                         }
 
-                        $(this).trigger("autoplayStop");
+                        $(this).trigger('autoplayStop');
                     });
                 },
 
@@ -5964,7 +6128,7 @@ var ModuleClockShow = function (_React$Component) {
                 toggleAutoplay: function toggleAutoplay(callback) {
                     return this.each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         callback = callback || data.autoplayCallback || function () {};
 
@@ -5979,7 +6143,7 @@ var ModuleClockShow = function (_React$Component) {
                 // isAutoplaying
                 // is this roundabout currently autoplaying?
                 isAutoplaying: function isAutoplaying() {
-                    return this.data("roundabout").autoplayIsRunning;
+                    return this.data('roundabout').autoplayIsRunning;
                 },
 
                 // changeAutoplayDuration
@@ -5987,7 +6151,7 @@ var ModuleClockShow = function (_React$Component) {
                 changeAutoplayDuration: function changeAutoplayDuration(duration) {
                     return this.each(function () {
                         var self = $(this),
-                            data = self.data("roundabout");
+                            data = self.data('roundabout');
 
                         data.autoplayDuration = duration;
 
@@ -6027,7 +6191,7 @@ var ModuleClockShow = function (_React$Component) {
                 // isChildBackDegreesBetween
                 // checks that a given child's backDegrees is between two values
                 isChildBackDegreesBetween: function isChildBackDegreesBetween(value1, value2) {
-                    var backDegrees = $(this).data("roundabout").backDegrees;
+                    var backDegrees = $(this).data('roundabout').backDegrees;
 
                     if (value1 > value2) {
                         return backDegrees >= value2 && backDegrees < value1;
@@ -6041,14 +6205,14 @@ var ModuleClockShow = function (_React$Component) {
                 getAnimateToMethod: function getAnimateToMethod(effect) {
                     effect = effect.toLowerCase();
 
-                    if (effect === "next") {
-                        return "animateToNextChild";
-                    } else if (effect === "previous") {
-                        return "animateToPreviousChild";
+                    if (effect === 'next') {
+                        return 'animateToNextChild';
+                    } else if (effect === 'previous') {
+                        return 'animateToPreviousChild';
                     }
 
                     // default selection
-                    return "animateToNearestChild";
+                    return 'animateToNearestChild';
                 },
 
                 // relayoutChildren
@@ -6056,9 +6220,9 @@ var ModuleClockShow = function (_React$Component) {
                 relayoutChildren: function relayoutChildren() {
                     return this.each(function () {
                         var self = $(this),
-                            settings = $.extend({}, self.data("roundabout"));
+                            settings = $.extend({}, self.data('roundabout'));
 
-                        settings.startingChild = self.data("roundabout").childInFocus;
+                        settings.startingChild = self.data('roundabout').childInFocus;
                         methods.init.apply(self, [settings, null, true]);
                     });
                 },
@@ -6067,7 +6231,7 @@ var ModuleClockShow = function (_React$Component) {
                 // gets the nearest child from the current bearing
                 getNearestChild: function getNearestChild() {
                     var self = $(this),
-                        data = self.data("roundabout"),
+                        data = self.data('roundabout'),
                         length = self.children(data.childSelector).length;
 
                     if (!data.reflect) {
@@ -6086,7 +6250,7 @@ var ModuleClockShow = function (_React$Component) {
                 // getPlacement
                 // returns the starting degree for a given child
                 getPlacement: function getPlacement(child) {
-                    var data = this.data("roundabout");
+                    var data = this.data('roundabout');
                     return !data.reflect ? 360.0 - data.period * child : data.period * child;
                 },
 
@@ -6095,7 +6259,7 @@ var ModuleClockShow = function (_React$Component) {
                 isInFocus: function isInFocus(degrees) {
                     var diff,
                         self = this,
-                        data = self.data("roundabout"),
+                        data = self.data('roundabout'),
                         bearing = methods.normalize.apply(null, [data.bearing]);
 
                     degrees = methods.normalize.apply(null, [degrees]);
@@ -6111,10 +6275,10 @@ var ModuleClockShow = function (_React$Component) {
             $.fn.roundabout = function (method) {
                 if (methods[method]) {
                     return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-                } else if ((typeof method === 'undefined' ? 'undefined' : _typeof(method)) === "object" || $.isFunction(method) || !method) {
+                } else if ((typeof method === 'undefined' ? 'undefined' : _typeof(method)) === 'object' || $.isFunction(method) || !method) {
                     return methods.init.apply(this, arguments);
                 } else {
-                    $.error("Method " + method + " does not exist for jQuery.roundabout.");
+                    $.error('Method ' + method + ' does not exist for jQuery.roundabout.');
                 }
             };
         }
@@ -6733,6 +6897,556 @@ var ModuleClockShow = function (_React$Component) {
 }(React.Component);
 
 module.exports = ModuleClockShow;
+
+/***/ }),
+
+/***/ "./lib/module-pager.js":
+/*!*****************************!*\
+  !*** ./lib/module-pager.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var stanLoading = __webpack_require__(/*! ../lib/common-stan-loading */ "./lib/common-stan-loading.js");
+
+var Pager = function (_React$Component) {
+    _inherits(Pager, _React$Component);
+
+    function Pager() {
+        _classCallCheck(this, Pager);
+
+        return _possibleConstructorReturn(this, (Pager.__proto__ || Object.getPrototypeOf(Pager)).apply(this, arguments));
+    }
+
+    _createClass(Pager, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            setTimeout(function () {
+                stanLoading('hide');
+            }, 500);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var data = this.props.data || {};
+            var current = data.page || 1;
+            var dataCount = data.count || 0;
+            var pageCount = Math.ceil(dataCount / 10);
+            var _jumpHandler = this.props.jumpHandler;
+            var config = {
+                current: current,
+                dataCount: dataCount,
+                pageCount: pageCount,
+                jumpHandler: function jumpHandler(jsonData) {
+                    stanLoading();
+                    _jumpHandler(jsonData);
+                }
+            };
+
+            if (pageCount === 1) {
+                return null;
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: 'pager-container' },
+                    React.createElement(
+                        'div',
+                        { className: 'pager-tips' },
+                        current,
+                        '/',
+                        pageCount
+                    ),
+                    React.createElement(
+                        'nav',
+                        {
+                            className: 'pager-content',
+                            'aria-label': 'Page navigation example'
+                        },
+                        React.createElement(
+                            'ul',
+                            { className: 'pagination' },
+                            React.createElement(PageHead, { config: config }),
+                            React.createElement(PagePrev, { config: config }),
+                            React.createElement(PagePrevEllipsis, { config: config }),
+                            React.createElement(PageCurrent, { config: config }),
+                            React.createElement(PageNextEllipsis, { config: config }),
+                            React.createElement(PageNext, { config: config }),
+                            React.createElement(PageFoot, { config: config })
+                        )
+                    )
+                );
+            }
+        }
+    }]);
+
+    return Pager;
+}(React.Component);
+
+var PageHead = function (_React$Component2) {
+    _inherits(PageHead, _React$Component2);
+
+    //  eslint-disable-line
+    function PageHead() {
+        _classCallCheck(this, PageHead);
+
+        var _this2 = _possibleConstructorReturn(this, (PageHead.__proto__ || Object.getPrototypeOf(PageHead)).call(this));
+
+        _this2.clickHandler = _this2.clickHandler.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(PageHead, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            var current = this.props.config.current;
+            var pageLinkClass = current === 1 ? 'page-link disable' : 'page-link';
+
+            return React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: pageLinkClass,
+                        href: 'javascript:;',
+                        onClick: function onClick(event) {
+                            return _this3.clickHandler(event, 1);
+                        }
+                    },
+                    React.createElement('i', { className: 'fa fa-step-backward' })
+                )
+            );
+        }
+    }]);
+
+    return PageHead;
+}(React.Component);
+
+var PagePrev = function (_React$Component3) {
+    _inherits(PagePrev, _React$Component3);
+
+    //  eslint-disable-line
+    function PagePrev() {
+        _classCallCheck(this, PagePrev);
+
+        var _this4 = _possibleConstructorReturn(this, (PagePrev.__proto__ || Object.getPrototypeOf(PagePrev)).call(this));
+
+        _this4.clickHandler = _this4.clickHandler.bind(_this4);
+        return _this4;
+    }
+
+    _createClass(PagePrev, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this5 = this;
+
+            var current = this.props.config.current;
+            var pageLinkClass = current === 1 ? 'page-link disable' : 'page-link';
+
+            return React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: pageLinkClass,
+                        href: 'javascript:;',
+                        onClick: function onClick(event) {
+                            return _this5.clickHandler(event, current - 1);
+                        }
+                    },
+                    React.createElement('i', { className: 'fa fa-angle-left' })
+                )
+            );
+        }
+    }]);
+
+    return PagePrev;
+}(React.Component);
+
+var PagePrevEllipsis = function (_React$Component4) {
+    _inherits(PagePrevEllipsis, _React$Component4);
+
+    //  eslint-disable-line
+    function PagePrevEllipsis() {
+        _classCallCheck(this, PagePrevEllipsis);
+
+        var _this6 = _possibleConstructorReturn(this, (PagePrevEllipsis.__proto__ || Object.getPrototypeOf(PagePrevEllipsis)).call(this));
+
+        _this6.clickHandler = _this6.clickHandler.bind(_this6);
+        return _this6;
+    }
+
+    _createClass(PagePrevEllipsis, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this7 = this;
+
+            var _props$config = this.props.config,
+                current = _props$config.current,
+                pageCount = _props$config.pageCount;
+
+            var pageArr = [];
+
+            var _loop = function _loop(i) {
+                pageArr.unshift(React.createElement(
+                    'li',
+                    {
+                        key: 'page_link_' + (current - i - 1),
+                        className: 'page-item'
+                    },
+                    React.createElement(
+                        'a',
+                        {
+                            className: 'page-link',
+                            href: 'javascript:;',
+                            onClick: function onClick(event) {
+                                return _this7.clickHandler(event, current - i - 1);
+                            }
+                        },
+                        current - i - 1
+                    )
+                ));
+            };
+
+            for (var i = 0; i < 3; i++) {
+                _loop(i);
+            }
+
+            if (current === 1) {
+                //  当前显示为第 1 页内容
+                return null;
+            } else if (current === 2) {
+                //  当前显示为第 2 页内容
+                pageArr.shift();
+                pageArr.shift();
+            } else if (current === 3) {
+                //  当前显示为第 3 页
+                pageArr.shift();
+
+                if (pageCount > 3) {
+                    //  总页数大于 3
+                    pageArr.shift();
+                    pageArr.unshift(React.createElement(
+                        'li',
+                        { className: 'page-item', key: 'page_link_ellipsis_prev' },
+                        React.createElement(
+                            'a',
+                            { className: 'page-link ellipsis', href: 'javascript:;' },
+                            React.createElement('i', { className: 'fa fa-ellipsis-h' })
+                        )
+                    ));
+                }
+            } else {
+                pageArr.shift();
+                pageArr.unshift(React.createElement(
+                    'li',
+                    { className: 'page-item', key: 'page_link_ellipsis_prev' },
+                    React.createElement(
+                        'a',
+                        { className: 'page-link ellipsis', href: 'javascript:;' },
+                        React.createElement('i', { className: 'fa fa-ellipsis-h' })
+                    )
+                ));
+            }
+
+            return pageArr;
+        }
+    }]);
+
+    return PagePrevEllipsis;
+}(React.Component);
+
+var PageCurrent = function (_React$Component5) {
+    _inherits(PageCurrent, _React$Component5);
+
+    function PageCurrent() {
+        _classCallCheck(this, PageCurrent);
+
+        return _possibleConstructorReturn(this, (PageCurrent.__proto__ || Object.getPrototypeOf(PageCurrent)).apply(this, arguments));
+    }
+
+    _createClass(PageCurrent, [{
+        key: 'render',
+        //  eslint-disable-line
+        value: function render() {
+            return React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: 'page-link active',
+                        href: 'javascript:;'
+                    },
+                    this.props.config.current
+                )
+            );
+        }
+    }]);
+
+    return PageCurrent;
+}(React.Component);
+
+var PageNextEllipsis = function (_React$Component6) {
+    _inherits(PageNextEllipsis, _React$Component6);
+
+    //  eslint-disable-line
+    function PageNextEllipsis() {
+        _classCallCheck(this, PageNextEllipsis);
+
+        var _this9 = _possibleConstructorReturn(this, (PageNextEllipsis.__proto__ || Object.getPrototypeOf(PageNextEllipsis)).call(this));
+
+        _this9.clickHandler = _this9.clickHandler.bind(_this9);
+        return _this9;
+    }
+
+    _createClass(PageNextEllipsis, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this10 = this;
+
+            var _props$config2 = this.props.config,
+                current = _props$config2.current,
+                pageCount = _props$config2.pageCount;
+
+            var pageArr = [];
+
+            var _loop2 = function _loop2(i) {
+                pageArr.push(React.createElement(
+                    'li',
+                    {
+                        key: 'page_link_' + (current + i + 1),
+                        className: 'page-item'
+                    },
+                    React.createElement(
+                        'a',
+                        {
+                            className: 'page-link',
+                            href: 'javascript:;',
+                            onClick: function onClick(event) {
+                                return _this10.clickHandler(event, current + i + 1);
+                            }
+                        },
+                        current + i + 1
+                    )
+                ));
+            };
+
+            for (var i = 0; i < 3; i++) {
+                _loop2(i);
+            }
+
+            if (current === pageCount) {
+                //  当前显示为倒数第 1 页内容
+                return null;
+            } else if (current === pageCount - 1) {
+                //  当前显示为倒数第 2 页内容
+                pageArr.pop();
+                pageArr.pop();
+            } else if (current === pageCount - 2) {
+                //  当前显示为倒数第 3 页
+                pageArr.pop();
+
+                if (pageCount > 3) {
+                    //  总页数大于 3
+                    pageArr.pop();
+                    pageArr.push(React.createElement(
+                        'li',
+                        { className: 'page-item', key: 'page_link_ellipsis_next' },
+                        React.createElement(
+                            'a',
+                            { className: 'page-link ellipsis', href: 'javascript:;' },
+                            React.createElement('i', { className: 'fa fa-ellipsis-h' })
+                        )
+                    ));
+                }
+            } else {
+                pageArr.pop();
+                pageArr.push(React.createElement(
+                    'li',
+                    { className: 'page-item', key: 'page_link_ellipsis_next' },
+                    React.createElement(
+                        'a',
+                        { className: 'page-link ellipsis', href: 'javascript:;' },
+                        React.createElement('i', { className: 'fa fa-ellipsis-h' })
+                    )
+                ));
+            }
+
+            return pageArr;
+        }
+    }]);
+
+    return PageNextEllipsis;
+}(React.Component);
+
+var PageNext = function (_React$Component7) {
+    _inherits(PageNext, _React$Component7);
+
+    //  eslint-disable-line
+    function PageNext() {
+        _classCallCheck(this, PageNext);
+
+        var _this11 = _possibleConstructorReturn(this, (PageNext.__proto__ || Object.getPrototypeOf(PageNext)).call(this));
+
+        _this11.clickHandler = _this11.clickHandler.bind(_this11);
+        return _this11;
+    }
+
+    _createClass(PageNext, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this12 = this;
+
+            var _props$config3 = this.props.config,
+                current = _props$config3.current,
+                pageCount = _props$config3.pageCount;
+
+            var pageLinkClass = current === pageCount ? 'page-link disable' : 'page-link';
+
+            return React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: pageLinkClass,
+                        href: 'javascript:;',
+                        onClick: function onClick(event) {
+                            return _this12.clickHandler(event, current + 1);
+                        }
+                    },
+                    React.createElement('i', { className: 'fa fa-angle-right' })
+                )
+            );
+        }
+    }]);
+
+    return PageNext;
+}(React.Component);
+
+var PageFoot = function (_React$Component8) {
+    _inherits(PageFoot, _React$Component8);
+
+    //  eslint-disable-line
+    function PageFoot() {
+        _classCallCheck(this, PageFoot);
+
+        var _this13 = _possibleConstructorReturn(this, (PageFoot.__proto__ || Object.getPrototypeOf(PageFoot)).call(this));
+
+        _this13.clickHandler = _this13.clickHandler.bind(_this13);
+        return _this13;
+    }
+
+    _createClass(PageFoot, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt, target) {
+            //  eslint-disable-line
+            var jumpHandler = this.props.config.jumpHandler;
+
+            jumpHandler({
+                page: target
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this14 = this;
+
+            var _props$config4 = this.props.config,
+                current = _props$config4.current,
+                pageCount = _props$config4.pageCount;
+
+            var pageLinkClass = current === pageCount ? 'page-link disable' : 'page-link';
+
+            return React.createElement(
+                'li',
+                { className: 'page-item' },
+                React.createElement(
+                    'a',
+                    {
+                        className: pageLinkClass,
+                        href: 'javascript:;',
+                        onClick: function onClick(event) {
+                            return _this14.clickHandler(event, pageCount);
+                        }
+                    },
+                    React.createElement('i', { className: 'fa fa-step-forward' })
+                )
+            );
+        }
+    }]);
+
+    return PageFoot;
+}(React.Component);
+
+module.exports = Pager;
 
 /***/ }),
 
@@ -36090,6 +36804,32 @@ module.exports = activateAccount;
 
 /***/ }),
 
+/***/ "./reducers/get-message.js":
+/*!*********************************!*\
+  !*** ./reducers/get-message.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getMessage = function getMessage(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.cache = originalState.cache || {};
+    newState.cache.isLogin = true;
+    newState.current = action.payload.current;
+    newState.message = action.payload.message;
+
+    return newState;
+};
+
+module.exports = getMessage;
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -36115,6 +36855,7 @@ var logoutFunc = __webpack_require__(/*! ./logout */ "./reducers/logout.js");
 var updateUserInfoFunc = __webpack_require__(/*! ./update-user-info */ "./reducers/update-user-info.js");
 var updatePwdFunc = __webpack_require__(/*! ./update-pwd */ "./reducers/update-pwd.js");
 var resetPwdFunc = __webpack_require__(/*! ./reset-pwd */ "./reducers/reset-pwd.js");
+var getMessageFunc = __webpack_require__(/*! ./get-message */ "./reducers/get-message.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -36156,6 +36897,9 @@ var reducers = function reducers() {
 
         case actionTypes.RESET_PWD:
             return resetPwdFunc(state, action);
+
+        case actionTypes.GET_MESSAGE:
+            return getMessageFunc(state, action);
 
         default:
             return state;

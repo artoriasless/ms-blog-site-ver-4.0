@@ -64,4 +64,9 @@ _router.post('/api/user/reset-pwd', api.user.resetPwd);
 //  发送激活邮件
 _router.post('/api/user/send-activate-mail', api.user.sendActivateMail);
 
+/**
+ *  Message
+ */
+_router.get('/api/message/page', api.message.page);
+
 module.exports = _router;

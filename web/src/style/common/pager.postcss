@@ -1,0 +1,79 @@
+.pager-container {
+    height: 1.5rem;
+    margin: 10px 0 5px;
+    font-family: consola,"microsoft yahei";
+
+    .pager-tips {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding: 0 5px;
+        border-radius: 10px;
+        background-color: var(--color-grey);
+        color: #fff;
+        text-align: center;
+        font-size: 0.75em;
+        font-style: italic;
+        float: left;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .pager-content {
+        float: right;
+
+        .pagination {
+            margin: 0;
+
+            .page-item {
+                .page-link {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    line-height: calc(1.5rem - 2px);
+                    padding: 0;
+                    margin: 0 2px;
+                    border: 1px solid var(--color-grey-light);
+                    border-radius: 50%;
+                    background-color: #fff;
+                    color: var(--color-theme);
+                    font-size: 0.75em;
+                    text-align: center;
+
+                    &:focus {
+                        box-shadow: none;
+                        background-color: #fff;
+                    }
+                }
+
+                .page-link.ellipsis {
+                    border-color: transparent;
+                    color: var(--color-grey-light);
+                    background-color: transparent;
+                    pointer-events: none;
+                }
+
+                .page-link.active {
+                    border-color: var(--color-theme);
+                    color: #fff;
+                    background-color: var(--color-theme);
+                }
+
+                .page-link.disable {
+                    border-color: var(--color-grey-lighter);
+                    color: var(--color-grey);
+                    background-color: var(--color-grey-lighter);
+                    pointer-events: none;
+                }
+
+                &:first-child .page-link {
+                    border-radius: 50%;
+                    margin-left: 0;
+                }
+
+                &:last-child .page-link {
+                    border-radius: 50%;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

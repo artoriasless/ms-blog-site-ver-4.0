@@ -10,6 +10,7 @@ const actions = require('/actions');
 
 const updateUserInfoFormAction = actions.updateUserInfoFormAction;
 const resetPwdAction = actions.resetPwdAction;
+const getMessageAction = actions.getMessageAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
@@ -17,6 +18,7 @@ const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
     updateUserInfoForm: formData => dispatch(updateUserInfoFormAction(formData)),
     sendActivateMail: () => sendActivateMail(),
     resetPwd: () => dispatch(ajaxResetPwd()),
+    getMessage: jsonData => dispatch(ajaxGetMessage(jsonData)),
 });
 
 const UserCenter = connect(
@@ -82,6 +84,34 @@ function ajaxResetPwd() {
         };
 
         return ajaxAction(requestUrl, {}, successFunc, failFunc);
+    });
+}
+
+function ajaxGetMessage(jsonData) {
+    return (dispatch => {
+        const requestUrl = '/api/message/page';
+        const successFunc = function(result) {
+            if (result.success) {
+                dispatch(getMessageAction(result.data));
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message,
+                });
+            }
+        };
+        const failFunc = function(err) {
+            stanAlert({
+                title: 'Warning!',
+                content: err.toString(),
+            });
+            console.info(err);  //  eslint-disable-line
+        };
+        const options = {
+            type: 'get',
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
     });
 }
 
