@@ -26,7 +26,7 @@ async function resolveFileOpts(req, ctx) {
         data: {},
     };
     var fileName;
-    var ext = '.jpg';
+    var ext = fields.ext || '.jpg';
 
     switch(fields.type) {
     case 'USER_AVATAR':
