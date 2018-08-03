@@ -27,7 +27,7 @@ class Pager extends React.Component {
             },
         };
 
-        if (pageCount === 1) {
+        if (pageCount <= 1) {
             return null;
         } else {
             return (

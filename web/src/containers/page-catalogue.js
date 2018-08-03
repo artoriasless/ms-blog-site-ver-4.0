@@ -12,6 +12,7 @@ class PageCatalogue extends React.Component {
         ];
         var filterType = this.props.params.filterType;
         var filterParam = this.props.params.filterParam || '';
+
         filterType = (filterArr.indexOf(filterType) === -1) ? 'ALL' : filterType.toUpperCase();
 
         return (

@@ -4524,6 +4524,7 @@ var PageCatalogue = function (_React$Component) {
             var filterArr = ['latest', 'timeline', 'tag'];
             var filterType = this.props.params.filterType;
             var filterParam = this.props.params.filterParam || '';
+
             filterType = filterArr.indexOf(filterType) === -1 ? 'ALL' : filterType.toUpperCase();
 
             return React.createElement(
@@ -6956,7 +6957,7 @@ var Pager = function (_React$Component) {
                 }
             };
 
-            if (pageCount === 1) {
+            if (pageCount <= 1) {
                 return null;
             } else {
                 return React.createElement(
