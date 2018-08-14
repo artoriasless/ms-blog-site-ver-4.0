@@ -15,5 +15,6 @@
 </p>
 <br/>
 <p>
-    tips: if jump link address fails,try to copy the link url into browser to activate.
+    tips: if jump link address fails,try to copy the following link url into browser to activate.
 </p>
+<p><activateLink></p>
