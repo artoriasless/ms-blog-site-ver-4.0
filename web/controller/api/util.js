@@ -2,6 +2,7 @@
 /* global __dirname */
 const fs = require('fs');
 const path = require('path');
+const hash = require('object-hash');
 
 const config = require('../../../config');
 const service = require('../../../service');
@@ -9,7 +10,8 @@ const utilService = service.util;
 
 module.exports = {
     sendActivateMail(uuid, email) {
-        const activateLink = `${config.domain}/util/activate/${uuid}`;
+        const hashVal = hash.sha1(uuid);
+        const activateLink = `${config.domain}/util/activate/${uuid}?stamp=${hashVal}`;
         const emailTpl = fs.readFileSync(path.resolve(__dirname, '../../template/activate-email.tpl')).toString();
         const emailOpts = {
             to: email,

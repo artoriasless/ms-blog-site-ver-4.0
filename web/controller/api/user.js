@@ -102,6 +102,7 @@ module.exports = {
         };
     },
     async activate(ctx) {
+        const activatePageUrl = ctx.request.header.referer;
         const jsonData = ctx.request.body;
         const query = {
             where: {
@@ -112,11 +113,15 @@ module.exports = {
         const userData = {
             isEnabled: 1,
         };
+        const stamp = {
+            url: (activatePageUrl.match(/\?stamp=(.+)$/) ? activatePageUrl.match(/\?stamp=(.+)$/)[1] : ''),
+            calced: hash.sha1(jsonData.uuid),
+        };
         var user;
         var success = true;
         var message = 'account has been activated!';
 
-        if (users.length === 0) {
+        if (users.length === 0 || stamp.url !== stamp.calced) {
             success = false;
             message = 'please check the url link is right!';
         } else {
