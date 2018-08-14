@@ -78,7 +78,7 @@ body * {
 
 @font-face {
 	font-family: "microsoft yahei";
-	src: url(fonts/MicroSoft Yahei/index.eot);
+	src: url(fonts/MicroSoft-Yahei/index.eot);
 }
 
 /* 覆盖 bootstrap 默认主题色 */
@@ -1026,7 +1026,7 @@ code {
 .page-user .user-comment .comment-title {
             height: 2.25rem;
             line-height: 2.25rem;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             border-bottom: 1px solid #ddd;
             font-family: consola,"microsoft yahei";
             font-size: 1.25rem;
@@ -1045,16 +1045,16 @@ code {
             }
 
 .page-user .user-comment .comment-content .message-item.paper-reply:before {
-                content: "paper reply:";
+                content: attr(data-no)". ";
                 color: #aaa;
                 display:block;
-                width: 80px;
+                width: 25px;
                 float: left;
             }
 
 .page-user .user-comment .comment-content .message-item > a {
-                display: block;
-                width: calc(100% - 80px);
+                display: inline-block;
+                max-width: calc(100% - 25px);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

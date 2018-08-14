@@ -28,6 +28,7 @@ class UserComment extends React.Component {
 class CommentContent extends React.Component {
     render() {
         const msg = this.props.message || {};
+        const page = msg.page || 1;
         const msgCount = msg.count || 0;
         const msgArr = msg.rows || [];
 
@@ -41,21 +42,24 @@ class CommentContent extends React.Component {
             return (
                 <div className="comment-content">
                     {
-                        msgArr.map(msgItem => {
+                        msgArr.map((msgItem, idx) => {
+                            let msgNo = (page - 1) * 10 + idx + 1;
                             let msgItemClassArr = [
                                 'message-item',
+                                'paper-reply',
                             ];
 
                             if (!msgItem.isRead) {
                                 msgItemClassArr.push('unread');
                             }
-                            //  TODO，后续将区分消息类型
-                            if (true) {
-                                msgItemClassArr.push('paper-reply');
+
+                            if (msgNo < 10) {
+                                msgNo = `0${msgNo}`;
                             }
 
                             return (
                                 <div
+                                    data-no={ msgNo }
                                     key={ `message_item_${msgItem.id}` }
                                     className={ msgItemClassArr.join(' ') }
                                 >

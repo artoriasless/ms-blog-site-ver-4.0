@@ -3643,6 +3643,7 @@ var CommentContent = function (_React$Component2) {
         key: 'render',
         value: function render() {
             var msg = this.props.message || {};
+            var page = msg.page || 1;
             var msgCount = msg.count || 0;
             var msgArr = msg.rows || [];
 
@@ -3656,20 +3657,22 @@ var CommentContent = function (_React$Component2) {
                 return React.createElement(
                     'div',
                     { className: 'comment-content' },
-                    msgArr.map(function (msgItem) {
-                        var msgItemClassArr = ['message-item'];
+                    msgArr.map(function (msgItem, idx) {
+                        var msgNo = (page - 1) * 10 + idx + 1;
+                        var msgItemClassArr = ['message-item', 'paper-reply'];
 
                         if (!msgItem.isRead) {
                             msgItemClassArr.push('unread');
                         }
-                        //  TODO，后续将区分消息类型
-                        if (true) {
-                            msgItemClassArr.push('paper-reply');
+
+                        if (msgNo < 10) {
+                            msgNo = '0' + msgNo;
                         }
 
                         return React.createElement(
                             'div',
                             {
+                                'data-no': msgNo,
                                 key: 'message_item_' + msgItem.id,
                                 className: msgItemClassArr.join(' ')
                             },
