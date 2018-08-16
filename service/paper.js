@@ -2,6 +2,8 @@
 
 const PAGE_LENGTH = 10;
 
+const sequelize = require('sequelize');
+
 const models = require('../model');
 
 const Paper = models.db.Paper;
@@ -51,5 +53,38 @@ module.exports = {
             count: result.count,
             rows: result.rows.map(paper => (paper ? paper.toJSON() : {})),
         });
+    },
+    async filterCount(filterType) {
+        const filterOpts = {
+            tag: {
+                group: ['tag'],
+                attributes: [
+                    'tag',
+                    sequelize.fn('count', sequelize.col('tag'))
+                ]
+            },
+            timeline: {
+                group: ['year_tag'],
+                attributes: [
+                    ['year_tag', 'yearTag'],
+                    sequelize.fn('count', sequelize.col('year_tag'))
+                ]
+            },
+            latest: {
+                limit: 5,
+                group: ['month_tag'],
+                attributes: [
+                    'id',
+                    'title',
+                    ['month_tag', 'monthTag'],
+                ],
+                order: [
+                    ['id', 'DESC'],
+                ],
+            }
+        };
+        const result = await Paper.findAndCountAll(filterOpts[filterType]);
+
+        return result;
     },
 };

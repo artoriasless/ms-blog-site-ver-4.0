@@ -69,4 +69,9 @@ _router.post('/api/user/send-activate-mail', api.user.sendActivateMail);
  */
 _router.get('/api/message/page', api.message.page);
 
+/**
+ *  Paper
+ */
+_router.get('/api/paper/filter-count', api.paper.filterCount);
+
 module.exports = _router;

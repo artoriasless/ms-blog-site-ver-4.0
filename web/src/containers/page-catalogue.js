@@ -4,6 +4,7 @@ const React = require('react');
 
 const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
+const PaperFilter = require('/components/common-paper-filter');
 /* eslint-disable */
 class PageCatalogue extends React.Component {
     render() {
@@ -19,6 +20,7 @@ class PageCatalogue extends React.Component {
             <div className="page-catalogue">
                 <Navbar/>
                 <div className="page-section-body">
+                    <PaperFilter/>
                     目录页:{filterType},{filterParam}
                 </div>
                 <LoginModal/>

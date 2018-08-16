@@ -109,6 +109,7 @@ var UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 var UPDATE_PWD = 'UPDATE_PWD';
 var RESET_PWD = 'RESET_PWD';
 var GET_MESSAGE = 'GET_MESSAGE';
+var GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -123,7 +124,8 @@ module.exports = {
     UPDATE_USER_INFO: UPDATE_USER_INFO,
     UPDATE_PWD: UPDATE_PWD,
     RESET_PWD: RESET_PWD,
-    GET_MESSAGE: GET_MESSAGE
+    GET_MESSAGE: GET_MESSAGE,
+    GET_FILTER_COUNT: GET_FILTER_COUNT
 };
 
 /***/ }),
@@ -153,6 +155,35 @@ var activateAccount = function activateAccount(userInfo) {
 };
 
 module.exports = activateAccount;
+
+/***/ }),
+
+/***/ "./actions/get-filter-count.js":
+/*!*************************************!*\
+  !*** ./actions/get-filter-count.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getFilterCount = function getFilterCount(filterType, filterCount) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_FILTER_COUNT',
+        payload: {
+            current: current,
+            filterType: filterType,
+            filterCount: filterCount
+        }
+    };
+};
+
+module.exports = getFilterCount;
 
 /***/ }),
 
@@ -209,6 +240,7 @@ var updateUserInfoAction = __webpack_require__(/*! ./update-user-info */ "./acti
 var updatePwdAction = __webpack_require__(/*! ./update-pwd */ "./actions/update-pwd.js");
 var resetPwdAction = __webpack_require__(/*! ./reset-pwd */ "./actions/reset-pwd.js");
 var getMessageAction = __webpack_require__(/*! ./get-message */ "./actions/get-message.js");
+var getFilterCountAction = __webpack_require__(/*! ./get-filter-count */ "./actions/get-filter-count.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -225,7 +257,8 @@ var actions = {
     updateUserInfoAction: updateUserInfoAction,
     updatePwdAction: updatePwdAction,
     resetPwdAction: resetPwdAction,
-    getMessageAction: getMessageAction
+    getMessageAction: getMessageAction,
+    getFilterCountAction: getFilterCountAction
 };
 
 module.exports = actions;
@@ -983,6 +1016,107 @@ function ajaxLogout() {
 }
 
 module.exports = Navbar;
+
+/***/ }),
+
+/***/ "./components/common-paper-filter.js":
+/*!*******************************************!*\
+  !*** ./components/common-paper-filter.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
+var UI_paperFilter = __webpack_require__(/*! ../components/ui-components/paper-filter */ "./components/ui-components/paper-filter/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var getFilterCountAction = actions.getFilterCountAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        getTagFilter: function getTagFilter(jsonData) {
+            return dispatch(ajaxGetTagFilter(jsonData));
+        },
+        getTimelineFilter: function getTimelineFilter(jsonData) {
+            return dispatch(ajaxGetTimelineFilter(jsonData));
+        },
+        getLatestFilter: function getLatestFilter(jsonData) {
+            return dispatch(ajaxGetLatestFilter(jsonData));
+        }
+    };
+};
+
+var PaperFilter = connect(mapState2Props, mapDispatch2Props)(UI_paperFilter);
+
+function ajaxGetTagFilter(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/paper/filter-count';
+        var successFunc = function successFunc(result) {
+            var filterType = jsonData.filterType;
+
+            dispatch(getFilterCountAction(filterType, result.data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+function ajaxGetTimelineFilter(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/paper/filter-count';
+        var successFunc = function successFunc(result) {
+            var filterType = jsonData.filterType;
+
+            dispatch(getFilterCountAction(filterType, result.data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+function ajaxGetLatestFilter(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/paper/filter-count';
+        var successFunc = function successFunc(result) {
+            var filterType = jsonData.filterType;
+
+            dispatch(getFilterCountAction(filterType, result.data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+module.exports = PaperFilter;
 
 /***/ }),
 
@@ -3401,6 +3535,64 @@ module.exports = NavbarRight;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper-filter/index.js":
+/*!********************************************************!*\
+  !*** ./components/ui-components/paper-filter/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* eslint-disable */
+
+var PaperFilter = function (_React$Component) {
+    _inherits(PaperFilter, _React$Component);
+
+    function PaperFilter() {
+        _classCallCheck(this, PaperFilter);
+
+        return _possibleConstructorReturn(this, (PaperFilter.__proto__ || Object.getPrototypeOf(PaperFilter)).apply(this, arguments));
+    }
+
+    _createClass(PaperFilter, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var getTagFilter = this.props.getTagFilter;
+            var getTimelineFilter = this.props.getTimelineFilter;
+            var getLatestFilter = this.props.getLatestFilter;
+
+            getTagFilter({ filterType: 'tag' });
+            getTimelineFilter({ filterType: 'timeline' });
+            getLatestFilter({ filterType: 'latest' });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var userInfo = this.props.userInfo || {};
+
+            return null;
+        }
+    }]);
+
+    return PaperFilter;
+}(React.Component);
+
+module.exports = PaperFilter;
+
+/***/ }),
+
 /***/ "./components/ui-components/user-center/index.js":
 /*!*******************************************************!*\
   !*** ./components/ui-components/user-center/index.js ***!
@@ -4510,6 +4702,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
+var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
 /* eslint-disable */
 
 var PageCatalogue = function (_React$Component) {
@@ -4537,6 +4730,7 @@ var PageCatalogue = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body' },
+                    React.createElement(PaperFilter, null),
                     '\u76EE\u5F55\u9875:',
                     filterType,
                     ',',
@@ -36808,6 +37002,29 @@ module.exports = activateAccount;
 
 /***/ }),
 
+/***/ "./reducers/get-filter-count.js":
+/*!**************************************!*\
+  !*** ./reducers/get-filter-count.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getFilterCount = function getFilterCount(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    console.info(action);
+
+    return newState;
+};
+
+module.exports = getFilterCount;
+
+/***/ }),
+
 /***/ "./reducers/get-message.js":
 /*!*********************************!*\
   !*** ./reducers/get-message.js ***!
@@ -36860,6 +37077,7 @@ var updateUserInfoFunc = __webpack_require__(/*! ./update-user-info */ "./reduce
 var updatePwdFunc = __webpack_require__(/*! ./update-pwd */ "./reducers/update-pwd.js");
 var resetPwdFunc = __webpack_require__(/*! ./reset-pwd */ "./reducers/reset-pwd.js");
 var getMessageFunc = __webpack_require__(/*! ./get-message */ "./reducers/get-message.js");
+var getFilterCountFunc = __webpack_require__(/*! ./get-filter-count */ "./reducers/get-filter-count.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -36904,6 +37122,9 @@ var reducers = function reducers() {
 
         case actionTypes.GET_MESSAGE:
             return getMessageFunc(state, action);
+
+        case actionTypes.GET_FILTER_COUNT:
+            return getFilterCountFunc(state, action);
 
         default:
             return state;

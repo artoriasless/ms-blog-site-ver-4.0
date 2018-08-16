@@ -13,6 +13,7 @@ const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 const UPDATE_PWD = 'UPDATE_PWD';
 const RESET_PWD = 'RESET_PWD';
 const GET_MESSAGE = 'GET_MESSAGE';
+const GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 
 module.exports = {
     GET_USER_DEFAULT,
@@ -28,4 +29,5 @@ module.exports = {
     UPDATE_PWD,
     RESET_PWD,
     GET_MESSAGE,
+    GET_FILTER_COUNT,
 };
