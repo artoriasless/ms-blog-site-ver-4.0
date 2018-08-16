@@ -60,23 +60,30 @@ module.exports = {
                 group: ['tag'],
                 attributes: [
                     'tag',
-                    sequelize.fn('count', sequelize.col('tag'))
+                    sequelize.fn('count', sequelize.col('tag')),
+                    ['gmt_create', 'gmtCreate'],
+                    ['gmt_modified', 'gmtModified'],
                 ]
             },
             timeline: {
                 group: ['year_tag'],
                 attributes: [
                     ['year_tag', 'yearTag'],
-                    sequelize.fn('count', sequelize.col('year_tag'))
+                    sequelize.fn('count', sequelize.col('year_tag')),
+                    ['gmt_create', 'gmtCreate'],
+                    ['gmt_modified', 'gmtModified'],
                 ]
             },
             latest: {
                 limit: 5,
-                group: ['month_tag'],
+                offset: 0,
+                group: ['id'],
                 attributes: [
                     'id',
                     'title',
                     ['month_tag', 'monthTag'],
+                    ['gmt_create', 'gmtCreate'],
+                    ['gmt_modified', 'gmtModified'],
                 ],
                 order: [
                     ['id', 'DESC'],
