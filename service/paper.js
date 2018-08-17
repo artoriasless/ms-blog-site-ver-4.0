@@ -77,7 +77,6 @@ module.exports = {
             latest: {
                 limit: 5,
                 offset: 0,
-                group: ['id'],
                 attributes: [
                     'id',
                     'title',
