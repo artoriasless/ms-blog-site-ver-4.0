@@ -2,9 +2,16 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es6": true
+        "es6": true,
+        "node": true
     },
     "extends": "eslint:recommended",
+    "globals": {
+        "$": true,
+        "document": true,
+        "jQuery": true,
+        "window": true
+    },
     "parserOptions": {
         "ecmaVersion": 2017,
         "ecmaFeatures": {

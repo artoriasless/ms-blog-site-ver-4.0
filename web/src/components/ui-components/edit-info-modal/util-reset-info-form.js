@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+
 function resetForm(formData) {
     const userName = formData.userName;
     const gender = formData.gender;

@@ -1,16 +1,16 @@
 'use strict';
-/* global $ */
-/**
- * 通用的 alert 方法，警告内容支持 html 格式标签
- * @param {object} [options] （可选）相关参数、设定
- *      {string}  [type]         （可选）指定 alert 类型：可选 info、danger、warning、success，默认为 danger
- *      {string}  [title]        （可选）指定 alert 内容的小标题
- *      {string}  [content]      （可选）指定 alert 内容的正文
- *      {boolean} [autoClose]    （可选）指定 alert 是否自动隐藏，默认 true ，传入的参数会被类型转换
- *      {number}  [shownExpires] （可选）指定 alert 多少秒后自动隐藏，默认 3 秒，若传入的 autoClose 为 false ，此参数将不生效
- *      {string}  [textAlign]    （可选）指定 alert 中主体内容的文案对齐方式，默认 left ，可传入值为 left/center/right
- */
+
 function stanAlert() {
+    /**
+     *  通用的 alert 方法，警告内容支持 html 格式标签
+     *  @param {object} [options] （可选）相关参数、设定
+     *      {string}  [type]         （可选）指定 alert 类型：可选 info、danger、warning、success，默认为 danger
+     *      {string}  [title]        （可选）指定 alert 内容的小标题
+     *      {string}  [content]      （可选）指定 alert 内容的正文
+     *      {boolean} [autoClose]    （可选）指定 alert 是否自动隐藏，默认 true ，传入的参数会被类型转换
+     *      {number}  [shownExpires] （可选）指定 alert 多少秒后自动隐藏，默认 3 秒，若传入的 autoClose 为 false ，此参数将不生效
+     *      {string}  [textAlign]    （可选）指定 alert 中主体内容的文案对齐方式，默认 left ，可传入值为 left/center/right
+     */
     var typeMap = {
         'info': 'info',
         'danger': 'danger',

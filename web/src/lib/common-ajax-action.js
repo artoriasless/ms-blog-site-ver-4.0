@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+
 function ajaxAction(url, data, successFunc, failFunc, opts) {
     //  通用的 ajax 调用方法，在 $.ajax 基础上做一次包装
     const defaultOpts = {

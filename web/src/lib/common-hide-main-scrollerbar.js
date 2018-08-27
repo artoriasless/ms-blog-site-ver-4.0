@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+
 const $root = $('#root');
 
 function hideMainScrollerbar() {

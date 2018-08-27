@@ -1,4 +1,5 @@
 'use strict';
+
 const React = require('react');
 
 class LogoutLink extends React.Component {

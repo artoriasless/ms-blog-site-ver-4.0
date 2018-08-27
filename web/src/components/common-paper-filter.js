@@ -1,4 +1,5 @@
 'use strict';
+
 const { connect } = require('react-redux');
 
 const ajaxAction = require('/lib/common-ajax-action');

@@ -14,8 +14,6 @@ class PaperFilter extends React.Component {
     }
 
     render() {
-        const userInfo = this.props.userInfo || {};
-
         return null;
     }
 }

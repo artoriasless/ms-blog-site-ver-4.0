@@ -17,14 +17,14 @@ function submitValidate(type, formData) {
         },
         passwordConfirm: {
             null: 'please retype the password to check!',
-            illegal: 'the password to confirm is inconsistent!'
-        }
+            illegal: 'the password to confirm is inconsistent!',
+        },
     };
 
     if (!formData.email) {
         stanAlert({
             title: alertInfo.title,
-            content: alertInfo.email.null
+            content: alertInfo.email.null,
         });
 
         return false;

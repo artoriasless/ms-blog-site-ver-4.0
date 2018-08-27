@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+
 const $compassIcon = $('#compassIcon');
 const $root = $('#root');
 

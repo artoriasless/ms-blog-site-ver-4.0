@@ -1,5 +1,5 @@
 'use strict';
-/* global $ */
+
 function stanLoading(hide) {
     var loadingDom = '' +
         `<div class="stan-loading-container">
