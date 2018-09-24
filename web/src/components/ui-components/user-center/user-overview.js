@@ -197,15 +197,11 @@ class AccountActive extends React.Component {   //  eslint-disable-line
         } else {
             return (
                 <div className="account-activated">
-                    <span
-                        className="activated-tips inactivated"
-                    >Inactivated</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a
                         className="send-activate-mail-link"
                         href="javascript:;"
                         onClick={ event => this.clickHandler(event) }
-                    >send activate email</a>
+                    >click to activate account</a>
                 </div>
             );
         }

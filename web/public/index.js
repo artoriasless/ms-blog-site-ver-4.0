@@ -4690,14 +4690,6 @@ var AccountActive = function (_React$Component4) {
                     'div',
                     { className: 'account-activated' },
                     React.createElement(
-                        'span',
-                        {
-                            className: 'activated-tips inactivated'
-                        },
-                        'Inactivated'
-                    ),
-                    '\xA0\xA0\xA0\xA0\xA0',
-                    React.createElement(
                         'a',
                         {
                             className: 'send-activate-mail-link',
@@ -4706,7 +4698,7 @@ var AccountActive = function (_React$Component4) {
                                 return _this6.clickHandler(event);
                             }
                         },
-                        'send activate email'
+                        'click to activate account'
                     )
                 );
             }
