@@ -5,11 +5,12 @@ const React = require('react');
 const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
 const PaperFilter = require('/components/common-paper-filter');
+const Catalogue = require('/components/common-catalogue');
 /* eslint-disable */
 class PageCatalogue extends React.Component {
     render() {
         const filterArr = [
-            'latest', 'timeline', 'tag',
+            'timeline', 'tag',
         ];
         var filterType = this.props.params.filterType;
         var filterParam = this.props.params.filterParam || '';
@@ -19,9 +20,12 @@ class PageCatalogue extends React.Component {
         return (
             <div className="page-catalogue">
                 <Navbar/>
-                <div className="page-section-body">
+                <div className="page-section-body row">
                     <PaperFilter/>
-                    目录页:{filterType},{filterParam}
+                    <Catalogue
+                        filterType={ filterType }
+                        filterParam={ filterParam }
+                    />
                 </div>
                 <LoginModal/>
             </div>

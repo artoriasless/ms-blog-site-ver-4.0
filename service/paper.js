@@ -80,7 +80,7 @@ module.exports = {
                 attributes: [
                     'id',
                     'title',
-                    ['month_tag', 'monthTag'],
+                    'tag',
                     ['gmt_create', 'gmtCreate'],
                     ['gmt_modified', 'gmtModified'],
                 ],

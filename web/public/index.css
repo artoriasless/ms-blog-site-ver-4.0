@@ -173,6 +173,16 @@ code {
 	-webkit-animation: fade-in 1s ease;
 }
 
+@keyframes move-animate {
+	0% { padding-left: 0; }
+	100% { padding-left: 15px; }
+}
+
+@-webkit-keyframes move-animate {
+	0% { padding-left: 0; }
+	100% { padding-left: 15px; }
+}
+
 .pager-container {
     height: 1.5rem;
     margin: 10px 0 5px;
@@ -1188,5 +1198,99 @@ code {
     background: #7b7b7b;
 }
 
+.page-catalogue .filter-container {
+        position: relative;
+        padding: 5px 5px 5px 0;
+    }
+
+.page-catalogue .filter-container .filter-content {
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+.page-catalogue .filter-container .filter-content:last-of-type {
+                margin-bottom: 0;
+            }
+
+.page-catalogue .filter-container .filter-content .filter-list {
+                padding: 0;
+                margin: 0;
+            }
+
+.page-catalogue .filter-container .filter-content .filter-list .filter-list-title {
+                    height: 25px;
+                    line-height: 25px;
+                    padding: 0;
+                    margin: 0;
+                    font-weight: 300;
+                }
+
+.page-catalogue .filter-container .filter-content .filter-list .filter-list-item {
+                    margin: 3px 0 3px 15px;
+                }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link {
+                    position: relative;
+                    display: block;
+                    height: 20px;
+                    line-height: 20px;
+                    padding: 0 0 0 5px;
+                    border-radius: 5px;
+                    color: #777;
+                    font-size: 0.85em;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link:hover {
+                        animation: move-animate 0.5s ease;
+                        -o-animation: move-animate 0.5s ease;
+                        -ms-animation: move-animate 0.5s ease;
+                        -moz-animation: move-animate 0.5s ease;
+                        -webkit-animation: move-animate 0.5s ease;
+                        padding-left: 15px;
+                        color: #5e87a2;
+                        text-decoration: none;
+                        background-color: #eee;
+                    }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link:hover:before {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        margin-top: -5px;
+                        border-top: 5px solid transparent;
+                        border-bottom: 5px solid transparent;
+                        border-left: 5px solid #888888;
+                    }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link .tag-val, .page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-val, .page-catalogue .filter-container .filter-content .filter-list .item-link .tag-count, .page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-count {
+                        display: block;
+                        height: 20px;
+                        line-height: 20px;
+                        float: left;
+                    }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link .tag-val {
+                        min-width: 65px;
+                    }
+
+.page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-val {
+                        min-width: 40px;
+                    }
+
+.page-catalogue .catalogue-container {
+        padding: 5px 0 5px 5px;
+    }
+
+.page-catalogue .catalogue-container .catalogue-content {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
 

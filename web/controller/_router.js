@@ -13,7 +13,6 @@ const staticVersion = (config.env === 'production') ? `.${require('../src/packag
 const routeList = [
     '/',
     '/catalogue',
-    '/catalogue/:filterType',
     '/catalogue/:filterType/:filterParam',
     '/paper/:paperId',
     '/paper/create',
@@ -73,5 +72,10 @@ _router.get('/api/message/page', api.message.page);
  *  Paper
  */
 _router.get('/api/paper/filter-count', api.paper.filterCount);
+
+/**
+ *  Catalogue
+ */
+_router.get('/api/catalogue/page', api.catalogue.page);
 
 module.exports = _router;

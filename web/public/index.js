@@ -780,6 +780,64 @@ module.exports = ActivateAccount;
 
 /***/ }),
 
+/***/ "./components/common-catalogue.js":
+/*!****************************************!*\
+  !*** ./components/common-catalogue.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
+var UI_catalogue = __webpack_require__(/*! ../components/ui-components/catalogue */ "./components/ui-components/catalogue/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var getCatalogueAction = actions.getCatalogueAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        getCatalogue: function getCatalogue(jsonData) {
+            return dispatch(ajaxGetCatalogue(jsonData));
+        }
+    };
+};
+
+var Catalogue = connect(mapState2Props, mapDispatch2Props)(UI_catalogue);
+
+function ajaxGetCatalogue(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/catalogue/page';
+        var successFunc = function successFunc(result) {
+            console.info(result);
+            // const filterType = jsonData.filterType;
+
+            // dispatch(getFilterCountAction(filterType, result.data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+module.exports = Catalogue;
+
+/***/ }),
+
 /***/ "./components/common-login-modal.js":
 /*!******************************************!*\
   !*** ./components/common-login-modal.js ***!
@@ -1328,6 +1386,59 @@ var ActivateContent = function (_React$Component) {
 }(React.Component);
 
 module.exports = ActivateContent;
+
+/***/ }),
+
+/***/ "./components/ui-components/catalogue/index.js":
+/*!*****************************************************!*\
+  !*** ./components/ui-components/catalogue/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* eslint-disable */
+
+var Catalogue = function (_React$Component) {
+    _inherits(Catalogue, _React$Component);
+
+    function Catalogue() {
+        _classCallCheck(this, Catalogue);
+
+        return _possibleConstructorReturn(this, (Catalogue.__proto__ || Object.getPrototypeOf(Catalogue)).apply(this, arguments));
+    }
+
+    _createClass(Catalogue, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { id: 'catalogue', className: 'catalogue-container col-xs-12 col-md-8 col-lg-9' },
+                React.createElement(
+                    'div',
+                    { className: 'catalogue-content' },
+                    '\u76EE\u5F55\u5217\u8868\u5185\u5BB9'
+                )
+            );
+        }
+    }]);
+
+    return Catalogue;
+}(React.Component);
+
+module.exports = Catalogue;
 
 /***/ }),
 
@@ -3529,6 +3640,268 @@ module.exports = NavbarRight;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper-filter/filter-content-latest.js":
+/*!************************************************************************!*\
+  !*** ./components/ui-components/paper-filter/filter-content-latest.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var FilterContentLatest = function (_React$Component) {
+    _inherits(FilterContentLatest, _React$Component);
+
+    function FilterContentLatest() {
+        _classCallCheck(this, FilterContentLatest);
+
+        return _possibleConstructorReturn(this, (FilterContentLatest.__proto__ || Object.getPrototypeOf(FilterContentLatest)).apply(this, arguments));
+    }
+
+    _createClass(FilterContentLatest, [{
+        key: 'render',
+        value: function render() {
+            var filterContent = this.props.filter || {};
+            var filterRows = filterContent.rows || [];
+
+            return React.createElement(
+                'div',
+                { className: 'filter-content' },
+                React.createElement(
+                    'dl',
+                    { className: 'filter-list latest' },
+                    React.createElement(
+                        'dt',
+                        { className: 'filter-list-title' },
+                        'Latest'
+                    ),
+                    filterRows.map(function (filterItem, index) {
+                        var key = 'latestFilterItem_' + index;
+                        var no = index + 1 + '.';
+                        var detailUrl = '/paper/' + filterItem.id;
+                        var filterItemVal = filterItem.title;
+
+                        return React.createElement(
+                            'dd',
+                            {
+                                className: 'filter-list-item',
+                                key: key
+                            },
+                            React.createElement(
+                                'a',
+                                {
+                                    title: filterItemVal,
+                                    className: 'item-link',
+                                    href: detailUrl
+                                },
+                                no,
+                                filterItemVal
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return FilterContentLatest;
+}(React.Component);
+
+module.exports = FilterContentLatest;
+
+/***/ }),
+
+/***/ "./components/ui-components/paper-filter/filter-content-tag.js":
+/*!*********************************************************************!*\
+  !*** ./components/ui-components/paper-filter/filter-content-tag.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var FilterContentTag = function (_React$Component) {
+    _inherits(FilterContentTag, _React$Component);
+
+    function FilterContentTag() {
+        _classCallCheck(this, FilterContentTag);
+
+        return _possibleConstructorReturn(this, (FilterContentTag.__proto__ || Object.getPrototypeOf(FilterContentTag)).apply(this, arguments));
+    }
+
+    _createClass(FilterContentTag, [{
+        key: 'render',
+        value: function render() {
+            var filterContent = this.props.filter || {};
+            var filterCount = filterContent.count || [];
+            var filterRows = filterContent.rows || [];
+
+            return React.createElement(
+                'div',
+                { className: 'filter-content' },
+                React.createElement(
+                    'dl',
+                    { className: 'filter-list tag' },
+                    React.createElement(
+                        'dt',
+                        { className: 'filter-list-title' },
+                        'Tags'
+                    ),
+                    filterRows.map(function (filterItem, index) {
+                        var key = 'tagsFilterItem_' + index;
+                        var detailUrl = '/catalogue/tag/' + filterItem.tag;
+                        var filterItemVal = filterItem.tag;
+                        var filterItemCount = '(' + filterCount[index].count + ')';
+
+                        return React.createElement(
+                            'dd',
+                            {
+                                className: 'filter-list-item',
+                                key: key
+                            },
+                            React.createElement(
+                                'a',
+                                {
+                                    className: 'item-link',
+                                    href: detailUrl
+                                },
+                                React.createElement(
+                                    'span',
+                                    { className: 'tag-val' },
+                                    filterItemVal
+                                ),
+                                React.createElement(
+                                    'span',
+                                    { className: 'tag-count' },
+                                    filterItemCount
+                                )
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return FilterContentTag;
+}(React.Component);
+
+module.exports = FilterContentTag;
+
+/***/ }),
+
+/***/ "./components/ui-components/paper-filter/filter-content-timeline.js":
+/*!**************************************************************************!*\
+  !*** ./components/ui-components/paper-filter/filter-content-timeline.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var FilterContentTimeline = function (_React$Component) {
+    _inherits(FilterContentTimeline, _React$Component);
+
+    function FilterContentTimeline() {
+        _classCallCheck(this, FilterContentTimeline);
+
+        return _possibleConstructorReturn(this, (FilterContentTimeline.__proto__ || Object.getPrototypeOf(FilterContentTimeline)).apply(this, arguments));
+    }
+
+    _createClass(FilterContentTimeline, [{
+        key: 'render',
+        value: function render() {
+            var filterContent = this.props.filter || {};
+            var filterCount = filterContent.count || [];
+            var filterRows = filterContent.rows || [];
+
+            return React.createElement(
+                'div',
+                { className: 'filter-content' },
+                React.createElement(
+                    'dl',
+                    { className: 'filter-list timeline' },
+                    React.createElement(
+                        'dt',
+                        { className: 'filter-list-title' },
+                        'Tags'
+                    ),
+                    filterRows.map(function (filterItem, index) {
+                        var key = 'timelineFilterItem_' + index;
+                        var detailUrl = '/catalogue/timeline/' + filterItem.yearTag;
+                        var filterItemVal = filterItem.yearTag;
+                        var filterItemCount = '(' + filterCount[index].count + ')';
+
+                        return React.createElement(
+                            'dd',
+                            {
+                                className: 'filter-list-item',
+                                key: key
+                            },
+                            React.createElement(
+                                'a',
+                                {
+                                    className: 'item-link',
+                                    href: detailUrl
+                                },
+                                React.createElement(
+                                    'span',
+                                    { className: 'timeline-val' },
+                                    filterItemVal
+                                ),
+                                React.createElement(
+                                    'span',
+                                    { className: 'timeline-count' },
+                                    filterItemCount
+                                )
+                            )
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return FilterContentTimeline;
+}(React.Component);
+
+module.exports = FilterContentTimeline;
+
+/***/ }),
+
 /***/ "./components/ui-components/paper-filter/index.js":
 /*!********************************************************!*\
   !*** ./components/ui-components/paper-filter/index.js ***!
@@ -3549,6 +3922,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ResponsiveToggler = __webpack_require__(/*! ./responsive-toggler */ "./components/ui-components/paper-filter/responsive-toggler.js");
+var FilterContentLatest = __webpack_require__(/*! ./filter-content-latest */ "./components/ui-components/paper-filter/filter-content-latest.js");
+var FilterContentTag = __webpack_require__(/*! ./filter-content-tag */ "./components/ui-components/paper-filter/filter-content-tag.js");
+var FilterContentTimeline = __webpack_require__(/*! ./filter-content-timeline */ "./components/ui-components/paper-filter/filter-content-timeline.js");
 /* eslint-disable */
 
 var PaperFilter = function (_React$Component) {
@@ -3574,7 +3952,16 @@ var PaperFilter = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return null;
+            var filter = this.props.filter || {};
+
+            return React.createElement(
+                'div',
+                { className: 'filter-container col-xs-12 col-md-4 col-lg-3' },
+                React.createElement(ResponsiveToggler, null),
+                React.createElement(FilterContentLatest, { filter: filter.latest }),
+                React.createElement(FilterContentTag, { filter: filter.tag }),
+                React.createElement(FilterContentTimeline, { filter: filter.timeline })
+            );
         }
     }]);
 
@@ -3582,6 +3969,49 @@ var PaperFilter = function (_React$Component) {
 }(React.Component);
 
 module.exports = PaperFilter;
+
+/***/ }),
+
+/***/ "./components/ui-components/paper-filter/responsive-toggler.js":
+/*!*********************************************************************!*\
+  !*** ./components/ui-components/paper-filter/responsive-toggler.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ResponsiveToggler = function (_React$Component) {
+    _inherits(ResponsiveToggler, _React$Component);
+
+    function ResponsiveToggler() {
+        _classCallCheck(this, ResponsiveToggler);
+
+        return _possibleConstructorReturn(this, (ResponsiveToggler.__proto__ || Object.getPrototypeOf(ResponsiveToggler)).apply(this, arguments));
+    }
+
+    _createClass(ResponsiveToggler, [{
+        key: 'render',
+        value: function render() {
+            return null;
+        }
+    }]);
+
+    return ResponsiveToggler;
+}(React.Component);
+
+module.exports = ResponsiveToggler;
 
 /***/ }),
 
@@ -4694,6 +5124,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
+var Catalogue = __webpack_require__(/*! ../components/common-catalogue */ "./components/common-catalogue.js");
 /* eslint-disable */
 
 var PageCatalogue = function (_React$Component) {
@@ -4708,7 +5139,7 @@ var PageCatalogue = function (_React$Component) {
     _createClass(PageCatalogue, [{
         key: 'render',
         value: function render() {
-            var filterArr = ['latest', 'timeline', 'tag'];
+            var filterArr = ['timeline', 'tag'];
             var filterType = this.props.params.filterType;
             var filterParam = this.props.params.filterParam || '';
 
@@ -4720,12 +5151,12 @@ var PageCatalogue = function (_React$Component) {
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
-                    { className: 'page-section-body' },
+                    { className: 'page-section-body row' },
                     React.createElement(PaperFilter, null),
-                    '\u76EE\u5F55\u9875:',
-                    filterType,
-                    ',',
-                    filterParam
+                    React.createElement(Catalogue, {
+                        filterType: filterType,
+                        filterParam: filterParam
+                    })
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -37581,7 +38012,8 @@ var getFilterCount = function getFilterCount(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
-    console.info(action);
+    newState.filter = originalState.filter || {};
+    newState.filter[action.payload.filterType] = action.payload.filterCount;
 
     return newState;
 };
@@ -37705,7 +38137,24 @@ module.exports = reducers;
     {
         currentPage: 'home',
         filter: {
-            ···
+            latest: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
+            tag: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
+            timeline: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
         },
         paper: {
 

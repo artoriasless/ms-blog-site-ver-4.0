@@ -75,7 +75,24 @@ module.exports = reducers;
     {
         currentPage: 'home',
         filter: {
-            ···
+            latest: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
+            tag: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
+            timeline: {
+                count: 5,
+                rows: [
+                    ···
+                ]
+            },
         },
         paper: {
 

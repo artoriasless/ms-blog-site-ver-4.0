@@ -4,6 +4,7 @@ const user = require('./user');
 const paper = require('./paper');
 const reply = require('./reply');
 const message = require('./message');
+const catalogue = require('./catalogue');
 
 const util = require('./util');
 
@@ -12,6 +13,7 @@ module.exports = {
     paper,
     reply,
     message,
+    catalogue,
 
     util,
 };
