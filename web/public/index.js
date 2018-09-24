@@ -3857,7 +3857,7 @@ var FilterContentTimeline = function (_React$Component) {
                     React.createElement(
                         'dt',
                         { className: 'filter-list-title' },
-                        'Tags'
+                        'Timeline'
                     ),
                     filterRows.map(function (filterItem, index) {
                         var key = 'timelineFilterItem_' + index;

@@ -1,12 +1,13 @@
 .page-catalogue {
     .filter-container {
         position: relative;
-        padding: 5px 5px 5px 0;
+        display: none;
+        padding: 0;
 
         .filter-content {
             padding: 5px;
             margin-bottom: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--color-grey-lighter);
             border-radius: 5px;
 
             &:last-of-type {
@@ -63,7 +64,7 @@
                         margin-top: -5px;
                         border-top: 5px solid transparent;
                         border-bottom: 5px solid transparent;
-                        border-left: 5px solid #888888;
+                        border-left: 5px solid var(--color-grey);
                     }
 
                     .tag-val,
@@ -77,7 +78,7 @@
                     }
 
                     .tag-val {
-                        min-width: 65px;
+                        min-width: 80px;
                     }
 
                     .timeline-val {
@@ -85,6 +86,15 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .page-catalogue {
+        .filter-container {
+            display: block;
+            padding: 5px 5px 5px 0;
         }
     }
 }

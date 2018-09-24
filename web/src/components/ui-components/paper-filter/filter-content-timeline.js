@@ -11,7 +11,7 @@ class FilterContentTimeline extends React.Component {
         return (
             <div className="filter-content">
                 <dl className="filter-list timeline">
-                    <dt className="filter-list-title">Tags</dt>
+                    <dt className="filter-list-title">Timeline</dt>
                     {
                         filterRows.map((filterItem, index) => {
                             var key = `timelineFilterItem_${index}`;

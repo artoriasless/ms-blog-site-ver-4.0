@@ -42,7 +42,7 @@ body, #root, #root .app {
 
 body {
     overflow: hidden;
-    font-family: "microsoft yahei",Tahoma,Arial,Roboto,"Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC","Hiragino Sans GB",Simsun,sans-self;
+    font-family: consola,"microsoft yahei",Tahoma,Arial,Roboto,"Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC","Hiragino Sans GB",Simsun,sans-self;
 }
 
 body * {
@@ -939,6 +939,10 @@ code {
                         font-style: normal;
                     }
 
+.page-user .user-overview .overview-container .info-container .account-activated .send-activate-mail-link:hover {
+                            text-decoration: none;
+                        }
+
 .page-user .user-overview .overview-container .info-container .account-activated .activated-tips.inactivated {
                         color: #aaa;
                     }
@@ -956,7 +960,7 @@ code {
 
 .page-user .user-overview .operate-container .operate-link {
                 display: inline-block;
-                padding: 0 10px;
+                padding: 0;
                 color: #5e87a2;
                 cursor: pointer;
             }
@@ -1200,7 +1204,8 @@ code {
 
 .page-catalogue .filter-container {
         position: relative;
-        padding: 5px 5px 5px 0;
+        display: none;
+        padding: 0;
     }
 
 .page-catalogue .filter-container .filter-content {
@@ -1266,7 +1271,7 @@ code {
                         margin-top: -5px;
                         border-top: 5px solid transparent;
                         border-bottom: 5px solid transparent;
-                        border-left: 5px solid #888888;
+                        border-left: 5px solid #777;
                     }
 
 .page-catalogue .filter-container .filter-content .filter-list .item-link .tag-val, .page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-val, .page-catalogue .filter-container .filter-content .filter-list .item-link .tag-count, .page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-count {
@@ -1277,20 +1282,33 @@ code {
                     }
 
 .page-catalogue .filter-container .filter-content .filter-list .item-link .tag-val {
-                        min-width: 65px;
+                        min-width: 80px;
                     }
 
 .page-catalogue .filter-container .filter-content .filter-list .item-link .timeline-val {
                         min-width: 40px;
                     }
 
+@media (min-width: 768px) {
+        .page-catalogue .filter-container {
+            display: block;
+            padding: 5px 5px 5px 0;
+        }
+}
+
 .page-catalogue .catalogue-container {
-        padding: 5px 0 5px 5px;
+        padding: 0;
     }
 
 .page-catalogue .catalogue-container .catalogue-content {
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
+@media (min-width: 768px) {
+        .page-catalogue .catalogue-container {
+            padding: 5px 0 5px 5px;
+        }
+}
 
 
