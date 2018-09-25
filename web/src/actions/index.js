@@ -16,6 +16,7 @@ const updatePwdAction = require('./update-pwd');
 const resetPwdAction = require('./reset-pwd');
 const getMessageAction = require('./get-message');
 const getFilterCountAction = require('./get-filter-count');
+const getCatalogueAction = require('./get-catalogue');
 
 const actions = {
     actionTypes,
@@ -34,6 +35,7 @@ const actions = {
     resetPwdAction,
     getMessageAction,
     getFilterCountAction,
+    getCatalogueAction,
 };
 
 module.exports = actions;

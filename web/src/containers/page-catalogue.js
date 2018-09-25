@@ -21,6 +21,7 @@ class PageCatalogue extends React.Component {
             <div className="page-catalogue">
                 <Navbar/>
                 <div className="page-section-body row">
+                    <PaperFilterToggler/>
                     <PaperFilter/>
                     <Catalogue
                         filterType={ filterType }
@@ -29,6 +30,30 @@ class PageCatalogue extends React.Component {
                 </div>
                 <LoginModal/>
             </div>
+        );
+    }
+}
+
+class PaperFilterToggler extends React.Component {
+    constructor() {
+        super();
+        this.clickHandler = this.clickHandler.bind(this);
+    }
+
+    clickHandler(evt) { //  eslint-disable-line
+        console.info('toggle');
+    }
+
+    render() {
+        return (
+            <a
+                id="paperFilterToggler"
+                className="paper-filter-toggler"
+                href="javascript:;"
+                onClick={ event => this.clickHandler(event) }
+            >
+                <i className="fa fa-angle-right"></i>
+            </a>
         );
     }
 }

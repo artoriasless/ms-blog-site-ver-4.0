@@ -150,6 +150,7 @@ code {
 }
 
 #root .app .page-section-header + .page-section-body {
+    position: relative;
     max-width: 1200px;
     padding: 0.25rem;
     margin: calc(2.5rem + 1px) auto 0;
@@ -1200,6 +1201,41 @@ code {
 
 .stan-radio .stan-radio-input:disabled ~ .stan-radio-indicator:after {
     background: #7b7b7b;
+}
+
+.page-catalogue .paper-filter-toggler {
+        position: absolute;
+        display: block;
+        width: 25px;
+        height: 25px;
+        top: 0;
+        left: 0;
+        margin: 0.25rem 0 0 0.25rem;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 25px;
+        background-color: #5e87a2;
+        opacity: 0.75;
+        z-index: 99999;
+    }
+
+.page-catalogue .paper-filter-toggler:hover {
+            text-decoration: none;
+            opacity: 1;
+        }
+
+.page-catalogue .paper-filter-toggler .fa {
+            display: block;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+        }
+
+@media (min-width: 768px) {
+        .page-catalogue .paper-filter-toggler {
+            display: none;
+        }
 }
 
 .page-catalogue .filter-container {

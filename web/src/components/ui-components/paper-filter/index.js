@@ -2,7 +2,6 @@
 /* eslint-disable */
 const React = require('react');
 
-const ResponsiveToggler = require('./responsive-toggler');
 const FilterContentLatest = require('./filter-content-latest');
 const FilterContentTag = require('./filter-content-tag');
 const FilterContentTimeline = require('./filter-content-timeline');
@@ -23,7 +22,6 @@ class PaperFilter extends React.Component {
 
         return (
             <div className="filter-container col-xs-12 col-md-4 col-lg-3">
-                <ResponsiveToggler/>
                 <FilterContentLatest filter={ filter.latest }/>
                 <FilterContentTag filter={ filter.tag }/>
                 <FilterContentTimeline filter={ filter.timeline }/>

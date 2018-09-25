@@ -110,6 +110,7 @@ var UPDATE_PWD = 'UPDATE_PWD';
 var RESET_PWD = 'RESET_PWD';
 var GET_MESSAGE = 'GET_MESSAGE';
 var GET_FILTER_COUNT = 'GET_FILTER_COUNT';
+var GET_CATALOGUE = 'GET_CATALOGUE';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -125,7 +126,8 @@ module.exports = {
     UPDATE_PWD: UPDATE_PWD,
     RESET_PWD: RESET_PWD,
     GET_MESSAGE: GET_MESSAGE,
-    GET_FILTER_COUNT: GET_FILTER_COUNT
+    GET_FILTER_COUNT: GET_FILTER_COUNT,
+    GET_CATALOGUE: GET_CATALOGUE
 };
 
 /***/ }),
@@ -155,6 +157,34 @@ var activateAccount = function activateAccount(userInfo) {
 };
 
 module.exports = activateAccount;
+
+/***/ }),
+
+/***/ "./actions/get-catalogue.js":
+/*!**********************************!*\
+  !*** ./actions/get-catalogue.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getCatalogue = function getCatalogue(catalogue) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_CATALOGUE',
+        payload: {
+            current: current,
+            catalogue: catalogue
+        }
+    };
+};
+
+module.exports = getCatalogue;
 
 /***/ }),
 
@@ -241,6 +271,7 @@ var updatePwdAction = __webpack_require__(/*! ./update-pwd */ "./actions/update-
 var resetPwdAction = __webpack_require__(/*! ./reset-pwd */ "./actions/reset-pwd.js");
 var getMessageAction = __webpack_require__(/*! ./get-message */ "./actions/get-message.js");
 var getFilterCountAction = __webpack_require__(/*! ./get-filter-count */ "./actions/get-filter-count.js");
+var getCatalogueAction = __webpack_require__(/*! ./get-catalogue */ "./actions/get-catalogue.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -258,7 +289,8 @@ var actions = {
     updatePwdAction: updatePwdAction,
     resetPwdAction: resetPwdAction,
     getMessageAction: getMessageAction,
-    getFilterCountAction: getFilterCountAction
+    getFilterCountAction: getFilterCountAction,
+    getCatalogueAction: getCatalogueAction
 };
 
 module.exports = actions;
@@ -795,7 +827,7 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 
 var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 
-var UI_catalogue = __webpack_require__(/*! ../components/ui-components/catalogue */ "./components/ui-components/catalogue/index.js");
+var UI_catalogue = __webpack_require__(/*! ../components/ui-components/catalogue */ "./components/ui-components/catalogue.js");
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var getCatalogueAction = actions.getCatalogueAction;
@@ -1389,10 +1421,10 @@ module.exports = ActivateContent;
 
 /***/ }),
 
-/***/ "./components/ui-components/catalogue/index.js":
-/*!*****************************************************!*\
-  !*** ./components/ui-components/catalogue/index.js ***!
-  \*****************************************************/
+/***/ "./components/ui-components/catalogue.js":
+/*!***********************************************!*\
+  !*** ./components/ui-components/catalogue.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1421,6 +1453,19 @@ var Catalogue = function (_React$Component) {
     }
 
     _createClass(Catalogue, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var filterType = this.props.filterType;
+            var filterParam = this.props.filterParam;
+            var getCatalogue = this.props.getCatalogue;
+
+            getCatalogue({
+                page: 1,
+                filterType: filterType,
+                filterParam: filterParam
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -3923,7 +3968,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var ResponsiveToggler = __webpack_require__(/*! ./responsive-toggler */ "./components/ui-components/paper-filter/responsive-toggler.js");
 var FilterContentLatest = __webpack_require__(/*! ./filter-content-latest */ "./components/ui-components/paper-filter/filter-content-latest.js");
 var FilterContentTag = __webpack_require__(/*! ./filter-content-tag */ "./components/ui-components/paper-filter/filter-content-tag.js");
 var FilterContentTimeline = __webpack_require__(/*! ./filter-content-timeline */ "./components/ui-components/paper-filter/filter-content-timeline.js");
@@ -3957,7 +4001,6 @@ var PaperFilter = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'filter-container col-xs-12 col-md-4 col-lg-3' },
-                React.createElement(ResponsiveToggler, null),
                 React.createElement(FilterContentLatest, { filter: filter.latest }),
                 React.createElement(FilterContentTag, { filter: filter.tag }),
                 React.createElement(FilterContentTimeline, { filter: filter.timeline })
@@ -3969,49 +4012,6 @@ var PaperFilter = function (_React$Component) {
 }(React.Component);
 
 module.exports = PaperFilter;
-
-/***/ }),
-
-/***/ "./components/ui-components/paper-filter/responsive-toggler.js":
-/*!*********************************************************************!*\
-  !*** ./components/ui-components/paper-filter/responsive-toggler.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var ResponsiveToggler = function (_React$Component) {
-    _inherits(ResponsiveToggler, _React$Component);
-
-    function ResponsiveToggler() {
-        _classCallCheck(this, ResponsiveToggler);
-
-        return _possibleConstructorReturn(this, (ResponsiveToggler.__proto__ || Object.getPrototypeOf(ResponsiveToggler)).apply(this, arguments));
-    }
-
-    _createClass(ResponsiveToggler, [{
-        key: 'render',
-        value: function render() {
-            return null;
-        }
-    }]);
-
-    return ResponsiveToggler;
-}(React.Component);
-
-module.exports = ResponsiveToggler;
 
 /***/ }),
 
@@ -5144,6 +5144,7 @@ var PageCatalogue = function (_React$Component) {
                 React.createElement(
                     'div',
                     { className: 'page-section-body row' },
+                    React.createElement(PaperFilterToggler, null),
                     React.createElement(PaperFilter, null),
                     React.createElement(Catalogue, {
                         filterType: filterType,
@@ -5156,6 +5157,47 @@ var PageCatalogue = function (_React$Component) {
     }]);
 
     return PageCatalogue;
+}(React.Component);
+
+var PaperFilterToggler = function (_React$Component2) {
+    _inherits(PaperFilterToggler, _React$Component2);
+
+    function PaperFilterToggler() {
+        _classCallCheck(this, PaperFilterToggler);
+
+        var _this2 = _possibleConstructorReturn(this, (PaperFilterToggler.__proto__ || Object.getPrototypeOf(PaperFilterToggler)).call(this));
+
+        _this2.clickHandler = _this2.clickHandler.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(PaperFilterToggler, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt) {
+            //  eslint-disable-line
+            console.info('toggle');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this3 = this;
+
+            return React.createElement(
+                'a',
+                {
+                    id: 'paperFilterToggler',
+                    className: 'paper-filter-toggler',
+                    href: 'javascript:;',
+                    onClick: function onClick(event) {
+                        return _this3.clickHandler(event);
+                    }
+                },
+                React.createElement('i', { className: 'fa fa-angle-right' })
+            );
+        }
+    }]);
+
+    return PaperFilterToggler;
 }(React.Component);
 
 module.exports = PageCatalogue;
@@ -37990,6 +38032,30 @@ module.exports = activateAccount;
 
 /***/ }),
 
+/***/ "./reducers/get-catalogue.js":
+/*!***********************************!*\
+  !*** ./reducers/get-catalogue.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getCatalogue = function getCatalogue(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.catalogue = action.payload.catalogue;
+
+    return newState;
+};
+
+module.exports = getCatalogue;
+
+/***/ }),
+
 /***/ "./reducers/get-filter-count.js":
 /*!**************************************!*\
   !*** ./reducers/get-filter-count.js ***!
@@ -38028,8 +38094,6 @@ var getMessage = function getMessage(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
-    newState.cache = originalState.cache || {};
-    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.message = action.payload.message;
 
@@ -38067,6 +38131,7 @@ var updatePwdFunc = __webpack_require__(/*! ./update-pwd */ "./reducers/update-p
 var resetPwdFunc = __webpack_require__(/*! ./reset-pwd */ "./reducers/reset-pwd.js");
 var getMessageFunc = __webpack_require__(/*! ./get-message */ "./reducers/get-message.js");
 var getFilterCountFunc = __webpack_require__(/*! ./get-filter-count */ "./reducers/get-filter-count.js");
+var getCatalogueFunc = __webpack_require__(/*! ./get-catalogue */ "./reducers/get-catalogue.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -38115,6 +38180,9 @@ var reducers = function reducers() {
         case actionTypes.GET_FILTER_COUNT:
             return getFilterCountFunc(state, action);
 
+        case actionTypes.GET_CATALOGUE:
+            return getCatalogueFunc(state, action);
+
         default:
             return state;
     }
@@ -38147,6 +38215,8 @@ module.exports = reducers;
                     ···
                 ]
             },
+        },
+        catalogue: {
         },
         paper: {
 
@@ -38382,8 +38452,6 @@ var updatePwd = function updatePwd(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
-    newState.cache = originalState.cache || {};
-    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 
@@ -38458,8 +38526,6 @@ var updateUserInfo = function updateUserInfo(originalState, action) {
     //  eslint-disable-line
     var newState = JSON.parse(JSON.stringify(originalState));
 
-    newState.cache = originalState.cache || {};
-    newState.cache.isLogin = true;
     newState.current = action.payload.current;
     newState.userInfo = action.payload.userInfo;
 

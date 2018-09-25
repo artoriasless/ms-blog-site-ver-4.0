@@ -16,6 +16,7 @@ const updatePwdFunc = require('./update-pwd');
 const resetPwdFunc = require('./reset-pwd');
 const getMessageFunc = require('./get-message');
 const getFilterCountFunc = require('./get-filter-count');
+const getCatalogueFunc = require('./get-catalogue');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -61,6 +62,9 @@ const reducers = (state = {}, action = {}) => {
     case actionTypes.GET_FILTER_COUNT:
         return getFilterCountFunc(state, action);
 
+    case actionTypes.GET_CATALOGUE:
+        return getCatalogueFunc(state, action);
+
     default:
         return state;
     }
@@ -93,6 +97,8 @@ module.exports = reducers;
                     ···
                 ]
             },
+        },
+        catalogue: {
         },
         paper: {
 
