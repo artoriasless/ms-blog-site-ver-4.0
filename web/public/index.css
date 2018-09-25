@@ -50,6 +50,15 @@ body * {
     word-break: break-all;
 }
 
+hr {
+    height: 1px;
+    padding: 0;
+    margin: 5px 0;
+    line-height: 1px;
+    background: transparent url('/img/hr.png') 33% 0 no-repeat;
+    border: none;
+}
+
 /* 引入特定字体 */
 
 @font-face {
@@ -1204,13 +1213,14 @@ code {
 }
 
 .page-catalogue .paper-filter-toggler {
-        position: absolute;
+        position: fixed;
         display: block;
         width: 25px;
         height: 25px;
         top: 0;
         left: 0;
-        margin: 0.25rem 0 0 0.25rem;
+        margin-left: 0.25rem;
+        margin-top: calc(2.75rem + 1px);
         border-radius: 3px;
         color: #fff;
         font-size: 25px;
@@ -1239,9 +1249,14 @@ code {
 }
 
 .page-catalogue .filter-container {
-        position: relative;
+        position: fixed;
         display: none;
+        width: calc(100% - 0.5rem);
+        height: 100%;
         padding: 0;
+        z-index: 9999;
+        background-color: #fff;
+        overflow-y: auto;
     }
 
 .page-catalogue .filter-container .filter-content {
@@ -1327,8 +1342,10 @@ code {
 
 @media (min-width: 768px) {
         .page-catalogue .filter-container {
+            position: relative;
             display: block;
             padding: 5px 5px 5px 0;
+            background-color: transparent;
         }
 }
 
@@ -1337,9 +1354,84 @@ code {
     }
 
 .page-catalogue .catalogue-container .catalogue-content {
+            padding: 5px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-title {
+                height: 1.5rem;
+                line-height: 1.5rem;
+                margin: 10px 0;
+                font-size: 1.25rem;
+            }
+
+.page-catalogue .catalogue-container .catalogue-content .no-item-tips {
+                line-height: 1.75rem;
+                margin: 2rem 0;
+                color: #fd7e14;
+                font-size: 0.75em;
+                text-align: center;
+            }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item {
+                    margin: 10px 0 11px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-title {
+                    display: block;
+                    height: 1.75rem;
+                    line-height: 1.75rem;
+                    color: #777;
+                    font-weight: bold;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-title:hover {
+                        border-radius: 5px;
+                        color: #5e87a2;
+                        text-decoration: none;
+                        background-color: #ddd;
+                    }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-subtitle {
+                    position: relative;
+                    height: 1.5rem;
+                    line-height: 1.5rem;
+                    margin: 0 5px;
+                    color: #aaa;
+                    font-size: 0.75em;
+                }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-subtitle .subtitle-date {
+                        width: 7rem;
+                        margin-right: 0.5rem;
+                    }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-subtitle .subtitle-tags {
+                        max-width: calc(100% - 7.5rem);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item-brief {
+                    display: -webkit-box;
+                    max-height: 6rem;
+                    line-height: 1.5rem;
+                    padding: 0;
+                    margin: 0 0 15px;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 4;
+                    overflow: hidden;
+                    text-indent: 2em;
+                    color: #777;
+                    font-size: 0.8em;
+                    font-family: "microsoft yahei";
+                }
 
 @media (min-width: 768px) {
         .page-catalogue .catalogue-container {

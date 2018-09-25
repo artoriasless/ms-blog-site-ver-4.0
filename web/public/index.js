@@ -827,7 +827,7 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
 
 var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
 
-var UI_catalogue = __webpack_require__(/*! ../components/ui-components/catalogue */ "./components/ui-components/catalogue.js");
+var UI_catalogue = __webpack_require__(/*! ../components/ui-components/catalogue */ "./components/ui-components/catalogue/index.js");
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var getCatalogueAction = actions.getCatalogueAction;
@@ -850,10 +850,7 @@ function ajaxGetCatalogue(jsonData) {
     return function (dispatch) {
         var requestUrl = '/api/catalogue/page';
         var successFunc = function successFunc(result) {
-            console.info(result);
-            // const filterType = jsonData.filterType;
-
-            // dispatch(getFilterCountAction(filterType, result.data));
+            dispatch(getCatalogueAction(result.data));
         };
         var failFunc = function failFunc(err) {
             console.info(err); //  eslint-disable-line
@@ -1421,10 +1418,10 @@ module.exports = ActivateContent;
 
 /***/ }),
 
-/***/ "./components/ui-components/catalogue.js":
-/*!***********************************************!*\
-  !*** ./components/ui-components/catalogue.js ***!
-  \***********************************************/
+/***/ "./components/ui-components/catalogue/catalogue-list.js":
+/*!**************************************************************!*\
+  !*** ./components/ui-components/catalogue/catalogue-list.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1443,13 +1440,204 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* eslint-disable */
 
+var CatalogueList = function (_React$Component) {
+    _inherits(CatalogueList, _React$Component);
+
+    function CatalogueList() {
+        _classCallCheck(this, CatalogueList);
+
+        return _possibleConstructorReturn(this, (CatalogueList.__proto__ || Object.getPrototypeOf(CatalogueList)).apply(this, arguments));
+    }
+
+    _createClass(CatalogueList, [{
+        key: 'render',
+        value: function render() {
+            var catalogue = this.props.catalogue || {};
+            var catalogueList = catalogue.rows || [];
+
+            if (catalogueList.length === 0) {
+                return React.createElement(
+                    'div',
+                    { className: 'no-item-tips' },
+                    'catalogue list is empty',
+                    React.createElement('br', null),
+                    'please check the url is right'
+                );
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: 'catalogue-list' },
+                    catalogueList.map(function (item, idx) {
+                        var key = 'catalogueItem_' + idx;
+                        var detailUrl = '/paper/' + item.id;
+                        var catalogueItemTitle = item.title;
+                        var catalogueItemBrief = item.brief;
+                        var dateVal = item.gmtCreate.slice(0, 10);
+                        var tagVal = '' + item.tag + (item.subtag ? '\uFF0C' + item.subtag : '');
+
+                        return React.createElement(
+                            'div',
+                            {
+                                key: key,
+                                className: 'catalogue-item'
+                            },
+                            React.createElement(
+                                'a',
+                                {
+                                    title: catalogueItemTitle,
+                                    href: detailUrl,
+                                    className: 'catalogue-item-title'
+                                },
+                                catalogueItemTitle
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'catalogue-item-subtitle' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'subtitle-tags pull-right' },
+                                    React.createElement('i', { className: 'fa fa-tags' }),
+                                    '\xA0',
+                                    React.createElement(
+                                        'span',
+                                        { className: 'tags-val' },
+                                        tagVal
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'subtitle-date pull-right' },
+                                    React.createElement('i', { className: 'fa fa-calendar' }),
+                                    '\xA0',
+                                    React.createElement(
+                                        'span',
+                                        { className: 'date-val' },
+                                        dateVal
+                                    )
+                                )
+                            ),
+                            React.createElement(
+                                'p',
+                                { className: 'catalogue-item-brief' },
+                                catalogueItemBrief
+                            )
+                        );
+                    })
+                );
+            }
+        }
+    }]);
+
+    return CatalogueList;
+}(React.Component);
+
+module.exports = CatalogueList;
+
+/***/ }),
+
+/***/ "./components/ui-components/catalogue/catalogue-pager.js":
+/*!***************************************************************!*\
+  !*** ./components/ui-components/catalogue/catalogue-pager.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ModulePager = __webpack_require__(/*! ../../../lib/module-pager */ "./lib/module-pager.js");
+/* eslint-disable */
+
+var CataloguePager = function (_React$Component) {
+    _inherits(CataloguePager, _React$Component);
+
+    function CataloguePager() {
+        _classCallCheck(this, CataloguePager);
+
+        return _possibleConstructorReturn(this, (CataloguePager.__proto__ || Object.getPrototypeOf(CataloguePager)).apply(this, arguments));
+    }
+
+    _createClass(CataloguePager, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var catalogue = this.props.catalogue || {};
+            var pageCount = Math.ceil(catalogue.count / 10);
+
+            if (pageCount > 1) {
+                return React.createElement(
+                    'div',
+                    { className: 'catalogue-pager' },
+                    React.createElement('hr', null),
+                    React.createElement(ModulePager, {
+                        jumpHandler: function jumpHandler(pageData) {
+                            return _this2.pageJumpHandler(pageData);
+                        },
+                        data: catalogue
+                    })
+                );
+            }
+
+            return null;
+        }
+    }]);
+
+    return CataloguePager;
+}(React.Component);
+
+module.exports = CataloguePager;
+
+/***/ }),
+
+/***/ "./components/ui-components/catalogue/index.js":
+/*!*****************************************************!*\
+  !*** ./components/ui-components/catalogue/index.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var CatalogueList = __webpack_require__(/*! ./catalogue-list */ "./components/ui-components/catalogue/catalogue-list.js");
+var CataloguePager = __webpack_require__(/*! ./catalogue-pager */ "./components/ui-components/catalogue/catalogue-pager.js");
+
+var getQueryParam = __webpack_require__(/*! ../../../lib/common-get-query-param */ "./lib/common-get-query-param.js");
+/* eslint-disable */
+
 var Catalogue = function (_React$Component) {
     _inherits(Catalogue, _React$Component);
 
     function Catalogue() {
         _classCallCheck(this, Catalogue);
 
-        return _possibleConstructorReturn(this, (Catalogue.__proto__ || Object.getPrototypeOf(Catalogue)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Catalogue.__proto__ || Object.getPrototypeOf(Catalogue)).call(this));
+
+        _this.pageJumpHandler = _this.pageJumpHandler.bind(_this);
+        return _this;
     }
 
     _createClass(Catalogue, [{
@@ -1458,9 +1646,31 @@ var Catalogue = function (_React$Component) {
             var filterType = this.props.filterType;
             var filterParam = this.props.filterParam;
             var getCatalogue = this.props.getCatalogue;
+            var page = function (paramPage) {
+                var _page = Number(paramPage);
+
+                if (isNaN(_page) || _page < 1) {
+                    _page = 1;
+                }
+
+                return _page;
+            }(getQueryParam('page'));
 
             getCatalogue({
-                page: 1,
+                page: page,
+                filterType: filterType,
+                filterParam: filterParam
+            });
+        }
+    }, {
+        key: 'pageJumpHandler',
+        value: function pageJumpHandler(pageData) {
+            var filterType = this.props.filterType;
+            var filterParam = this.props.filterParam;
+            var getCatalogue = this.props.getCatalogue;
+
+            getCatalogue({
+                page: pageData.page,
                 filterType: filterType,
                 filterParam: filterParam
             });
@@ -1468,13 +1678,22 @@ var Catalogue = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var catalogue = this.props.catalogue || {};
+
             return React.createElement(
                 'div',
                 { id: 'catalogue', className: 'catalogue-container col-xs-12 col-md-8 col-lg-9' },
                 React.createElement(
                     'div',
                     { className: 'catalogue-content' },
-                    '\u76EE\u5F55\u5217\u8868\u5185\u5BB9'
+                    React.createElement(
+                        'div',
+                        { className: 'catalogue-title' },
+                        'Catalogue'
+                    ),
+                    React.createElement('hr', null),
+                    React.createElement(CatalogueList, { catalogue: catalogue }),
+                    React.createElement(CataloguePager, { catalogue: catalogue })
                 )
             );
         }
@@ -5521,6 +5740,31 @@ function ajaxAction(url, data, successFunc, failFunc, opts) {
 }
 
 module.exports = ajaxAction;
+
+/***/ }),
+
+/***/ "./lib/common-get-query-param.js":
+/*!***************************************!*\
+  !*** ./lib/common-get-query-param.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function getQueryParam(parameterName) {
+    var reg = new RegExp('(^|&)' + parameterName + '=([^&]*)(&|$)'),
+        url = window.location.search.substr(1).match(reg);
+
+    if (url != null) {
+        return decodeURI(url[2]);
+    }
+
+    return null;
+}
+
+module.exports = getQueryParam;
 
 /***/ }),
 

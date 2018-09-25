@@ -31,6 +31,9 @@ module.exports = {
             attributes,
             limit: PAGE_LENGTH,
             offset: ((page - 1) * PAGE_LENGTH),
+            order: [
+                ['id', 'DESC'],
+            ],
         };
         const result = await Paper.findAndCountAll(query);
 

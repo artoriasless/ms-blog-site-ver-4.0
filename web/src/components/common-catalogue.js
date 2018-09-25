@@ -24,10 +24,7 @@ function ajaxGetCatalogue(jsonData) {
     return (dispatch => {
         const requestUrl = '/api/catalogue/page';
         const successFunc = function(result) {
-            console.info(result);
-            // const filterType = jsonData.filterType;
-
-            // dispatch(getFilterCountAction(filterType, result.data));
+            dispatch(getCatalogueAction(result.data));
         };
         const failFunc = function(err) {
             console.info(err);  //  eslint-disable-line

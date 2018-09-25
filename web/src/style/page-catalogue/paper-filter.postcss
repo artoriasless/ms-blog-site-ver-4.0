@@ -1,8 +1,13 @@
 .page-catalogue {
     .filter-container {
-        position: relative;
+        position: fixed;
         display: none;
+        width: calc(100% - 0.5rem);
+        height: 100%;
         padding: 0;
+        z-index: 9999;
+        background-color: var(--color-white);
+        overflow-y: auto;
 
         .filter-content {
             padding: 5px;
@@ -93,8 +98,10 @@
 @media (min-width: 768px) {
     .page-catalogue {
         .filter-container {
+            position: relative;
             display: block;
             padding: 5px 5px 5px 0;
+            background-color: transparent;
         }
     }
 }
