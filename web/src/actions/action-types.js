@@ -15,6 +15,7 @@ const RESET_PWD = 'RESET_PWD';
 const GET_MESSAGE = 'GET_MESSAGE';
 const GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 const GET_CATALOGUE = 'GET_CATALOGUE';
+const GET_PAPER = 'GET_PAPER';
 
 module.exports = {
     GET_USER_DEFAULT,
@@ -32,4 +33,5 @@ module.exports = {
     GET_MESSAGE,
     GET_FILTER_COUNT,
     GET_CATALOGUE,
+    GET_PAPER,
 };

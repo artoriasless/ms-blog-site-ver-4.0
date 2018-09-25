@@ -111,6 +111,7 @@ var RESET_PWD = 'RESET_PWD';
 var GET_MESSAGE = 'GET_MESSAGE';
 var GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 var GET_CATALOGUE = 'GET_CATALOGUE';
+var GET_PAPER = 'GET_PAPER';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -127,7 +128,8 @@ module.exports = {
     RESET_PWD: RESET_PWD,
     GET_MESSAGE: GET_MESSAGE,
     GET_FILTER_COUNT: GET_FILTER_COUNT,
-    GET_CATALOGUE: GET_CATALOGUE
+    GET_CATALOGUE: GET_CATALOGUE,
+    GET_PAPER: GET_PAPER
 };
 
 /***/ }),
@@ -245,6 +247,34 @@ module.exports = getMessage;
 
 /***/ }),
 
+/***/ "./actions/get-paper.js":
+/*!******************************!*\
+  !*** ./actions/get-paper.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getPaper = function getPaper(paper) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_PAPER',
+        payload: {
+            current: current,
+            paper: paper
+        }
+    };
+};
+
+module.exports = getPaper;
+
+/***/ }),
+
 /***/ "./actions/index.js":
 /*!**************************!*\
   !*** ./actions/index.js ***!
@@ -272,6 +302,7 @@ var resetPwdAction = __webpack_require__(/*! ./reset-pwd */ "./actions/reset-pwd
 var getMessageAction = __webpack_require__(/*! ./get-message */ "./actions/get-message.js");
 var getFilterCountAction = __webpack_require__(/*! ./get-filter-count */ "./actions/get-filter-count.js");
 var getCatalogueAction = __webpack_require__(/*! ./get-catalogue */ "./actions/get-catalogue.js");
+var getPaperAction = __webpack_require__(/*! ./get-paper */ "./actions/get-paper.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -290,7 +321,8 @@ var actions = {
     resetPwdAction: resetPwdAction,
     getMessageAction: getMessageAction,
     getFilterCountAction: getFilterCountAction,
-    getCatalogueAction: getCatalogueAction
+    getCatalogueAction: getCatalogueAction,
+    getPaperAction: getPaperAction
 };
 
 module.exports = actions;
@@ -1356,6 +1388,61 @@ function ajaxUpdatePwd(jsonData) {
 }
 
 module.exports = EditPwdModal;
+
+/***/ }),
+
+/***/ "./components/paper.js":
+/*!*****************************!*\
+  !*** ./components/paper.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
+var UI_paper = __webpack_require__(/*! ../components/ui-components/paper */ "./components/ui-components/paper/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var getPaperAction = actions.getPaperAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        getPaper: function getPaper(jsonData) {
+            return dispatch(ajaxGetPaper(jsonData));
+        }
+    };
+};
+
+var Paper = connect(mapState2Props, mapDispatch2Props)(UI_paper);
+
+function ajaxGetPaper(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/paper/' + jsonData.paperId;
+        var successFunc = function successFunc(result) {
+            dispatch(getPaperAction(result.data));
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+module.exports = Paper;
 
 /***/ }),
 
@@ -4316,6 +4403,71 @@ module.exports = PaperFilterToggler;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper/index.js":
+/*!*************************************************!*\
+  !*** ./components/ui-components/paper/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Paper = function (_React$Component) {
+    _inherits(Paper, _React$Component);
+
+    function Paper() {
+        _classCallCheck(this, Paper);
+
+        return _possibleConstructorReturn(this, (Paper.__proto__ || Object.getPrototypeOf(Paper)).apply(this, arguments));
+    }
+
+    _createClass(Paper, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var paperId = this.props.paperId;
+            var getPaper = this.props.getPaper;
+
+            getPaper({
+                paperId: paperId
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var paper = this.props.paper;
+
+            console.info(paper);
+
+            return React.createElement(
+                'div',
+                { className: 'paper-container col-xs-12 col-md-8 col-lg-9' },
+                React.createElement(
+                    'div',
+                    { className: 'paper-content' },
+                    '\u6587\u7AE0\u8BE6\u60C5\u9875'
+                )
+            );
+        }
+    }]);
+
+    return Paper;
+}(React.Component);
+
+module.exports = Paper;
+
+/***/ }),
+
 /***/ "./components/ui-components/user-center/index.js":
 /*!*******************************************************!*\
   !*** ./components/ui-components/user-center/index.js ***!
@@ -5649,6 +5801,7 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
+var Paper = __webpack_require__(/*! ../components/paper */ "./components/paper.js");
 
 var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
@@ -5676,16 +5829,7 @@ var PagePaper = function (_React$Component) {
                     { className: 'page-section-body row' },
                     React.createElement(PaperFilterToggler, null),
                     React.createElement(PaperFilter, null),
-                    React.createElement(
-                        'div',
-                        { className: 'paper-container col-xs-12 col-md-8 col-lg-9' },
-                        React.createElement(
-                            'div',
-                            { className: 'paper-content' },
-                            '\u6587\u7AE0\u8BE6\u60C5\u9875\uFF1A',
-                            paperId
-                        )
-                    )
+                    React.createElement(Paper, { paperId: paperId })
                 ),
                 React.createElement(LoginModal, null)
             );
@@ -38405,6 +38549,30 @@ module.exports = getMessage;
 
 /***/ }),
 
+/***/ "./reducers/get-paper.js":
+/*!*******************************!*\
+  !*** ./reducers/get-paper.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getPaper = function getPaper(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.paper = action.payload.paper;
+
+    return newState;
+};
+
+module.exports = getPaper;
+
+/***/ }),
+
 /***/ "./reducers/index.js":
 /*!***************************!*\
   !*** ./reducers/index.js ***!
@@ -38433,6 +38601,7 @@ var resetPwdFunc = __webpack_require__(/*! ./reset-pwd */ "./reducers/reset-pwd.
 var getMessageFunc = __webpack_require__(/*! ./get-message */ "./reducers/get-message.js");
 var getFilterCountFunc = __webpack_require__(/*! ./get-filter-count */ "./reducers/get-filter-count.js");
 var getCatalogueFunc = __webpack_require__(/*! ./get-catalogue */ "./reducers/get-catalogue.js");
+var getPaperFunc = __webpack_require__(/*! ./get-paper */ "./reducers/get-paper.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -38484,6 +38653,9 @@ var reducers = function reducers() {
         case actionTypes.GET_CATALOGUE:
             return getCatalogueFunc(state, action);
 
+        case actionTypes.GET_PAPER:
+            return getPaperFunc(state, action);
+
         default:
             return state;
     }
@@ -38520,7 +38692,6 @@ module.exports = reducers;
         catalogue: {
         },
         paper: {
-
         },
         userInfo: {
             ···

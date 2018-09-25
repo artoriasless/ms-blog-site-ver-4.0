@@ -4,6 +4,25 @@ const service = require('../../../service');
 const paperService = service.paper;
 
 module.exports = {
+    async findOne(ctx) {
+        const paperId = Number(ctx.params.paperId);
+        var success = true;
+        var message = 'get paper success!';
+        var data = {};
+
+        if (!isNaN(paperId)) {
+            data = await paperService.findById(paperId);
+        } else {
+            success = false;
+            message = 'get paper failed, please check the paper id is legal!';
+        }
+
+        ctx.body = {
+            success,
+            message,
+            data,
+        };
+    },
     async filterCount(ctx) {
         const filterArr = [
             'tag', 'timeline', 'latest'

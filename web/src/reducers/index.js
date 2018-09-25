@@ -17,6 +17,7 @@ const resetPwdFunc = require('./reset-pwd');
 const getMessageFunc = require('./get-message');
 const getFilterCountFunc = require('./get-filter-count');
 const getCatalogueFunc = require('./get-catalogue');
+const getPaperFunc = require('./get-paper');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -65,6 +66,9 @@ const reducers = (state = {}, action = {}) => {
     case actionTypes.GET_CATALOGUE:
         return getCatalogueFunc(state, action);
 
+    case actionTypes.GET_PAPER:
+        return getPaperFunc(state, action);
+
     default:
         return state;
     }
@@ -101,7 +105,6 @@ module.exports = reducers;
         catalogue: {
         },
         paper: {
-
         },
         userInfo: {
             ···

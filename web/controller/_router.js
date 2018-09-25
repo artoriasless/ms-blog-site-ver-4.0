@@ -72,6 +72,7 @@ _router.get('/api/message/page', api.message.page);
  *  Paper
  */
 _router.get('/api/paper/filter-count', api.paper.filterCount);
+_router.get('/api/paper/:paperId', api.paper.findOne);
 
 /**
  *  Catalogue
