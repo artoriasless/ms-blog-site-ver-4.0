@@ -4234,6 +4234,88 @@ module.exports = PaperFilter;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper-filter/paper-filter-toggler.js":
+/*!***********************************************************************!*\
+  !*** ./components/ui-components/paper-filter/paper-filter-toggler.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var PaperFilterToggler = function (_React$Component) {
+    _inherits(PaperFilterToggler, _React$Component);
+
+    function PaperFilterToggler() {
+        _classCallCheck(this, PaperFilterToggler);
+
+        var _this = _possibleConstructorReturn(this, (PaperFilterToggler.__proto__ || Object.getPrototypeOf(PaperFilterToggler)).call(this));
+
+        _this.clickHandler = _this.clickHandler.bind(_this);
+        return _this;
+    }
+
+    _createClass(PaperFilterToggler, [{
+        key: 'clickHandler',
+        value: function clickHandler(evt) {
+            //  eslint-disable-line
+            var $container = $(evt.target).closest('.page-section-body');
+            var $filterContainer = $container.find('.filter-container');
+
+            if ($container.hasClass('filter-expand')) {
+                $container.removeClass('filter-expand');
+                $filterContainer.fadeOut();
+            } else {
+                $container.addClass('filter-expand');
+                $filterContainer.fadeIn();
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+                'a',
+                {
+                    id: 'paperFilterToggler',
+                    className: 'paper-filter-toggler',
+                    href: 'javascript:;'
+                },
+                React.createElement('i', {
+                    onClick: function onClick(event) {
+                        return _this2.clickHandler(event);
+                    },
+                    className: 'fa fa-expand show-icon pull-left'
+                }),
+                React.createElement('i', {
+                    onClick: function onClick(event) {
+                        return _this2.clickHandler(event);
+                    },
+                    className: 'fa fa-compress hide-icon pull-right'
+                })
+            );
+        }
+    }]);
+
+    return PaperFilterToggler;
+}(React.Component);
+
+module.exports = PaperFilterToggler;
+
+/***/ }),
+
 /***/ "./components/ui-components/user-center/index.js":
 /*!*******************************************************!*\
   !*** ./components/ui-components/user-center/index.js ***!
@@ -5320,6 +5402,7 @@ module.exports = PageActivate;
 
 "use strict";
 
+/* global $ */
 /* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5336,6 +5419,8 @@ var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./component
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
 var Catalogue = __webpack_require__(/*! ../components/common-catalogue */ "./components/common-catalogue.js");
+
+var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
 
 var PageCatalogue = function (_React$Component) {
@@ -5376,47 +5461,6 @@ var PageCatalogue = function (_React$Component) {
     }]);
 
     return PageCatalogue;
-}(React.Component);
-
-var PaperFilterToggler = function (_React$Component2) {
-    _inherits(PaperFilterToggler, _React$Component2);
-
-    function PaperFilterToggler() {
-        _classCallCheck(this, PaperFilterToggler);
-
-        var _this2 = _possibleConstructorReturn(this, (PaperFilterToggler.__proto__ || Object.getPrototypeOf(PaperFilterToggler)).call(this));
-
-        _this2.clickHandler = _this2.clickHandler.bind(_this2);
-        return _this2;
-    }
-
-    _createClass(PaperFilterToggler, [{
-        key: 'clickHandler',
-        value: function clickHandler(evt) {
-            //  eslint-disable-line
-            console.info('toggle');
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            return React.createElement(
-                'a',
-                {
-                    id: 'paperFilterToggler',
-                    className: 'paper-filter-toggler',
-                    href: 'javascript:;',
-                    onClick: function onClick(event) {
-                        return _this3.clickHandler(event);
-                    }
-                },
-                React.createElement('i', { className: 'fa fa-angle-right' })
-            );
-        }
-    }]);
-
-    return PaperFilterToggler;
 }(React.Component);
 
 module.exports = PageCatalogue;
@@ -5604,6 +5648,9 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
+var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
+
+var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
 
 var PagePaper = function (_React$Component) {
@@ -5626,9 +5673,19 @@ var PagePaper = function (_React$Component) {
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
-                    { className: 'page-section-body' },
-                    '\u6587\u7AE0\u9875:',
-                    paperId
+                    { className: 'page-section-body row' },
+                    React.createElement(PaperFilterToggler, null),
+                    React.createElement(PaperFilter, null),
+                    React.createElement(
+                        'div',
+                        { className: 'paper-container col-xs-12 col-md-8 col-lg-9' },
+                        React.createElement(
+                            'div',
+                            { className: 'paper-content' },
+                            '\u6587\u7AE0\u8BE6\u60C5\u9875\uFF1A',
+                            paperId
+                        )
+                    )
                 ),
                 React.createElement(LoginModal, null)
             );

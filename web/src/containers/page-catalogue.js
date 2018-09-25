@@ -1,4 +1,5 @@
 'use strict';
+/* global $ */
 /* eslint-disable */
 const React = require('react');
 
@@ -6,6 +7,8 @@ const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
 const PaperFilter = require('/components/common-paper-filter');
 const Catalogue = require('/components/common-catalogue');
+
+const PaperFilterToggler = require('/components/ui-components/paper-filter/paper-filter-toggler');
 /* eslint-disable */
 class PageCatalogue extends React.Component {
     render() {
@@ -30,30 +33,6 @@ class PageCatalogue extends React.Component {
                 </div>
                 <LoginModal/>
             </div>
-        );
-    }
-}
-
-class PaperFilterToggler extends React.Component {
-    constructor() {
-        super();
-        this.clickHandler = this.clickHandler.bind(this);
-    }
-
-    clickHandler(evt) { //  eslint-disable-line
-        console.info('toggle');
-    }
-
-    render() {
-        return (
-            <a
-                id="paperFilterToggler"
-                className="paper-filter-toggler"
-                href="javascript:;"
-                onClick={ event => this.clickHandler(event) }
-            >
-                <i className="fa fa-angle-right"></i>
-            </a>
         );
     }
 }
