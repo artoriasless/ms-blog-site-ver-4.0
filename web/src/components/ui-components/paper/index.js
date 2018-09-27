@@ -1,5 +1,5 @@
 'use strict';
-
+/* global $ */
 const React = require('react');
 
 const mdConvert = require('/lib/common-markdown');

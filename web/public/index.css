@@ -1513,4 +1513,53 @@ code {
         }
 }
 
+.page-paper .paper-container .paper-content .paper-body h1, .page-paper .paper-container .paper-content .paper-body h2, .page-paper .paper-container .paper-content .paper-body h3, .page-paper .paper-container .paper-content .paper-body h4, .page-paper .paper-container .paper-content .paper-body h5, .page-paper .paper-container .paper-content .paper-body h6 {
+                    margin: 1rem 0 0.75rem;
+                    color: #555;
+                    font-size: 1.25em;
+                }
+
+.page-paper .paper-container .paper-content .paper-body p {
+                    color: #777;
+                    line-height: 1.5rem;
+                    margin: 0 0 0.5rem;
+                    font-size: 0.8em;
+                    text-indent: 2em;
+                }
+
+.page-paper .paper-container .paper-content .paper-body code {
+                    color: #777;
+                }
+
+.page-paper .paper-container .paper-content .paper-body blockquote {
+                    margin: 0 0 0.25rem;
+                    color: #777;
+                }
+
+.page-paper .paper-container .paper-content .paper-body img {
+                    display: block;
+                    width: 300px;
+                    max-width: 100%;
+                    margin: 0.5rem auto;
+                }
+
+.page-paper .paper-container .paper-content .paper-body strong {
+                    font-size: 1.25em;
+                    font-weight: bolder;
+                }
+
+.page-paper .paper-container .paper-content .paper-body pre {
+                    padding: 0.5rem;
+                    margin: 0.5rem 1em;
+                    border-radius: 5px;
+                    background-color: #ddd;
+                }
+
+.page-paper .paper-container .paper-content .paper-body pre code {
+                        padding: 0;
+                        margin: 0;
+                        font-size: 0.75em;
+                        font-family: consola;
+                    }
+
 
