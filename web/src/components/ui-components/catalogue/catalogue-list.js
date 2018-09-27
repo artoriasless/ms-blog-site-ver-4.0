@@ -20,12 +20,12 @@ class CatalogueList extends React.Component {
                 <div className="catalogue-list">
                     {
                         catalogueList.map((item, idx) => {
-                            var key = `catalogueItem_${idx}`;
-                            var detailUrl = `/paper/${item.id}`;
-                            var catalogueItemTitle = item.title;
-                            var catalogueItemBrief = item.brief;
-                            var dateVal = item.gmtCreate.slice(0, 10);
-                            var tagVal = `${item.tag}${item.subtag ? `，${item.subtag}` : ''}`;
+                            const key = `catalogueItem_${idx}`;
+                            const detailUrl = `/paper/${item.id}`;
+                            const catalogueItemTitle = item.title;
+                            const catalogueItemBrief = item.brief;
+                            const dateVal = item.gmtCreate.slice(0, 10);
+                            const tagVal = `${item.tag}${item.subtag ? `，${item.subtag}` : ''}`;
 
                             return (
                                 <div

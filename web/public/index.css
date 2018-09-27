@@ -1468,6 +1468,45 @@ code {
             border-radius: 5px;
         }
 
+.page-paper .paper-container .paper-content .paper-title {
+                height: 2rem;
+                line-height: 2rem;
+                margin: 15px 0 0;
+                color: #5e87a2;
+                font-weight: bold;
+                font-size: 1.25em;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+.page-paper .paper-container .paper-content .paper-subtitle {
+                position: relative;
+                height: 1.5rem;
+                line-height: 1.5rem;
+                margin: 10px 5px 5px;
+                color: #aaa;
+                font-size: 0.75em;
+            }
+
+.page-paper .paper-container .paper-content .paper-subtitle .subtitle-date {
+                    width: 7rem;
+                    margin-right: 0.5rem;
+                }
+
+.page-paper .paper-container .paper-content .paper-subtitle .subtitle-tags {
+                    max-width: calc(100% - 7.5rem);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+.page-paper .paper-container .paper-content .paper-body {
+                padding: 0 10px;
+                margin: 15px 0;
+                font-family: "microsoft yahei";
+            }
+
 @media (min-width: 768px) {
         .page-paper .paper-container {
             padding: 5px 0 5px 5px;

@@ -6,6 +6,45 @@
             padding: 5px;
             border: 1px solid var(--color-grey-lighter);
             border-radius: 5px;
+
+            .paper-title {
+                height: 2rem;
+                line-height: 2rem;
+                margin: 15px 0 0;
+                color: var(--color-theme);
+                font-weight: bold;
+                font-size: 1.25em;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .paper-subtitle {
+                position: relative;
+                height: 1.5rem;
+                line-height: 1.5rem;
+                margin: 10px 5px 5px;
+                color: var(--color-grey-light);
+                font-size: 0.75em;
+
+                .subtitle-date {
+                    width: 7rem;
+                    margin-right: 0.5rem;
+                }
+
+                .subtitle-tags {
+                    max-width: calc(100% - 7.5rem);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .paper-body {
+                padding: 0 10px;
+                margin: 15px 0;
+                font-family: "microsoft yahei";
+            }
         }
     }
 }

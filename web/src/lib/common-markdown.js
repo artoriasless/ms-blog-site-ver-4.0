@@ -1,9 +1,9 @@
 'use strict';
 
-const md = require('markdown').markdown;
+var md = require('markdown-it')();
 
 function markdown(markdownStr) {
-    return md.toHTML(markdownStr);
+    return md.render(markdownStr);
 }
 
 module.exports = markdown;
