@@ -28,6 +28,13 @@ module.exports = (sequelize, DataTypes) => {
             field: 'reply_id',
             comment: '该评论对应的上一级评论 id （该评论为子评论时）',
         },
+        replyLevel: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: false,
+            field: 'reply_level',
+            defaultValue: 0,
+            comment: '该条评论的层级，0 表示某个文章的直接子评论',
+        },
         content: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -44,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false,
             field: 'reply_date',
-            comment: '评论主体内容',
+            comment: '评论时间',
         },
         isDeleted: {
             type: DataTypes.INTEGER,
@@ -74,7 +81,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
     }, {
-        tableName: 'comment',
+        tableName: 'reply',
         timestamps: true,
         underscored: true,
 

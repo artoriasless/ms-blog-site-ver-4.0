@@ -1,5 +1,7 @@
 'use strict';
 /* global $ */
+require('/plugins/img-viewer/js/index');
+
 const React = require('react');
 
 const mdConvert = require('/lib/common-markdown');
@@ -11,6 +13,35 @@ class Paper extends React.Component {
 
         getPaper({
             paperId,
+        });
+    }
+
+    componentDidUpdate() {
+        $('.paper-body img').each(function() {
+            const $container = $(this).closest('p');
+            const imgSrc = $(this).prop('src');
+            const imgAlt = $(this).prop('alt');
+            const $imgContainer = $(`
+                <a class="img-container" href="${imgSrc}" data-caption="${imgAlt}" data-magnify="gallery">
+                    <img src="${imgSrc}" alt="${imgAlt}"/>
+                </a>
+            `);
+
+            $container.html($imgContainer);
+        });
+        $('.paper-body .img-container').magnify({
+            title: true,
+            headToolbar: [
+                'close'
+            ],
+            footToolbar: [
+                'zoomIn',
+                'zoomOut',
+                'actualSize',
+                'rotateRight'
+            ],
+            initMaximized: true,
+            zIndex: 999999,
         });
     }
 
