@@ -18,18 +18,15 @@ class Paper extends React.Component {
 
     componentDidUpdate() {
         $('.paper-body img').each(function() {
-            const $container = $(this).closest('p');
             const imgSrc = $(this).prop('src');
             const imgAlt = $(this).prop('alt');
-            const $imgContainer = $(`
-                <a class="img-container" href="${imgSrc}" data-caption="${imgAlt}" data-magnify="gallery">
-                    <img src="${imgSrc}" alt="${imgAlt}"/>
-                </a>
-            `);
 
-            $container.html($imgContainer);
+            $(this).attr({
+                'data-src': imgSrc,
+                'data-caption': imgAlt,
+            });
         });
-        $('.paper-body .img-container').magnify({
+        $('.paper-body img').magnify({
             title: true,
             headToolbar: [
                 'close'

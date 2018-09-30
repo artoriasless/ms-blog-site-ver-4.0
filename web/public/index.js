@@ -4451,14 +4451,15 @@ var Paper = function (_React$Component) {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
             $('.paper-body img').each(function () {
-                var $container = $(this).closest('p');
                 var imgSrc = $(this).prop('src');
                 var imgAlt = $(this).prop('alt');
-                var $imgContainer = $('\n                <a class="img-container" href="' + imgSrc + '" data-caption="' + imgAlt + '" data-magnify="gallery">\n                    <img src="' + imgSrc + '" alt="' + imgAlt + '"/>\n                </a>\n            ');
 
-                $container.html($imgContainer);
+                $(this).attr({
+                    'data-src': imgSrc,
+                    'data-caption': imgAlt
+                });
             });
-            $('.paper-body .img-container').magnify({
+            $('.paper-body img').magnify({
                 title: true,
                 headToolbar: ['close'],
                 footToolbar: ['zoomIn', 'zoomOut', 'actualSize', 'rotateRight'],
