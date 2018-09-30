@@ -31,12 +31,6 @@ routeList.forEach(routeLink => {
     _router.get(routeLink, page);
 });
 
-_router.get('/amp', function async(ctx) {
-    const data = fs.readFileSync(path.resolve(__dirname, '../template/amp.html')).toString();
-
-    ctx.body = data;
-});
-
 //  通用的工具接口
 const util = require('./util');
 //  用户相关的 api 接口
