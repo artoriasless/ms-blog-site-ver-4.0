@@ -5,6 +5,7 @@ const PAGE_LENGTH = 10;
 const models = require('../model');
 
 const Reply = models.db.Reply;
+const User = models.db.User;
 
 module.exports = {
     async create(data) {
@@ -28,8 +29,27 @@ module.exports = {
 
         return (reply ? reply.toJSON() : {});
     },
-    async findMany(query){
-        query = query || {};
+    async findMany(paperId){
+        const query = {
+            paper_id: paperId,
+            attributes: [
+                'id', 'replyLevel', 'replyDate', 'content', 'isDeleted', 'replyId',
+            ],
+            order: [
+                ['root_reply_id', 'ASC'],
+            ],
+            include: [
+                {
+                    model: User,
+                    attributes: [
+                        'id', 'userName', 'email', 'gender', 'uuid',
+                    ],
+                    where: {
+                        id: models.db.sequelize.col('Reply.user_id'),
+                    },
+                }
+            ],
+        };
 
         const replies = await Reply.findAll(query);
 

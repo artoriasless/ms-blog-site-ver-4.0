@@ -112,6 +112,7 @@ var GET_MESSAGE = 'GET_MESSAGE';
 var GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 var GET_CATALOGUE = 'GET_CATALOGUE';
 var GET_PAPER = 'GET_PAPER';
+var GET_PAPER_REPLY = 'GET_PAPER_REPLY';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -129,7 +130,8 @@ module.exports = {
     GET_MESSAGE: GET_MESSAGE,
     GET_FILTER_COUNT: GET_FILTER_COUNT,
     GET_CATALOGUE: GET_CATALOGUE,
-    GET_PAPER: GET_PAPER
+    GET_PAPER: GET_PAPER,
+    GET_PAPER_REPLY: GET_PAPER_REPLY
 };
 
 /***/ }),
@@ -247,6 +249,34 @@ module.exports = getMessage;
 
 /***/ }),
 
+/***/ "./actions/get-paper-reply.js":
+/*!************************************!*\
+  !*** ./actions/get-paper-reply.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getPaperReply = function getPaperReply(reply) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'GET_PAPER_REPLY',
+        payload: {
+            current: current,
+            reply: reply
+        }
+    };
+};
+
+module.exports = getPaperReply;
+
+/***/ }),
+
 /***/ "./actions/get-paper.js":
 /*!******************************!*\
   !*** ./actions/get-paper.js ***!
@@ -303,6 +333,7 @@ var getMessageAction = __webpack_require__(/*! ./get-message */ "./actions/get-m
 var getFilterCountAction = __webpack_require__(/*! ./get-filter-count */ "./actions/get-filter-count.js");
 var getCatalogueAction = __webpack_require__(/*! ./get-catalogue */ "./actions/get-catalogue.js");
 var getPaperAction = __webpack_require__(/*! ./get-paper */ "./actions/get-paper.js");
+var getPaperReplyAction = __webpack_require__(/*! ./get-paper-reply */ "./actions/get-paper-reply.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -322,7 +353,8 @@ var actions = {
     getMessageAction: getMessageAction,
     getFilterCountAction: getFilterCountAction,
     getCatalogueAction: getCatalogueAction,
-    getPaperAction: getPaperAction
+    getPaperAction: getPaperAction,
+    getPaperReplyAction: getPaperReplyAction
 };
 
 module.exports = actions;
@@ -1391,6 +1423,66 @@ module.exports = EditPwdModal;
 
 /***/ }),
 
+/***/ "./components/paper-reply.js":
+/*!***********************************!*\
+  !*** ./components/paper-reply.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+
+var UI_paperReply = __webpack_require__(/*! ../components/ui-components/paper-reply */ "./components/ui-components/paper-reply/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var getPaperReplyAction = actions.getPaperReplyAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        getPaperReply: function getPaperReply(jsonData) {
+            return dispatch(ajaxGetPaperReply(jsonData));
+        }
+    };
+};
+
+var PaperReply = connect(mapState2Props, mapDispatch2Props)(UI_paperReply);
+
+function ajaxGetPaperReply(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/reply';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                dispatch(getPaperReplyAction({
+                    paperId: jsonData.paperId,
+                    replyList: result.data
+                }));
+            }
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+        var options = {
+            type: 'get'
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+    };
+}
+
+module.exports = PaperReply;
+
+/***/ }),
+
 /***/ "./components/paper.js":
 /*!*****************************!*\
   !*** ./components/paper.js ***!
@@ -1697,6 +1789,7 @@ module.exports = CataloguePager;
 
 "use strict";
 
+/* global $ */
 /* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1748,6 +1841,16 @@ var Catalogue = function (_React$Component) {
                 filterType: filterType,
                 filterParam: filterParam
             });
+
+            window.onresize = function () {
+                var currentViewWidth = document.body.offsetWidth;
+
+                if (currentViewWidth >= 767) {
+                    $('.filter-container').css('display', 'block');
+                } else {
+                    $('.filter-container').css('display', 'none');
+                }
+            };
         }
     }, {
         key: 'pageJumpHandler',
@@ -4403,6 +4506,172 @@ module.exports = PaperFilterToggler;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper-reply/index.js":
+/*!*******************************************************!*\
+  !*** ./components/ui-components/paper-reply/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var PaperReply = function (_React$Component) {
+    _inherits(PaperReply, _React$Component);
+
+    function PaperReply() {
+        _classCallCheck(this, PaperReply);
+
+        return _possibleConstructorReturn(this, (PaperReply.__proto__ || Object.getPrototypeOf(PaperReply)).apply(this, arguments));
+    }
+
+    _createClass(PaperReply, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var paperId = this.props.paperId;
+            var getPaperReply = this.props.getPaperReply;
+
+            getPaperReply({
+                paperId: paperId
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var paperId = this.props.paperId;
+            var userInfo = this.props.userInfo || {};
+            var reply = this.props.reply || {
+                paperId: paperId,
+                replyList: []
+            };
+            var replyId2IdxMap = {};
+
+            reply.replyList.map(function (replyItem, index) {
+                replyItem.editTag = replyItem.userInfo.uuid === userInfo.uuid && !replyItem.isDeleted;
+
+                replyId2IdxMap[replyItem.id] = index;
+
+                return replyItem;
+            });
+
+            if (reply.replyList.length === 0) {
+                return React.createElement(
+                    'dl',
+                    { className: 'reply-container' },
+                    React.createElement(
+                        'dt',
+                        { className: 'reply-title' },
+                        'Comments'
+                    ),
+                    React.createElement(
+                        'dd',
+                        { className: 'no-reply-tips' },
+                        'no comment now, be the first to reply'
+                    )
+                );
+            } else {
+                return React.createElement(
+                    'dl',
+                    { className: 'reply-container' },
+                    React.createElement(
+                        'dt',
+                        { className: 'reply-title' },
+                        'Comments'
+                    ),
+                    reply.replyList.map(function (replyItem, index) {
+                        var key = 'replyItem_' + index;
+                        var avatarSrc = 'https://monkingstand.oss-cn-beijing.aliyuncs.com/user/default.jpg?' + Date.parse(new Date());
+                        var userName = replyItem.userInfo.userName;
+                        var replyContent = replyItem.content;
+                        var replyDate = replyItem.replyDate;
+                        var replyToTag = replyItem.replyLevel !== 0;
+                        var replyTo = replyItem.replyLevel === 0 ? '' : reply.replyList[replyId2IdxMap[replyItem.id]].userInfo.userName;
+
+                        var ownerTag = replyItem.userInfo.uuid === userInfo.uuid && userInfo.uuid !== undefined;
+                        var canDeleteTag = ownerTag && replyItem.isDeleted === 0;
+                        var canEditTag = canDeleteTag;
+
+                        return React.createElement(
+                            'dd',
+                            {
+                                className: 'reply-item reply-level-' + replyItem.replyLevel,
+                                key: key,
+                                'data-id': replyItem.id,
+                                'data-level': replyItem.replyLevel
+                            },
+                            React.createElement(
+                                'div',
+                                { className: 'user-info' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'user-avatar' },
+                                    React.createElement('img', { className: 'avatar-img', src: avatarSrc })
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'user-name' },
+                                    userName,
+                                    React.createElement('i', { className: replyToTag ? 'fa fa-share' : '' }),
+                                    replyTo
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'reply-content' },
+                                replyContent
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'reply-addition' },
+                                React.createElement(
+                                    'div',
+                                    { className: 'reply-date pull-left' },
+                                    replyDate
+                                ),
+                                React.createElement(
+                                    'div',
+                                    { className: 'reply-operate-container pull-right' },
+                                    !canDeleteTag ? null : React.createElement(
+                                        'a',
+                                        { className: 'reply-operate delete', href: 'javascript:;' },
+                                        React.createElement('i', { className: 'fa fa-times' })
+                                    ),
+                                    !canEditTag ? null : React.createElement(
+                                        'a',
+                                        { className: 'reply-operate edit', href: 'javascript:;' },
+                                        React.createElement('i', { className: 'fa fa-edit' })
+                                    ),
+                                    React.createElement(
+                                        'a',
+                                        { className: 'reply-operate reply', href: 'javascript:;' },
+                                        React.createElement('i', { className: 'fa fa-share' })
+                                    )
+                                )
+                            )
+                        );
+                    })
+                );
+            }
+        }
+    }]);
+
+    return PaperReply;
+}(React.Component);
+
+module.exports = PaperReply;
+
+/***/ }),
+
 /***/ "./components/ui-components/paper/index.js":
 /*!*************************************************!*\
   !*** ./components/ui-components/paper/index.js ***!
@@ -4413,6 +4682,7 @@ module.exports = PaperFilterToggler;
 "use strict";
 
 /* global $ */
+/* eslint-disable */
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4426,7 +4696,10 @@ __webpack_require__(/*! ../../../plugins/img-viewer/js/index */ "./plugins/img-v
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var PaperReply = __webpack_require__(/*! ../../../components/paper-reply */ "./components/paper-reply.js");
+
 var mdConvert = __webpack_require__(/*! ../../../lib/common-markdown */ "./lib/common-markdown.js");
+/* eslint-disable */
 
 var Paper = function (_React$Component) {
     _inherits(Paper, _React$Component);
@@ -4446,6 +4719,16 @@ var Paper = function (_React$Component) {
             getPaper({
                 paperId: paperId
             });
+
+            window.onresize = function () {
+                var currentViewWidth = document.body.offsetWidth;
+
+                if (currentViewWidth >= 767) {
+                    $('.filter-container').css('display', 'block');
+                } else {
+                    $('.filter-container').css('display', 'none');
+                }
+            };
         }
     }, {
         key: 'componentDidUpdate',
@@ -4516,7 +4799,9 @@ var Paper = function (_React$Component) {
                             )
                         ),
                         React.createElement('hr', null),
-                        React.createElement('div', { className: 'paper-body', dangerouslySetInnerHTML: { __html: paperBody } })
+                        React.createElement('div', { className: 'paper-body', dangerouslySetInnerHTML: { __html: paperBody } }),
+                        React.createElement('hr', null),
+                        React.createElement(PaperReply, { paperId: paper.id })
                     )
                 );
             } else {
@@ -49383,6 +49668,30 @@ module.exports = getMessage;
 
 /***/ }),
 
+/***/ "./reducers/get-paper-reply.js":
+/*!*************************************!*\
+  !*** ./reducers/get-paper-reply.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getPaperReply = function getPaperReply(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.reply = action.payload.reply;
+
+    return newState;
+};
+
+module.exports = getPaperReply;
+
+/***/ }),
+
 /***/ "./reducers/get-paper.js":
 /*!*******************************!*\
   !*** ./reducers/get-paper.js ***!
@@ -49436,6 +49745,7 @@ var getMessageFunc = __webpack_require__(/*! ./get-message */ "./reducers/get-me
 var getFilterCountFunc = __webpack_require__(/*! ./get-filter-count */ "./reducers/get-filter-count.js");
 var getCatalogueFunc = __webpack_require__(/*! ./get-catalogue */ "./reducers/get-catalogue.js");
 var getPaperFunc = __webpack_require__(/*! ./get-paper */ "./reducers/get-paper.js");
+var getPaperReplyFunc = __webpack_require__(/*! ./get-paper-reply */ "./reducers/get-paper-reply.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -49489,6 +49799,9 @@ var reducers = function reducers() {
 
         case actionTypes.GET_PAPER:
             return getPaperFunc(state, action);
+
+        case actionTypes.GET_PAPER_REPLY:
+            return getPaperReplyFunc(state, action);
 
         default:
             return state;

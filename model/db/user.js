@@ -81,10 +81,18 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: 'gmtModified',
 
         classMethods: {
-            // associate(models) {
-            // example on how to add relations
-            // Article.hasMany(models.Comments)
-            // },
+            associate(models) {
+                // associate Message
+                User.hasMany(models.Message, {
+                    foreignKey: 'userId',
+                    sourceKey: 'id',
+                });
+                // associate Reply
+                User.hasMany(models.Reply, {
+                    foreignKey: 'userId',
+                    sourceKey: 'id',
+                });
+            },
         },
     });
 

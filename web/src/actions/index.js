@@ -18,6 +18,7 @@ const getMessageAction = require('./get-message');
 const getFilterCountAction = require('./get-filter-count');
 const getCatalogueAction = require('./get-catalogue');
 const getPaperAction = require('./get-paper');
+const getPaperReplyAction = require('./get-paper-reply');
 
 const actions = {
     actionTypes,
@@ -38,6 +39,7 @@ const actions = {
     getFilterCountAction,
     getCatalogueAction,
     getPaperAction,
+    getPaperReplyAction,
 };
 
 module.exports = actions;

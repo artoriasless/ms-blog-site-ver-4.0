@@ -18,6 +18,7 @@ const getMessageFunc = require('./get-message');
 const getFilterCountFunc = require('./get-filter-count');
 const getCatalogueFunc = require('./get-catalogue');
 const getPaperFunc = require('./get-paper');
+const getPaperReplyFunc = require('./get-paper-reply');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -68,6 +69,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.GET_PAPER:
         return getPaperFunc(state, action);
+
+    case actionTypes.GET_PAPER_REPLY:
+        return getPaperReplyFunc(state, action);
 
     default:
         return state;

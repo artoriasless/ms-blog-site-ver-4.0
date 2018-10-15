@@ -815,7 +815,7 @@ code {
         width: calc(100% - 0.5rem);
         height: 100%;
         padding: 0;
-        z-index: 9999;
+        z-index: 999;
         background-color: #fff;
         overflow-y: auto;
     }
@@ -2006,5 +2006,119 @@ code {
                         font-size: 0.75em;
                         font-family: consola;
                     }
+
+.reply-container {
+    padding: 0 15px;
+    margin: 0.5rem 0;
+}
+
+.reply-container .no-reply-tips {
+        padding: 0;
+        margin: 0.75rem 0;
+        color: #aaa;
+        font-size: 0.75em;
+        text-align: center;
+    }
+
+.reply-container .reply-item {
+        padding: 5px;
+        margin: 0.25rem 0 0 2.5rem;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+    }
+
+.reply-container .reply-item .user-info {
+            height: 1.6rem;
+        }
+
+.reply-container .reply-item .user-info .user-avatar {
+                width: 1.6rem;
+                height: 1.6rem;
+                margin-right: 0.25rem;
+                float: left;
+            }
+
+.reply-container .reply-item .user-info .user-avatar .avatar-img {
+                    display: block;
+                    width: 1.6rem;
+                    height: 1.6rem;
+                    padding: 0;
+                    margin: 0;
+                }
+
+.reply-container .reply-item .user-info .user-name {
+                max-width: calc(100% - 1.75rem - 10px);
+                height: 1.6rem;
+                line-height: 1.6rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #5e87a2;
+                font-size: 0.75em;
+                float: left;
+            }
+
+.reply-container .reply-item .user-info .user-name .fa-share {
+                    display: inline-block;
+                    height: 1.6rem;
+                    line-height: 1.6rem;
+                    margin: 0 0.5rem;
+                    color: #777;
+                    font-size: 0.5em;
+                }
+
+.reply-container .reply-item .reply-content {
+            padding: 5px 0;
+            color: #555;
+            font-size: 0.75em;
+            text-indent: 2em;
+        }
+
+.reply-container .reply-item .reply-addition {
+            height: 1.5rem;
+            line-height: 1.5rem;
+            color: #777;
+            font-size: 0.75em;
+        }
+
+.reply-container .reply-item .reply-addition .reply-operate {
+                display: inline-block;
+                width: 1rem;
+                margin: 0 0.25rem;
+                color: #555;
+                text-align: center;
+            }
+
+.reply-container .reply-item .reply-addition .reply-operate:hover {
+                    color: #5e87a2;
+                }
+
+.reply-container .reply-item .reply-addition .reply-operate:first-of-type {
+                    margin-left: 0;
+                }
+
+.reply-container .reply-item .reply-addition .reply-operate:last-of-type {
+                    margin-right: 0;
+                }
+
+.reply-container .reply-item.reply-level-4 {
+        margin-left: 2rem;
+    }
+
+.reply-container .reply-item.reply-level-3 {
+        margin-left: 1.5rem;
+    }
+
+.reply-container .reply-item.reply-level-2 {
+        margin-left: 1rem;
+    }
+
+.reply-container .reply-item.reply-level-1 {
+        margin-left: 0.5rem;
+    }
+
+.reply-container .reply-item.reply-level-0 {
+        margin-left: 0;
+    }
 
 

@@ -16,6 +16,7 @@ const GET_MESSAGE = 'GET_MESSAGE';
 const GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 const GET_CATALOGUE = 'GET_CATALOGUE';
 const GET_PAPER = 'GET_PAPER';
+const GET_PAPER_REPLY = 'GET_PAPER_REPLY';
 
 module.exports = {
     GET_USER_DEFAULT,
@@ -34,4 +35,5 @@ module.exports = {
     GET_FILTER_COUNT,
     GET_CATALOGUE,
     GET_PAPER,
+    GET_PAPER_REPLY,
 };

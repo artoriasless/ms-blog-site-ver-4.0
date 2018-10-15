@@ -15,11 +15,18 @@ module.exports = (sequelize, DataTypes) => {
             field: 'user_id',
             comment: '评论的用户 id',
         },
-        papgerId: {
+        paperId: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             field: 'paper_id',
             comment: '评论所属文章 id',
+        },
+        rootReplyId: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0,
+            field: 'root_reply_id',
+            comment: '该评论对应的最根级的评论 id ，如果是直接子评论，则为自己的 id',
         },
         replyId: {
             type: DataTypes.INTEGER.UNSIGNED,
@@ -52,6 +59,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             field: 'reply_date',
             comment: '评论时间',
+            get: function() {
+                const replyDate = this.getDataValue('replyDate');
+
+                return moment(replyDate).format('YYYY-MM-DD HH:mm:ss');
+            },
         },
         isDeleted: {
             type: DataTypes.INTEGER,
@@ -89,10 +101,23 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: 'gmtModified',
 
         classMethods: {
-            // associate(models) {
-            // example on how to add relations
-            // Article.hasMany(models.Comments)
-            // },
+            associate(models) {
+                // associate User
+                Reply.belongsTo(models.User, {
+                    foreignKey: 'userId',
+                    targetKey: 'id',
+                });
+                // associate Paper
+                Reply.belongsTo(models.Paper, {
+                    foreignKey: 'paperId',
+                    targetKey: 'id',
+                });
+                // associate Message
+                Reply.hasOne(models.Message, {
+                    foreignKey: 'replyId',
+                    as: 'Reply',
+                });
+            },
         },
     });
 

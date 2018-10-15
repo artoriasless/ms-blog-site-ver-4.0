@@ -1,4 +1,5 @@
 'use strict';
+/* global $ */
 /* eslint-disable */
 const React = require('react');
 
@@ -33,6 +34,16 @@ class Catalogue extends React.Component {
             filterType,
             filterParam,
         });
+
+        window.onresize = function() {
+            const currentViewWidth = document.body.offsetWidth;
+
+            if (currentViewWidth >= 767) {
+                $('.filter-container').css('display', 'block');
+            } else {
+                $('.filter-container').css('display', 'none');
+            }
+        };
     }
 
     pageJumpHandler(pageData) {

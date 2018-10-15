@@ -1,10 +1,14 @@
 'use strict';
 /* global $ */
+/* eslint-disable */
 require('/plugins/img-viewer/js/index');
 
 const React = require('react');
 
+const PaperReply = require('/components/paper-reply');
+
 const mdConvert = require('/lib/common-markdown');
+/* eslint-disable */
 
 class Paper extends React.Component {
     componentWillMount() {
@@ -14,6 +18,16 @@ class Paper extends React.Component {
         getPaper({
             paperId,
         });
+
+        window.onresize = function() {
+            const currentViewWidth = document.body.offsetWidth;
+
+            if (currentViewWidth >= 767) {
+                $('.filter-container').css('display', 'block');
+            } else {
+                $('.filter-container').css('display', 'none');
+            }
+        };
     }
 
     componentDidUpdate() {
@@ -69,6 +83,8 @@ class Paper extends React.Component {
                         </div>
                         <hr/>
                         <div className="paper-body" dangerouslySetInnerHTML={{ __html: paperBody }}></div>
+                        <hr/>
+                        <PaperReply paperId={ paper.id }/>
                     </div>
                 </div>
             );
