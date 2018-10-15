@@ -45,7 +45,7 @@ class PaperReply extends React.Component {
                             const key = `replyItem_${index}`;
                             const avatarSrc = `https://monkingstand.oss-cn-beijing.aliyuncs.com/user/default.jpg?${Date.parse(new Date())}`;
                             const userName = replyItem.userInfo.userName;
-                            const replyContent = replyItem.content;
+                            const replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                             const replyDate = replyItem.replyDate;
                             const replyToTag = replyItem.replyLevel !== 0;
                             const replyTo = replyItem.replyLevel === 0 ? '' : reply.replyList[replyId2IdxMap[replyItem.id]].userInfo.userName;
@@ -71,7 +71,7 @@ class PaperReply extends React.Component {
                                             { replyTo }
                                         </div>
                                     </div>
-                                    <div className="reply-content">{ replyContent }</div>
+                                    <div className={ `reply-content ${replyItem.isDeleted === 0 ? '' : 'deleted'}` }>{ replyContent }</div>
                                     <div className="reply-addition">
                                         <div className="reply-date pull-left">{ replyDate }</div>
                                         <div className="reply-operate-container pull-right">
@@ -90,7 +90,7 @@ class PaperReply extends React.Component {
                                                 )
                                             }
                                             <a className="reply-operate reply" href="javascript:;">
-                                                <i className="fa fa-share"></i>
+                                                <i className="fa fa-reply"></i>
                                             </a>
                                         </div>
                                     </div>

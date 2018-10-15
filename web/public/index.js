@@ -4592,7 +4592,7 @@ var PaperReply = function (_React$Component) {
                         var key = 'replyItem_' + index;
                         var avatarSrc = 'https://monkingstand.oss-cn-beijing.aliyuncs.com/user/default.jpg?' + Date.parse(new Date());
                         var userName = replyItem.userInfo.userName;
-                        var replyContent = replyItem.content;
+                        var replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                         var replyDate = replyItem.replyDate;
                         var replyToTag = replyItem.replyLevel !== 0;
                         var replyTo = replyItem.replyLevel === 0 ? '' : reply.replyList[replyId2IdxMap[replyItem.id]].userInfo.userName;
@@ -4627,7 +4627,7 @@ var PaperReply = function (_React$Component) {
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'reply-content' },
+                                { className: 'reply-content ' + (replyItem.isDeleted === 0 ? '' : 'deleted') },
                                 replyContent
                             ),
                             React.createElement(
@@ -4654,7 +4654,7 @@ var PaperReply = function (_React$Component) {
                                     React.createElement(
                                         'a',
                                         { className: 'reply-operate reply', href: 'javascript:;' },
-                                        React.createElement('i', { className: 'fa fa-share' })
+                                        React.createElement('i', { className: 'fa fa-reply' })
                                     )
                                 )
                             )
