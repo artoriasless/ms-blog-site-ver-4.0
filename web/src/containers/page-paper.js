@@ -6,6 +6,7 @@ const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
 const PaperFilter = require('/components/common-paper-filter');
 const Paper = require('/components/paper');
+const ReplyModal = require('/components/reply-modal');
 
 const PaperFilterToggler = require('/components/ui-components/paper-filter/paper-filter-toggler');
 /* eslint-disable */
@@ -22,6 +23,7 @@ class PagePaper extends React.Component {
                     <Paper paperId={ paperId }/>
                 </div>
                 <LoginModal/>
+                <ReplyModal/>
             </div>
         );
     }

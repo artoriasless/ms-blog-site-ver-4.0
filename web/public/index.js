@@ -113,6 +113,9 @@ var GET_FILTER_COUNT = 'GET_FILTER_COUNT';
 var GET_CATALOGUE = 'GET_CATALOGUE';
 var GET_PAPER = 'GET_PAPER';
 var GET_PAPER_REPLY = 'GET_PAPER_REPLY';
+var RESET_REPLY_FORM = 'RESET_REPLY_FORM';
+var UPDATE_REPLY_FORM = 'UPDATE_REPLY_FORM';
+var SUBMIT_REPLY = 'SUBMIT_REPLY';
 
 module.exports = {
     GET_USER_DEFAULT: GET_USER_DEFAULT,
@@ -131,7 +134,10 @@ module.exports = {
     GET_FILTER_COUNT: GET_FILTER_COUNT,
     GET_CATALOGUE: GET_CATALOGUE,
     GET_PAPER: GET_PAPER,
-    GET_PAPER_REPLY: GET_PAPER_REPLY
+    GET_PAPER_REPLY: GET_PAPER_REPLY,
+    RESET_REPLY_FORM: RESET_REPLY_FORM,
+    UPDATE_REPLY_FORM: UPDATE_REPLY_FORM,
+    SUBMIT_REPLY: SUBMIT_REPLY
 };
 
 /***/ }),
@@ -334,6 +340,9 @@ var getFilterCountAction = __webpack_require__(/*! ./get-filter-count */ "./acti
 var getCatalogueAction = __webpack_require__(/*! ./get-catalogue */ "./actions/get-catalogue.js");
 var getPaperAction = __webpack_require__(/*! ./get-paper */ "./actions/get-paper.js");
 var getPaperReplyAction = __webpack_require__(/*! ./get-paper-reply */ "./actions/get-paper-reply.js");
+var resetReplyFormAction = __webpack_require__(/*! ./reset-reply-form */ "./actions/reset-reply-form.js");
+var updateReplyFormAction = __webpack_require__(/*! ./update-reply-form */ "./actions/update-reply-form.js");
+var submitReplyAction = __webpack_require__(/*! ./submit-reply */ "./actions/submit-reply.js");
 
 var actions = {
     actionTypes: actionTypes,
@@ -354,7 +363,10 @@ var actions = {
     getFilterCountAction: getFilterCountAction,
     getCatalogueAction: getCatalogueAction,
     getPaperAction: getPaperAction,
-    getPaperReplyAction: getPaperReplyAction
+    getPaperReplyAction: getPaperReplyAction,
+    resetReplyFormAction: resetReplyFormAction,
+    updateReplyFormAction: updateReplyFormAction,
+    submitReplyAction: submitReplyAction
 };
 
 module.exports = actions;
@@ -501,6 +513,66 @@ module.exports = resetPwd;
 
 /***/ }),
 
+/***/ "./actions/reset-reply-form.js":
+/*!*************************************!*\
+  !*** ./actions/reset-reply-form.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var resetReplyForm = function resetReplyForm(formData) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'RESET_REPLY_FORM',
+        payload: {
+            current: current,
+            cache: {
+                reply: formData
+            }
+        }
+    };
+};
+
+module.exports = resetReplyForm;
+
+/***/ }),
+
+/***/ "./actions/submit-reply.js":
+/*!*********************************!*\
+  !*** ./actions/submit-reply.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var submitReply = function submitReply() {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'SUBMIT_REPLY',
+        payload: {
+            current: current,
+            cache: {
+                reply: {}
+            }
+        }
+    };
+};
+
+module.exports = submitReply;
+
+/***/ }),
+
 /***/ "./actions/update-login-form.js":
 /*!**************************************!*\
   !*** ./actions/update-login-form.js ***!
@@ -616,6 +688,36 @@ var updateRegisterForm = function updateRegisterForm(formData) {
 };
 
 module.exports = updateRegisterForm;
+
+/***/ }),
+
+/***/ "./actions/update-reply-form.js":
+/*!**************************************!*\
+  !*** ./actions/update-reply-form.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updateReplyForm = function updateReplyForm(formData) {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'UPDATE_REPLY_FORM',
+        payload: {
+            current: current,
+            cache: {
+                reply: formData
+            }
+        }
+    };
+};
+
+module.exports = updateReplyForm;
 
 /***/ }),
 
@@ -1502,6 +1604,7 @@ var UI_paper = __webpack_require__(/*! ../components/ui-components/paper */ "./c
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var getPaperAction = actions.getPaperAction;
+var resetReplyFormAction = actions.resetReplyFormAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -1511,6 +1614,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
     return { //  eslint-disable-line
         getPaper: function getPaper(jsonData) {
             return dispatch(ajaxGetPaper(jsonData));
+        },
+        resetReplyForm: function resetReplyForm(formData) {
+            return dispatch(resetReplyFormAction(formData));
         }
     };
 };
@@ -1535,6 +1641,128 @@ function ajaxGetPaper(jsonData) {
 }
 
 module.exports = Paper;
+
+/***/ }),
+
+/***/ "./components/reply-modal.js":
+/*!***********************************!*\
+  !*** ./components/reply-modal.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+var UI_replyModal = __webpack_require__(/*! ../components/ui-components/reply-modal */ "./components/ui-components/reply-modal/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var updateReplyFormAction = actions.updateReplyFormAction;
+var submitReplyAction = actions.submitReplyAction;
+var getPaperReplyAction = actions.getPaperReplyAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return { //  eslint-disable-line
+        updateReplyForm: function updateReplyForm(formData) {
+            return dispatch(updateReplyFormAction(formData));
+        },
+        addReply: function addReply(jsonData) {
+            return dispatch(ajaxAddReply(jsonData));
+        },
+        editReply: function editReply(jsonData) {
+            return dispatch(ajaxEditReply(jsonData));
+        }
+    };
+};
+
+var ReplyModal = connect(mapState2Props, mapDispatch2Props)(UI_replyModal);
+
+function ajaxAddReply(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/reply/create';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                $('#replyModal').modal('hide');
+                dispatch(submitReplyAction());
+
+                // 评论添加成功后，更新评论列表
+                updatePaperReply({
+                    paperId: jsonData.paperId
+                }, dispatch);
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+function ajaxEditReply(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/reply/' + jsonData.id + '/update';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                $('#replyModal').modal('hide');
+                dispatch(submitReplyAction());
+
+                // 评论添加成功后，更新评论列表
+                updatePaperReply({
+                    paperId: jsonData.paperId
+                }, dispatch);
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+function updatePaperReply(jsonData, dispatch) {
+    var requestUrl = '/api/reply';
+    var successFunc = function successFunc(result) {
+        if (result.success) {
+            dispatch(getPaperReplyAction({
+                paperId: jsonData.paperId,
+                replyList: result.data
+            }));
+        }
+    };
+    var failFunc = function failFunc(err) {
+        console.info(err); //  eslint-disable-line
+    };
+    var options = {
+        type: 'get'
+    };
+
+    ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
+}
+
+module.exports = ReplyModal;
 
 /***/ }),
 
@@ -1848,6 +2076,7 @@ var Catalogue = function (_React$Component) {
                 if (currentViewWidth >= 767) {
                     $('.filter-container').css('display', 'block');
                 } else {
+                    $('.page-section-body').removeClass('filter-expand');
                     $('.filter-container').css('display', 'none');
                 }
             };
@@ -4526,16 +4755,68 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var config = __webpack_require__(/*! ../../../config */ "./config.js");
+
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
 var PaperReply = function (_React$Component) {
     _inherits(PaperReply, _React$Component);
 
     function PaperReply() {
         _classCallCheck(this, PaperReply);
 
-        return _possibleConstructorReturn(this, (PaperReply.__proto__ || Object.getPrototypeOf(PaperReply)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (PaperReply.__proto__ || Object.getPrototypeOf(PaperReply)).call(this));
+
+        _this.showReplyModal = _this.showReplyModal.bind(_this);
+        _this.showLoginModal = _this.showLoginModal.bind(_this);
+        _this.errHandler = _this.errHandler.bind(_this);
+        return _this;
     }
 
     _createClass(PaperReply, [{
+        key: 'showReplyModal',
+        value: function showReplyModal(evt, formData) {
+            var _this2 = this;
+
+            var isLogin = this.props.cache.isLogin;
+            var resetReplyForm = this.props.resetReplyForm;
+
+            if (isLogin) {
+                resetReplyForm(formData);
+
+                $('.navbar-collapse').collapse('hide');
+                $('#replyModal').modal();
+                document.querySelector('#replyForm').reset();
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: 'Guest,please login first...',
+                    shownExpires: 1.5
+                });
+
+                setTimeout(function () {
+                    _this2.showLoginModal();
+                }, 1500);
+            }
+        }
+    }, {
+        key: 'showLoginModal',
+        value: function showLoginModal() {
+            $('.navbar-collapse').collapse('hide');
+            $('#loginModal').modal();
+            document.querySelector('#registerForm').reset();
+            document.querySelector('#loginForm').reset();
+        }
+    }, {
+        key: 'errHandler',
+        value: function errHandler(evt) {
+            //  eslint-disable-line
+            var $userAvatar = $(evt.target);
+            var defaultAvatarLink = config.ossPublic.user + '/default.jpg?' + Date.parse(new Date());
+
+            $userAvatar.attr('src', defaultAvatarLink);
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             var paperId = this.props.paperId;
@@ -4548,6 +4829,8 @@ var PaperReply = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var paperId = this.props.paperId;
             var userInfo = this.props.userInfo || {};
             var reply = this.props.reply || {
@@ -4571,7 +4854,25 @@ var PaperReply = function (_React$Component) {
                     React.createElement(
                         'dt',
                         { className: 'reply-title' },
-                        'Comments'
+                        'Comments',
+                        React.createElement(
+                            'a',
+                            {
+                                className: 'reply-operate reply',
+                                href: 'javascript:;',
+                                onClick: function onClick(event) {
+                                    return _this3.showReplyModal(event, {
+                                        paperId: reply.paperId,
+                                        rootReplyId: 0,
+                                        replyId: 0,
+                                        replyLevel: 0,
+                                        replyType: 'ADD',
+                                        content: ''
+                                    });
+                                }
+                            },
+                            React.createElement('i', { className: 'fa fa-reply' })
+                        )
                     ),
                     React.createElement(
                         'dd',
@@ -4586,11 +4887,29 @@ var PaperReply = function (_React$Component) {
                     React.createElement(
                         'dt',
                         { className: 'reply-title' },
-                        'Comments'
+                        'Comments',
+                        React.createElement(
+                            'a',
+                            {
+                                className: 'reply-operate reply',
+                                href: 'javascript:;',
+                                onClick: function onClick(event) {
+                                    return _this3.showReplyModal(event, {
+                                        paperId: reply.paperId,
+                                        rootReplyId: 0,
+                                        replyId: 0,
+                                        replyLevel: 0,
+                                        replyType: 'ADD',
+                                        content: ''
+                                    });
+                                }
+                            },
+                            React.createElement('i', { className: 'fa fa-reply' })
+                        )
                     ),
                     reply.replyList.map(function (replyItem, index) {
                         var key = 'replyItem_' + index;
-                        var avatarSrc = 'https://monkingstand.oss-cn-beijing.aliyuncs.com/user/default.jpg?' + Date.parse(new Date());
+                        var avatarSrc = config.ossPublic.user + '/' + replyItem.userInfo.uuid + '.jpg?' + Date.parse(new Date());
                         var userName = replyItem.userInfo.userName;
                         var replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                         var replyDate = replyItem.replyDate;
@@ -4607,7 +4926,8 @@ var PaperReply = function (_React$Component) {
                                 className: 'reply-item reply-level-' + replyItem.replyLevel,
                                 key: key,
                                 'data-id': replyItem.id,
-                                'data-level': replyItem.replyLevel
+                                'data-level': replyItem.replyLevel,
+                                'data-root': replyItem.rootReplyId
                             },
                             React.createElement(
                                 'div',
@@ -4615,7 +4935,13 @@ var PaperReply = function (_React$Component) {
                                 React.createElement(
                                     'div',
                                     { className: 'user-avatar' },
-                                    React.createElement('img', { className: 'avatar-img', src: avatarSrc })
+                                    React.createElement('img', {
+                                        className: 'avatar-img',
+                                        src: avatarSrc,
+                                        onError: function onError(event) {
+                                            return _this3.errHandler(event);
+                                        }
+                                    })
                                 ),
                                 React.createElement(
                                     'div',
@@ -4648,12 +4974,36 @@ var PaperReply = function (_React$Component) {
                                     ),
                                     !canEditTag ? null : React.createElement(
                                         'a',
-                                        { className: 'reply-operate edit', href: 'javascript:;' },
+                                        {
+                                            className: 'reply-operate edit',
+                                            href: 'javascript:;',
+                                            onClick: function onClick(event) {
+                                                return _this3.showReplyModal(event, {
+                                                    paperId: reply.paperId,
+                                                    id: replyItem.id,
+                                                    replyType: 'EDIT',
+                                                    content: replyContent
+                                                });
+                                            }
+                                        },
                                         React.createElement('i', { className: 'fa fa-edit' })
                                     ),
                                     React.createElement(
                                         'a',
-                                        { className: 'reply-operate reply', href: 'javascript:;' },
+                                        {
+                                            className: 'reply-operate reply',
+                                            href: 'javascript:;',
+                                            onClick: function onClick(event) {
+                                                return _this3.showReplyModal(event, {
+                                                    paperId: reply.paperId,
+                                                    rootReplyId: replyItem.rootReplyId,
+                                                    replyId: replyItem.id,
+                                                    replyLevel: replyItem.replyLevel + 1,
+                                                    replyType: 'ADD',
+                                                    content: ''
+                                                });
+                                            }
+                                        },
                                         React.createElement('i', { className: 'fa fa-reply' })
                                     )
                                 )
@@ -4726,6 +5076,7 @@ var Paper = function (_React$Component) {
                 if (currentViewWidth >= 767) {
                     $('.filter-container').css('display', 'block');
                 } else {
+                    $('.page-section-body').removeClass('filter-expand');
                     $('.filter-container').css('display', 'none');
                 }
             };
@@ -4801,7 +5152,11 @@ var Paper = function (_React$Component) {
                         React.createElement('hr', null),
                         React.createElement('div', { className: 'paper-body', dangerouslySetInnerHTML: { __html: paperBody } }),
                         React.createElement('hr', null),
-                        React.createElement(PaperReply, { paperId: paper.id })
+                        React.createElement(PaperReply, {
+                            paperId: paper.id,
+                            resetReplyForm: this.props.resetReplyForm,
+                            cache: this.props.cache
+                        })
                     )
                 );
             } else {
@@ -4814,6 +5169,401 @@ var Paper = function (_React$Component) {
 }(React.Component);
 
 module.exports = Paper;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/index.js":
+/*!*******************************************************!*\
+  !*** ./components/ui-components/reply-modal/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var Header = __webpack_require__(/*! ./reply-modal-header */ "./components/ui-components/reply-modal/reply-modal-header.js");
+var Body = __webpack_require__(/*! ./reply-modal-body */ "./components/ui-components/reply-modal/reply-modal-body.js");
+var Footer = __webpack_require__(/*! ./reply-modal-footer */ "./components/ui-components/reply-modal/reply-modal-footer.js");
+/* eslint-disable */
+
+var ReplyModal = function (_React$Component) {
+    _inherits(ReplyModal, _React$Component);
+
+    function ReplyModal() {
+        _classCallCheck(this, ReplyModal);
+
+        return _possibleConstructorReturn(this, (ReplyModal.__proto__ || Object.getPrototypeOf(ReplyModal)).apply(this, arguments));
+    }
+
+    _createClass(ReplyModal, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                {
+                    id: 'replyModal',
+                    className: 'common-modal modal fade',
+                    tabIndex: '-1',
+                    role: 'dialog'
+                },
+                React.createElement(
+                    'div',
+                    {
+                        className: 'modal-dialog',
+                        role: 'document'
+                    },
+                    React.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        React.createElement(Header, null),
+                        React.createElement(Body, {
+                            updateReplyForm: this.props.updateReplyForm,
+                            cache: this.props.cache
+                        }),
+                        React.createElement(Footer, {
+                            addReply: this.props.addReply,
+                            editReply: this.props.editReply,
+                            cache: this.props.cache
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return ReplyModal;
+}(React.Component);
+
+module.exports = ReplyModal;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/reply-modal-body.js":
+/*!******************************************************************!*\
+  !*** ./components/ui-components/reply-modal/reply-modal-body.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReplyForm = __webpack_require__(/*! ./reply-modal-form */ "./components/ui-components/reply-modal/reply-modal-form.js");
+/* eslint-disable */
+
+var ReplyModalBody = function (_React$Component) {
+    _inherits(ReplyModalBody, _React$Component);
+
+    function ReplyModalBody() {
+        _classCallCheck(this, ReplyModalBody);
+
+        return _possibleConstructorReturn(this, (ReplyModalBody.__proto__ || Object.getPrototypeOf(ReplyModalBody)).apply(this, arguments));
+    }
+
+    _createClass(ReplyModalBody, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'modal-body' },
+                React.createElement(ReplyForm, {
+                    updateReplyForm: this.props.updateReplyForm,
+                    cache: this.props.cache
+                })
+            );
+        }
+    }]);
+
+    return ReplyModalBody;
+}(React.Component);
+
+module.exports = ReplyModalBody;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/reply-modal-footer.js":
+/*!********************************************************************!*\
+  !*** ./components/ui-components/reply-modal/reply-modal-footer.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var submitValidate = __webpack_require__(/*! ./util-submit-validate */ "./components/ui-components/reply-modal/util-submit-validate.js");
+
+var ReplyModalFooter = function (_React$Component) {
+    _inherits(ReplyModalFooter, _React$Component);
+
+    function ReplyModalFooter() {
+        _classCallCheck(this, ReplyModalFooter);
+
+        var _this = _possibleConstructorReturn(this, (ReplyModalFooter.__proto__ || Object.getPrototypeOf(ReplyModalFooter)).call(this));
+
+        _this.submitReply = _this.submitReply.bind(_this);
+        return _this;
+    }
+
+    _createClass(ReplyModalFooter, [{
+        key: 'submitReply',
+        value: function submitReply(evt) {
+            // eslint-disable-line
+            var addReply = this.props.addReply;
+            var editReply = this.props.editReply;
+            var cache = this.props.cache || {};
+            var reply = cache.reply || {};
+            var type = reply.replyType;
+
+            if (submitValidate(type, reply)) {
+                if (type === 'ADD') {
+                    addReply(reply);
+                } else if (type === 'EDIT') {
+                    editReply(reply);
+                }
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+                'div',
+                { className: 'modal-footer' },
+                React.createElement(
+                    'a',
+                    {
+                        className: 'btn btn-primary submit-btn',
+                        onClick: function onClick(event) {
+                            return _this2.submitReply(event);
+                        }
+                    },
+                    'Submit'
+                )
+            );
+        }
+    }]);
+
+    return ReplyModalFooter;
+}(React.Component);
+
+module.exports = ReplyModalFooter;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/reply-modal-form.js":
+/*!******************************************************************!*\
+  !*** ./components/ui-components/reply-modal/reply-modal-form.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var ReplyForm = function (_React$Component) {
+    _inherits(ReplyForm, _React$Component);
+
+    function ReplyForm() {
+        _classCallCheck(this, ReplyForm);
+
+        var _this = _possibleConstructorReturn(this, (ReplyForm.__proto__ || Object.getPrototypeOf(ReplyForm)).call(this));
+
+        _this.formChangeHandler = _this.formChangeHandler.bind(_this);
+        return _this;
+    }
+
+    _createClass(ReplyForm, [{
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var cache = this.props.cache || {};
+            var reply = cache.reply || {};
+            var $replyInput = reactDom.findDOMNode(this.refs.content);
+
+            $replyInput.value = reply.content || '';
+        }
+    }, {
+        key: 'formChangeHandler',
+        value: function formChangeHandler(evt) {
+            //  eslint-disable-line
+            var updateReplyForm = this.props.updateReplyForm;
+            var cache = this.props.cache || {};
+            var formData = cache.reply || {};
+            var $replyInput = reactDom.findDOMNode(this.refs.content);
+
+            formData.content = $replyInput.value;
+
+            updateReplyForm(formData);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return React.createElement(
+                'form',
+                { id: 'replyForm' },
+                React.createElement('textarea', {
+                    id: 'replyInput',
+                    name: 'content',
+                    ref: 'content',
+                    placeholder: 'please type your comment here...',
+                    onChange: function onChange(event) {
+                        return _this2.formChangeHandler(event);
+                    }
+                })
+            );
+        }
+    }]);
+
+    return ReplyForm;
+}(React.Component);
+
+module.exports = ReplyForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/reply-modal-header.js":
+/*!********************************************************************!*\
+  !*** ./components/ui-components/reply-modal/reply-modal-header.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ReplyModalHeader = function (_React$Component) {
+    _inherits(ReplyModalHeader, _React$Component);
+
+    function ReplyModalHeader() {
+        _classCallCheck(this, ReplyModalHeader);
+
+        return _possibleConstructorReturn(this, (ReplyModalHeader.__proto__ || Object.getPrototypeOf(ReplyModalHeader)).apply(this, arguments));
+    }
+
+    _createClass(ReplyModalHeader, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'modal-header' },
+                React.createElement(
+                    'h5',
+                    { className: 'modal-title' },
+                    'Add Your Comment'
+                ),
+                React.createElement(
+                    'a',
+                    {
+                        className: 'btn close',
+                        'data-dismiss': 'modal',
+                        'aria-label': 'Close'
+                    },
+                    React.createElement('i', {
+                        className: 'fa fa-times',
+                        'aria-hidden': 'true'
+                    })
+                )
+            );
+        }
+    }]);
+
+    return ReplyModalHeader;
+}(React.Component);
+
+module.exports = ReplyModalHeader;
+
+/***/ }),
+
+/***/ "./components/ui-components/reply-modal/util-submit-validate.js":
+/*!**********************************************************************!*\
+  !*** ./components/ui-components/reply-modal/util-submit-validate.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
+
+function submitValidate(type, formData) {
+    var alertInfo = {
+        title: 'Warning!',
+        content: {
+            null: 'please type the comment!'
+        }
+    };
+
+    if (!formData.content) {
+        stanAlert({
+            title: alertInfo.title,
+            content: alertInfo.content.null
+        });
+
+        return false;
+    }
+
+    return true;
+}
+
+module.exports = submitValidate;
 
 /***/ }),
 
@@ -6151,6 +6901,7 @@ var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./component
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
 var Paper = __webpack_require__(/*! ../components/paper */ "./components/paper.js");
+var ReplyModal = __webpack_require__(/*! ../components/reply-modal */ "./components/reply-modal.js");
 
 var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
@@ -6180,7 +6931,8 @@ var PagePaper = function (_React$Component) {
                     React.createElement(PaperFilter, null),
                     React.createElement(Paper, { paperId: paperId })
                 ),
-                React.createElement(LoginModal, null)
+                React.createElement(LoginModal, null),
+                React.createElement(ReplyModal, null)
             );
         }
     }]);
@@ -49746,6 +50498,9 @@ var getFilterCountFunc = __webpack_require__(/*! ./get-filter-count */ "./reduce
 var getCatalogueFunc = __webpack_require__(/*! ./get-catalogue */ "./reducers/get-catalogue.js");
 var getPaperFunc = __webpack_require__(/*! ./get-paper */ "./reducers/get-paper.js");
 var getPaperReplyFunc = __webpack_require__(/*! ./get-paper-reply */ "./reducers/get-paper-reply.js");
+var resetReplyFormFunc = __webpack_require__(/*! ./reset-reply-form */ "./reducers/reset-reply-form.js");
+var updateReplyFormFunc = __webpack_require__(/*! ./update-reply-form */ "./reducers/update-reply-form.js");
+var submitReplyFunc = __webpack_require__(/*! ./submit-reply */ "./reducers/submit-reply.js");
 
 var reducers = function reducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -49802,6 +50557,15 @@ var reducers = function reducers() {
 
         case actionTypes.GET_PAPER_REPLY:
             return getPaperReplyFunc(state, action);
+
+        case actionTypes.RESET_REPLY_FORM:
+            return resetReplyFormFunc(state, action);
+
+        case actionTypes.UPDATE_REPLY_FORM:
+            return updateReplyFormFunc(state, action);
+
+        case actionTypes.SUBMIT_REPLY:
+            return submitReplyFunc(state, action);
 
         default:
             return state;
@@ -49865,6 +50629,9 @@ module.exports = reducers;
                 original,
                 modify,
                 confirm,
+            },
+            reply: {
+                ···
             }
         }
     }
@@ -50007,6 +50774,56 @@ module.exports = resetPwd;
 
 /***/ }),
 
+/***/ "./reducers/reset-reply-form.js":
+/*!**************************************!*\
+  !*** ./reducers/reset-reply-form.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var resetReplyForm = function resetReplyForm(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
+    newState.cache.reply = action.payload.cache.reply;
+
+    return newState;
+};
+
+module.exports = resetReplyForm;
+
+/***/ }),
+
+/***/ "./reducers/submit-reply.js":
+/*!**********************************!*\
+  !*** ./reducers/submit-reply.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var submitReply = function submitReply(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
+    newState.cache.reply = action.payload.cache.reply;
+
+    return newState;
+};
+
+module.exports = submitReply;
+
+/***/ }),
+
 /***/ "./reducers/update-login-form.js":
 /*!***************************************!*\
   !*** ./reducers/update-login-form.js ***!
@@ -50103,6 +50920,31 @@ var updateRegisterForm = function updateRegisterForm(originalState, action) {
 };
 
 module.exports = updateRegisterForm;
+
+/***/ }),
+
+/***/ "./reducers/update-reply-form.js":
+/*!***************************************!*\
+  !*** ./reducers/update-reply-form.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var updateReplyForm = function updateReplyForm(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+    newState.cache = originalState.cache || {};
+    newState.cache.reply = action.payload.cache.reply;
+
+    return newState;
+};
+
+module.exports = updateReplyForm;
 
 /***/ }),
 

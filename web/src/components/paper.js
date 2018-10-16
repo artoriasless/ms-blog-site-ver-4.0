@@ -8,11 +8,13 @@ const UI_paper = require('/components/ui-components/paper');
 const actions = require('/actions');
 
 const getPaperAction = actions.getPaperAction;
+const resetReplyFormAction = actions.resetReplyFormAction;
 
 const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
 
 const mapDispatch2Props = (dispatch, props) => ({   //  eslint-disable-line
     getPaper: jsonData => dispatch(ajaxGetPaper(jsonData)),
+    resetReplyForm: formData => dispatch(resetReplyFormAction(formData)),
 });
 
 const Paper = connect(

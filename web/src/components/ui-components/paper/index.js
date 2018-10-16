@@ -25,6 +25,7 @@ class Paper extends React.Component {
             if (currentViewWidth >= 767) {
                 $('.filter-container').css('display', 'block');
             } else {
+                $('.page-section-body').removeClass('filter-expand');
                 $('.filter-container').css('display', 'none');
             }
         };
@@ -84,7 +85,11 @@ class Paper extends React.Component {
                         <hr/>
                         <div className="paper-body" dangerouslySetInnerHTML={{ __html: paperBody }}></div>
                         <hr/>
-                        <PaperReply paperId={ paper.id }/>
+                        <PaperReply
+                            paperId={ paper.id }
+                            resetReplyForm={ this.props.resetReplyForm }
+                            cache={ this.props.cache }
+                        />
                     </div>
                 </div>
             );

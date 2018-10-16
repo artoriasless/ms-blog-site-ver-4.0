@@ -2,6 +2,25 @@
     padding: 0 15px;
     margin: 0.5rem 0;
 
+    .reply-title {
+        height: 1.5rem;
+        line-height: 1.5rem;
+
+        .reply {
+            display: block;
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--color-grey-dark);
+            font-size: 0.8em;
+            text-align: center;
+            float: right;
+
+            &:hover {
+                color: var(--color-theme);
+            }
+        }
+    }
+
     .no-reply-tips {
         padding: 0;
         margin: 0.75rem 0;
@@ -15,6 +34,7 @@
         margin: 0.25rem 0 0 2.5rem;
         border: 1px solid var(--color-grey-lighter);
         border-radius: 3px;
+        background-color: var(--color-white);
 
         .user-info {
             height: 1.6rem;
@@ -31,6 +51,7 @@
                     height: 1.6rem;
                     padding: 0;
                     margin: 0;
+                    border-radius: 50%;
                 }
             }
 
@@ -57,10 +78,13 @@
         }
 
         .reply-content {
-            padding: 5px 0;
+            padding: 3px 5px;
+            margin: 3px 0;
+            border-top: 1px solid var(--color-white-darker);
+            border-bottom: 1px solid var(--color-white-darker);
             color: var(--color-grey-dark);
             font-size: 0.75em;
-            text-indent: 2em;
+            white-space: pre-line;
         }
 
         .reply-content.deleted {
@@ -70,7 +94,6 @@
             padding: 0 10px;
             margin: 0.5rem 0;
             border-radius: 5px;
-            text-indent: 0;
             color: var(--color-white);
             background-color: var(--color-grey-dark);
         }

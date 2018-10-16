@@ -29,11 +29,13 @@ module.exports = {
 
         return (reply ? reply.toJSON() : {});
     },
-    async findMany(paperId){
+    async findMany(paper_id){
         const query = {
-            paper_id: paperId,
+            where: {
+                paper_id,
+            },
             attributes: [
-                'id', 'replyLevel', 'replyDate', 'content', 'isDeleted', 'replyId',
+                'id', 'replyLevel', 'replyDate', 'content', 'isDeleted', 'replyId', 'rootReplyId',
             ],
             order: [
                 ['root_reply_id', 'ASC'],

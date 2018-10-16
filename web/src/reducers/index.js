@@ -19,6 +19,9 @@ const getFilterCountFunc = require('./get-filter-count');
 const getCatalogueFunc = require('./get-catalogue');
 const getPaperFunc = require('./get-paper');
 const getPaperReplyFunc = require('./get-paper-reply');
+const resetReplyFormFunc = require('./reset-reply-form');
+const updateReplyFormFunc = require('./update-reply-form');
+const submitReplyFunc = require('./submit-reply');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -72,6 +75,15 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.GET_PAPER_REPLY:
         return getPaperReplyFunc(state, action);
+
+    case actionTypes.RESET_REPLY_FORM:
+        return resetReplyFormFunc(state, action);
+
+    case actionTypes.UPDATE_REPLY_FORM:
+        return updateReplyFormFunc(state, action);
+
+    case actionTypes.SUBMIT_REPLY:
+        return submitReplyFunc(state, action);
 
     default:
         return state;
@@ -135,6 +147,9 @@ module.exports = reducers;
                 original,
                 modify,
                 confirm,
+            },
+            reply: {
+                ···
             }
         }
     }

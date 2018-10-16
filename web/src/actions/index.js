@@ -19,6 +19,9 @@ const getFilterCountAction = require('./get-filter-count');
 const getCatalogueAction = require('./get-catalogue');
 const getPaperAction = require('./get-paper');
 const getPaperReplyAction = require('./get-paper-reply');
+const resetReplyFormAction = require('./reset-reply-form');
+const updateReplyFormAction = require('./update-reply-form');
+const submitReplyAction = require('./submit-reply');
 
 const actions = {
     actionTypes,
@@ -40,6 +43,9 @@ const actions = {
     getCatalogueAction,
     getPaperAction,
     getPaperReplyAction,
+    resetReplyFormAction,
+    updateReplyFormAction,
+    submitReplyAction,
 };
 
 module.exports = actions;

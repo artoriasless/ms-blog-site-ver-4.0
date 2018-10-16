@@ -41,6 +41,7 @@ class Catalogue extends React.Component {
             if (currentViewWidth >= 767) {
                 $('.filter-container').css('display', 'block');
             } else {
+                $('.page-section-body').removeClass('filter-expand');
                 $('.filter-container').css('display', 'none');
             }
         };

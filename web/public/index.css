@@ -506,7 +506,7 @@ code {
                     }
 
 .app .page-section-header .page-section-header-container .navbar .user-center-link .user-name:before {
-                            content: "Welcom, ";
+                            content: "Welcome, ";
                             color: #fd7e14;
                         }
 
@@ -2012,6 +2012,25 @@ code {
     margin: 0.5rem 0;
 }
 
+.reply-container .reply-title {
+        height: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+.reply-container .reply-title .reply {
+            display: block;
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #555;
+            font-size: 0.8em;
+            text-align: center;
+            float: right;
+        }
+
+.reply-container .reply-title .reply:hover {
+                color: #5e87a2;
+            }
+
 .reply-container .no-reply-tips {
         padding: 0;
         margin: 0.75rem 0;
@@ -2025,6 +2044,7 @@ code {
         margin: 0.25rem 0 0 2.5rem;
         border: 1px solid #ddd;
         border-radius: 3px;
+        background-color: #fff;
     }
 
 .reply-container .reply-item .user-info {
@@ -2044,6 +2064,7 @@ code {
                     height: 1.6rem;
                     padding: 0;
                     margin: 0;
+                    border-radius: 50%;
                 }
 
 .reply-container .reply-item .user-info .user-name {
@@ -2068,10 +2089,13 @@ code {
                 }
 
 .reply-container .reply-item .reply-content {
-            padding: 5px 0;
+            padding: 3px 5px;
+            margin: 3px 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
             color: #555;
             font-size: 0.75em;
-            text-indent: 2em;
+            white-space: pre-line;
         }
 
 .reply-container .reply-item .reply-content.deleted {
@@ -2081,7 +2105,6 @@ code {
             padding: 0 10px;
             margin: 0.5rem 0;
             border-radius: 5px;
-            text-indent: 0;
             color: #fff;
             background-color: #555;
         }
@@ -2132,5 +2155,24 @@ code {
 .reply-container .reply-item.reply-level-0 {
         margin-left: 0;
     }
+
+#replyModal #replyForm {
+        position: relative;
+        display: block;
+        height: 11rem;
+        margin: 0.5rem 0;
+    }
+
+#replyModal #replyForm #replyInput {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            margin: 0px;
+            outline: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
 
 

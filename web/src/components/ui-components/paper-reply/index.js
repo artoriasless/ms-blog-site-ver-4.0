@@ -2,7 +2,56 @@
 
 const React = require('react');
 
+const config = require('/config');
+
+const stanAlert = require('/lib/common-stan-alert');
+
 class PaperReply extends React.Component {
+    constructor() {
+        super();
+
+        this.showReplyModal = this.showReplyModal.bind(this);
+        this.showLoginModal = this.showLoginModal.bind(this);
+        this.errHandler = this.errHandler.bind(this);
+    }
+
+    showReplyModal(evt, formData) {
+        const isLogin = this.props.cache.isLogin;
+        const resetReplyForm = this.props.resetReplyForm;
+
+        if (isLogin) {
+            resetReplyForm(formData);
+
+            $('.navbar-collapse').collapse('hide');
+            $('#replyModal').modal();
+            document.querySelector('#replyForm').reset();
+        } else {
+            stanAlert({
+                title: 'Warning!',
+                content: 'Guest,please login first...',
+                shownExpires: 1.5,
+            });
+
+            setTimeout(() => {
+                this.showLoginModal();
+            }, 1500);
+        }
+    }
+
+    showLoginModal() {
+        $('.navbar-collapse').collapse('hide');
+        $('#loginModal').modal();
+        document.querySelector('#registerForm').reset();
+        document.querySelector('#loginForm').reset();
+    }
+
+    errHandler(evt) {   //  eslint-disable-line
+        const $userAvatar = $(evt.target);
+        const defaultAvatarLink = `${config.ossPublic.user}/default.jpg?${Date.parse(new Date())}`;
+
+        $userAvatar.attr('src', defaultAvatarLink);
+    }
+
     componentWillMount() {
         const paperId = this.props.paperId;
         const getPaperReply = this.props.getPaperReply;
@@ -32,18 +81,50 @@ class PaperReply extends React.Component {
         if (reply.replyList.length === 0) {
             return (
                 <dl className="reply-container">
-                    <dt className="reply-title">Comments</dt>
+                    <dt className="reply-title">
+                        Comments
+                        <a
+                            className="reply-operate reply"
+                            href="javascript:;"
+                            onClick={ event => this.showReplyModal(event, {
+                                paperId: reply.paperId,
+                                rootReplyId: 0,
+                                replyId: 0,
+                                replyLevel: 0,
+                                replyType: 'ADD',
+                                content: '',
+                            }) }
+                        >
+                            <i className="fa fa-reply"></i>
+                        </a>
+                    </dt>
                     <dd className="no-reply-tips">no comment now, be the first to reply</dd>
                 </dl>
             );
         } else {
             return (
                 <dl className="reply-container">
-                    <dt className="reply-title">Comments</dt>
+                    <dt className="reply-title">
+                        Comments
+                        <a
+                            className="reply-operate reply"
+                            href="javascript:;"
+                            onClick={ event => this.showReplyModal(event, {
+                                paperId: reply.paperId,
+                                rootReplyId: 0,
+                                replyId: 0,
+                                replyLevel: 0,
+                                replyType: 'ADD',
+                                content: '',
+                            }) }
+                        >
+                            <i className="fa fa-reply"></i>
+                        </a>
+                    </dt>
                     {
                         reply.replyList.map((replyItem, index) => {
                             const key = `replyItem_${index}`;
-                            const avatarSrc = `https://monkingstand.oss-cn-beijing.aliyuncs.com/user/default.jpg?${Date.parse(new Date())}`;
+                            const avatarSrc = `${config.ossPublic.user}/${replyItem.userInfo.uuid}.jpg?${Date.parse(new Date())}`;
                             const userName = replyItem.userInfo.userName;
                             const replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                             const replyDate = replyItem.replyDate;
@@ -60,10 +141,15 @@ class PaperReply extends React.Component {
                                     key={ key }
                                     data-id={ replyItem.id }
                                     data-level={ replyItem.replyLevel }
+                                    data-root={ replyItem.rootReplyId }
                                 >
                                     <div className="user-info">
                                         <div className="user-avatar">
-                                            <img className="avatar-img" src={ avatarSrc }/>
+                                            <img
+                                                className="avatar-img"
+                                                src={ avatarSrc }
+                                                onError={ event => this.errHandler(event) }
+                                            />
                                         </div>
                                         <div className="user-name">
                                             { userName }
@@ -84,12 +170,32 @@ class PaperReply extends React.Component {
                                             }
                                             {
                                                 !canEditTag ? null : (
-                                                    <a className="reply-operate edit" href="javascript:;">
+                                                    <a
+                                                        className="reply-operate edit"
+                                                        href="javascript:;"
+                                                        onClick={ event => this.showReplyModal(event, {
+                                                            paperId: reply.paperId,
+                                                            id: replyItem.id,
+                                                            replyType: 'EDIT',
+                                                            content: replyContent,
+                                                        }) }
+                                                    >
                                                         <i className="fa fa-edit"></i>
                                                     </a>
                                                 )
                                             }
-                                            <a className="reply-operate reply" href="javascript:;">
+                                            <a
+                                                className="reply-operate reply"
+                                                href="javascript:;"
+                                                onClick={ event => this.showReplyModal(event, {
+                                                    paperId: reply.paperId,
+                                                    rootReplyId: replyItem.rootReplyId,
+                                                    replyId: replyItem.id,
+                                                    replyLevel: replyItem.replyLevel + 1,
+                                                    replyType: 'ADD',
+                                                    content: '',
+                                                }) }
+                                            >
                                                 <i className="fa fa-reply"></i>
                                             </a>
                                         </div>

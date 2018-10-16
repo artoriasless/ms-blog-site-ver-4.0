@@ -78,6 +78,8 @@ _router.get('/api/paper/:paperId', api.paper.findOne);
  *  Reply
  */
 _router.get('/api/reply', api.reply.findMany);
+_router.post('/api/reply/create', api.reply.create);
+_router.post('/api/reply/:replyId/update', api.reply.update);
 
 /**
  *  Catalogue
