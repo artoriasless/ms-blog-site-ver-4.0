@@ -6,5 +6,13 @@ module.exports = {
     auth: {
         user: '<email-address>',
         pass: '<email-password>',
-    }
+    },
+    // for qq mail
+    // _____: 'mail.qq.com',   //  qq mail login page
+    // service: 'qq',
+    // port: 465,
+    // auth: {
+    //     user: '1464051654@qq.com',
+    //     pass: 'frprzsfgzvjcffhi',
+    // },
 };

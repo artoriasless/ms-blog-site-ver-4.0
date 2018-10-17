@@ -168,7 +168,15 @@ class PaperReply extends React.Component {
                                         <div className="reply-operate-container pull-right">
                                             {
                                                 !canDeleteTag ? null : (
-                                                    <a className="reply-operate delete" href="javascript:;">
+                                                    <a
+                                                        className="reply-operate delete"
+                                                        href="javascript:;"
+                                                        onClick={ () => this.props.deleteReply({
+                                                            paperId: reply.paperId,
+                                                            id: replyItem.id,
+                                                            replyType: 'DELETE',
+                                                        }) }
+                                                    >
                                                         <i className="fa fa-times"></i>
                                                     </a>
                                                 )

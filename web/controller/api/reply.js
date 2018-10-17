@@ -87,8 +87,6 @@ module.exports = {
             const originalReply = await replyService.findById(Number(jsonData.id));
             const history = JSON.parse(originalReply.replyHistory);
 
-            console.info(history);
-
             if (!originalReply.id) {
                 success = false;
                 message = 'please pass right comment id!';
@@ -116,4 +114,40 @@ module.exports = {
             data,
         };
     },
+    async delete(ctx) {
+        const user = ctx.session.user;
+        const jsonData = ctx.request.body;
+        var success = true;
+        var message = 'delete comment success!';
+        var data = {};
+
+        if (!user.id) {
+            success = false;
+            message = 'please login first!';
+        } else {
+            const originalReply = await replyService.findById(Number(jsonData.id));
+
+            if (!originalReply.id) {
+                success = false;
+                message = 'please pass right comment id!';
+            } else {
+                if (user.id !== originalReply.userId) {
+                    success = false;
+                    message = 'you cannot delete other\'s comment!';
+                } else {
+                    if (originalReply.content !== jsonData.content) {
+                        originalReply.isDeleted = 1;
+
+                        data = await replyService.update(originalReply);
+                    }
+                }
+            }
+        }
+
+        ctx.body = {
+            success,
+            message,
+            data,
+        };
+    }
 };

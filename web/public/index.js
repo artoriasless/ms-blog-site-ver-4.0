@@ -1599,12 +1599,15 @@ var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redu
     connect = _require.connect;
 
 var ajaxAction = __webpack_require__(/*! ../lib/common-ajax-action */ "./lib/common-ajax-action.js");
+var stanAlert = __webpack_require__(/*! ../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 var UI_paper = __webpack_require__(/*! ../components/ui-components/paper */ "./components/ui-components/paper/index.js");
 var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
 
 var getPaperAction = actions.getPaperAction;
 var resetReplyFormAction = actions.resetReplyFormAction;
+var submitReplyAction = actions.submitReplyAction;
+var getPaperReplyAction = actions.getPaperReplyAction;
 
 var mapState2Props = function mapState2Props(state, props) {
     return state.appReducer;
@@ -1617,6 +1620,9 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
         },
         resetReplyForm: function resetReplyForm(formData) {
             return dispatch(resetReplyFormAction(formData));
+        },
+        deleteReply: function deleteReply(jsonData) {
+            return dispatch(ajaxDeleteReply(jsonData));
         }
     };
 };
@@ -1638,6 +1644,59 @@ function ajaxGetPaper(jsonData) {
 
         return ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
     };
+}
+
+function ajaxDeleteReply(jsonData) {
+    return function (dispatch) {
+        var requestUrl = '/api/reply/' + jsonData.id + '/delete';
+        var successFunc = function successFunc(result) {
+            if (result.success) {
+                dispatch(submitReplyAction());
+
+                stanAlert({
+                    type: 'success',
+                    content: result.message,
+                    textAlign: 'center',
+                    shownExpires: 0.75
+                });
+
+                // 评论添加成功后，更新评论列表
+                updatePaperReply({
+                    paperId: jsonData.paperId
+                }, dispatch);
+            } else {
+                stanAlert({
+                    title: 'Warning!',
+                    content: result.message
+                });
+            }
+        };
+        var failFunc = function failFunc(err) {
+            console.info(err); //  eslint-disable-line
+        };
+
+        return ajaxAction(requestUrl, jsonData, successFunc, failFunc);
+    };
+}
+
+function updatePaperReply(jsonData, dispatch) {
+    var requestUrl = '/api/reply';
+    var successFunc = function successFunc(result) {
+        if (result.success) {
+            dispatch(getPaperReplyAction({
+                paperId: jsonData.paperId,
+                replyList: result.data
+            }));
+        }
+    };
+    var failFunc = function failFunc(err) {
+        console.info(err); //  eslint-disable-line
+    };
+    var options = {
+        type: 'get'
+    };
+
+    ajaxAction(requestUrl, jsonData, successFunc, failFunc, options);
 }
 
 module.exports = Paper;
@@ -4974,7 +5033,17 @@ var PaperReply = function (_React$Component) {
                                     { className: 'reply-operate-container pull-right' },
                                     !canDeleteTag ? null : React.createElement(
                                         'a',
-                                        { className: 'reply-operate delete', href: 'javascript:;' },
+                                        {
+                                            className: 'reply-operate delete',
+                                            href: 'javascript:;',
+                                            onClick: function onClick() {
+                                                return _this3.props.deleteReply({
+                                                    paperId: reply.paperId,
+                                                    id: replyItem.id,
+                                                    replyType: 'DELETE'
+                                                });
+                                            }
+                                        },
                                         React.createElement('i', { className: 'fa fa-times' })
                                     ),
                                     !canEditTag ? null : React.createElement(
@@ -5160,6 +5229,7 @@ var Paper = function (_React$Component) {
                         React.createElement(PaperReply, {
                             paperId: paper.id,
                             resetReplyForm: this.props.resetReplyForm,
+                            deleteReply: this.props.deleteReply,
                             cache: this.props.cache
                         })
                     )

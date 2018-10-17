@@ -60,7 +60,7 @@ module.exports = {
     email(options) {
         const transporter = nodemailer.createTransport(emailConfig);
         const mailOpts = {
-            from: 'MonkingStand@gmail.com',
+            from: 'MonkingStand<1464051654@qq.com>',
             to: options.to,
             subject: options.subject,
             text: options.text,

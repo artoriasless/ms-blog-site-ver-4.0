@@ -88,6 +88,7 @@ class Paper extends React.Component {
                         <PaperReply
                             paperId={ paper.id }
                             resetReplyForm={ this.props.resetReplyForm }
+                            deleteReply={ this.props.deleteReply }
                             cache={ this.props.cache }
                         />
                     </div>
