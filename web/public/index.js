@@ -4838,11 +4838,16 @@ var PaperReply = function (_React$Component) {
                 replyList: []
             };
             var replyId2IdxMap = {};
+            var userId2NameMap = {};
 
             reply.replyList.map(function (replyItem, index) {
                 replyItem.editTag = replyItem.userInfo.uuid === userInfo.uuid && !replyItem.isDeleted;
 
                 replyId2IdxMap[replyItem.id] = index;
+
+                if (userId2NameMap[replyItem.userInfo.id] === undefined) {
+                    userId2NameMap[replyItem.userInfo.id] = replyItem.userInfo.userName;
+                }
 
                 return replyItem;
             });
@@ -4914,7 +4919,7 @@ var PaperReply = function (_React$Component) {
                         var replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                         var replyDate = replyItem.replyDate;
                         var replyToTag = replyItem.replyLevel !== 0;
-                        var replyTo = replyItem.replyLevel === 0 ? '' : reply.replyList[replyId2IdxMap[replyItem.id]].userInfo.userName;
+                        var replyTo = replyItem.replyLevel === 0 ? '' : userId2NameMap[reply.replyList[replyId2IdxMap[replyItem.replyId]].userInfo.id];
 
                         var ownerTag = replyItem.userInfo.uuid === userInfo.uuid && userInfo.uuid !== undefined;
                         var canDeleteTag = ownerTag && replyItem.isDeleted === 0;

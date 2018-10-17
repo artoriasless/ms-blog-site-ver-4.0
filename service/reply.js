@@ -39,6 +39,7 @@ module.exports = {
             ],
             order: [
                 ['root_reply_id', 'ASC'],
+                ['reply_level', 'ASC'],
             ],
             include: [
                 {

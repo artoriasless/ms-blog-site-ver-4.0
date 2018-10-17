@@ -69,11 +69,16 @@ class PaperReply extends React.Component {
             replyList: [],
         };
         const replyId2IdxMap = {};
+        const userId2NameMap = {};
 
         reply.replyList.map((replyItem, index) => {
             replyItem.editTag = (replyItem.userInfo.uuid === userInfo.uuid) && !replyItem.isDeleted;
 
             replyId2IdxMap[replyItem.id] = index;
+
+            if (userId2NameMap[replyItem.userInfo.id] === undefined) {
+                userId2NameMap[replyItem.userInfo.id] = replyItem.userInfo.userName;
+            }
 
             return replyItem;
         });
@@ -129,7 +134,7 @@ class PaperReply extends React.Component {
                             const replyContent = replyItem.isDeleted === 0 ? replyItem.content : 'x this reply has been deleted';
                             const replyDate = replyItem.replyDate;
                             const replyToTag = replyItem.replyLevel !== 0;
-                            const replyTo = replyItem.replyLevel === 0 ? '' : reply.replyList[replyId2IdxMap[replyItem.id]].userInfo.userName;
+                            const replyTo = replyItem.replyLevel === 0 ? '' : userId2NameMap[reply.replyList[replyId2IdxMap[replyItem.replyId]].userInfo.id];
 
                             const ownerTag = replyItem.userInfo.uuid === userInfo.uuid && userInfo.uuid !== undefined;
                             const canDeleteTag = ownerTag && replyItem.isDeleted === 0;

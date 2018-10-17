@@ -62,6 +62,7 @@ module.exports = {
                 data = await replyService.update({
                     id: data.id,
                     rootReplyId: data.id,
+                    replyHistory: '[]',
                 });
             }
         }
@@ -84,6 +85,9 @@ module.exports = {
             message = 'please login first!';
         } else {
             const originalReply = await replyService.findById(Number(jsonData.id));
+            const history = JSON.parse(originalReply.replyHistory);
+
+            console.info(history);
 
             if (!originalReply.id) {
                 success = false;
@@ -94,7 +98,12 @@ module.exports = {
                     message = 'you cannot edit other\'s comment!';
                 } else {
                     if (originalReply.content !== jsonData.content) {
+                        history.push(JSON.stringify(originalReply));
+
+                        originalReply.replyHistory = JSON.stringify(history);
                         originalReply.content = jsonData.content;
+                        originalReply.replyDate = new Date();
+
                         data = await replyService.update(originalReply);
                     }
                 }
