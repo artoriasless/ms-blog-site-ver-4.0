@@ -80,8 +80,7 @@ class SwitchButton extends React.Component {
             <div id="switch_In_Up_container">
                 <input
                     id="switchBtn"
-                    checked="true"
-                    readOnly="false"
+                    defaultChecked={ true }
                     type="checkbox"
                 />
             </div>
