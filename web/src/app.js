@@ -31,6 +31,28 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store);
 const rootDom = document.getElementById('root');
+const initLink = () => {
+    const $root = document.querySelector('#root');
+
+    if ($root) {
+        $root.addEventListener('click', function(evt) {
+            const $targetLink = evt.target.closest('a');
+            const href = $targetLink ? $targetLink.getAttribute('href') : '';
+            const ignoreReg = /^((http(s)?:)?\/\/|#)/;
+
+            if (!ignoreReg.test(href)) {
+                if (href && href !== 'javascript:;') {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+
+                    history.push(href);
+
+                    return false;
+                }
+            }
+        });
+    }
+}
 
 const router = (
     <Router history = { history }>
@@ -80,3 +102,4 @@ const render = () => {
 };
 
 render();
+initLink();

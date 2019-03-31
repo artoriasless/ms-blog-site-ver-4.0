@@ -2,6 +2,8 @@
 
 const actionTypes = require('./action-types');
 
+const changeRouteAction = require('./change-route');
+
 const initUserInfoDefaultAction = require('./init-user-info-default');
 const updateRegisterFormAction = require('./update-register-form');
 const updateLoginFromAction = require('./update-login-form');
@@ -25,6 +27,8 @@ const submitReplyAction = require('./submit-reply');
 
 const actions = {
     actionTypes,
+
+    changeRouteAction,
 
     initUserInfoDefaultAction,
     updateRegisterFormAction,

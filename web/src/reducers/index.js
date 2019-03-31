@@ -2,6 +2,8 @@
 
 const { actionTypes } = require('/actions');
 
+const changeRouteFunc = require('./change-route');
+
 const initUserInfoDefaultFunc = require('./init-user-info-default');
 const updateRegisterFormFunc = require('./update-register-form');
 const updateLoginFormFunc = require('./update-login-form');
@@ -25,6 +27,10 @@ const submitReplyFunc = require('./submit-reply');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
+
+    case actionTypes.CHANGE_ROUTE:
+        return changeRouteFunc(state, action);
+
     case actionTypes.GET_USER_DEFAULT:
         return initUserInfoDefaultFunc(state, action);
 

@@ -96,6 +96,8 @@
 "use strict";
 
 
+var CHANGE_ROUTE = 'CHANGE_ROUTE';
+
 var GET_USER_DEFAULT = 'GET_USER_DEFAULT';
 var UPDATE_REGISTER_FORM = 'UPDATE_REGISTER_FORM';
 var UPDATE_LOGIN_FORM = 'UPDATE_LOGIN_FORM';
@@ -118,6 +120,8 @@ var UPDATE_REPLY_FORM = 'UPDATE_REPLY_FORM';
 var SUBMIT_REPLY = 'SUBMIT_REPLY';
 
 module.exports = {
+    CHANGE_ROUTE: CHANGE_ROUTE,
+
     GET_USER_DEFAULT: GET_USER_DEFAULT,
     UPDATE_REGISTER_FORM: UPDATE_REGISTER_FORM,
     UPDATE_LOGIN_FORM: UPDATE_LOGIN_FORM,
@@ -167,6 +171,33 @@ var activateAccount = function activateAccount(userInfo) {
 };
 
 module.exports = activateAccount;
+
+/***/ }),
+
+/***/ "./actions/change-route.js":
+/*!*********************************!*\
+  !*** ./actions/change-route.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var changeRoute = function changeRoute() {
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'CHANGE_ROUTE',
+        payload: {
+            current: current
+        }
+    };
+};
+
+module.exports = changeRoute;
 
 /***/ }),
 
@@ -323,6 +354,8 @@ module.exports = getPaper;
 
 var actionTypes = __webpack_require__(/*! ./action-types */ "./actions/action-types.js");
 
+var changeRouteAction = __webpack_require__(/*! ./change-route */ "./actions/change-route.js");
+
 var initUserInfoDefaultAction = __webpack_require__(/*! ./init-user-info-default */ "./actions/init-user-info-default.js");
 var updateRegisterFormAction = __webpack_require__(/*! ./update-register-form */ "./actions/update-register-form.js");
 var updateLoginFromAction = __webpack_require__(/*! ./update-login-form */ "./actions/update-login-form.js");
@@ -346,6 +379,8 @@ var submitReplyAction = __webpack_require__(/*! ./submit-reply */ "./actions/sub
 
 var actions = {
     actionTypes: actionTypes,
+
+    changeRouteAction: changeRouteAction,
 
     initUserInfoDefaultAction: initUserInfoDefaultAction,
     updateRegisterFormAction: updateRegisterFormAction,
@@ -834,6 +869,28 @@ var store = createStore(combineReducers({
 
 var history = syncHistoryWithStore(browserHistory, store);
 var rootDom = document.getElementById('root');
+var initLink = function initLink() {
+    var $root = document.querySelector('#root');
+
+    if ($root) {
+        $root.addEventListener('click', function (evt) {
+            var $targetLink = evt.target.closest('a');
+            var href = $targetLink ? $targetLink.getAttribute('href') : '';
+            var ignoreReg = /^((http(s)?:)?\/\/|#)/;
+
+            if (!ignoreReg.test(href)) {
+                if (href && href !== 'javascript:;') {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+
+                    history.push(href);
+
+                    return false;
+                }
+            }
+        });
+    }
+};
 
 var router = React.createElement(
     Router,
@@ -885,6 +942,7 @@ var render = function render() {
 };
 
 render();
+initLink();
 
 /***/ }),
 
@@ -6606,22 +6664,27 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
 var hideMainScrollerbar = __webpack_require__(/*! ../lib/common-hide-main-scrollerbar */ "./lib/common-hide-main-scrollerbar.js");
 var initCompassIcon = __webpack_require__(/*! ../lib/common-init-compass-icon */ "./lib/common-init-compass-icon.js");
 var initNavbarBG = __webpack_require__(/*! ../lib/common-init-navbar-bg */ "./lib/common-init-navbar-bg.js");
 var stanLoading = __webpack_require__(/*! ../lib/common-stan-loading */ "./lib/common-stan-loading.js");
 /* eslint-disable */
 
-var App = function (_React$Component) {
-    _inherits(App, _React$Component);
+var UI_App = function (_React$Component) {
+    _inherits(UI_App, _React$Component);
 
-    function App() {
-        _classCallCheck(this, App);
+    function UI_App() {
+        _classCallCheck(this, UI_App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_App.__proto__ || Object.getPrototypeOf(UI_App)).apply(this, arguments));
     }
 
-    _createClass(App, [{
+    _createClass(UI_App, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
             stanLoading();
@@ -6639,6 +6702,26 @@ var App = function (_React$Component) {
             }, 500);
         }
     }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            var $body = document.querySelectorAll('body')[0];
+            var domain = window.location.host;
+            var originalUrl = $body.getAttribute('data-url');
+            var currentUrl = window.location.href.split(domain)[1];
+
+            if (originalUrl !== currentUrl) {
+                $body.setAttribute('data-url', currentUrl);
+                this.props.changeRoute();
+
+                stanLoading();
+                //  动画显示页面
+                setTimeout(function () {
+                    stanLoading('hide');
+                    $('#root').removeClass('hidden').addClass('fade-in-animate');
+                }, 500);
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
             return React.createElement(
@@ -6649,8 +6732,24 @@ var App = function (_React$Component) {
         }
     }]);
 
-    return App;
+    return UI_App;
 }(React.Component);
+
+var changeRouteAction = actions.changeRouteAction;
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {
+        changeRoute: function changeRoute() {
+            return dispatch(changeRouteAction());
+        }
+    };
+};
+
+var App = connect(mapState2Props, mapDispatch2Props)(UI_App);
 
 module.exports = App;
 
@@ -6677,27 +6776,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 
 var ActivateAccount = __webpack_require__(/*! ../components/activate-account */ "./components/activate-account.js");
 /* eslint-disable */
 
-var PageActivate = function (_React$Component) {
-    _inherits(PageActivate, _React$Component);
+var UI_PageActivate = function (_React$Component) {
+    _inherits(UI_PageActivate, _React$Component);
 
-    function PageActivate() {
-        _classCallCheck(this, PageActivate);
+    function UI_PageActivate() {
+        _classCallCheck(this, UI_PageActivate);
 
-        return _possibleConstructorReturn(this, (PageActivate.__proto__ || Object.getPrototypeOf(PageActivate)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PageActivate.__proto__ || Object.getPrototypeOf(UI_PageActivate)).apply(this, arguments));
     }
 
-    _createClass(PageActivate, [{
+    _createClass(UI_PageActivate, [{
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'page-activate' },
+                { className: 'page-activate', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -6711,8 +6813,18 @@ var PageActivate = function (_React$Component) {
         }
     }]);
 
-    return PageActivate;
+    return UI_PageActivate;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PageActivate = connect(mapState2Props, mapDispatch2Props)(UI_PageActivate);
 
 module.exports = PageActivate;
 
@@ -6740,6 +6852,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
@@ -6748,16 +6863,16 @@ var Catalogue = __webpack_require__(/*! ../components/common-catalogue */ "./com
 var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
 
-var PageCatalogue = function (_React$Component) {
-    _inherits(PageCatalogue, _React$Component);
+var UI_PageCatalogue = function (_React$Component) {
+    _inherits(UI_PageCatalogue, _React$Component);
 
-    function PageCatalogue() {
-        _classCallCheck(this, PageCatalogue);
+    function UI_PageCatalogue() {
+        _classCallCheck(this, UI_PageCatalogue);
 
-        return _possibleConstructorReturn(this, (PageCatalogue.__proto__ || Object.getPrototypeOf(PageCatalogue)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PageCatalogue.__proto__ || Object.getPrototypeOf(UI_PageCatalogue)).apply(this, arguments));
     }
 
-    _createClass(PageCatalogue, [{
+    _createClass(UI_PageCatalogue, [{
         key: 'render',
         value: function render() {
             var filterArr = ['timeline', 'tag'];
@@ -6768,7 +6883,7 @@ var PageCatalogue = function (_React$Component) {
 
             return React.createElement(
                 'div',
-                { className: 'page-catalogue' },
+                { className: 'page-catalogue', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -6785,8 +6900,18 @@ var PageCatalogue = function (_React$Component) {
         }
     }]);
 
-    return PageCatalogue;
+    return UI_PageCatalogue;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PageCatalogue = connect(mapState2Props, mapDispatch2Props)(UI_PageCatalogue);
 
 module.exports = PageCatalogue;
 
@@ -6813,25 +6938,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
-var PageHome = function (_React$Component) {
-    _inherits(PageHome, _React$Component);
+var UI_PageHome = function (_React$Component) {
+    _inherits(UI_PageHome, _React$Component);
 
-    function PageHome() {
-        _classCallCheck(this, PageHome);
+    function UI_PageHome() {
+        _classCallCheck(this, UI_PageHome);
 
-        return _possibleConstructorReturn(this, (PageHome.__proto__ || Object.getPrototypeOf(PageHome)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PageHome.__proto__ || Object.getPrototypeOf(UI_PageHome)).apply(this, arguments));
     }
 
-    _createClass(PageHome, [{
+    _createClass(UI_PageHome, [{
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'page-home' },
+                { className: 'page-home', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -6885,8 +7013,18 @@ var PageHome = function (_React$Component) {
         }
     }]);
 
-    return PageHome;
+    return UI_PageHome;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PageHome = connect(mapState2Props, mapDispatch2Props)(UI_PageHome);
 
 module.exports = PageHome;
 
@@ -6913,25 +7051,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 /* eslint-disable */
 
-var PagePaperCreate = function (_React$Component) {
-    _inherits(PagePaperCreate, _React$Component);
+var UI_PagePaperCreate = function (_React$Component) {
+    _inherits(UI_PagePaperCreate, _React$Component);
 
-    function PagePaperCreate() {
-        _classCallCheck(this, PagePaperCreate);
+    function UI_PagePaperCreate() {
+        _classCallCheck(this, UI_PagePaperCreate);
 
-        return _possibleConstructorReturn(this, (PagePaperCreate.__proto__ || Object.getPrototypeOf(PagePaperCreate)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PagePaperCreate.__proto__ || Object.getPrototypeOf(UI_PagePaperCreate)).apply(this, arguments));
     }
 
-    _createClass(PagePaperCreate, [{
+    _createClass(UI_PagePaperCreate, [{
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'page-paper' },
+                { className: 'page-paper', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -6943,8 +7084,18 @@ var PagePaperCreate = function (_React$Component) {
         }
     }]);
 
-    return PagePaperCreate;
+    return UI_PagePaperCreate;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PagePaperCreate = connect(mapState2Props, mapDispatch2Props)(UI_PagePaperCreate);
 
 module.exports = PagePaperCreate;
 
@@ -6971,6 +7122,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 var PaperFilter = __webpack_require__(/*! ../components/common-paper-filter */ "./components/common-paper-filter.js");
@@ -6980,23 +7134,23 @@ var ReplyModal = __webpack_require__(/*! ../components/reply-modal */ "./compone
 var PaperFilterToggler = __webpack_require__(/*! ../components/ui-components/paper-filter/paper-filter-toggler */ "./components/ui-components/paper-filter/paper-filter-toggler.js");
 /* eslint-disable */
 
-var PagePaper = function (_React$Component) {
-    _inherits(PagePaper, _React$Component);
+var UI_PagePaper = function (_React$Component) {
+    _inherits(UI_PagePaper, _React$Component);
 
-    function PagePaper() {
-        _classCallCheck(this, PagePaper);
+    function UI_PagePaper() {
+        _classCallCheck(this, UI_PagePaper);
 
-        return _possibleConstructorReturn(this, (PagePaper.__proto__ || Object.getPrototypeOf(PagePaper)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PagePaper.__proto__ || Object.getPrototypeOf(UI_PagePaper)).apply(this, arguments));
     }
 
-    _createClass(PagePaper, [{
+    _createClass(UI_PagePaper, [{
         key: 'render',
         value: function render() {
             var paperId = this.props.params.paperId;
 
             return React.createElement(
                 'div',
-                { className: 'page-paper' },
+                { className: 'page-paper', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -7011,8 +7165,18 @@ var PagePaper = function (_React$Component) {
         }
     }]);
 
-    return PagePaper;
+    return UI_PagePaper;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PagePaper = connect(mapState2Props, mapDispatch2Props)(UI_PagePaper);
 
 module.exports = PagePaper;
 
@@ -7039,6 +7203,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
 var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
 var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 
@@ -7047,21 +7214,21 @@ var EditPwdModal = __webpack_require__(/*! ../components/edit-pwd-modal */ "./co
 var UserCenter = __webpack_require__(/*! ../components/user-center */ "./components/user-center.js");
 /* eslint-disable */
 
-var PageUser = function (_React$Component) {
-    _inherits(PageUser, _React$Component);
+var UI_PageUser = function (_React$Component) {
+    _inherits(UI_PageUser, _React$Component);
 
-    function PageUser() {
-        _classCallCheck(this, PageUser);
+    function UI_PageUser() {
+        _classCallCheck(this, UI_PageUser);
 
-        return _possibleConstructorReturn(this, (PageUser.__proto__ || Object.getPrototypeOf(PageUser)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (UI_PageUser.__proto__ || Object.getPrototypeOf(UI_PageUser)).apply(this, arguments));
     }
 
-    _createClass(PageUser, [{
+    _createClass(UI_PageUser, [{
         key: 'render',
         value: function render() {
             return React.createElement(
                 'div',
-                { className: 'page-user' },
+                { className: 'page-user', key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(
                     'div',
@@ -7075,8 +7242,18 @@ var PageUser = function (_React$Component) {
         }
     }]);
 
-    return PageUser;
+    return UI_PageUser;
 }(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PageUser = connect(mapState2Props, mapDispatch2Props)(UI_PageUser);
 
 module.exports = PageUser;
 
@@ -51532,6 +51709,29 @@ module.exports = activateAccount;
 
 /***/ }),
 
+/***/ "./reducers/change-route.js":
+/*!**********************************!*\
+  !*** ./reducers/change-route.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var changeRoute = function changeRoute(originalState, action) {
+    //  eslint-disable-line
+    var newState = JSON.parse(JSON.stringify(originalState));
+
+    newState.current = action.payload.current;
+
+    return newState;
+};
+
+module.exports = changeRoute;
+
+/***/ }),
+
 /***/ "./reducers/get-catalogue.js":
 /*!***********************************!*\
   !*** ./reducers/get-catalogue.js ***!
@@ -51665,6 +51865,8 @@ module.exports = getPaper;
 var _require = __webpack_require__(/*! ../actions */ "./actions/index.js"),
     actionTypes = _require.actionTypes;
 
+var changeRouteFunc = __webpack_require__(/*! ./change-route */ "./reducers/change-route.js");
+
 var initUserInfoDefaultFunc = __webpack_require__(/*! ./init-user-info-default */ "./reducers/init-user-info-default.js");
 var updateRegisterFormFunc = __webpack_require__(/*! ./update-register-form */ "./reducers/update-register-form.js");
 var updateLoginFormFunc = __webpack_require__(/*! ./update-login-form */ "./reducers/update-login-form.js");
@@ -51691,6 +51893,10 @@ var reducers = function reducers() {
     var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     switch (action.type) {
+
+        case actionTypes.CHANGE_ROUTE:
+            return changeRouteFunc(state, action);
+
         case actionTypes.GET_USER_DEFAULT:
             return initUserInfoDefaultFunc(state, action);
 

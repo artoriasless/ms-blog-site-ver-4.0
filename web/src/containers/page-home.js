@@ -1,14 +1,15 @@
 'use strict';
 /* eslint-disable */
 const React = require('react');
+const { connect } = require('react-redux');
 
 const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
 /* eslint-disable */
-class PageHome extends React.Component {
+class UI_PageHome extends React.Component {
     render() {
         return (
-            <div className="page-home">
+            <div className="page-home" key={ this.props.current }>
                 <Navbar/>
                 <div className="page-section-body">
                     <div className="main">
@@ -36,5 +37,14 @@ class PageHome extends React.Component {
         );
     }
 }
+
+const mapState2Props = (state, props) => state.appReducer;  //  eslint-disable-line
+
+const mapDispatch2Props = (dispatch, props) => ({});
+
+const PageHome = connect(
+    mapState2Props,
+    mapDispatch2Props
+)(UI_PageHome);
 
 module.exports = PageHome;
