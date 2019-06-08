@@ -3,7 +3,7 @@
 const stanAlert = require('/lib/common-stan-alert');
 
 function submitValidate(type, formData) {
-    const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const emailReg = /^[^@]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/;
     const pwdReg = /^\S{10,18}$/;
     const alertInfo = {
         title: 'Warning!',

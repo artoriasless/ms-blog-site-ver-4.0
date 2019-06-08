@@ -5,6 +5,7 @@ const message = require('./message');
 const paper = require('./paper');
 const catalogue = require('./catalogue');
 const reply = require('./reply');
+const admin = require('./admin');
 
 module.exports = {
     user,
@@ -12,4 +13,5 @@ module.exports = {
     paper,
     catalogue,
     reply,
+    admin,
 };

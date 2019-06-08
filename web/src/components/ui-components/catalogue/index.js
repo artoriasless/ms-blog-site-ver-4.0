@@ -61,13 +61,14 @@ class Catalogue extends React.Component {
 
     render() {
         const catalogue = this.props.catalogue || {};
+        const userInfo = this.props.userInfo || {};
 
         return (
             <div id="catalogue" className="catalogue-container col-xs-12 col-md-8 col-lg-9">
                 <div className="catalogue-content">
                     <div className="catalogue-title">Catalogue</div>
                     <hr/>
-                    <CatalogueList catalogue={ catalogue }/>
+                    <CatalogueList catalogue={ catalogue } userInfo={ userInfo }/>
                     <CataloguePager catalogue={ catalogue }/>
                 </div>
             </div>

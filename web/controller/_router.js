@@ -15,16 +15,32 @@ const routeList = [
     '/catalogue',
     '/catalogue/:filterType/:filterParam',
     '/paper/:paperId',
-    '/paper/create',
     '/user/:uuid',
     '/util/activate/:uuid',
+    '/admin/add-paper',
+    '/admin/edit-paper/:paperId',
 ];
 
-async function page(ctx) {
+async function page(ctx, next) {
+    const adminReg = /^\/admin/;
+    const reqUrl = ctx.request.url;
     const filePath = path.resolve(__dirname, '../template/index.html');
     const data = fs.readFileSync(filePath).toString();
 
-    ctx.body = data.replace(/<staticVersion>/g, staticVersion);
+    if (adminReg.test(reqUrl)) {
+        const isOwner = ctx.session.isOwner;
+
+        if (!isOwner) {
+            ctx.status = 404;
+            ctx.message = 'Not Found';
+
+            await next();
+        } else {
+            ctx.body = data.replace(/<staticVersion>/g, staticVersion);
+        }
+    } else {
+        ctx.body = data.replace(/<staticVersion>/g, staticVersion);
+    }
 }
 
 routeList.forEach(routeLink => {
@@ -86,5 +102,11 @@ _router.post('/api/reply/:replyId/delete', api.reply.delete);
  *  Catalogue
  */
 _router.get('/api/catalogue/page', api.catalogue.page);
+
+/**
+ *  Admin
+ */
+_router.post('/api/admin/paper/add', api.admin.addPaper);
+_router.post('/api/admin/paper/:paperId/update', api.admin.updatePaper);
 
 module.exports = _router;

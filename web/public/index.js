@@ -856,9 +856,9 @@ var App = __webpack_require__(/*! ./containers/app */ "./containers/app.js");
 var PageHome = __webpack_require__(/*! ./containers/page-home */ "./containers/page-home.js");
 var PageCatalogue = __webpack_require__(/*! ./containers/page-catalogue */ "./containers/page-catalogue.js");
 var PagePaper = __webpack_require__(/*! ./containers/page-paper */ "./containers/page-paper.js");
-var PagePaperCreate = __webpack_require__(/*! ./containers/page-paper-create */ "./containers/page-paper-create.js");
 var PageUser = __webpack_require__(/*! ./containers/page-user */ "./containers/page-user.js");
 var PageActivate = __webpack_require__(/*! ./containers/page-activate */ "./containers/page-activate.js");
+var PageEditPaper = __webpack_require__(/*! ./containers/page-edit-paper */ "./containers/page-edit-paper.js");
 /* 引入自定义的 reducers */
 var appReducer = __webpack_require__(/*! ./reducers */ "./reducers/index.js");
 /* 生成 store */
@@ -919,16 +919,20 @@ var router = React.createElement(
             component: PagePaper
         }),
         React.createElement(Route, {
-            path: '/paper/create',
-            component: PagePaperCreate
-        }),
-        React.createElement(Route, {
             path: '/user/:uuid',
             component: PageUser
         }),
         React.createElement(Route, {
             path: '/util/activate/:uuid',
             component: PageActivate
+        }),
+        React.createElement(Route, {
+            path: '/admin/add-paper',
+            component: PageEditPaper
+        }),
+        React.createElement(Route, {
+            path: '/admin/edit-paper/:paperId',
+            component: PageEditPaper
         })
     )
 );
@@ -1964,8 +1968,83 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* eslint-disable */
 
-var CatalogueList = function (_React$Component) {
-    _inherits(CatalogueList, _React$Component);
+var CatalogueItem = function (_React$Component) {
+    _inherits(CatalogueItem, _React$Component);
+
+    function CatalogueItem() {
+        _classCallCheck(this, CatalogueItem);
+
+        return _possibleConstructorReturn(this, (CatalogueItem.__proto__ || Object.getPrototypeOf(CatalogueItem)).apply(this, arguments));
+    }
+
+    _createClass(CatalogueItem, [{
+        key: 'render',
+        value: function render() {
+            var userInfo = this.props.userInfo;
+            var catalogue = this.props.catalogue;
+            var detailUrl = '/paper/' + catalogue.id;
+            var catalogueItemTitle = catalogue.title;
+            var catalogueItemBrief = catalogue.brief;
+            var dateVal = catalogue.gmtCreate.slice(0, 10);
+            var tagVal = '' + catalogue.tag + (catalogue.subtag ? '\uFF0C' + catalogue.subtag : '');
+
+            return React.createElement(
+                'div',
+                { className: 'catalogue-item' },
+                React.createElement(
+                    'a',
+                    {
+                        title: catalogueItemTitle,
+                        href: detailUrl,
+                        className: 'catalogue-item-title'
+                    },
+                    catalogueItemTitle
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'catalogue-item-subtitle' },
+                    React.createElement(
+                        'div',
+                        { className: 'subtitle-tags pull-right' },
+                        React.createElement('i', { className: 'fa fa-tags' }),
+                        '\xA0',
+                        React.createElement(
+                            'span',
+                            { className: 'tags-val' },
+                            tagVal
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'subtitle-date pull-right' },
+                        React.createElement('i', { className: 'fa fa-calendar' }),
+                        '\xA0',
+                        React.createElement(
+                            'span',
+                            { className: 'date-val' },
+                            dateVal
+                        )
+                    )
+                ),
+                React.createElement(
+                    'p',
+                    { className: 'catalogue-item-brief' },
+                    catalogueItemBrief
+                ),
+                !userInfo.isOwner ? null : React.createElement(
+                    'a',
+                    { className: 'edit-paper-link', href: '/admin/edit-paper/' + catalogue.id },
+                    React.createElement('i', { className: 'fa fa-edit' })
+                )
+            );
+        }
+    }]);
+
+    return CatalogueItem;
+}(React.Component);
+
+var CatalogueList = function (_React$Component2) {
+    _inherits(CatalogueList, _React$Component2);
 
     function CatalogueList() {
         _classCallCheck(this, CatalogueList);
@@ -1976,6 +2055,7 @@ var CatalogueList = function (_React$Component) {
     _createClass(CatalogueList, [{
         key: 'render',
         value: function render() {
+            var userInfo = this.props.userInfo || {};
             var catalogue = this.props.catalogue || {};
             var catalogueList = catalogue.rows || [];
 
@@ -1991,61 +2071,14 @@ var CatalogueList = function (_React$Component) {
                 return React.createElement(
                     'div',
                     { className: 'catalogue-list' },
-                    catalogueList.map(function (item, idx) {
-                        var key = 'catalogueItem_' + idx;
-                        var detailUrl = '/paper/' + item.id;
-                        var catalogueItemTitle = item.title;
-                        var catalogueItemBrief = item.brief;
-                        var dateVal = item.gmtCreate.slice(0, 10);
-                        var tagVal = '' + item.tag + (item.subtag ? '\uFF0C' + item.subtag : '');
+                    catalogueList.map(function (item) {
+                        var key = 'catalogueItem_' + item.id;
 
-                        return React.createElement(
-                            'div',
-                            {
-                                key: key,
-                                className: 'catalogue-item'
-                            },
-                            React.createElement(
-                                'a',
-                                {
-                                    title: catalogueItemTitle,
-                                    href: detailUrl,
-                                    className: 'catalogue-item-title'
-                                },
-                                catalogueItemTitle
-                            ),
-                            React.createElement(
-                                'div',
-                                { className: 'catalogue-item-subtitle' },
-                                React.createElement(
-                                    'div',
-                                    { className: 'subtitle-tags pull-right' },
-                                    React.createElement('i', { className: 'fa fa-tags' }),
-                                    '\xA0',
-                                    React.createElement(
-                                        'span',
-                                        { className: 'tags-val' },
-                                        tagVal
-                                    )
-                                ),
-                                React.createElement(
-                                    'div',
-                                    { className: 'subtitle-date pull-right' },
-                                    React.createElement('i', { className: 'fa fa-calendar' }),
-                                    '\xA0',
-                                    React.createElement(
-                                        'span',
-                                        { className: 'date-val' },
-                                        dateVal
-                                    )
-                                )
-                            ),
-                            React.createElement(
-                                'p',
-                                { className: 'catalogue-item-brief' },
-                                catalogueItemBrief
-                            )
-                        );
+                        return React.createElement(CatalogueItem, {
+                            catalogue: item,
+                            userInfo: userInfo,
+                            key: key
+                        });
                     })
                 );
             }
@@ -2215,6 +2248,7 @@ var Catalogue = function (_React$Component) {
         key: 'render',
         value: function render() {
             var catalogue = this.props.catalogue || {};
+            var userInfo = this.props.userInfo || {};
 
             return React.createElement(
                 'div',
@@ -2228,7 +2262,7 @@ var Catalogue = function (_React$Component) {
                         'Catalogue'
                     ),
                     React.createElement('hr', null),
-                    React.createElement(CatalogueList, { catalogue: catalogue }),
+                    React.createElement(CatalogueList, { catalogue: catalogue, userInfo: userInfo }),
                     React.createElement(CataloguePager, { catalogue: catalogue })
                 )
             );
@@ -3896,7 +3930,7 @@ module.exports = resetPwdValidate;
 var stanAlert = __webpack_require__(/*! ../../../lib/common-stan-alert */ "./lib/common-stan-alert.js");
 
 function submitValidate(type, formData) {
-    var emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var emailReg = /^[^@]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/;
     var pwdReg = /^\S{10,18}$/;
     var alertInfo = {
         title: 'Warning!',
@@ -4081,6 +4115,66 @@ var NavbarLeft = function (_React$Component) {
 }(React.Component);
 
 module.exports = NavbarLeft;
+
+/***/ }),
+
+/***/ "./components/ui-components/navbar/navbar-right-admin.js":
+/*!***************************************************************!*\
+  !*** ./components/ui-components/navbar/navbar-right-admin.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var NavbarRightAdmin = function (_React$Component) {
+    _inherits(NavbarRightAdmin, _React$Component);
+
+    function NavbarRightAdmin() {
+        _classCallCheck(this, NavbarRightAdmin);
+
+        return _possibleConstructorReturn(this, (NavbarRightAdmin.__proto__ || Object.getPrototypeOf(NavbarRightAdmin)).apply(this, arguments));
+    }
+
+    _createClass(NavbarRightAdmin, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'li',
+                { className: 'nav-item dropdown' },
+                React.createElement(
+                    'a',
+                    { className: 'nav-link dropdown-toggle', href: '#', id: 'navbarAdminDropdown', role: 'button', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+                    'Admin'
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'dropdown-menu', 'aria-labelledby': 'navbarAdminDropdown' },
+                    React.createElement(
+                        'a',
+                        { className: 'dropdown-item', href: '/admin/add-paper' },
+                        'Add Paper'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return NavbarRightAdmin;
+}(React.Component);
+
+module.exports = NavbarRightAdmin;
 
 /***/ }),
 
@@ -4368,6 +4462,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
+var NavbarRightAdmin = __webpack_require__(/*! ./navbar-right-admin */ "./components/ui-components/navbar/navbar-right-admin.js");
 var NavbarRightCatalogue = __webpack_require__(/*! ./navbar-right-catalogue */ "./components/ui-components/navbar/navbar-right-catalogue.js");
 var NavbarRightUser = __webpack_require__(/*! ./navbar-right-user */ "./components/ui-components/navbar/navbar-right-user.js");
 var NavbarRightLogout = __webpack_require__(/*! ./navbar-right-logout */ "./components/ui-components/navbar/navbar-right-logout.js");
@@ -4420,6 +4515,7 @@ var NavbarRight = function (_React$Component) {
                     React.createElement(
                         'ul',
                         { className: 'navbar-nav' },
+                        userInfo.isOwner ? React.createElement(NavbarRightAdmin, null) : null,
                         React.createElement(NavbarRightCatalogue, null),
                         React.createElement(NavbarRightUser, { userInfo: userInfo }),
                         userInfo.id && userInfo.email && userInfo.password ? React.createElement(NavbarRightLogout, {
@@ -5236,8 +5332,9 @@ var Paper = function (_React$Component) {
         key: 'render',
         value: function render() {
             var paper = this.props.paper;
+            var userInfo = this.props.userInfo || {};
 
-            if (paper) {
+            if (paper && paper.title && paper.gmtCreate && paper.tag && paper.content) {
                 var paperTitle = paper.title;
                 var dateVal = paper.gmtCreate.slice(0, 10);
                 var tagVal = '' + paper.tag + (paper.subtag ? '\uFF0C' + paper.subtag : '');
@@ -5289,6 +5386,11 @@ var Paper = function (_React$Component) {
                             deleteReply: this.props.deleteReply,
                             cache: this.props.cache
                         })
+                    ),
+                    !userInfo.isOwner ? null : React.createElement(
+                        'a',
+                        { className: 'edit-paper-link', href: '/admin/edit-paper/' + paper.id },
+                        React.createElement('i', { className: 'fa fa-edit' })
                     )
                 );
             } else {
@@ -6917,6 +7019,73 @@ module.exports = PageCatalogue;
 
 /***/ }),
 
+/***/ "./containers/page-edit-paper.js":
+/*!***************************************!*\
+  !*** ./containers/page-edit-paper.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+/* eslint-disable */
+
+
+var UI_PagePaper = function (_React$Component) {
+    _inherits(UI_PagePaper, _React$Component);
+
+    function UI_PagePaper() {
+        _classCallCheck(this, UI_PagePaper);
+
+        return _possibleConstructorReturn(this, (UI_PagePaper.__proto__ || Object.getPrototypeOf(UI_PagePaper)).apply(this, arguments));
+    }
+
+    _createClass(UI_PagePaper, [{
+        key: 'render',
+        value: function render() {
+            var paperId = this.props.params.paperId || '';
+            var pageType = paperId ? 'EDIT' : 'ADD';
+
+            return React.createElement(
+                'div',
+                { className: 'page-edit-paper', key: this.props.current },
+                pageType === 'ADD' ? 'add new paper' : 'update paper, paper id: ' + paperId
+            );
+        }
+    }]);
+
+    return UI_PagePaper;
+}(React.Component);
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {};
+};
+
+var PagePaper = connect(mapState2Props, mapDispatch2Props)(UI_PagePaper);
+
+module.exports = PagePaper;
+
+/***/ }),
+
 /***/ "./containers/page-home.js":
 /*!*********************************!*\
   !*** ./containers/page-home.js ***!
@@ -7027,77 +7196,6 @@ var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
 var PageHome = connect(mapState2Props, mapDispatch2Props)(UI_PageHome);
 
 module.exports = PageHome;
-
-/***/ }),
-
-/***/ "./containers/page-paper-create.js":
-/*!*****************************************!*\
-  !*** ./containers/page-paper-create.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/* eslint-disable */
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
-    connect = _require.connect;
-
-var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
-var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
-/* eslint-disable */
-
-var UI_PagePaperCreate = function (_React$Component) {
-    _inherits(UI_PagePaperCreate, _React$Component);
-
-    function UI_PagePaperCreate() {
-        _classCallCheck(this, UI_PagePaperCreate);
-
-        return _possibleConstructorReturn(this, (UI_PagePaperCreate.__proto__ || Object.getPrototypeOf(UI_PagePaperCreate)).apply(this, arguments));
-    }
-
-    _createClass(UI_PagePaperCreate, [{
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                { className: 'page-paper', key: this.props.current },
-                React.createElement(Navbar, null),
-                React.createElement(
-                    'div',
-                    { className: 'page-section-body' },
-                    '\u65B0\u589E\u6587\u7AE0\u9875'
-                ),
-                React.createElement(LoginModal, null)
-            );
-        }
-    }]);
-
-    return UI_PagePaperCreate;
-}(React.Component);
-
-var mapState2Props = function mapState2Props(state, props) {
-    return state.appReducer;
-}; //  eslint-disable-line
-
-var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
-    return {};
-};
-
-var PagePaperCreate = connect(mapState2Props, mapDispatch2Props)(UI_PagePaperCreate);
-
-module.exports = PagePaperCreate;
 
 /***/ }),
 

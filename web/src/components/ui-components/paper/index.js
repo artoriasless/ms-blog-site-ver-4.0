@@ -59,8 +59,9 @@ class Paper extends React.Component {
 
     render() {
         const paper = this.props.paper;
+        const userInfo = this.props.userInfo || {};
 
-        if (paper) {
+        if (paper && paper.title && paper.gmtCreate && paper.tag && paper.content) {
             const paperTitle = paper.title;
             const dateVal = paper.gmtCreate.slice(0, 10);
             const tagVal = `${paper.tag}${paper.subtag ? `，${paper.subtag}` : ''}`;
@@ -92,6 +93,13 @@ class Paper extends React.Component {
                             cache={ this.props.cache }
                         />
                     </div>
+                    {
+                        !userInfo.isOwner ? null : (
+                            <a className="edit-paper-link" href={ `/admin/edit-paper/${paper.id}` }>
+                                <i className="fa fa-edit"></i>
+                            </a>
+                        )
+                    }
                 </div>
             );
         } else {

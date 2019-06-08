@@ -15,4 +15,7 @@ module.exports = {
             },
         },
     },
+    owners: [
+        '36c30019-f85f-422e-b37b-efaebb87de3b'
+    ],
 };

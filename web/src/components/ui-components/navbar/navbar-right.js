@@ -2,6 +2,7 @@
 /* eslint-disable */
 const React = require('react');
 
+const NavbarRightAdmin = require('./navbar-right-admin');
 const NavbarRightCatalogue = require('./navbar-right-catalogue');
 const NavbarRightUser = require('./navbar-right-user');
 const NavbarRightLogout = require('./navbar-right-logout');
@@ -35,6 +36,7 @@ class NavbarRight extends React.Component {
                     className="collapse navbar-collapse"
                 >
                     <ul className="navbar-nav">
+                        { userInfo.isOwner ? <NavbarRightAdmin/> : null }
                         <NavbarRightCatalogue/>
                         <NavbarRightUser userInfo={ userInfo }/>
                         {

@@ -477,6 +477,31 @@ code {
                     background: transparent;
                 }
 
+.app .page-section-header .page-section-header-container .navbar .dropdown-menu {
+                    min-width: 0;
+                    padding: 0;
+                    margin: 0.25rem 0 0;
+                    border-top: none;
+                    border-radius: 0 0 0.25rem 0.25rem;
+                    overflow: hidden;
+                    text-align: center;
+                }
+
+.app .page-section-header .page-section-header-container .navbar .dropdown-menu .dropdown-item {
+                        height: 2rem;
+                        line-height: 2rem;
+                        padding: 0 1rem;
+                        color: #5e87a2;
+                    }
+
+.app .page-section-header .page-section-header-container .navbar .dropdown-menu .dropdown-item:hover {
+                            color: rgb(94, 160, 204);
+                        }
+
+.app .page-section-header .page-section-header-container .navbar .dropdown-menu .dropdown-item:active {
+                            background-color: #f8f9fa;
+                        }
+
 .app .page-section-header .page-section-header-container .navbar .nav-link {
                     height: 2rem;
                     line-height: 2rem;
@@ -534,6 +559,20 @@ code {
                         margin-top: 2.5rem;
                         background-color: #f0f0f0;
                     }
+
+                    .app .page-section-header .page-section-header-container .navbar .dropdown-menu {
+                        margin: 0;
+                        border: none;
+                        border-radius: 0;
+                        overflow: hidden;
+                        text-align: center;
+                    }
+
+                        .app .page-section-header .page-section-header-container .navbar .dropdown-menu .dropdown-item {
+                            height: 2rem;
+                            line-height: 2rem;
+                            padding: 0 1rem;
+                        }
                         .app .page-section-header .page-section-header-container .navbar .user-center-link .user-avatar {
                             display: none;
                         }
@@ -1394,6 +1433,7 @@ code {
             }
 
 .page-catalogue .catalogue-container .catalogue-content .catalogue-list .catalogue-item {
+                    position: relative;
                     margin: 10px 0 11px;
                     border-bottom: 1px solid #ddd;
                 }
@@ -1452,6 +1492,30 @@ code {
                     font-size: 0.8em;
                     font-family: "microsoft yahei";
                 }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .edit-paper-link {
+                    position: absolute;
+                    display: block;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    right: 0;
+                    bottom: 0;
+                    margin-bottom: 15px;
+                    background-color: white;
+                    border-radius: 3px;
+                }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .edit-paper-link:hover {
+                        text-decoration: none;
+                    }
+
+.page-catalogue .catalogue-container .catalogue-content .catalogue-list .edit-paper-link .fa {
+                        display: block;
+                        width: 1.5rem;
+                        line-height: 1.5rem;
+                        text-align: center;
+                        font-size: 1rem;
+                    }
 
 @media (min-width: 768px) {
         .page-catalogue .catalogue-container {
@@ -2006,6 +2070,26 @@ code {
                         font-size: 0.75em;
                         font-family: consola;
                     }
+
+.page-paper .paper-container .edit-paper-link {
+            position: fixed;
+            width: 2rem;
+            height: 2rem;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            opacity: 0.85;
+            z-index: 9;
+        }
+
+.page-paper .paper-container .edit-paper-link .fa {
+                display: block;
+                width: 2rem;
+                height: 2rem;
+                line-height: 2rem;
+                font-size: 1.25rem;
+                text-align: center;
+            }
 
 .reply-container {
     padding: 0 15px;

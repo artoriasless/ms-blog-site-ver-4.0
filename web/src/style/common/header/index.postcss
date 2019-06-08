@@ -63,6 +63,31 @@
                     background: transparent;
                 }
 
+                .dropdown-menu {
+                    min-width: 0;
+                    padding: 0;
+                    margin: 0.25rem 0 0;
+                    border-top: none;
+                    border-radius: 0 0 0.25rem 0.25rem;
+                    overflow: hidden;
+                    text-align: center;
+
+                    .dropdown-item {
+                        height: 2rem;
+                        line-height: 2rem;
+                        padding: 0 1rem;
+                        color: var(--color-theme);
+
+                        &:hover {
+                            color: var(--color-theme-dark);
+                        }
+
+                        &:active {
+                            background-color: #f8f9fa;
+                        }
+                    }
+                }
+
                 .nav-link {
                     height: 2rem;
                     line-height: 2rem;

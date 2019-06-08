@@ -15,9 +15,9 @@ const App = require('/containers/app');
 const PageHome = require('/containers/page-home');
 const PageCatalogue = require('/containers/page-catalogue');
 const PagePaper = require('/containers/page-paper');
-const PagePaperCreate = require('/containers/page-paper-create');
 const PageUser = require('/containers/page-user');
 const PageActivate = require('/containers/page-activate');
+const PageEditPaper = require('/containers/page-edit-paper');
 /* 引入自定义的 reducers */
 const appReducer = require('./reducers');
 /* 生成 store */
@@ -78,16 +78,20 @@ const router = (
                 component={ PagePaper }
             />
             <Route
-                path="/paper/create"
-                component={ PagePaperCreate }
-            />
-            <Route
                 path="/user/:uuid"
                 component={ PageUser }
             />
             <Route
                 path="/util/activate/:uuid"
                 component={ PageActivate }
+            />
+            <Route
+                path="/admin/add-paper"
+                component={ PageEditPaper }
+            />
+            <Route
+                path="/admin/edit-paper/:paperId"
+                component={ PageEditPaper }
             />
         </Route>
     </Router>

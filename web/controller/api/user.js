@@ -3,6 +3,7 @@
 const uuid = require('uuid/v4');
 const hash = require('object-hash');
 
+const config = require('../../../config');
 const service = require('../../../service');
 const userService = service.user;
 
@@ -19,6 +20,7 @@ module.exports = {
         const loginUser = ctx.session.user;
         const user = await userService.findById(Number(loginUser.id)) || {};
 
+        user.isOwner = Boolean(ctx.session.isOwner);
         ctx.session.user = user;
         ctx.body = {
             success: true,
@@ -28,6 +30,7 @@ module.exports = {
     },
     async logout(ctx) {
         ctx.session.user = {};
+        ctx.session.isOwner = false;
         ctx.body = {
             success: true,
             message: 'logout success!',
@@ -45,6 +48,7 @@ module.exports = {
         var user = users[0] || {};
         var success = true;
         var message = 'login success!';
+        var isOwner = false;
 
         if (!user.id && !user.email && !user.password) {
             success = false;
@@ -55,9 +59,14 @@ module.exports = {
                 success = false;
                 message = 'login failed.please check that password is right!';
             }
+            if (config.owners.indexOf(user.uuid) !== -1) {
+                isOwner = true;
+                user.isOwner = true;
+            }
         }
 
         ctx.session.user = user;
+        ctx.session.isOwner = isOwner;
         ctx.body = {
             success,
             message,
