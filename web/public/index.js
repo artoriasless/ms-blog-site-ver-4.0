@@ -1587,6 +1587,37 @@ module.exports = EditPwdModal;
 
 /***/ }),
 
+/***/ "./components/paper-edit.js":
+/*!**********************************!*\
+  !*** ./components/paper-edit.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
+    connect = _require.connect;
+
+var UI_paperEdit = __webpack_require__(/*! ../components/ui-components/paper-edit */ "./components/ui-components/paper-edit/index.js");
+var actions = __webpack_require__(/*! ../actions */ "./actions/index.js");
+
+var mapState2Props = function mapState2Props(state, props) {
+    return state.appReducer;
+}; //  eslint-disable-line
+
+var mapDispatch2Props = function mapDispatch2Props(dispatch, props) {
+    return {//  eslint-disable-line
+    };
+};
+
+var PaperEdit = connect(mapState2Props, mapDispatch2Props)(UI_paperEdit);
+
+module.exports = PaperEdit;
+
+/***/ }),
+
 /***/ "./components/paper-reply.js":
 /*!***********************************!*\
   !*** ./components/paper-reply.js ***!
@@ -4535,6 +4566,163 @@ module.exports = NavbarRight;
 
 /***/ }),
 
+/***/ "./components/ui-components/paper-edit/index.js":
+/*!******************************************************!*\
+  !*** ./components/ui-components/paper-edit/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var PaperEditForm = __webpack_require__(/*! ./paper-edit-form */ "./components/ui-components/paper-edit/paper-edit-form.js");
+var PaperEditPreview = __webpack_require__(/*! ./paper-edit-preview */ "./components/ui-components/paper-edit/paper-edit-preview.js");
+/* eslint-disable */
+
+var PaperEdit = function (_React$Component) {
+    _inherits(PaperEdit, _React$Component);
+
+    function PaperEdit() {
+        _classCallCheck(this, PaperEdit);
+
+        return _possibleConstructorReturn(this, (PaperEdit.__proto__ || Object.getPrototypeOf(PaperEdit)).apply(this, arguments));
+    }
+
+    _createClass(PaperEdit, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { className: 'page-section-body row' },
+                React.createElement(PaperEditForm, null),
+                React.createElement(PaperEditPreview, null)
+            );
+        }
+    }]);
+
+    return PaperEdit;
+}(React.Component);
+
+module.exports = PaperEdit;
+
+/***/ }),
+
+/***/ "./components/ui-components/paper-edit/paper-edit-form.js":
+/*!****************************************************************!*\
+  !*** ./components/ui-components/paper-edit/paper-edit-form.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* eslint-disable */
+
+var PaperEditForm = function (_React$Component) {
+    _inherits(PaperEditForm, _React$Component);
+
+    function PaperEditForm() {
+        _classCallCheck(this, PaperEditForm);
+
+        return _possibleConstructorReturn(this, (PaperEditForm.__proto__ || Object.getPrototypeOf(PaperEditForm)).apply(this, arguments));
+    }
+
+    _createClass(PaperEditForm, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'form',
+                { id: 'paperEditForm', className: 'form-container col-xs-12 col-md-6' },
+                '\u7F16\u8F91\u8868\u5355'
+            );
+        }
+    }]);
+
+    return PaperEditForm;
+}(React.Component);
+
+module.exports = PaperEditForm;
+
+/***/ }),
+
+/***/ "./components/ui-components/paper-edit/paper-edit-preview.js":
+/*!*******************************************************************!*\
+  !*** ./components/ui-components/paper-edit/paper-edit-preview.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* global $ */
+/* eslint-disable */
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+__webpack_require__(/*! ../../../plugins/img-viewer/js/index */ "./plugins/img-viewer/js/index.js");
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var mdConvert = __webpack_require__(/*! ../../../lib/common-markdown */ "./lib/common-markdown.js");
+/* eslint-disable */
+
+var PaperEditPreview = function (_React$Component) {
+    _inherits(PaperEditPreview, _React$Component);
+
+    function PaperEditPreview() {
+        _classCallCheck(this, PaperEditPreview);
+
+        return _possibleConstructorReturn(this, (PaperEditPreview.__proto__ || Object.getPrototypeOf(PaperEditPreview)).apply(this, arguments));
+    }
+
+    _createClass(PaperEditPreview, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                { id: 'paperEditPreview', className: 'preview-container col-xs-12 col-md-6' },
+                '\u9884\u89C8\u533A\u57DF'
+            );
+        }
+    }]);
+
+    return PaperEditPreview;
+}(React.Component);
+
+module.exports = PaperEditPreview;
+
+/***/ }),
+
 /***/ "./components/ui-components/paper-filter/filter-content-latest.js":
 /*!************************************************************************!*\
   !*** ./components/ui-components/paper-filter/filter-content-latest.js ***!
@@ -7043,8 +7231,11 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _require = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js"),
     connect = _require.connect;
 
-/* eslint-disable */
+var Navbar = __webpack_require__(/*! ../components/common-navbar */ "./components/common-navbar.js");
+var LoginModal = __webpack_require__(/*! ../components/common-login-modal */ "./components/common-login-modal.js");
 
+var PaperEdit = __webpack_require__(/*! ../components/paper-edit */ "./components/paper-edit.js");
+/* eslint-disable */
 
 var UI_PagePaper = function (_React$Component) {
     _inherits(UI_PagePaper, _React$Component);
@@ -7064,7 +7255,9 @@ var UI_PagePaper = function (_React$Component) {
             return React.createElement(
                 'div',
                 { className: 'page-edit-paper', key: this.props.current },
-                pageType === 'ADD' ? 'add new paper' : 'update paper, paper id: ' + paperId
+                React.createElement(Navbar, null),
+                React.createElement(PaperEdit, { pageType: pageType }),
+                React.createElement(LoginModal, null)
             );
         }
     }]);

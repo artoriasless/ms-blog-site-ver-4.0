@@ -3,6 +3,10 @@
 const React = require('react');
 const { connect } = require('react-redux');
 
+const Navbar = require('/components/common-navbar');
+const LoginModal = require('/components/common-login-modal');
+
+const PaperEdit = require('/components/paper-edit');
 /* eslint-disable */
 class UI_PagePaper extends React.Component {
     render() {
@@ -11,7 +15,9 @@ class UI_PagePaper extends React.Component {
 
         return (
             <div className="page-edit-paper" key={ this.props.current }>
-                { pageType === 'ADD' ? 'add new paper' : `update paper, paper id: ${paperId}` }
+                <Navbar/>
+                <PaperEdit pageType={ pageType }/>
+                <LoginModal/>
             </div>
         );
     }

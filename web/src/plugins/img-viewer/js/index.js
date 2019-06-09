@@ -55,11 +55,11 @@ var IE, Wilq32;
 
         img.onload = function () {
             success(img);
-        }
+        };
 
         img.onerror = function () {
             error(img);
-        }
+        };
 
         img.src = src;
 
