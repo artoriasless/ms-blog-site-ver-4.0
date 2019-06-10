@@ -11,8 +11,10 @@ const mdConvert = require('/lib/common-markdown');
 class PaperEditPreview extends React.Component {
     render() {
         return (
-            <div id="paperEditPreview" className="preview-container col-xs-12 col-md-6">
-                预览区域
+            <div className="preview-container col-xs-12 col-md-6">
+                <div className="preview-content">
+                    文章内容预览区域
+                </div>
             </div>
         );
     }

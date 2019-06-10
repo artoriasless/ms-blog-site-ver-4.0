@@ -9,8 +9,14 @@ const PaperEditPreview = require('./paper-edit-preview');
 
 class PaperEdit extends React.Component {
     render() {
+        const operateType = this.props.operateType || 'editing';
+
         return (
             <div className="page-section-body row">
+                <a className={ `toggle-edit-preview ${operateType}` } href="javascript:;">
+                    <i className="fa fa-edit"></i>
+                    <i className="fa fa-eye"></i>
+                </a>
                 <PaperEditForm/>
                 <PaperEditPreview/>
             </div>

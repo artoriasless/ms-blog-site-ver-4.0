@@ -25,6 +25,8 @@ const resetReplyFormAction = require('./reset-reply-form');
 const updateReplyFormAction = require('./update-reply-form');
 const submitReplyAction = require('./submit-reply');
 
+const toggleEditPreviewAction = require('./toggle-edit-preview');
+
 const actions = {
     actionTypes,
 
@@ -50,6 +52,8 @@ const actions = {
     resetReplyFormAction,
     updateReplyFormAction,
     submitReplyAction,
+
+    toggleEditPreviewAction,
 };
 
 module.exports = actions;

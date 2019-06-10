@@ -119,6 +119,8 @@ var RESET_REPLY_FORM = 'RESET_REPLY_FORM';
 var UPDATE_REPLY_FORM = 'UPDATE_REPLY_FORM';
 var SUBMIT_REPLY = 'SUBMIT_REPLY';
 
+var TOGGLE_EDIT_PREVIEW = 'TOGGLE_EDIT_PREVIEW';
+
 module.exports = {
     CHANGE_ROUTE: CHANGE_ROUTE,
 
@@ -141,7 +143,9 @@ module.exports = {
     GET_PAPER_REPLY: GET_PAPER_REPLY,
     RESET_REPLY_FORM: RESET_REPLY_FORM,
     UPDATE_REPLY_FORM: UPDATE_REPLY_FORM,
-    SUBMIT_REPLY: SUBMIT_REPLY
+    SUBMIT_REPLY: SUBMIT_REPLY,
+
+    TOGGLE_EDIT_PREVIEW: TOGGLE_EDIT_PREVIEW
 };
 
 /***/ }),
@@ -377,6 +381,8 @@ var resetReplyFormAction = __webpack_require__(/*! ./reset-reply-form */ "./acti
 var updateReplyFormAction = __webpack_require__(/*! ./update-reply-form */ "./actions/update-reply-form.js");
 var submitReplyAction = __webpack_require__(/*! ./submit-reply */ "./actions/submit-reply.js");
 
+var toggleEditPreviewAction = __webpack_require__(/*! ./toggle-edit-preview */ "./actions/toggle-edit-preview.js");
+
 var actions = {
     actionTypes: actionTypes,
 
@@ -401,7 +407,9 @@ var actions = {
     getPaperReplyAction: getPaperReplyAction,
     resetReplyFormAction: resetReplyFormAction,
     updateReplyFormAction: updateReplyFormAction,
-    submitReplyAction: submitReplyAction
+    submitReplyAction: submitReplyAction,
+
+    toggleEditPreviewAction: toggleEditPreviewAction
 };
 
 module.exports = actions;
@@ -605,6 +613,36 @@ var submitReply = function submitReply() {
 };
 
 module.exports = submitReply;
+
+/***/ }),
+
+/***/ "./actions/toggle-edit-preview.js":
+/*!****************************************!*\
+  !*** ./actions/toggle-edit-preview.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var toggleEditPreview = function toggleEditPreview() {
+    var operateType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'editing';
+
+    var url = document.URL;
+    var reg = /^[^/]+\/\/[^/]+/;
+    var current = url.replace(reg, '');
+
+    return {
+        type: 'TOGGLE_EDIT_PREVIEW',
+        payload: {
+            current: current,
+            operateType: operateType
+        }
+    };
+};
+
+module.exports = toggleEditPreview;
 
 /***/ }),
 
@@ -4604,9 +4642,17 @@ var PaperEdit = function (_React$Component) {
     _createClass(PaperEdit, [{
         key: 'render',
         value: function render() {
+            var operateType = this.props.operateType || 'editing';
+
             return React.createElement(
                 'div',
                 { className: 'page-section-body row' },
+                React.createElement(
+                    'a',
+                    { className: 'toggle-edit-preview ' + operateType, href: 'javascript:;' },
+                    React.createElement('i', { className: 'fa fa-edit' }),
+                    React.createElement('i', { className: 'fa fa-eye' })
+                ),
                 React.createElement(PaperEditForm, null),
                 React.createElement(PaperEditPreview, null)
             );
@@ -4655,9 +4701,67 @@ var PaperEditForm = function (_React$Component) {
         key: 'render',
         value: function render() {
             return React.createElement(
-                'form',
-                { id: 'paperEditForm', className: 'form-container col-xs-12 col-md-6' },
-                '\u7F16\u8F91\u8868\u5355'
+                'div',
+                { className: 'form-container col-xs-12 col-md-6' },
+                React.createElement(
+                    'form',
+                    { className: 'form-content' },
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement('input', {
+                            id: 'paper_title',
+                            className: 'form-control',
+                            type: 'text',
+                            placeholder: 'type paper title',
+                            ref: 'paper_title'
+                        })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement('input', {
+                            id: 'paper_tag',
+                            className: 'form-control',
+                            type: 'text',
+                            placeholder: 'type paper tag',
+                            ref: 'paper_tag'
+                        })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement('input', {
+                            id: 'paper_subtag',
+                            className: 'form-control',
+                            type: 'text',
+                            placeholder: 'type paper subtag(s)',
+                            ref: 'paper_subtag'
+                        })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement('textarea', {
+                            id: 'paper_brief',
+                            className: 'form-control',
+                            type: 'text',
+                            placeholder: 'type paper brief(one paragraph is enough)',
+                            ref: 'paper_brief'
+                        })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group paper-content-container' },
+                        React.createElement('textarea', {
+                            id: 'paper_content',
+                            className: 'form-control',
+                            type: 'text',
+                            placeholder: 'type paper content(only support markdown syntax)',
+                            ref: 'paper_content'
+                        })
+                    )
+                )
             );
         }
     }]);
@@ -4710,8 +4814,12 @@ var PaperEditPreview = function (_React$Component) {
         value: function render() {
             return React.createElement(
                 'div',
-                { id: 'paperEditPreview', className: 'preview-container col-xs-12 col-md-6' },
-                '\u9884\u89C8\u533A\u57DF'
+                { className: 'preview-container col-xs-12 col-md-6' },
+                React.createElement(
+                    'div',
+                    { className: 'preview-content' },
+                    '\u6587\u7AE0\u5185\u5BB9\u9884\u89C8\u533A\u57DF'
+                )
             );
         }
     }]);
@@ -7249,12 +7357,13 @@ var UI_PagePaper = function (_React$Component) {
     _createClass(UI_PagePaper, [{
         key: 'render',
         value: function render() {
+            var operateType = this.props.operateType || 'editing';
             var paperId = this.props.params.paperId || '';
             var pageType = paperId ? 'EDIT' : 'ADD';
 
             return React.createElement(
                 'div',
-                { className: 'page-edit-paper', key: this.props.current },
+                { className: 'page-edit-paper ' + operateType, key: this.props.current },
                 React.createElement(Navbar, null),
                 React.createElement(PaperEdit, { pageType: pageType }),
                 React.createElement(LoginModal, null)
@@ -52284,6 +52393,8 @@ module.exports = reducers;
         catalogue: {
         },
         paper: {
+        },
+        editPaper: {
         },
         userInfo: {
             ···

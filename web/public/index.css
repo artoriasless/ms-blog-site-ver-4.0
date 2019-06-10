@@ -580,7 +580,6 @@ code {
 
 .common-modal {
     z-index: 999999;
-
 }
 
 .common-modal .modal-dialog {
@@ -2259,5 +2258,85 @@ code {
             resize: none;
         }
 
+.page-edit-paper {
+    height: calc(100% - 2.5rem - 1px);
+}
 
+.page-edit-paper .page-section-body {
+        height: 100%;
+    }
 
+.page-edit-paper .form-container {
+        padding: 0;
+    }
+
+.page-edit-paper .form-container .form-content {
+            height: 100%;
+            padding: 5px;
+            margin: 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+.page-edit-paper .form-container .form-content .form-group {
+                margin-bottom: 0.5rem;
+            }
+
+.page-edit-paper .form-container .form-content .form-group .form-control {
+                    height: 2rem;
+                    line-height: calc(1.7rem - 2px);
+                    padding: 0.15 0.75rem;
+                    -webkit-box-sizing: border-box;
+                            box-sizing: border-box;
+                }
+
+.page-edit-paper .form-container .form-content .form-group.paper-content-container {
+                    height: calc(100% - 15.5rem);
+                    min-height: 20rem;
+                }
+
+.page-edit-paper .form-container .form-content #paper_brief {
+                height: 7.5rem;
+                resize: none;
+            }
+
+.page-edit-paper .form-container .form-content #paper_content {
+                height: 100%;
+                resize: none;
+            }
+
+@media (min-width: 768px) {
+        .page-edit-paper .form-container {
+            padding: 5px 5px 5px 0;
+        }
+}
+
+@media (max-width: 767px) {
+        .page-edit-paper.preview .form-container {
+            display: none;
+        }
+}
+
+.page-edit-paper .preview-container {
+        padding: 0;
+    }
+
+.page-edit-paper .preview-container .preview-content {
+            height: 100%;
+            padding: 5px;
+            margin-bottom: 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+@media (min-width: 768px) {
+        .page-edit-paper .preview-container {
+            padding: 5px 0 5px 5px;
+        }
+}
+
+@media (max-width: 767px) {
+        .page-edit-paper.editing .preview-container {
+            display: none;
+        }
+}

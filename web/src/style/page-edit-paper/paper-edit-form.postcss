@@ -1,0 +1,55 @@
+.page-edit-paper {
+    .form-container {
+        padding: 0;
+
+        .form-content {
+            height: 100%;
+            padding: 5px;
+            margin: 0;
+            border: 1px solid var(--color-grey-lighter);
+            border-radius: 5px;
+
+            .form-group {
+                margin-bottom: 0.5rem;
+
+                .form-control {
+                    height: 2rem;
+                    line-height: calc(1.7rem - 2px);
+                    padding: 0.15 0.75rem;
+                    box-sizing: border-box;
+                }
+
+                &.paper-content-container {
+                    height: calc(100% - 15.5rem);
+                    min-height: 20rem;
+                }
+            }
+
+            #paper_brief {
+                height: 7.5rem;
+                resize: none;
+            }
+
+            #paper_content {
+                height: 100%;
+                resize: none;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .page-edit-paper {
+        .form-container {
+            padding: 5px 5px 5px 0;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .page-edit-paper {
+        &.preview .form-container {
+            display: none;
+        }
+    }
+}

@@ -128,6 +128,8 @@ module.exports = reducers;
         },
         paper: {
         },
+        editPaper: {
+        },
         userInfo: {
             ···
         },
