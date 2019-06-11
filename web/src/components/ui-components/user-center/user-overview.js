@@ -9,8 +9,6 @@ const ajaxAction = require('/lib/common-ajax-action');
 const stanAlert = require('/lib/common-stan-alert');
 const stanLoading = require('/lib/common-stan-loading');
 
-const resetInfoForm = require('../edit-info-modal/util-reset-info-form');
-
 class UserOverview extends React.Component {
     render() {
         return (
@@ -218,9 +216,11 @@ class OperateContainer extends React.Component {    //  eslint-disable-line
 
     editInfo(evt) { //  eslint-disable-line
         const userInfo = this.props.userInfo || {};
+        const $editInfoModal = $('#editInfoModal');
 
-        resetInfoForm(userInfo);
-        $('#editInfoModal').modal();
+        $editInfoModal.modal();
+        $editInfoModal.find('[name=userName]').val(userInfo.userName);
+        $editInfoModal.find(`[name=gender][value=${userInfo.gender}]`).prop('checked', true);
         this.props.updateUserInfoForm({
             userName: userInfo.userName,
             gender: userInfo.gender,

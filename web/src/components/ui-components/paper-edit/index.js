@@ -14,6 +14,17 @@ class PaperEdit extends React.Component {
         this.toggleEditPreview = this.toggleEditPreview.bind(this);
     }
 
+    componentWillMount() {
+        const paperId = this.props.paperId;
+        const getPaper = this.props.getPaper;
+
+        if (paperId) {
+            getPaper({
+                paperId,
+            });
+        }
+    }
+
     toggleEditPreview(evt, currentOperateType) {
         const toggleEditPreview = this.props.toggleEditPreview;
         const target = currentOperateType === 'editing' ? 'preview' : 'editing';
@@ -22,6 +33,7 @@ class PaperEdit extends React.Component {
     }
 
     render() {
+        const cache = this.props.cache || {};
         const editPaper = this.props.editPaper || {};
         const operateType = editPaper.operateType || 'editing';
 
@@ -35,8 +47,11 @@ class PaperEdit extends React.Component {
                     <i className="fa fa-edit"></i>
                     <i className="fa fa-eye"></i>
                 </a>
-                <PaperEditForm/>
-                <PaperEditPreview/>
+                <PaperEditForm
+                    cache={ cache }
+                    updatePaperForm={ this.props.updatePaperForm }
+                />
+                <PaperEditPreview cache={ cache }/>
             </div>
         );
     }

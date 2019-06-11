@@ -26,6 +26,7 @@ const updateReplyFormAction = require('./update-reply-form');
 const submitReplyAction = require('./submit-reply');
 
 const toggleEditPreviewAction = require('./toggle-edit-preview');
+const updatePaperFormAction = require('./update-paper-form');
 
 const actions = {
     actionTypes,
@@ -54,6 +55,7 @@ const actions = {
     submitReplyAction,
 
     toggleEditPreviewAction,
+    updatePaperFormAction,
 };
 
 module.exports = actions;

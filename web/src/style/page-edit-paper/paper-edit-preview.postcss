@@ -1,6 +1,8 @@
 .page-edit-paper {
     .preview-container {
+        max-height: 100%;
         padding: 0;
+        overflow-y: auto;
 
         .preview-content {
             height: 100%;
@@ -8,6 +10,59 @@
             margin-bottom: 0;
             border: 1px solid var(--color-grey-lighter);
             border-radius: 5px;
+
+            .preview-paper {
+                max-height: 100%;
+                padding: 0 10px;
+                overflow-y: auto;
+
+                h1, h2, h3, h4, h5, h6 {
+                    margin: 1rem 0 0.75rem;
+                    color: var(--color-grey-dark);
+                    font-size: 1.25em;
+                }
+
+                p {
+                    color: var(--color-grey);
+                    line-height: 1.5rem;
+                    margin: 0 0 0.5rem;
+                    font-size: 0.8em;
+                    text-indent: 2em;
+                }
+
+                blockquote {
+                    margin: 0 0 0.25rem;
+                    color: var(--color-grey);
+                }
+
+                img {
+                    display: block;
+                    width: 300px;
+                    max-width: 100%;
+                    padding: 0;
+                    margin: 0.5rem auto;
+                }
+
+                strong {
+                    font-size: 1.25em;
+                    font-weight: bolder;
+                }
+
+                pre {
+                    padding: 0.5rem;
+                    margin: 0.5rem 1em;
+                    border-radius: 5px;
+                    background-color: var(--color-black-light);
+
+                    code {
+                        padding: 0;
+                        margin: 0;
+                        color: var(--color-white);
+                        font-size: 0.75em;
+                        font-family: consola;
+                    }
+                }
+            }
         }
     }
 }

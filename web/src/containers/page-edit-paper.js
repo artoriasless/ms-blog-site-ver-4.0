@@ -14,9 +14,15 @@ class UI_PagePaper extends React.Component {
         const pageType = paperId ? 'EDIT' : 'ADD';
 
         return (
-            <div className="page-edit-paper" key={ this.props.current }>
+            <div
+                className="page-edit-paper"
+                key={ this.props.current }
+            >
                 <Navbar/>
-                <PaperEdit pageType={ pageType }/>
+                <PaperEdit
+                    paperId={ paperId }
+                    pageType={ pageType }
+                />
                 <LoginModal/>
             </div>
         );

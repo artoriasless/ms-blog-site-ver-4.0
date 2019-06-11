@@ -26,6 +26,7 @@ const updateReplyFormFunc = require('./update-reply-form');
 const submitReplyFunc = require('./submit-reply');
 
 const toggleEditPreviewFunc = require('./toggle-edit-preview');
+const updatePaperFormFunc = require('./update-paper-form');
 
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
@@ -96,6 +97,9 @@ const reducers = (state = {}, action = {}) => {
     case actionTypes.TOGGLE_EDIT_PREVIEW:
         return toggleEditPreviewFunc(state, action);
 
+    case actionTypes.UPDATE_PAPER_FORM:
+        return updatePaperFormFunc(state, action);
+
     default:
         return state;
     }
@@ -163,6 +167,13 @@ module.exports = reducers;
             },
             reply: {
                 ···
+            },
+            paper: {
+                title: '',
+                tag: '',
+                subtag: '',
+                brief: '',
+                content: '',
             }
         }
     }
