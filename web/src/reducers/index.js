@@ -25,6 +25,8 @@ const resetReplyFormFunc = require('./reset-reply-form');
 const updateReplyFormFunc = require('./update-reply-form');
 const submitReplyFunc = require('./submit-reply');
 
+const toggleEditPreviewFunc = require('./toggle-edit-preview');
+
 const reducers = (state = {}, action = {}) => {
     switch (action.type) {
 
@@ -90,6 +92,9 @@ const reducers = (state = {}, action = {}) => {
 
     case actionTypes.SUBMIT_REPLY:
         return submitReplyFunc(state, action);
+
+    case actionTypes.TOGGLE_EDIT_PREVIEW:
+        return toggleEditPreviewFunc(state, action);
 
     default:
         return state;

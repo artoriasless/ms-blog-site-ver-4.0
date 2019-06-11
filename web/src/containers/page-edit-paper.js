@@ -10,12 +10,11 @@ const PaperEdit = require('/components/paper-edit');
 /* eslint-disable */
 class UI_PagePaper extends React.Component {
     render() {
-        const operateType = this.props.operateType || 'editing';
         const paperId = this.props.params.paperId || '';
         const pageType = paperId ? 'EDIT' : 'ADD';
 
         return (
-            <div className={ `page-edit-paper ${operateType}` } key={ this.props.current }>
+            <div className="page-edit-paper" key={ this.props.current }>
                 <Navbar/>
                 <PaperEdit pageType={ pageType }/>
                 <LoginModal/>

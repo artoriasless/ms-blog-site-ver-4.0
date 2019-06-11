@@ -4,6 +4,57 @@
     .page-section-body {
         height: 100%;
     }
+
+    .toggle-edit-preview {
+        position: fixed;
+        width: 1.5rem;
+        height: 1.5rem;
+        right: 0;
+        top: calc(2.5rem + 1px);
+        border-radius: 0 0 0 5px;
+        background-color: rgba(255, 255, 255, 0.9);
+        z-index: 9;
+
+        .fa {
+            display: block;
+            width: 1.5rem;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+
+        &.editing .fa-edit {
+            display: none;
+        }
+
+        &.preview .fa-eye {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .page-edit-paper {
+
+        .toggle-edit-preview {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .page-edit-paper {
+
+        .toggle-edit-preview {
+            display: block;
+        }
+    }
 }
 
 @import url(./paper-edit-form.postcss);
