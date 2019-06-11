@@ -5,8 +5,8 @@ const os = require('os');
 const forever = require('forever-monitor');
 
 const env = process.env.NODE_ENV || 'development';
+const config = require('./config');
 
-let port = require('./config').port;
 let max = 1;        //  affect the number of child process
 let silent = false; //  affect whether show the console result in child process
 const args = [
@@ -25,7 +25,7 @@ const child = new(forever.Monitor)('./web/server.js', {
 });
 
 child.on('start', () => {
-    console.info(`app has started,address: http://localhost:${port}`);// eslint-disable-line
+    console.info(`app has started,address: ${config.domain}`);// eslint-disable-line
 });
 
 child.on('exit', () => {
