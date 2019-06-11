@@ -36,7 +36,7 @@ class NavbarRight extends React.Component {
                     className="collapse navbar-collapse"
                 >
                     <ul className="navbar-nav">
-                        { userInfo.isOwner ? <NavbarRightAdmin/> : null }
+                        { (userInfo.isOwner && userInfo.uuid) ? <NavbarRightAdmin/> : null }
                         <NavbarRightCatalogue/>
                         <NavbarRightUser userInfo={ userInfo }/>
                         {

@@ -28,9 +28,10 @@ async function page(ctx, next) {
     const data = fs.readFileSync(filePath).toString();
 
     if (adminReg.test(reqUrl)) {
+        const user = ctx.session.user || {};
         const isOwner = ctx.session.isOwner;
 
-        if (!isOwner) {
+        if (!isOwner || !user.uuid) {
             ctx.status = 404;
             ctx.message = 'Not Found';
 
