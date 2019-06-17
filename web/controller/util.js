@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const formidable = require('koa-formidable');
-// const uuid = require('uuid/v4');
+const uuid = require('uuid/v4');
 
 const service = require('../../service');
 const utilService = service.util;
@@ -25,32 +25,33 @@ async function resolveFileOpts(req, ctx) {
         fileData: fs.readFileSync(files.file.path),
         data: {},
     };
+    const imgReg = /\.((j|J)(p|P)(e|E)?(g|G)|(p|P)(n|N)(g|G)|(g|G)(i|I)(f|F)|(b|B)(m|M)(p|P)|(s|S)(v|V)(g|G ))$/;
+    const extReg = /\.[^.]+$/;
+    const originalFileName = files.file ? (files.file.name || '') : '';
+    var ext = originalFileName.match(extReg) ? originalFileName.match(extReg)[0] : '';
     var fileName;
-    var ext = fields.ext || '.jpg';
 
     switch(fields.type) {
     case 'USER_AVATAR':
-        fileName = `user/${ctx.session.user.uuid}${ext}`;
+        fileName = `user/${ctx.session.user.uuid}.jpg`;
         fileOpts.message = 'avatar has been changed!';
+        fileOpts.data = {
+            originalFileName,
+            fileName,
+        };
         break;
-    //  TODO
-    // case 'PAPER_MATERIAL_IMAGE':
-    //     fileName = `paper/image/${fileName}${ext}`;
-    //     fileOpts.message = 'upload image success!';
-    //     fileOpts.data = {
-    //         fileName,
-    //     };
-    //     break;
-    // case 'PAPER_MATERIAL_ATTACHMENT':
-    //     ext = files.file.name.match(/\.[^.]+$/)[0];
-    //     fileName = `paper/attachment/${fileName}${ext}`;
-    //     fileOpts.data = {
-    //         fileName,
-    //     };
-    //     break;
+    case 'PAPER_MATERIAL':
+        fileName = `paper/${imgReg.test(ext) ? 'image' : 'attachment'}/${uuid()}${ext}`;
+        fileOpts.message = 'upload paper material success!';
+        fileOpts.data = {
+            originalFileName,
+            fileName,
+        };
+        break;
     default:
-        fileOpts.fileName = '';
+        fileName = '';
         fileOpts.fileData = '';
+        fileOpts.data = {};
     }
 
     fileOpts.fileName = fileName;

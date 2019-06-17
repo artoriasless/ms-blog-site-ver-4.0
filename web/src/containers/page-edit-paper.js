@@ -5,6 +5,7 @@ const { connect } = require('react-redux');
 
 const Navbar = require('/components/common-navbar');
 const LoginModal = require('/components/common-login-modal');
+const UploadModal = require('/components/common-upload-modal');
 
 const PaperEdit = require('/components/paper-edit');
 /* eslint-disable */
@@ -24,6 +25,7 @@ class UI_PagePaper extends React.Component {
                     pageType={ pageType }
                 />
                 <LoginModal/>
+                <UploadModal/>
             </div>
         );
     }

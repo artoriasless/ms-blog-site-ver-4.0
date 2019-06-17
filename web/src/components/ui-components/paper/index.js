@@ -33,6 +33,7 @@ class Paper extends React.Component {
 
     componentDidUpdate() {
         $('.paper-body img').each(function() {
+            const typeReg = /\?type=/;
             const imgSrc = $(this).prop('src');
             const imgAlt = $(this).prop('alt');
 
@@ -40,8 +41,14 @@ class Paper extends React.Component {
                 'data-src': imgSrc,
                 'data-caption': imgAlt,
             });
+
+            if (!typeReg.test(imgSrc)) {
+                $(this).addClass('default');
+            } else {
+                $(this).addClass(imgSrc.split(typeReg)[1] || '');
+            }
         });
-        $('.paper-body img').magnify({
+        $('.paper-body img.default').magnify({
             title: true,
             headToolbar: [
                 'close'

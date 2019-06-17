@@ -12,16 +12,21 @@ class PaperEdit extends React.Component {
         super();
 
         this.toggleEditPreview = this.toggleEditPreview.bind(this);
+        this.showUploadModal = this.showUploadModal.bind(this);
+        this.submitPaper = this.submitPaper.bind(this);
     }
 
     componentWillMount() {
         const paperId = this.props.paperId;
         const getPaper = this.props.getPaper;
+        const updatePaperForm = this.props.updatePaperForm;
 
         if (paperId) {
             getPaper({
                 paperId,
             });
+        } else {
+            updatePaperForm({});
         }
     }
 
@@ -30,6 +35,17 @@ class PaperEdit extends React.Component {
         const target = currentOperateType === 'editing' ? 'preview' : 'editing';
 
         toggleEditPreview(target);
+    }
+
+    showUploadModal(evt) {
+        $('#uploadModal').modal();
+    }
+
+    submitPaper(evt) {
+        const cache = this.props.cache || {};
+        const paper = cache.paper || {};
+
+        console.info(paper);
     }
 
     render() {
@@ -52,6 +68,20 @@ class PaperEdit extends React.Component {
                     updatePaperForm={ this.props.updatePaperForm }
                 />
                 <PaperEditPreview cache={ cache }/>
+                <a
+                    className="show-upload-modal-link"
+                    href="javascript:;"
+                    onClick={ event => this.showUploadModal(event) }
+                >
+                    <i className="fa fa-upload"></i>
+                </a>
+                <a
+                    className="submit-paper-link"
+                    href="javascript:;"
+                    onClick={ event => this.submitPaper(event) }
+                >
+                    <i className="fa fa-save"></i>
+                </a>
             </div>
         );
     }

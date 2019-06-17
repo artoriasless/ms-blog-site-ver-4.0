@@ -37,6 +37,117 @@
             display: none;
         }
     }
+
+    .show-upload-modal-link,
+    .submit-paper-link {
+        position: fixed;
+        display: block;
+        right: 0;
+        margin-right: 0.25rem;
+        width: 2rem;
+        height: 2rem;
+        color: var(--color-white);
+        background-color: var(--color-theme);
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        .fa {
+            display: block;
+            width: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+    }
+
+    .show-upload-modal-link {
+        bottom: calc(2rem + 10px);
+        border-radius: 5px 5px 0 0;
+    }
+
+    .submit-paper-link {
+        bottom: 0;
+        margin-bottom: 10px;
+        border-radius: 0 0 5px 5px;
+    }
+}
+
+#uploadModal {
+    .upload-form {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 0.25rem;
+        margin-right: 0.75rem;
+    }
+
+    .upload-icon-container {
+        width: 1.75rem;
+        height: 1.75rem;
+        line-height: 1.75rem;
+        text-align: center;
+        font-size: 1.25rem;
+    }
+
+    .history-title {
+        height: calc(1.75rem + 1px);
+        line-height: 1.75rem;
+        border-bottom: 1px solid var(--color-grey-lighter);
+        font-weight: 600;
+    }
+
+    .history-list {
+        padding: 0 0 0 20px;
+        margin: 5px 0 0;
+        font-size: 0.85rem;
+    }
+
+    .history-item {
+        height: 1.5rem;
+        line-height: 1.5rem;
+        padding-left: 5px;
+        margin: 5px 0 0;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: var(--color-grey-lighter);
+        }
+
+        .original-name {
+            max-width: calc(100% - 1.5rem - 15px);
+            float: left;
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .cdn-info-link {
+            width: 1.5rem;
+            height: 1.5rem;
+            float: right;
+            cursor: pointer;
+
+            &:hover,
+            &:active {
+                text-decoration: none;
+                outline: none;
+            }
+
+            .fa {
+                display: block;
+                width: 1.5rem;
+                line-height: 1.5rem;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.cdn-info-wrap {
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {
@@ -46,6 +157,17 @@
             display: none;
         }
     }
+
+    #uploadModal {
+        .modal-dialog {
+            top: 35%;
+        }
+
+        .modal-body {
+            max-height: 450px;
+            overflow-y: auto;
+        }
+    }
 }
 
 @media (max-width: 767px) {
@@ -53,6 +175,17 @@
 
         .toggle-edit-preview {
             display: block;
+        }
+    }
+
+    #uploadModal {
+        .modal-dialog {
+            top: 45%;
+        }
+
+        .modal-body {
+            max-height: 375px;
+            overflow-y: auto;
         }
     }
 }
