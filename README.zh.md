@@ -1,6 +1,8 @@
 # ms-blog-site-ver-4.0
 自己搭的一个博客网站，4.0 版本（[English](https://github.com/MonkingStand/ms-blog-site-ver-4.0))
 
+> 线上运行版本可访问 **[stanby.cn](http://www.stanby.cn)**
+
 ## 简述
 *   服务端使用 koa2
 *   数据库使用 mysql

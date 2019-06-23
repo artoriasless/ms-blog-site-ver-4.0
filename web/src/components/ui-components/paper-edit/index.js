@@ -5,6 +5,8 @@ const React = require('react');
 
 const PaperEditForm = require('./paper-edit-form');
 const PaperEditPreview = require('./paper-edit-preview');
+
+const submitValidate = require('./util-submit-validate');
 /* eslint-disable */
 
 class PaperEdit extends React.Component {
@@ -42,10 +44,27 @@ class PaperEdit extends React.Component {
     }
 
     submitPaper(evt) {
+        const ajaxAddPaper = this.props.ajaxAddPaper;
+        const ajaxUpdatePaper = this.props.ajaxUpdatePaper;
+        const pageType = this.props.pageType || 'ADD';
+        const paperId = this.props.paperId || '';
         const cache = this.props.cache || {};
         const paper = cache.paper || {};
 
-        console.info(paper);
+        paper.id = paperId;
+
+        if (submitValidate(pageType, paper)) {
+            switch(pageType) {
+                case 'ADD':
+                    ajaxAddPaper(paper);
+                    break;
+                case 'EDIT':
+                    ajaxUpdatePaper(paper);
+                    break;
+                default:
+                    return;
+            }
+        }
     }
 
     render() {

@@ -1,6 +1,8 @@
 # ms-blog-site-ver-4.0
 a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-blog-site-ver-4.0/blob/master/README.zh.md)）
 
+> blog site: **[stanby.cn](http://www.stanby.cn)**
+
 ## brief
 *   it will use koa (ver ^2.0.0) as server side
 *   it will use mySQL as database
@@ -40,7 +42,7 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
         +   gulp is more efficient than webpack on handling CSS preprocessor
         +   webpack needs loaders/plugins to resolve static asserts in stylesheet
 
-    1.  the plugin in webpack to bundle css costs too much time
+    2.  the plugin in webpack to bundle css costs too much time
         +	this problem appears while using **` css-loader `** 、 **` style-loader `** 、 **` sass-loader `** 、 **` less-loader `** 、 **` postcss-loader `** with **` extract-text-webpack-plugin `**
 
 +   Incremental Build
