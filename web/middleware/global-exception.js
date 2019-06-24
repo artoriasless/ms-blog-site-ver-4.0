@@ -3,6 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 
+const config = require('../../config');
+const staticVersion = (config.env === 'production') ? `.${require('../src/package.json').version}.` : '.';
+const staticServer = (config.env === 'production') ? config.ossPublic.static : '';
+
 module.exports = async (ctx, next) => {
     const statusCode = String(ctx.status);
 
@@ -33,6 +37,8 @@ module.exports = async (ctx, next) => {
         } else {
             //  页面访问
             data = fs.readFileSync(filePath).toString().replace(/<errorContent>/g, err.message.toString().trim());
+            data = data.replace(/<staticVersion>/g, staticVersion);
+            data = data.replace(/<staticServer>/g, staticServer);
         }
 
         ctx.body = data;

@@ -15,7 +15,7 @@ module.exports = {
         renew: false,
     },
     ossPublic: {
-        assets: 'https://monkingstand.oss-cn-beijing.aliyuncs.com',
+        static: '//monkingstand.oss-cn-beijing.aliyuncs.com/static',
         user: 'https://monkingstand.oss-cn-beijing.aliyuncs.com/user',
         paper: 'https://monkingstand.oss-cn-beijing.aliyuncs.com/paper'
     }

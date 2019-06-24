@@ -1,3 +1,8 @@
+.__fix__assets__import {
+    background: url(img/github-logo.png);
+    background: url(img/logo.jpg);
+}
+
 .page-home {
     .main {
         text-align: center;
@@ -71,11 +76,11 @@
 
                     .link-img.github-link {
                         border-radius: 0;
-                        background: url(img/github-logo.png) no-repeat center center / cover;
+                        background: url(var(--oss-server)/img/github-logo.png) no-repeat center center / cover;
                     }
 
                     .link-img.blog-link {
-                        background: url(img/logo.jpg) no-repeat center center / cover;
+                        background: url(var(--oss-server)/img/logo.jpg) no-repeat center center / cover;
                     }
                 }
             }

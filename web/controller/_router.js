@@ -8,6 +8,7 @@ const _router = new Router();
 
 const config = require('../../config');
 const staticVersion = (config.env === 'production') ? `.${require('../src/package.json').version}.` : '.';
+const staticServer = (config.env === 'production') ? config.ossPublic.static : '';
 
 //  前端将使用 react ，网站采用 SPA 模式，固定模板页面，设定路由列表
 const routeList = [
@@ -25,7 +26,7 @@ async function page(ctx, next) {
     const adminReg = /^\/admin/;
     const reqUrl = ctx.request.url;
     const filePath = path.resolve(__dirname, '../template/index.html');
-    const data = fs.readFileSync(filePath).toString();
+    var data = fs.readFileSync(filePath).toString();
 
     if (adminReg.test(reqUrl)) {
         const user = ctx.session.user || {};
@@ -37,9 +38,11 @@ async function page(ctx, next) {
 
             await next();
         } else {
+            data = data.replace(/<staticServer>/g, staticServer);
             ctx.body = data.replace(/<staticVersion>/g, staticVersion);
         }
     } else {
+        data = data.replace(/<staticServer>/g, staticServer);
         ctx.body = data.replace(/<staticVersion>/g, staticVersion);
     }
 }
