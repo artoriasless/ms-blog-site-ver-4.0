@@ -1,10 +1,12 @@
 'use strict';
 
+const config = require('../config');
+
 function stanLoading(hide) {
     var loadingDom = '' +
         `<div class="stan-loading-container">
             <div class="stan-loading-content">
-                <img class="loading" src="/img/loading.gif"/>
+                <img class="loading" src="${config.ossPublic.domain}/static/img/loading.gif"/>
             </div>
         </div>`;
 

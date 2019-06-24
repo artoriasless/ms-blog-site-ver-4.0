@@ -8763,8 +8763,10 @@ module.exports = stanAlert;
 "use strict";
 
 
+var config = __webpack_require__(/*! ../config */ "./config.js");
+
 function stanLoading(hide) {
-    var loadingDom = '' + '<div class="stan-loading-container">\n            <div class="stan-loading-content">\n                <img class="loading" src="/img/loading.gif"/>\n            </div>\n        </div>';
+    var loadingDom = '' + ('<div class="stan-loading-container">\n            <div class="stan-loading-content">\n                <img class="loading" src="' + config.ossPublic.domain + '/static/img/loading.gif"/>\n            </div>\n        </div>');
 
     if (hide) {
         $('.stan-loading-container').fadeOut('fast', function () {
