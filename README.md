@@ -14,6 +14,8 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
     *   using gulp to bundle stylesheet file(s)
     *   using webpack to bundle javascript file(s)
     *   while file changed,choose **`Incremental Build`**,avoid **`Full Build`**
+*   about front-end resources
+    *   all front-end static resources have been migrated into **OSS**
 
 ## NOTE
 *   node version must be at least 7.6.0
@@ -53,3 +55,7 @@ a blog site of mine,version 4.0（[中文](https://github.com/MonkingStand/ms-bl
         4.  using chokidar
             +   avoid problems above
             +   for incremental build
+
+## TODO
++   oss-pusher
+    +   used for deploying FE application into **OSS**
